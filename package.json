@@ -1,6 +1,6 @@
 {
   "name": "falcoeye-user-app",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": true,
   "dependencies": {
     "@headlessui/react": "^1.4.3",
