@@ -22,30 +22,30 @@ import Signup from "../src/Components/Views/Auth/Signup";
 import { useSelector } from "react-redux";
 
 function App() {
-   const [authenticated, setAuthenticated] = useState(true);
-  // useEffect(() => {
-  //   if (localStorage.getItem("user") !== null) {
-  //     setAuthenticated(true);
-  //   } else {
-  //     setAuthenticated(false);
-  //   }
-  // }, []);
+  const [authenticated, setAuthenticated] = useState(false);
+  useEffect(() => {
+    if (localStorage.getItem("user") !== null) {
+      setAuthenticated(true);
+    } else {
+      setAuthenticated(false);
+    }
+  }, []);
   return (
     <>
       <Routes>
-        <Route path="/" element={authenticated ? <Home /> : <Navigate replace to="/login" />  } />
-        <Route path="/Camera" element={ authenticated ? <Camera /> : <Navigate replace to="/login" /> } />
-        <Route path="/VideoImages" element={authenticated ? <VideoImages /> : <Navigate replace to="/login" /> } />
-        <Route path="/Streaming/:id" element={authenticated ? <Streaming /> : <Navigate replace to="/login" />   } />
-        <Route path="/analysis-jobs" element={authenticated ? <AnalysisJobs /> : <Navigate replace to="/login" /> } />
-        <Route path="/snap-shot" element={authenticated ? <SnapShot /> : <Navigate replace to="/login" />  } />
-        <Route path="/new-analysis" element={authenticated ? <NewAnalysis /> : <Navigate replace to="/login" />  } />
-        <Route path="/ai-store" element={authenticated ? <AiModals /> : <Navigate replace to="/login" />  } />
-        <Route path="/analysis-details" element={authenticated ? <AnalysisDetailsIndex /> : <Navigate replace to="/login" />  } />
-        <Route path="/all-analysis" element={authenticated ? <AllAnalysis /> : <Navigate replace to="/login" />  } />
-        <Route path="/charts" element={authenticated ? <Charts /> : <Navigate replace to="/login" />  } />
+        <Route path="/" element={authenticated ? <Home /> : <Navigate replace to="/login" />} />
+        <Route path="/Camera" element={authenticated ? <Camera /> : <Navigate replace to="/login" />} />
+        <Route path="/VideoImages" element={authenticated ? <VideoImages /> : <Navigate replace to="/login" />} />
+        <Route path="/Streaming/:id" element={authenticated ? <Streaming /> : <Navigate replace to="/login" />} />
+        <Route path="/analysis-jobs" element={authenticated ? <AnalysisJobs /> : <Navigate replace to="/login" />} />
+        <Route path="/snap-shot" element={authenticated ? <SnapShot /> : <Navigate replace to="/login" />} />
+        <Route path="/new-analysis" element={authenticated ? <NewAnalysis /> : <Navigate replace to="/login" />} />
+        <Route path="/ai-store" element={authenticated ? <AiModals /> : <Navigate replace to="/login" />} />
+        <Route path="/analysis-details" element={authenticated ? <AnalysisDetailsIndex /> : <Navigate replace to="/login" />} />
+        <Route path="/all-analysis" element={authenticated ? <AllAnalysis /> : <Navigate replace to="/login" />} />
+        <Route path="/charts" element={authenticated ? <Charts /> : <Navigate replace to="/login" />} />
         <Route path="/login" element={!authenticated ? <Login /> : <Navigate replace to="/" />} />
-         <Route path="/signup" element={!authenticated ? <Signup /> : <Navigate replace to="/" />} />
+        <Route path="/signup" element={!authenticated ? <Signup /> : <Navigate replace to="/" />} />
       </Routes>
     </>
   );
