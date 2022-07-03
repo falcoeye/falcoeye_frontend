@@ -19,7 +19,7 @@ const useFetch = (url, options, dependencies) => {
             }
         };
         fetchData();
-    }, dependencies ? dependencies : []);
+    }, [options, url]);
     return { response, loading, error };
 };
 

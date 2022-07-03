@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
-import "./Auth.css";
-import axios from "../../../axiosInstance";
-import { toast } from "react-toastify";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import axios from "../../../axiosInstance";
+import "./Auth.css";
 //import { addUser } from "../../store/user";
 const Signup = () => {
   const navigate = useNavigate();
@@ -13,8 +12,6 @@ const Signup = () => {
     email: null,
     name: null,
   });
-
-  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;

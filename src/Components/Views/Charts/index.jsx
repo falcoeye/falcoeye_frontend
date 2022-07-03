@@ -1,69 +1,68 @@
-import React, { useState } from "react";
-import Layout from "../../Layout";
 import ApexCharts from "react-apexcharts";
+import Layout from "../../Layout";
 
-export default function Charts() {
-  const [state, setState] = useState({
-    series: [
-      {
-        name: "Net Profit",
-        data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
+const state = {
+  series: [
+    {
+      name: "Net Profit",
+      data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
+    },
+  ],
+  options: {
+    chart: {
+      type: "bar",
+      height: 350,
+    },
+    plotOptions: {
+      bar: {
+        horizontal: false,
+        columnWidth: "25%",
+        endingShape: "rounded",
       },
-    ],
-    options: {
-      chart: {
-        type: "bar",
-        height: 350,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      show: true,
+      width: 2,
+      colors: ["transparent"],
+    },
+    xaxis: {
+      categories: [
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+      ],
+    },
+    yaxis: {
+      title: {
+        text: "Number of fish",
       },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: "25%",
-          endingShape: "rounded",
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        show: true,
-        width: 2,
-        colors: ["transparent"],
-      },
-      xaxis: {
-        categories: [
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-        ],
-      },
-      yaxis: {
-        title: {
-          text: "Number of fish",
-        },
-      },
-      fill: {
-        opacity: 1,
-      },
-      tooltip: {
-        y: {
-          formatter: function (val) {
-            return "$ " + val + " thousands";
-          },
+    },
+    fill: {
+      opacity: 1,
+    },
+    tooltip: {
+      y: {
+        formatter: function (val) {
+          return "$ " + val + " thousands";
         },
       },
     },
+  },
 
-    selection: "one_year",
-  });
+  selection: "one_year",
+}
+export default function Charts() {
 
-  const updateData = (timeline) => {
+  /* const updateData = (timeline) => {
     setState({
       ...state,
       selection: timeline,
@@ -112,7 +111,7 @@ export default function Charts() {
         break;
       default:
     }
-  };
+  }; */
   return (
     <Layout>
       <div className="flex flex-col items-center h-screen w-full">

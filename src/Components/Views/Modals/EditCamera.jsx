@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import axios from "../../../axiosInstance";
 import "./Modals.css";
-import useFetch from "../../../hooks/UseFetch";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 const EditCamera = ({ setEditCamera,currentId }) => {
   const user = useSelector((state) => state.user);
  
@@ -54,6 +52,7 @@ const EditCamera = ({ setEditCamera,currentId }) => {
             },
           }
         );
+        console.log(res)
         setEditCamera(false);
       } catch (error) {
         toast.error("Something went wrong", {

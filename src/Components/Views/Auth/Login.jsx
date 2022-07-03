@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import './Auth.css';
-import axios from '../../../axiosInstance';
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import axios from '../../../axiosInstance';
 import { addUser } from '../../../store/user';
+import './Auth.css';
 const Login = () => {
   const navigate = useNavigate();
   const [data, setData] = useState({

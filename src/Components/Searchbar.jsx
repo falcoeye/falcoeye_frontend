@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { AiOutlineSearch, AiOutlineSetting } from "react-icons/ai";
-import AutoComplete from "./AutoComplete";
-import profile from "../../src/images/dp.jpg";
-import { BsChevronDown } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from 'react';
+import { AiOutlineSearch, AiOutlineSetting } from 'react-icons/ai';
+import { useSelector } from 'react-redux';
+import AutoComplete from './AutoComplete';
 const Searchbar = () => {
   const pathString = window.location.pathname;
   const [paths, setPaths] = useState();
-  const navigate = useNavigate();
- const user = useSelector((state) => state.user);
+
+  const user = useSelector((state) => state.user);
   useEffect(() => {
-    pathString !== null && setPaths(pathString.split("/"));
+    pathString !== null && setPaths(pathString.split('/'));
   }, [pathString]);
   useEffect(() => {
     console.log(paths);
   }, [paths]);
-  const handleRedirect = (idx) => {
+  /* const handleRedirect = (idx) => {
     let redirectPathArray = [];
     paths.forEach((item, index) => {
       if (index <= idx) {
@@ -26,11 +23,11 @@ const Searchbar = () => {
     const redirectPath = `${redirectPathArray.join("/")}`;
     console.log("check redirect", redirectPath);
     navigate(`${redirectPath}`);
-  };
+  }; */
   const handleActionChange = (id) => {
-    if ("logout" == id) { 
-       localStorage.removeItem("user");
-      window.location.pathname = "/login";
+    if ('logout' === id) {
+      localStorage.removeItem('user');
+      window.location.pathname = '/login';
     }
   };
   return (
@@ -68,22 +65,22 @@ const Searchbar = () => {
             <p className="text-xs text-primary capitalize"></p>
             <span className="text-xs text-primary cursor-pointer">
               <select
-            className="text-primary max-w-[140px] bg-white text-sm  w-full"
+                className="text-primary max-w-[140px] bg-white text-sm  w-full"
                 placeholder="="
                 onChange={(e) => {
-              handleActionChange(e.target.value);
-            }}
+                  handleActionChange(e.target.value);
+                }}
               >
-                <option value={ user.user.name}>{ user.user.name}</option>
-            <option value="logout">Log out</option>
-          </select>
+                <option value={user.user.name}>{user.user.name}</option>
+                <option value="logout">Log out</option>
+              </select>
             </span>
           </div>
         </div>
       </div>
-      {paths && paths[1] !== "" && (
+      {paths && paths[1] !== '' && (
         <div className="flex items-center">
-          {paths?.map((path, index) => {})}
+          {paths?.map((path, index) => console.log(path))}
         </div>
       )}
     </div>
@@ -92,4 +89,4 @@ const Searchbar = () => {
 
 export default Searchbar;
 
-const suggestions = ["aaa", "sasdf", "askdf"];
+const suggestions = ['aaa', 'sasdf', 'askdf'];

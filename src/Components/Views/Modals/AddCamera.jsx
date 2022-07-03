@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import axios from "../../../axiosInstance";
 import "./Modals.css";
-import useFetch from "../../../hooks/UseFetch";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 const AddCamera = ({ setAddCamera }) => {
    const user = useSelector((state) => state.user);
-  const navigate = useNavigate();
-  const userData = useSelector((state) => state.user);
   const [disableSubmit, setDisableSubmit] = useState(true);
   const [showRSTP, setShowRSTP] = React.useState(false)
   const [data, setData] = useState({
@@ -27,7 +23,7 @@ const AddCamera = ({ setAddCamera }) => {
 
   const handleStreamingTypeChange = (e) => {
     handleChange(e);
-    if (e.target.value == "RSTP") {
+    if (e.target.value === "RSTP") {
       setShowRSTP(true);
     }
     else { 
@@ -39,7 +35,7 @@ const AddCamera = ({ setAddCamera }) => {
     data.thumbnail === null || data.name === null || data.url === null || data.streaming_type === "-" 
       ? setDisableSubmit(true)
       : setDisableSubmit(false);
-  }, [data.thumbnail, data.name,data.url]);
+  }, [data.thumbnail, data.name, data.url, data.streaming_type]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -99,6 +95,7 @@ const AddCamera = ({ setAddCamera }) => {
             },
           }
         );
+        console.log(res)
         setAddCamera(false);
       } catch (error) {
         toast.error("Something went wrong", {

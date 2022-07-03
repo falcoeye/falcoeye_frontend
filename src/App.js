@@ -1,25 +1,20 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate
+  Navigate, Route, Routes
 } from "react-router-dom";
-import { useState, useEffect } from "react";
-import Home from "./Components/Views/Home";
-import Camera from "./Components/Views/Camera";
-import VideoImages from "./Components/Views/VideoImages";
-import Streaming from "./Components/Views/Streaming";
-import AnalysisJobs from "./Components/Views/Analysis";
-import SnapShot from "./Components/Views/Snapshots";
-import NewAnalysis from "./Components/Views/NewAnalysis";
-import AiModals from "./Components/Views/AiModels";
-import AnalysisDetailsIndex from "./Components/Views/AnalysisDetails";
-import AllAnalysis from "./Components/Views/AllAnalysis";
-import Charts from "./Components/Views/Charts";
 import Login from "../src/Components/Views/Auth/Login";
 import Signup from "../src/Components/Views/Auth/Signup";
-import { useSelector } from "react-redux";
+import AiModals from "./Components/Views/AiModels";
+import AllAnalysis from "./Components/Views/AllAnalysis";
+import AnalysisJobs from "./Components/Views/Analysis";
+import AnalysisDetailsIndex from "./Components/Views/AnalysisDetails";
+import Camera from "./Components/Views/Camera";
+import Charts from "./Components/Views/Charts";
+import Home from "./Components/Views/Home";
+import NewAnalysis from "./Components/Views/NewAnalysis";
+import SnapShot from "./Components/Views/Snapshots";
+import Streaming from "./Components/Views/Streaming";
+import VideoImages from "./Components/Views/VideoImages";
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);

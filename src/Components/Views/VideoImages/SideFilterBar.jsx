@@ -13,8 +13,6 @@ import { BsDisplay } from "react-icons/bs";
 import { FaRobot } from "react-icons/fa";
 import { FiRotateCw } from "react-icons/fi";
 
-const initialvalue = {};
-
 const SideFilterBar = ({ sideNav, toggle, isModal }) => {
   const [filters, setFilters] = useState([]);
   console.log(filters, "filters");

@@ -49,7 +49,7 @@ function CamerCards({ data }) {
 }
 
 export default CamerCards;
-const files = [
+/* const files = [
   {
     id: 1,
     title: "Camera Name 1 Canon G7X |||",
@@ -115,3 +115,4 @@ const files = [
     source: "https://www.youtube.com/watch?v=ixVaAQVEiSM",
   },
 ];
+ */
