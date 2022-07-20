@@ -1,18 +1,21 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useContext, useState } from 'react';
+// import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import axios from '../../axiosInstance';
-import { addUser } from '../../store/user';
+// import { toast } from 'react-toastify';
+// import axios from '../../axiosInstance';
+import AuthContext from '../../store/auth-context';
+// import { addUser } from '../../store/user';
 import './Auth.css';
 const Login = () => {
+  const authCtx = useContext(AuthContext)
+  const { login } = authCtx
   const navigate = useNavigate();
   const [data, setData] = useState({
     username: null,
     password: null,
   });
 
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,7 +28,9 @@ const Login = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (data.username === null || data.password === null) {
+    login('sdnsjdnsjkdnsd')
+    navigate('/', { replace: true })
+    /* if (data.username === null || data.password === null) {
       toast.error('All fields are required!', {
         position: 'top-center',
         autoClose: 5000,
@@ -69,7 +74,7 @@ const Login = () => {
           progress: undefined,
         });
       }
-    }
+    } */
   };
   return (
     <div className="login_form_wrapper">
