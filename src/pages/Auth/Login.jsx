@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 // import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 // import { toast } from 'react-toastify';
 // import axios from '../../axiosInstance';
 import AuthContext from '../../store/auth-context';
@@ -9,6 +9,9 @@ import './Auth.css';
 const Login = () => {
   const authCtx = useContext(AuthContext)
   const { login } = authCtx
+  
+  let location = useLocation();
+    let from = location.state?.from?.pathname || "/";
   const navigate = useNavigate();
   const [data, setData] = useState({
     username: null,
@@ -29,7 +32,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     login('sdnsjdnsjkdnsd')
-    navigate('/', { replace: true })
+    navigate(from, { replace: true });
     /* if (data.username === null || data.password === null) {
       toast.error('All fields are required!', {
         position: 'top-center',
