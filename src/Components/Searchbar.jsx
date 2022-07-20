@@ -71,7 +71,7 @@ const Searchbar = () => {
                   handleActionChange(e.target.value);
                 }}
               >
-                <option value={user.user.name}>{user.user.name}</option>
+                <option value={user?.user?.name}>{user?.user?.name}</option>
                 <option value="logout">Log out</option>
               </select>
             </span>
