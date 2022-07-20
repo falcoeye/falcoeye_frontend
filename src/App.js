@@ -2,19 +2,19 @@ import { useEffect, useState } from "react";
 import {
   Navigate, Route, Routes
 } from "react-router-dom";
-import Login from "../src/Components/Views/Auth/Login";
-import Signup from "../src/Components/Views/Auth/Signup";
-import AiModals from "./Components/Views/AiModels";
-import AllAnalysis from "./Components/Views/AllAnalysis";
-import AnalysisJobs from "./Components/Views/Analysis";
-import AnalysisDetailsIndex from "./Components/Views/AnalysisDetails";
-import Camera from "./Components/Views/Camera";
-import Charts from "./Components/Views/Charts";
-import Home from "./Components/Views/Home";
-import NewAnalysis from "./Components/Views/NewAnalysis";
-import SnapShot from "./Components/Views/Snapshots";
-import Streaming from "./Components/Views/Streaming";
-import VideoImages from "./Components/Views/VideoImages";
+import Login from "./pages/Auth/Login";
+import Signup from "./pages/Auth/Signup";
+import AiModals from "./pages/AiModels";
+import AllAnalysis from "./pages/AllAnalysis";
+import AnalysisJobs from "./pages/Analysis";
+import AnalysisDetailsIndex from "./pages/AnalysisDetails";
+import Camera from "./pages/Camera";
+import Charts from "./pages/Charts";
+import Home from "./pages/Home";
+import NewAnalysis from "./pages/NewAnalysis";
+import SnapShot from "./pages/Snapshots";
+import Streaming from "./pages/Streaming";
+import VideoImages from "./pages/VideoImages";
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
