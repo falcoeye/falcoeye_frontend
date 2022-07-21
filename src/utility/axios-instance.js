@@ -1,0 +1,34 @@
+import axios from "axios";
+import { Cookies } from "../shared/utility";
+
+const instance = axios.create({
+  baseURL: "https://falcoeye-backend-xbjr6s7buq-uc.a.run.app",
+});
+
+instance.interceptors.request.use(
+  function (config) {
+    let token = Cookies.getCookie("token");
+    config.headers["Accept"] = "*/*";
+    config.headers["Content-Type"] = "application/json";
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    if (error.response.status === 401) {
+      Cookies.deleteCookie("token");
+      window.location.href = "/login";
+    }
+    return error;
+  }
+);
+instance.interceptors.response.use(undefined, (error) => {
+  if (error.response.status === 401) {
+    Cookies.deleteCookie("token");
+    window.location.href = "/login";
+  }
+  return error;
+});
+
+export default instance;

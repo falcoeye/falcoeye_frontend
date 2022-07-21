@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios from "../../axiosInstance";
+import axios from "../../utility/axios-instance";
 import "./Auth.css";
 //import { addUser } from "../../store/user";
 const Signup = () => {
@@ -44,7 +44,7 @@ const Signup = () => {
       try {
         const registered = await axios.post("/auth/register", data);
         localStorage.setItem("user", JSON.stringify(registered.data));
-      //  dispatch(addUser(registered.data));
+        //  dispatch(addUser(registered.data));
 
         navigate("/");
       } catch (error) {
@@ -64,7 +64,6 @@ const Signup = () => {
     <div className="login_form_wrapper">
       <div className="login_form_box ">
         <div id="loginformContent">
-          
           <form>
             <input
               type="text"
@@ -113,13 +112,11 @@ const Signup = () => {
               onClick={handleSubmit}
             />
 
-              <br/>
-            <a href="/login">
-             Click here to login now!
-            </a>
+            <br />
+            <a href="/login">Click here to login now!</a>
             <br />
             <br />
-             <br/>
+            <br />
           </form>
         </div>
       </div>
