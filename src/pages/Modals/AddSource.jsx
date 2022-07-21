@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import axios from "../../utility/axios-instance";
 import "./Modals.css";
-const AddCamera = ({ setAddCamera }) => {
+const AddSource = ({ handleSourceModal }) => {
   const user = useSelector((state) => state.user);
   const [disableSubmit, setDisableSubmit] = useState(true);
   const [showRSTP, setShowRSTP] = React.useState(false);
@@ -100,7 +100,7 @@ const AddCamera = ({ setAddCamera }) => {
           }
         );
         console.log(res);
-        setAddCamera(false);
+        handleSourceModal(false);
       } catch (error) {
         toast.error("Something went wrong", {
           position: "top-center",
@@ -115,7 +115,7 @@ const AddCamera = ({ setAddCamera }) => {
     }
   };
   return (
-    <div className="modal_backdrop" onClick={() => setAddCamera(false)}>
+    <div className="modal_backdrop" onClick={() => handleSourceModal(false)}>
       <div className="custom_modal_box" onClick={(e) => e.stopPropagation()}>
         <div className="cmb_heading">Add a Camera</div>
         <form>
@@ -243,4 +243,4 @@ const AddCamera = ({ setAddCamera }) => {
   );
 };
 
-export default AddCamera;
+export default AddSource;

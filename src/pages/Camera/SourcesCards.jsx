@@ -1,9 +1,8 @@
-/* eslint-disable jsx-a11y/no-redundant-roles */
 import React from 'react';
 import useFetch from '../../hooks/UseFetch';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-function CamerCards() {
+function SourcesCards() {
   const user = useSelector((state) => state.user);
   const camerasList = useFetch('/camera/', {
     headers: {
@@ -14,7 +13,6 @@ function CamerCards() {
     <div className="main-container">
       <div className="bg-white mx-1 pt-9 px-7 pb-7 rounded-sm">
         <ul
-          role="list"
           className="grid sm:grid-cols-2 grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-3 sm:gap-x-3 lg:grid-cols-4 "
         >
           {camerasList.response &&
@@ -47,5 +45,5 @@ function CamerCards() {
   );
 }
 
-export default CamerCards;
+export default SourcesCards;
 

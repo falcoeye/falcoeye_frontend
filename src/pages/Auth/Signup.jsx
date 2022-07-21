@@ -136,7 +136,7 @@ const Signup = () => {
             />
 
             <p>
-              Click here to{" "}
+              Click here to
               <Link to="/login" className="form_link">
                 login now!
               </Link>

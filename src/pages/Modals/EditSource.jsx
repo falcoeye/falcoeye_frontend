@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import axios from "../../utility/axios-instance";
 import "./Modals.css";
-const EditCamera = ({ setEditCamera, currentId }) => {
+const EditSource = ({ handleEditModal, currentId }) => {
   const user = useSelector((state) => state.user);
 
   const [data, setData] = useState({
@@ -50,7 +50,7 @@ const EditCamera = ({ setEditCamera, currentId }) => {
           }
         );
         console.log(res);
-        setEditCamera(false);
+        handleEditModal(false);
       } catch (error) {
         toast.error("Something went wrong", {
           position: "top-center",
@@ -65,7 +65,7 @@ const EditCamera = ({ setEditCamera, currentId }) => {
     }
   };
   return (
-    <div className="modal_backdrop" onClick={() => setEditCamera(false)}>
+    <div className="modal_backdrop" onClick={() => handleEditModal(false)}>
       <div className="custom_modal_box" onClick={(e) => e.stopPropagation()}>
         <div className="cmb_heading">Edit Camera</div>
         <form>
@@ -92,4 +92,4 @@ const EditCamera = ({ setEditCamera, currentId }) => {
   );
 };
 
-export default EditCamera;
+export default EditSource;

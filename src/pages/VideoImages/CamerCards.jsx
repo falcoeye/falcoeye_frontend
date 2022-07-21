@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-redundant-roles */
 import React from "react";
 function CamerCards({ data }) {
   return (
@@ -35,7 +34,7 @@ function CamerCards({ data }) {
                     href={file.url}
                     className="hover:text-white hover:bg-primary text-sm transition-all ease-in-out duration-300 bg-white text-primary border-2 border-primary px-4 py-2 rounded-3xl"
                   >
-                    {" "}
+                    
                     View More
                   </a>
                 </div>

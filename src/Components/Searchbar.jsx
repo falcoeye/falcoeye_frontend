@@ -10,9 +10,6 @@ const Searchbar = () => {
   useEffect(() => {
     pathString !== null && setPaths(pathString.split('/'));
   }, [pathString]);
-  useEffect(() => {
-    console.log(paths);
-  }, [paths]);
   /* const handleRedirect = (idx) => {
     let redirectPathArray = [];
     paths.forEach((item, index) => {

@@ -6,7 +6,7 @@ function FilterBar({ setSort, sort }) {
       <div className="  main-container md:pt-9 pt-4 pb-3">
         <div className="  flex justify-between items-center mb-3">
           <div className="">
-            {" "}
+            
             <h1 className="text-gray-900 text-lg">Sreaming</h1>
           </div>
         </div>

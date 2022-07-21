@@ -26,7 +26,7 @@ const MobileNav = ({ isOpen, toggleDrawer }) => {
           </button>
           <img src={`logo`} alt="logo" />
           <button className="text-primary text-xl">
-            {" "}
+            
             <AiOutlineSearch />
           </button>
         </div>
