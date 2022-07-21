@@ -46,15 +46,18 @@ const Login = () => {
       navigate("/");
     } catch (error) {
       if (error.response.data.message) {
-        return toast.error(error.response.data.message, {
-          position: "bottom-center",
-          autoClose: 4000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-        });
+        return toast.error(
+          error.response.data.message || "Something went wrong!",
+          {
+            position: "bottom-center",
+            autoClose: 4000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+          }
+        );
       }
 
       Object.entries(error.response.data.errors).map((t, k) => {
