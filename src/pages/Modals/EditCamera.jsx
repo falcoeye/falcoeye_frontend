@@ -1,17 +1,16 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import axios from "../../axiosInstance";
+import axios from "../../utility/axios-instance";
 import "./Modals.css";
-const EditCamera = ({ setEditCamera,currentId }) => {
+const EditCamera = ({ setEditCamera, currentId }) => {
   const user = useSelector((state) => state.user);
- 
+
   const [data, setData] = useState({
     url: null,
-    currentId:null,
+    currentId: null,
   });
- data.currentId = currentId;
-
+  data.currentId = currentId;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,12 +23,10 @@ const EditCamera = ({ setEditCamera,currentId }) => {
     console.log(data);
   };
 
-
-
   const handleSubmit = async (e) => {
     console.log(data);
     e.preventDefault();
-    if ( data.url === null) {
+    if (data.url === null) {
       toast.error("All fields are required!", {
         position: "top-center",
         autoClose: 5000,
@@ -52,7 +49,7 @@ const EditCamera = ({ setEditCamera,currentId }) => {
             },
           }
         );
-        console.log(res)
+        console.log(res);
         setEditCamera(false);
       } catch (error) {
         toast.error("Something went wrong", {
@@ -72,7 +69,7 @@ const EditCamera = ({ setEditCamera,currentId }) => {
       <div className="custom_modal_box" onClick={(e) => e.stopPropagation()}>
         <div className="cmb_heading">Edit Camera</div>
         <form>
- <input
+          <input
             type="text"
             id="url"
             className="modal_form_input "
@@ -81,11 +78,10 @@ const EditCamera = ({ setEditCamera,currentId }) => {
             onChange={handleChange}
             value={data.url}
           />
-        
 
           <input
             type="submit"
-            style={{marginLeft:"100px"}}
+            style={{ marginLeft: "100px" }}
             className={`login_form_btn`}
             value="Update"
             onClick={handleSubmit}

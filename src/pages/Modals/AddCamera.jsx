@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import axios from "../../axiosInstance";
+import axios from "../../utility/axios-instance";
 import "./Modals.css";
 const AddCamera = ({ setAddCamera }) => {
-   const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user);
   const [disableSubmit, setDisableSubmit] = useState(true);
-  const [showRSTP, setShowRSTP] = React.useState(false)
+  const [showRSTP, setShowRSTP] = React.useState(false);
   const [data, setData] = useState({
     name: null,
     utm_x: null,
-    utm_y:null,
+    utm_y: null,
     thumbnail: null,
     streaming_type: null,
     url: null,
@@ -20,19 +20,20 @@ const AddCamera = ({ setAddCamera }) => {
     password: null,
   });
 
-
   const handleStreamingTypeChange = (e) => {
     handleChange(e);
     if (e.target.value === "RSTP") {
       setShowRSTP(true);
-    }
-    else { 
+    } else {
       setShowRSTP(false);
     }
   };
 
   useEffect(() => {
-    data.thumbnail === null || data.name === null || data.url === null || data.streaming_type === "-" 
+    data.thumbnail === null ||
+    data.name === null ||
+    data.url === null ||
+    data.streaming_type === "-"
       ? setDisableSubmit(true)
       : setDisableSubmit(false);
   }, [data.thumbnail, data.name, data.url, data.streaming_type]);
@@ -64,7 +65,10 @@ const AddCamera = ({ setAddCamera }) => {
     const file = event.target.files[0];
     const base64 = await convertBase64(file);
     data.thumbnail = base64;
-     data.thumbnail === null || data.name === null || data.url === null || data.streaming_type === "-" 
+    data.thumbnail === null ||
+    data.name === null ||
+    data.url === null ||
+    data.streaming_type === "-"
       ? setDisableSubmit(true)
       : setDisableSubmit(false);
   };
@@ -95,7 +99,7 @@ const AddCamera = ({ setAddCamera }) => {
             },
           }
         );
-        console.log(res)
+        console.log(res);
         setAddCamera(false);
       } catch (error) {
         toast.error("Something went wrong", {
@@ -150,18 +154,11 @@ const AddCamera = ({ setAddCamera }) => {
               handleStreamingTypeChange(e);
             }}
           >
-           <option value="-">
-                    --SELECT--
-            </option>
-                  <option value="RSTP">
-                    RSTP
-            </option>
-            <option value="STREAMINGSERVER">
-                  STREAMING SERVER
-                  </option>
-               
+            <option value="-">--SELECT--</option>
+            <option value="RSTP">RSTP</option>
+            <option value="STREAMINGSERVER">STREAMING SERVER</option>
           </select>
- <input
+          <input
             type="text"
             id="url"
             className="modal_form_input "
@@ -170,71 +167,70 @@ const AddCamera = ({ setAddCamera }) => {
             onChange={handleChange}
             value={data.url}
           />
-          {showRSTP ?
+          {showRSTP ? (
             <>
-            <input
-              type="text"
-              id="host"
-              className="modal_form_input "
-              name="host"
-              placeholder="host"
-              onChange={handleChange}
-              value={data.host}
-            />
-           
-         <input
-            type="number"
-            id="port"
-            className="modal_form_input "
-            name="port"
-            placeholder="port"
-            onChange={handleChange}
-            value={data.port}
-          />
+              <input
+                type="text"
+                id="host"
+                className="modal_form_input "
+                name="host"
+                placeholder="host"
+                onChange={handleChange}
+                value={data.host}
+              />
 
-           <input
-            type="text"
-            id="username"
-            className="modal_form_input "
-            name="username"
-            placeholder="username"
-            onChange={handleChange}
-            value={data.username}
-          />
-            <input
-            type="password"
-            id="password"
-            className="modal_form_input "
-            name="password"
-            placeholder="password"
-            onChange={handleChange}
-            value={data.password}
-          />
+              <input
+                type="number"
+                id="port"
+                className="modal_form_input "
+                name="port"
+                placeholder="port"
+                onChange={handleChange}
+                value={data.port}
+              />
+
+              <input
+                type="text"
+                id="username"
+                className="modal_form_input "
+                name="username"
+                placeholder="username"
+                onChange={handleChange}
+                value={data.username}
+              />
+              <input
+                type="password"
+                id="password"
+                className="modal_form_input "
+                name="password"
+                placeholder="password"
+                onChange={handleChange}
+                value={data.password}
+              />
             </>
-            :null 
-          }
-        <div   style={{marginLeft:"85px"}}>
-          <label for="thumbnail" className="image_upload_label">
-            Upload Camera Thumbnail
-            <input
-              style={{
-                visibility: "hidden",
-                position: "absolute",
-                zIndex: "-1",
-              }}
-              type="file"
-              id="thumbnail"
-              accept="image/*"
-              className="modal_form_input "
-              name="thumbnail"
-              placeholder="Camera Thumbnail"
-              onChange={handleImageUpload}
-            />
-          </label>
-</div>
+          ) : null}
+          <div style={{ marginLeft: "85px" }}>
+            <label for="thumbnail" className="image_upload_label">
+              Upload Camera Thumbnail
+              <input
+                style={{
+                  visibility: "hidden",
+                  position: "absolute",
+                  zIndex: "-1",
+                }}
+                type="file"
+                id="thumbnail"
+                accept="image/*"
+                className="modal_form_input "
+                name="thumbnail"
+                placeholder="Camera Thumbnail"
+                onChange={handleImageUpload}
+              />
+            </label>
+          </div>
           <input
             type="submit"
-            style={{marginLeft:"100px"}}
+            style={{ marginLeft: "100px" }}
             className={`login_form_btn ${
               disableSubmit && "disable_submit_btn"
             }`}

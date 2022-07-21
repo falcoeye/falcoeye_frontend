@@ -2,37 +2,52 @@ import React, { useState } from "react";
 import { Cookies } from "../shared/utility";
 
 const AuthContext = React.createContext({
-    token: "",
-    isLoggedIn: false,
-    login: () => {},
-    logout: () => {},
+  token: "",
+  isLoggedIn: false,
+  login: (token, user) => {},
+  logout: () => {},
+  userData: null,
 });
 
 export const AuthContextProvider = (props) => {
-    const intialToken = Cookies.getCookie("token");
+  const intialToken = Cookies.getCookie("token");
 
-    const [token, setToken] = useState(intialToken);
+  const initialUserData = JSON.parse(localStorage.getItem("user")) ||  null;
 
-    const userIsLoggedIn = !!token;
+  const [token, setToken] = useState(intialToken);
+  const [userData, setUserData] = useState(initialUserData);
 
-    const loginHandler = (token) => {
-        setToken(token);
-        Cookies.setCookie("token", token);
-    };
+  const userIsLoggedIn = !!token;
 
-    const logoutHandler = () => {
-        setToken(null);
-        Cookies.deleteCookie("token");
-    };
+  const loginHandler = (token, user) => {
+    setToken(token);
+    Cookies.setCookie("token", token);
 
-    const contextValue = {
-        token: token,
-        isLoggedIn: userIsLoggedIn,
-        login: loginHandler,
-        logout: logoutHandler,
-    };
+    setUserData(user);
+    localStorage.setItem("user", JSON.stringify(user));
+  };
 
-    return <AuthContext.Provider value={contextValue}>{props.children}</AuthContext.Provider>;
+  const logoutHandler = () => {
+    setToken(null);
+    Cookies.deleteCookie("token");
+
+    setUserData(null);
+    localStorage.removeItem("user");
+  };
+
+  const contextValue = {
+    token,
+    isLoggedIn: userIsLoggedIn,
+    login: loginHandler,
+    logout: logoutHandler,
+    userData,
+  };
+
+  return (
+    <AuthContext.Provider value={contextValue}>
+      {props.children}
+    </AuthContext.Provider>
+  );
 };
 
 export default AuthContext;
