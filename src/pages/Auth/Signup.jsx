@@ -1,16 +1,19 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import AuthContext from "../../store/auth-context";
 import axios from "../../utility/axios-instance";
 import "./Auth.css";
 //import { addUser } from "../../store/user";
 const Signup = () => {
+  const authCtx = useContext(AuthContext);
+
   const navigate = useNavigate();
   const [data, setData] = useState({
-    username: null,
-    password: null,
-    email: null,
-    name: null,
+    username: "",
+    password: "",
+    email: "",
+    name: "",
   });
 
   const handleChange = (e) => {
@@ -21,7 +24,6 @@ const Signup = () => {
         [name]: value,
       };
     });
-    console.log(data);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,20 +44,38 @@ const Signup = () => {
       });
     } else {
       try {
-        const registered = await axios.post("/auth/register", data);
-        localStorage.setItem("user", JSON.stringify(registered.data));
-        //  dispatch(addUser(registered.data));
-
+        const registeredData = await axios.post("/auth/register", data);
+        console.log(registeredData);
+        authCtx.login(
+          registeredData.data.access_token,
+          registeredData.data.user
+        );
         navigate("/");
       } catch (error) {
-        toast.error("Failed to register", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+        if (error.response.data.message) {
+          return toast.error(error.response.data.message, {
+            position: "bottom-center",
+            autoClose: 4000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+          });
+        }
+
+        Object.entries(error.response.data.errors).map((t, k) => {
+          const errorMessage = `${t[0]}: ${t[1][0]}`;
+
+          return toast.error(errorMessage, {
+            position: "bottom-center",
+            autoClose: 4000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+          });
         });
       }
     }
@@ -112,11 +132,12 @@ const Signup = () => {
               onClick={handleSubmit}
             />
 
-            <br />
-            <a href="/login">Click here to login now!</a>
-            <br />
-            <br />
-            <br />
+            <p>
+              Click here to{" "}
+              <Link to="/login" className="form_link">
+                login now!
+              </Link>
+            </p>
           </form>
         </div>
       </div>

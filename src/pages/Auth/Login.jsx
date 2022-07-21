@@ -1,24 +1,20 @@
-import { useContext, useState } from 'react';
-// import { useDispatch } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
-// import { toast } from 'react-toastify';
-// import axios from '../../axiosInstance';
-import AuthContext from '../../store/auth-context';
-// import { addUser } from '../../store/user';
-import './Auth.css';
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import AuthContext from "../../store/auth-context";
+import axios from "../../utility/axios-instance";
+
+import "./Auth.css";
+
 const Login = () => {
-  const authCtx = useContext(AuthContext)
-  const { login } = authCtx
-  
-  let location = useLocation();
-    let from = location.state?.from?.pathname || "/";
+  const authCtx = useContext(AuthContext);
+  const { login } = authCtx;
+
   const navigate = useNavigate();
   const [data, setData] = useState({
-    username: null,
-    password: null,
+    email: "",
+    password: "",
   });
-
-  //const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,67 +27,65 @@ const Login = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    login('sdnsjdnsjkdnsd')
-    navigate(from, { replace: true });
-    /* if (data.username === null || data.password === null) {
-      toast.error('All fields are required!', {
-        position: 'top-center',
-        autoClose: 5000,
-        hideProgressBar: false,
+
+    if (data.email.trim() === "" || data.password.trim() === "") {
+      return toast.error("All fields are required!", {
+        position: "bottom-center",
+        autoClose: 4000,
+        hideProgressBar: true,
         closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
+        pauseOnHover: false,
+        draggable: false,
         progress: undefined,
       });
-    } else {
-      try {
-        dispatch(
-          addUser({
-            user: {
-              name: 'sdsdsd',
-            },
-            access_token: 'sdsdss',
-          })
-        );
-        localStorage.setItem('user', JSON.stringify({
-          user: {
-            name: 'sdsdsd',
-          },
-          access_token: 'sdsdss',
-        }));
-        navigate('/');
-        window.location.reload();
-        const registered = await axios.post('/auth/login', data);
-        localStorage.setItem('user', JSON.stringify(registered.data));
-        console.log(registered.data);
-        //dispatch(addUser(registered.data));
+    }
 
-      } catch (error) {
-        toast.error('Failed to Login', {
-          position: 'top-center',
-          autoClose: 5000,
-          hideProgressBar: false,
+    try {
+      const registeredData = await axios.post("/auth/login", data);
+      login(registeredData.data.access_token, registeredData.data.user);
+      navigate("/");
+    } catch (error) {
+      if (error.response.data.message) {
+        return toast.error(error.response.data.message, {
+          position: "bottom-center",
+          autoClose: 4000,
+          hideProgressBar: true,
           closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
+          pauseOnHover: false,
+          draggable: false,
           progress: undefined,
         });
       }
-    } */
+
+      Object.entries(error.response.data.errors).map((t, k) => {
+        const errorMessage = `${t[0]}: ${t[1][0]}`;
+
+        return toast.error(errorMessage, {
+          position: "bottom-center",
+          autoClose: 4000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+        });
+      });
+    }
   };
+
   return (
     <div className="login_form_wrapper">
       <div className="login_form_box ">
         <div id="loginformContent">
-          <form>
+          <form onSubmit={handleSubmit}>
             <input
-              type="text"
+              type="email"
               id="email"
               className="login_form_input "
-              name="username"
+              name="email"
               placeholder="Email Address"
               onChange={handleChange}
-              value={data.username}
+              value={data.email}
               required={true}
             />
             <input
@@ -104,17 +98,16 @@ const Login = () => {
               value={data.password}
               required={true}
             />
-            <input
-              type="submit"
-              className="login_form_btn"
-              value="Login"
-              onClick={handleSubmit}
-            />
-            <br />
-            <a href="/signup">Click here to register now!</a>
-            <br />
-            <br />
-            <br />
+            <button type="submit" className="login_form_btn" value="Login">
+              Login
+            </button>
+
+            <p>
+              Click here to{" "}
+              <Link to="/signup" className="form_link">
+                register now!
+              </Link>
+            </p>
           </form>
         </div>
       </div>

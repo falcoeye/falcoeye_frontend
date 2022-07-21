@@ -16,19 +16,20 @@ instance.interceptors.request.use(
     return config;
   },
   (error) => {
+    return Promise.reject(error);
+  }
+);
+instance.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  (error) => {
     if (error.response.status === 401) {
       Cookies.deleteCookie("token");
       window.location.href = "/login";
     }
-    return error;
+    return Promise.reject(error);
   }
 );
-instance.interceptors.response.use(undefined, (error) => {
-  if (error.response.status === 401) {
-    Cookies.deleteCookie("token");
-    window.location.href = "/login";
-  }
-  return error;
-});
 
 export default instance;

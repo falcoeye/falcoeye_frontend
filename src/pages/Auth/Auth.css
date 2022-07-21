@@ -28,15 +28,14 @@
   max-width: 450px;
   position: relative;
   padding: 0px;
-  -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
-  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.09);
+  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.09);
   text-align: center;
+  padding: 20px 0;
 }
 
-.login_form_btn,
-.login_form_btn,
 .login_form_btn {
-  background-color: #42a7df;
+  background-color: #42a7de;
   border: none;
   color: white;
   padding: 15px 80px;
@@ -45,28 +44,24 @@
   display: inline-block;
   text-transform: uppercase;
   font-size: 13px;
-  -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
-  box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+  font-weight: 700;
+  -webkit-box-shadow: 0 10px 15px 0 rgba(95, 186, 233, 0.4);
+  box-shadow: 0 10px 15px 0 rgba(95, 186, 233, 0.4);
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
-  margin: 5px 20px 40px 20px;
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -ms-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
+  margin: 25px 0;
 }
 
-.login_form_btn:hover,
-.login_form_btn:hover,
 .login_form_btn:hover {
-  background-color: #f2f9ff;
-  color: #42a7df;
+  background-color: #3489b7;
 }
 
-.login_form_btn:active,
-.login_form_btn:active,
 .login_form_btn:active {
   -moz-transform: scale(0.95);
   -webkit-transform: scale(0.95);
@@ -84,7 +79,7 @@
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  margin: 5px;
+  margin-bottom: 10px;
   width: 85%;
   border: 2px solid #f6f6f6;
   -webkit-transition: all 0.5s ease-in-out;
@@ -144,4 +139,8 @@
     min-height: 100%;
     padding: 10px;
   }
+}
+
+.form_link {
+  color: #42a7df;
 }

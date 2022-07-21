@@ -4,13 +4,14 @@ import { Cookies } from "../shared/utility";
 const AuthContext = React.createContext({
   token: "",
   isLoggedIn: false,
-  login: () => {},
+  login: (token, uData) => {},
   logout: () => {},
   userData: null,
 });
 
 export const AuthContextProvider = (props) => {
   const intialToken = Cookies.getCookie("token");
+
   const initialUserData = JSON.parse(localStorage.getItem("user"));
 
   const [token, setToken] = useState(intialToken);
