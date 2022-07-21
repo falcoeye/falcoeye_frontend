@@ -144,3 +144,12 @@
 .form_link {
   color: #42a7df;
 }
+
+.error_text {
+  font-size: 14px;
+  line-height: 1.4;
+  margin-top: 10px;
+  text-align: center;
+  text-transform: capitalize;
+  color: rgb(223, 19, 56);
+}

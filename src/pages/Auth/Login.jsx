@@ -5,8 +5,12 @@ import AuthContext from "../../store/auth-context";
 import axios from "../../utility/axios-instance";
 
 import "./Auth.css";
+import LoadingSpinner from "./components/LoadingSpinner";
 
 const Login = () => {
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   const authCtx = useContext(AuthContext);
   const { login } = authCtx;
 
@@ -25,7 +29,7 @@ const Login = () => {
       };
     });
   };
-  const handleSubmit =  (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (data.email.trim() === "" || data.password.trim() === "") {
       return toast.error("All fields are required!", {
@@ -39,41 +43,40 @@ const Login = () => {
       });
     }
 
-    axios.post("/auth/login", data)
-      .then(res => {
-          login(res.data.access_token, res.data.user);
-          navigate("/", { replace: true});
+    setIsLoading(true);
+    axios
+      .post("/auth/login", data)
+      .then((res) => {
+        setIsLoading(false);
+        login(res.data.access_token, res.data.user);
+        navigate("/", { replace: true });
+
+        if (errorMessage) {
+          setErrorMessage("");
+        }
       })
-      .catch( error => {
-          if (error.response.data.message) {
-            return toast.error(
-              error.response.data.message || "Something went wrong!",
-              {
-                position: "bottom-center",
-                autoClose: 4000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: false,
-                progress: undefined,
-              }
-            );
-          }
-    
-          Object.entries(error.response.data.errors).map((t, k) => {
-            const errorMessage = `${t[0]}: ${t[1][0]}`;
-    
-            return toast.error(errorMessage, {
-              position: "bottom-center",
-              autoClose: 4000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: false,
-              draggable: false,
-              progress: undefined,
-            });
+      .catch((error) => {
+        setIsLoading(false);
+        if (error.response.data.message) {
+          return setErrorMessage(
+            error.response.data.message || "Something went wrong!"
+          );
+        }
+
+        Object.entries(error.response.data.errors).map((t, k) => {
+          const errorMessage = `${t[0]}: ${t[1][0]}`;
+
+          return toast.error(errorMessage, {
+            position: "bottom-center",
+            autoClose: 4000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
           });
-      } )
+        });
+      });
   };
 
   return (
@@ -101,15 +104,20 @@ const Login = () => {
               value={data.password}
               required={true}
             />
+
+            {errorMessage && <p className="error_text">{errorMessage}</p>}
+
             <button type="submit" className="login_form_btn" value="Login">
-              Login
+              {isLoading && <LoadingSpinner />}
+              {!isLoading && "Login"}
             </button>
 
             <p>
               Click here to{" "}
               <Link to="/signup" className="form_link">
-                register now!
-              </Link>
+                register
+              </Link>{" "}
+              now!
             </p>
           </form>
         </div>
