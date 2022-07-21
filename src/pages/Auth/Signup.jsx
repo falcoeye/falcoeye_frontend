@@ -61,24 +61,26 @@ const Signup = () => {
       } catch (error) {
         setIsLoading(false);
         if (error.response.data.message) {
-          return setErrorMessage(
+          setErrorMessage(
             error.response.data.message || "Something went wrong!"
           );
         }
 
-        Object.entries(error.response.data.errors).map((t, k) => {
-          const errorMessage = `${t[0]}: ${t[1][0]}`;
+        if (error.response.data.errors) {
+          Object.entries(error.response.data.errors).map((t, k) => {
+            const errorMessage = `${t[0]}: ${t[1][0]}`;
 
-          return toast.error(errorMessage, {
-            position: "bottom-center",
-            autoClose: 4000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false,
-            progress: undefined,
+            return toast.error(errorMessage, {
+              position: "bottom-center",
+              autoClose: 4000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: false,
+              progress: undefined,
+            });
           });
-        });
+        }
       }
     }
   };
