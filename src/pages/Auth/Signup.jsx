@@ -4,8 +4,11 @@ import { toast } from "react-toastify";
 import AuthContext from "../../store/auth-context";
 import axios from "../../utility/axios-instance";
 import "./Auth.css";
+import LoadingSpinner from "./components/LoadingSpinner";
 //import { addUser } from "../../store/user";
 const Signup = () => {
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const authCtx = useContext(AuthContext);
 
   const navigate = useNavigate();
@@ -43,19 +46,31 @@ const Signup = () => {
         progress: undefined,
       });
     } else {
+      setIsLoading(true);
       try {
         const registeredData = await axios.post("/auth/register", data);
-        console.log(registeredData);
+        setIsLoading(false);
         authCtx.login(
           registeredData.data.access_token,
           registeredData.data.user
         );
         navigate("/");
+        if (errorMessage) {
+          setErrorMessage("");
+        }
       } catch (error) {
+        setIsLoading(false);
         if (error.response.data.message) {
-          return toast.error(
-            error.response.data.message || "Something went wrong!",
-            {
+          setErrorMessage(
+            error.response.data.message || "Something went wrong!"
+          );
+        }
+
+        if (error.response.data.errors) {
+          Object.entries(error.response.data.errors).map((t, k) => {
+            const errorMessage = `${t[0]}: ${t[1][0]}`;
+
+            return toast.error(errorMessage, {
               position: "bottom-center",
               autoClose: 4000,
               hideProgressBar: true,
@@ -63,23 +78,9 @@ const Signup = () => {
               pauseOnHover: false,
               draggable: false,
               progress: undefined,
-            }
-          );
-        }
-
-        Object.entries(error.response.data.errors).map((t, k) => {
-          const errorMessage = `${t[0]}: ${t[1][0]}`;
-
-          return toast.error(errorMessage, {
-            position: "bottom-center",
-            autoClose: 4000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false,
-            progress: undefined,
+            });
           });
-        });
+        }
       }
     }
   };
@@ -87,7 +88,7 @@ const Signup = () => {
     <div className="login_form_wrapper">
       <div className="login_form_box ">
         <div id="loginformContent">
-          <form>
+          <form onSubmit={handleSubmit}>
             <input
               type="text"
               id="name"
@@ -128,18 +129,20 @@ const Signup = () => {
               value={data.password}
               required={true}
             />
-            <input
-              type="submit"
-              className="login_form_btn"
-              value="Signup"
-              onClick={handleSubmit}
-            />
+
+            {errorMessage && <p className="error_text">{errorMessage}</p>}
+
+            <button type="submit" className="login_form_btn" value="Signup">
+              {isLoading && <LoadingSpinner />}
+              {!isLoading && "Signup"}
+            </button>
 
             <p>
               Click here to
               <Link to="/login" className="form_link">
-                login now!
-              </Link>
+                login
+              </Link>{" "}
+              now!
             </p>
           </form>
         </div>
