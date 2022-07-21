@@ -1,5 +1,4 @@
-import { useContext } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import RequireAuth from "./Components/RequireAuth/RequireAuth";
@@ -16,13 +15,10 @@ import NewAnalysis from "./pages/NewAnalysis";
 import SnapShot from "./pages/Snapshots";
 import Streaming from "./pages/Streaming";
 import VideoImages from "./pages/VideoImages";
-import AuthContext from "./store/auth-context";
 
 toast.configure();
 
 function App() {
-  const authCtx = useContext(AuthContext);
-  const { isLoggedIn } = authCtx;
 
   return (
     <Routes>
@@ -30,8 +26,8 @@ function App() {
         path="/"
         element={
           <RequireAuth>
-            {" "}
-            <Home />{" "}
+
+            <Home />
           </RequireAuth>
         }
       />
@@ -39,8 +35,8 @@ function App() {
         path="Camera"
         element={
           <RequireAuth>
-            {" "}
-            <Camera />{" "}
+
+            <Camera />
           </RequireAuth>
         }
       />
@@ -48,8 +44,8 @@ function App() {
         path="VideoImages"
         element={
           <RequireAuth>
-            {" "}
-            <VideoImages />{" "}
+
+            <VideoImages />
           </RequireAuth>
         }
       />
@@ -57,8 +53,8 @@ function App() {
         path="Streaming/:id"
         element={
           <RequireAuth>
-            {" "}
-            <Streaming />{" "}
+
+            <Streaming />
           </RequireAuth>
         }
       />
@@ -66,8 +62,8 @@ function App() {
         path="analysis-jobs"
         element={
           <RequireAuth>
-            {" "}
-            <AnalysisJobs />{" "}
+
+            <AnalysisJobs />
           </RequireAuth>
         }
       />
@@ -75,8 +71,8 @@ function App() {
         path="snap-shot"
         element={
           <RequireAuth>
-            {" "}
-            <SnapShot />{" "}
+
+            <SnapShot />
           </RequireAuth>
         }
       />
@@ -84,8 +80,8 @@ function App() {
         path="new-analysis"
         element={
           <RequireAuth>
-            {" "}
-            <NewAnalysis />{" "}
+
+            <NewAnalysis />
           </RequireAuth>
         }
       />
@@ -93,8 +89,8 @@ function App() {
         path="ai-store"
         element={
           <RequireAuth>
-            {" "}
-            <AiModals />{" "}
+
+            <AiModals />
           </RequireAuth>
         }
       />
@@ -102,8 +98,8 @@ function App() {
         path="analysis-details"
         element={
           <RequireAuth>
-            {" "}
-            <AnalysisDetailsIndex />{" "}
+
+            <AnalysisDetailsIndex />
           </RequireAuth>
         }
       />
@@ -111,8 +107,8 @@ function App() {
         path="all-analysis"
         element={
           <RequireAuth>
-            {" "}
-            <AllAnalysis />{" "}
+
+            <AllAnalysis />
           </RequireAuth>
         }
       />
@@ -120,18 +116,18 @@ function App() {
         path="charts"
         element={
           <RequireAuth>
-            {" "}
-            <Charts />{" "}
+
+            <Charts />
           </RequireAuth>
         }
       />
       <Route
         path="login"
-        element={!isLoggedIn ? <Login /> : <Navigate replace to="/" />}
+        element={<Login />}
       />
       <Route
         path="signup"
-        element={!isLoggedIn ? <Signup /> : <Navigate replace to="/" />}
+        element={<Signup />}
       />
     </Routes>
   );

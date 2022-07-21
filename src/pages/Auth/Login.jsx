@@ -25,9 +25,8 @@ const Login = () => {
       };
     });
   };
-  const handleSubmit = async (e) => {
+  const handleSubmit =  (e) => {
     e.preventDefault();
-
     if (data.email.trim() === "" || data.password.trim() === "") {
       return toast.error("All fields are required!", {
         position: "bottom-center",
@@ -40,40 +39,41 @@ const Login = () => {
       });
     }
 
-    try {
-      const registeredData = await axios.post("/auth/login", data);
-      login(registeredData.data.access_token, registeredData.data.user);
-      navigate("/");
-    } catch (error) {
-      if (error.response.data.message) {
-        return toast.error(
-          error.response.data.message || "Something went wrong!",
-          {
-            position: "bottom-center",
-            autoClose: 4000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false,
-            progress: undefined,
+    axios.post("/auth/login", data)
+      .then(res => {
+          login(res.data.access_token, res.data.user);
+          navigate("/", { replace: true});
+      })
+      .catch( error => {
+          if (error.response.data.message) {
+            return toast.error(
+              error.response.data.message || "Something went wrong!",
+              {
+                position: "bottom-center",
+                autoClose: 4000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                progress: undefined,
+              }
+            );
           }
-        );
-      }
-
-      Object.entries(error.response.data.errors).map((t, k) => {
-        const errorMessage = `${t[0]}: ${t[1][0]}`;
-
-        return toast.error(errorMessage, {
-          position: "bottom-center",
-          autoClose: 4000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-        });
-      });
-    }
+    
+          Object.entries(error.response.data.errors).map((t, k) => {
+            const errorMessage = `${t[0]}: ${t[1][0]}`;
+    
+            return toast.error(errorMessage, {
+              position: "bottom-center",
+              autoClose: 4000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: false,
+              progress: undefined,
+            });
+          });
+      } )
   };
 
   return (
