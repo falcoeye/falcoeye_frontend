@@ -4,7 +4,7 @@ import { Cookies } from "../shared/utility";
 const AuthContext = React.createContext({
   token: "",
   isLoggedIn: false,
-  login: (token, uData) => {},
+  login: (token, user) => {},
   logout: () => {},
   userData: null,
 });
@@ -12,19 +12,19 @@ const AuthContext = React.createContext({
 export const AuthContextProvider = (props) => {
   const intialToken = Cookies.getCookie("token");
 
-  const initialUserData = JSON.parse(localStorage.getItem("user"));
+  const initialUserData = JSON.parse(localStorage.getItem("user")) ||  null;
 
   const [token, setToken] = useState(intialToken);
   const [userData, setUserData] = useState(initialUserData);
 
   const userIsLoggedIn = !!token;
 
-  const loginHandler = (token, uData) => {
+  const loginHandler = (token, user) => {
     setToken(token);
     Cookies.setCookie("token", token);
 
-    setUserData(uData);
-    localStorage.setItem("user", JSON.stringify(uData));
+    setUserData(user);
+    localStorage.setItem("user", JSON.stringify(user));
   };
 
   const logoutHandler = () => {
@@ -36,7 +36,7 @@ export const AuthContextProvider = (props) => {
   };
 
   const contextValue = {
-    token: token,
+    token,
     isLoggedIn: userIsLoggedIn,
     login: loginHandler,
     logout: logoutHandler,
