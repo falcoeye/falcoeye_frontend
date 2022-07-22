@@ -11,6 +11,12 @@ const DropDown = () => {
 
   const { logout } = useContext(AuthContext);
 
+  let isUserData = false;
+
+  if (userData) {
+    isUserData = true;
+  }
+
   return (
     <div className="relative inline-block text-left">
       <div>
@@ -53,7 +59,14 @@ const DropDown = () => {
               tabIndex="-1"
               id="menu-item-0"
             >
-              {userData?.name}
+              {isUserData ? (
+                userData.name
+              ) : (
+                <div role="status" class="max-w-sm animate-pulse">
+                  <div class="h-2.5 rounded-full bg-gray-300 w-48"></div>
+                  <span class="sr-only">Loading...</span>
+                </div>
+              )}
             </p>
             <button
               onClick={logout}
