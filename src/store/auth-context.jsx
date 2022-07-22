@@ -12,7 +12,7 @@ const AuthContext = React.createContext({
 export const AuthContextProvider = (props) => {
   const intialToken = Cookies.getCookie("token");
 
-  const initialUserData = JSON.parse(localStorage.getItem("user")) ||  null;
+  const initialUserData = JSON.parse(localStorage.getItem("user")) || null;
 
   const [token, setToken] = useState(intialToken);
   const [userData, setUserData] = useState(initialUserData);
