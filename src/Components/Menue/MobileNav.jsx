@@ -14,7 +14,11 @@ const MobileNav = ({ isOpen, toggleDrawer }) => {
   const { pathname } = useLocation();
 
   const userData = JSON.parse(localStorage.getItem("user"));
-  const firstUserNameLetter = userData?.name?.slice(0, 1).toUpperCase() || "S";
+  let firstUserNameLetter;
+
+  if (userData) {
+    firstUserNameLetter = userData.name.slice(0, 1).toUpperCase();
+  }
 
   return (
     <div className="w-full md:hidden bg-white min-h-[70px] flex items-center">

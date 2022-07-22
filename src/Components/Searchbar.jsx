@@ -27,7 +27,11 @@ export const LoadingSkelton = () => {
 
 const Searchbar = () => {
   const userData = JSON.parse(localStorage.getItem("user"));
-  const firstUserNameLetter = userData?.name?.slice(0, 1).toUpperCase() || "S";
+  let firstUserNameLetter;
+
+  if (userData) {
+    firstUserNameLetter = userData.name.slice(0, 1).toUpperCase();
+  }
 
   // useEffect(() => {
   //   if (!userData) {
