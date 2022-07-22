@@ -53,7 +53,7 @@ const DropDown = () => {
           tabIndex="-1"
         >
           <div className="py-2 space-y-4" role="none">
-            <p
+            <div
               className="text-white px-4 py-2 text-base bg-primary/80"
               role="menuitem"
               tabIndex="-1"
@@ -67,7 +67,7 @@ const DropDown = () => {
                   <span class="sr-only">Loading...</span>
                 </div>
               )}
-            </p>
+            </div>
             <button
               onClick={logout}
               className="mx-4 text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5  bg-green hover:bg-green/90 focus:outline-none focus:ring-green/50"
