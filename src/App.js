@@ -19,14 +19,12 @@ import VideoImages from "./pages/VideoImages";
 toast.configure();
 
 function App() {
-
   return (
     <Routes>
       <Route
         path="/"
         element={
           <RequireAuth>
-
             <Home />
           </RequireAuth>
         }
@@ -35,7 +33,6 @@ function App() {
         path="Camera"
         element={
           <RequireAuth>
-
             <Camera />
           </RequireAuth>
         }
@@ -44,7 +41,6 @@ function App() {
         path="VideoImages"
         element={
           <RequireAuth>
-
             <VideoImages />
           </RequireAuth>
         }
@@ -53,7 +49,6 @@ function App() {
         path="Streaming/:id"
         element={
           <RequireAuth>
-
             <Streaming />
           </RequireAuth>
         }
@@ -62,7 +57,6 @@ function App() {
         path="analysis-jobs"
         element={
           <RequireAuth>
-
             <AnalysisJobs />
           </RequireAuth>
         }
@@ -71,7 +65,6 @@ function App() {
         path="snap-shot"
         element={
           <RequireAuth>
-
             <SnapShot />
           </RequireAuth>
         }
@@ -80,7 +73,6 @@ function App() {
         path="new-analysis"
         element={
           <RequireAuth>
-
             <NewAnalysis />
           </RequireAuth>
         }
@@ -89,7 +81,6 @@ function App() {
         path="ai-store"
         element={
           <RequireAuth>
-
             <AiModals />
           </RequireAuth>
         }
@@ -98,7 +89,6 @@ function App() {
         path="analysis-details"
         element={
           <RequireAuth>
-
             <AnalysisDetailsIndex />
           </RequireAuth>
         }
@@ -107,7 +97,6 @@ function App() {
         path="all-analysis"
         element={
           <RequireAuth>
-
             <AllAnalysis />
           </RequireAuth>
         }
@@ -116,19 +105,12 @@ function App() {
         path="charts"
         element={
           <RequireAuth>
-
             <Charts />
           </RequireAuth>
         }
       />
-      <Route
-        path="login"
-        element={<Login />}
-      />
-      <Route
-        path="signup"
-        element={<Signup />}
-      />
+      <Route path="login" element={<Login />} />
+      <Route path="signup" element={<Signup />} />
     </Routes>
   );
 }

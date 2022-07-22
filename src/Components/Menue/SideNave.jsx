@@ -5,11 +5,12 @@ import {
   AiFillCamera,
   AiFillRobot,
   AiOutlineBackward,
-  AiOutlineForward
+  AiOutlineForward,
 } from "react-icons/ai";
 import { RiCameraLensFill } from "react-icons/ri";
 import { BiSearchAlt } from "react-icons/bi";
 import { useLocation } from "react-router-dom";
+import { IoSettings } from "react-icons/io5";
 
 const SideNave = ({ sideNav, toggle }) => {
   const { pathname } = useLocation();
@@ -62,6 +63,7 @@ const navLinks = [
     id: 5,
     text: "jobs",
     icon: <BiSearchAlt />,
-    path: "/all-analysis"
-  }
+    path: "/all-analysis",
+  },
+  { id: 6, text: "Settings", icon: <IoSettings />, path: "/settings" },
 ];
