@@ -45,7 +45,10 @@ export const AuthContextProvider = (props) => {
           localStorage.setItem("user", JSON.stringify(response.data.user));
         })
         .catch((err) => {
-          toast.error("Something went wrong!", {
+          const errorMessage =
+            err.response.data.msg || err.response.data.message;
+
+          toast.error(errorMessage || "Something went wrong!", {
             position: "bottom-center",
             autoClose: 4000,
             hideProgressBar: true,
