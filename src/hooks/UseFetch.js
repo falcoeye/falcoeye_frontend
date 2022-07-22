@@ -1,4 +1,4 @@
-import axios from "../utility/axios-instance";
+import axios from "../utility/api-instance";
 import { useState, useEffect } from "react";
 
 const useFetch = (url, options, dependencies) => {

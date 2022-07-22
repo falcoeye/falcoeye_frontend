@@ -9,10 +9,16 @@ export const counterSlice = createSlice({
         fetchSources: (state, action) => {
             state = action.payload
         },
+        addSource: (state, action) => {
+            state = [
+                ...state,
+                {...action.payload}
+            ]
+        },
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { fetchSources } = counterSlice.actions
+export const { fetchSources, addSource } = counterSlice.actions
 
 export default counterSlice.reducer

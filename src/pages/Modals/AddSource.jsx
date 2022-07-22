@@ -1,52 +1,68 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { addSource } from "../../store/sources";
 import { toast } from "react-toastify";
-import axios from "../../utility/axios-instance";
+import axios from "../../utility/api-instance";
 import "./Modals.css";
+import LoadingSpinner from "../../Components/UI/LoadingSpinner/LoadingSpinner";
 const AddSource = ({ handleSourceModal }) => {
-  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch()
   const [disableSubmit, setDisableSubmit] = useState(true);
-  const [showRSTP, setShowRSTP] = React.useState(false);
+  const [ sendingRequest, setSendingRequest] = useState(false);
+  const [ errorMessage, setErrorMessage] = useState(false);
+  //const [showRSTP, setShowRSTP] = React.useState(false);
   const [data, setData] = useState({
-    name: null,
-    utm_x: null,
-    utm_y: null,
+    name: '',
+    utm_x: '',
+    utm_y: '',
+    streaming_type: '',
     thumbnail: null,
-    streaming_type: null,
-    url: null,
-    host: null,
-    port: null,
-    username: null,
-    password: null,
+    url: '',
+    host: '',
+    port: '',
+    username: '',
+    password: '',
   });
 
   const handleStreamingTypeChange = (e) => {
     handleChange(e);
     if (e.target.value === "RSTP") {
-      setShowRSTP(true);
+      // setShowRSTP(true);
     } else {
-      setShowRSTP(false);
+      // setShowRSTP(false);
     }
   };
 
   useEffect(() => {
-    data.thumbnail === null ||
-    data.name === null ||
-    data.url === null ||
-    data.streaming_type === "-"
-      ? setDisableSubmit(true)
-      : setDisableSubmit(false);
-  }, [data.thumbnail, data.name, data.url, data.streaming_type]);
+    const dataFields = Object.keys(data)
+    let hasNull = false
+    dataFields.forEach(key => {
+      console.log(data[key])
+      if(data[key] === null || data[key] === '') {
+        hasNull = true
+      } 
+    })
+    console.log(hasNull)
+    setDisableSubmit(hasNull)
+  }, [data]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type } = e.target;
+    if (type === 'number') {
+      setData((preVal) => {
+        return {
+          ...preVal,
+          [name]: +value,
+        };
+      });
+      return;
+    }
     setData((preVal) => {
       return {
         ...preVal,
         [name]: value,
       };
     });
-    console.log(data);
   };
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -61,63 +77,41 @@ const AddSource = ({ handleSourceModal }) => {
     });
   };
   const handleImageUpload = async (event) => {
-    console.log(event.target.files[0]);
     const file = event.target.files[0];
     const base64 = await convertBase64(file);
+    setData((preVal) => {
+      return {
+        ...preVal,
+        thumbnail: base64
+      }
+    })
     data.thumbnail = base64;
-    data.thumbnail === null ||
-    data.name === null ||
-    data.url === null ||
-    data.streaming_type === "-"
-      ? setDisableSubmit(true)
-      : setDisableSubmit(false);
   };
 
   const handleSubmit = async (e) => {
-    console.log(data);
     e.preventDefault();
-    if (data.name === null || data.url === null) {
-      toast.error("All fields are required!", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-    } else {
-      try {
-        const res = await axios.post(
-          "/camera/",
-          {
-            ...data,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${user.access_token}`,
-            },
-          }
-        );
-        console.log(res);
-        handleSourceModal(false);
-      } catch (error) {
-        toast.error("Something went wrong", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+    setSendingRequest(true)
+    try {
+      const res = await axios.post("/camera/",data);
+      dispatch(addSource(res.data))
+      setSendingRequest(false)
+      handleSourceModal(false);
+    } catch (error) {
+      setErrorMessage(error.response.data.message || 'Something went wrong')
+      if (error.response.data.errors) {
+        let errorObjectKeys = Object.keys(error.response.data.errors)
+        errorObjectKeys.forEach( key => {
+          toast.error(`${key}: ${error.response.data.errors[`${key}`]}`)
+        } )
       }
+      setSendingRequest(false)
     }
   };
+
   return (
     <div className="modal_backdrop" onClick={() => handleSourceModal(false)}>
       <div className="custom_modal_box" onClick={(e) => e.stopPropagation()}>
-        <div className="cmb_heading">Add a Camera</div>
+        <div className="cmb_heading">Add a Source</div>
         <form>
           <input
             type="text"
@@ -133,7 +127,7 @@ const AddSource = ({ handleSourceModal }) => {
             id="utm_x"
             className="modal_form_input "
             name="utm_x"
-            placeholder="x-cordinate"
+            placeholder="longitude"
             onChange={handleChange}
             value={data.utm_x}
           />
@@ -142,7 +136,7 @@ const AddSource = ({ handleSourceModal }) => {
             id="utm_y"
             className="modal_form_input "
             name="utm_y"
-            placeholder="y-cordinate"
+            placeholder="latitude"
             onChange={handleChange}
             value={data.utm_y}
           />
@@ -167,51 +161,47 @@ const AddSource = ({ handleSourceModal }) => {
             onChange={handleChange}
             value={data.url}
           />
-          {showRSTP ? (
-            <>
-              <input
-                type="text"
-                id="host"
-                className="modal_form_input "
-                name="host"
-                placeholder="host"
-                onChange={handleChange}
-                value={data.host}
-              />
+          <input
+            type="text"
+            id="host"
+            className="modal_form_input "
+            name="host"
+            placeholder="host"
+            onChange={handleChange}
+            value={data.host}
+          />
 
-              <input
-                type="number"
-                id="port"
-                className="modal_form_input "
-                name="port"
-                placeholder="port"
-                onChange={handleChange}
-                value={data.port}
-              />
+          <input
+            type="number"
+            id="port"
+            className="modal_form_input "
+            name="port"
+            placeholder="port"
+            onChange={handleChange}
+            value={data.port}
+          />
 
-              <input
-                type="text"
-                id="username"
-                className="modal_form_input "
-                name="username"
-                placeholder="username"
-                onChange={handleChange}
-                value={data.username}
-              />
-              <input
-                type="password"
-                id="password"
-                className="modal_form_input "
-                name="password"
-                placeholder="password"
-                onChange={handleChange}
-                value={data.password}
-              />
-            </>
-          ) : null}
-          <div style={{ marginLeft: "85px" }}>
-            <label for="thumbnail" className="image_upload_label">
-              Upload Camera Thumbnail
+          <input
+            type="text"
+            id="username"
+            className="modal_form_input "
+            name="username"
+            placeholder="username"
+            onChange={handleChange}
+            value={data.username}
+          />
+          <input
+            type="password"
+            id="password"
+            className="modal_form_input "
+            name="password"
+            placeholder="password"
+            onChange={handleChange}
+            value={data.password}
+          />
+          <div>
+            <label htmlFor="thumbnail" className="image_upload_label" style={{margin: '5px auto'}}>
+              Upload Source Thumbnail
               <input
                 style={{
                   visibility: "hidden",
@@ -223,20 +213,19 @@ const AddSource = ({ handleSourceModal }) => {
                 accept="image/*"
                 className="modal_form_input "
                 name="thumbnail"
-                placeholder="Camera Thumbnail"
+                placeholder="Source Thumbnail"
                 onChange={handleImageUpload}
               />
             </label>
           </div>
-          <input
-            type="submit"
-            style={{ marginLeft: "100px" }}
+          {errorMessage && <p className="error_text">{errorMessage}</p>}
+          <button
+            style={{ margin: "25px auto", display: 'block' }}
             className={`login_form_btn ${
               disableSubmit && "disable_submit_btn"
             }`}
-            value="Add Camera"
             onClick={handleSubmit}
-          />
+          >{sendingRequest ? <LoadingSpinner />  : "Add Source"}</button>
         </form>
       </div>
     </div>
