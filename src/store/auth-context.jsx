@@ -42,6 +42,7 @@ export const AuthContextProvider = (props) => {
         .get("/user/profile")
         .then((response) => {
           setUserData(response.data.user);
+          localStorage.setItem("user", JSON.stringify(response.data.user));
         })
         .catch((err) => {
           toast.error("Something went wrong!", {
