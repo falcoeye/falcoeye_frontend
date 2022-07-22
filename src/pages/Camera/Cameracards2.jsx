@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AiTwotoneEdit, AiFillDelete } from "react-icons/ai";
 import EditCamera from "../Modals/EditCamera";
-import axios from "../../utility/axios-instance";
+import axios from "../../utility/auth-instance";
 import { toast } from "react-toastify";
 function CamerCards2() {
   const user = useSelector((state) => state.user);
