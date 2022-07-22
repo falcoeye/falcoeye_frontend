@@ -7,12 +7,9 @@ const DropDown = () => {
     setShowOptions((prevState) => !prevState);
   };
 
-  const userData = JSON.parse(localStorage.getItem("user"));
-
-  const { logout } = useContext(AuthContext);
+  const { logout, userData } = useContext(AuthContext);
 
   let isUserData = false;
-
   if (userData) {
     isUserData = true;
   }
@@ -62,9 +59,9 @@ const DropDown = () => {
               {isUserData ? (
                 userData.name
               ) : (
-                <div role="status" class="max-w-sm animate-pulse">
-                  <div class="h-2.5 rounded-full bg-gray-300 w-48"></div>
-                  <span class="sr-only">Loading...</span>
+                <div role="status" className="max-w-sm animate-pulse">
+                  <div className="h-2.5 rounded-full bg-gray-300 w-48"></div>
+                  <span className="sr-only">Loading...</span>
                 </div>
               )}
             </div>

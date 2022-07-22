@@ -1,6 +1,7 @@
-// import axios from "../utility/axios-instance";
-// import { useEffect } from "react";
+import { useContext } from "react";
 import DropDown from "./DropDown/DropDown";
+
+import AuthContext from "../store/auth-context";
 
 export const LoadingSkelton = () => {
   return (
@@ -26,21 +27,12 @@ export const LoadingSkelton = () => {
 };
 
 const Searchbar = () => {
-  const userData = JSON.parse(localStorage.getItem("user"));
-  let firstUserNameLetter;
+  const { userData } = useContext(AuthContext);
 
+  let firstUserNameLetter;
   if (userData) {
     firstUserNameLetter = userData.name.slice(0, 1).toUpperCase();
   }
-
-  // useEffect(() => {
-  //   if (!userData) {
-  //     axios
-  //       .get("/api/user/profile")
-  //       .then((response) => console.log(response))
-  //       .catch((err) => console.log(err.response));
-  //   }
-  // }, [userData]);
 
   return (
     <>

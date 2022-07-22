@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import AuthContext from "../../store/auth-context";
-import axios from "../../utility/axios-instance";
+import axios from "../../utility/auth-instance";
 
 import "./Auth.css";
 import LoadingSpinner from "./components/LoadingSpinner";
