@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = []
 
-export const counterSlice = createSlice({
+const sourcesSlice = createSlice({
     name: 'sources',
     initialState,
     reducers: {
@@ -10,15 +10,14 @@ export const counterSlice = createSlice({
             state = action.payload
         },
         addSource: (state, action) => {
-            state = [
-                ...state,
-                {...action.payload}
-            ]
+            state.push(action.payload)
         },
     },
 })
 
-// Action creators are generated for each case reducer function
-export const { fetchSources, addSource } = counterSlice.actions
+const { actions, reducer } = sourcesSlice
 
-export default counterSlice.reducer
+// Action creators are generated for each case reducer function
+export const { fetchSources, addSource } = actions
+
+export default reducer

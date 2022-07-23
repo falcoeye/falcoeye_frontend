@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addSource } from "../../store/sources";
 import { toast } from "react-toastify";
-import axios from "../../utility/api-instance";
+// import axios from "../../utility/api-instance";
 import "./Modals.css";
 import LoadingSpinner from "../../Components/UI/LoadingSpinner/LoadingSpinner";
 const AddSource = ({ handleSourceModal }) => {
@@ -92,8 +92,13 @@ const AddSource = ({ handleSourceModal }) => {
     e.preventDefault();
     setSendingRequest(true)
     try {
-      const res = await axios.post("/camera/",data);
-      dispatch(addSource(res.data))
+      //const res = await axios.post("/camera/",data);
+      //dispatch(addSource(res.data.camera))
+      dispatch(addSource({
+        ...data,
+        "id": Math.random(),
+        "created_at": "2022-07-22T13:39:01.339Z"
+      }))
       setSendingRequest(false)
       handleSourceModal(false);
     } catch (error) {
