@@ -24,7 +24,6 @@ const EditSource = ({ handleEditModal, currentId }) => {
   };
 
   const handleSubmit = async (e) => {
-    console.log(data);
     e.preventDefault();
     if (data.url === null) {
       toast.error("All fields are required!", {
@@ -37,8 +36,7 @@ const EditSource = ({ handleEditModal, currentId }) => {
         progress: undefined,
       });
     } else {
-      try {
-        const res = await axios.put(
+        axios.put(
           `/camera/${data.currentId}`,
           {
             ...data,
@@ -48,10 +46,10 @@ const EditSource = ({ handleEditModal, currentId }) => {
               Authorization: `Bearer ${user.access_token}`,
             },
           }
-        );
-        console.log(res);
-        handleEditModal(false);
-      } catch (error) {
+        )
+        .then( res => {
+          handleEditModal(false);
+        } ).catch (error => {
         toast.error("Something went wrong", {
           position: "top-center",
           autoClose: 5000,
@@ -62,12 +60,11 @@ const EditSource = ({ handleEditModal, currentId }) => {
           progress: undefined,
         });
       }
-    }
   };
   return (
     <div className="modal_backdrop" onClick={() => handleEditModal(false)}>
       <div className="custom_modal_box" onClick={(e) => e.stopPropagation()}>
-        <div className="cmb_heading">Edit Camera</div>
+        <div className="cmb_heading">Edit Source</div>
         <form>
           <input
             type="text"

@@ -49,6 +49,9 @@ const sourcesSlice = createSlice({
         addSource: (state, action) => {
             state.push(action.payload)
         },
+        deleteSource: (state, action) => {
+            state.data = state.data.filter( item => item.id !== action.payload )
+        },
     },
 })
 
@@ -68,6 +71,6 @@ export const fetchSources = () => async (dispatch) => {
 const { actions, reducer } = sourcesSlice
 
 // Action creators are generated for each case reducer function
-export const { fetchingSources, fetchSourcesSuccess, fetchSourcesFailed, addSource } = actions
+export const { fetchingSources, fetchSourcesSuccess, fetchSourcesFailed, addSource, deleteSource } = actions
 
 export default reducer
