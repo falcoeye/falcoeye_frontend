@@ -1,13 +1,11 @@
 import { Tab } from '@headlessui/react';
-import axios from '../../utility/api-instance';
 import { useCallback, useEffect, useState } from 'react';
 import { FaCamera } from 'react-icons/fa';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fetchSources } from "../../store/sources";
 import AddSource from '../Modals/AddSource';
 import SourcesGrid from './SourcesGrid';
 import SourcesMap from './SourcesMap';
-import { toast } from 'react-toastify';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
@@ -16,18 +14,10 @@ const SourcesView = (props) => {
 
     const dispatch = useDispatch()
 
-    const sources = useSelector((state) => state.sources);
-
     const [addSourceOpened, setAddSourceOpened] = useState(false);
 
     useEffect(() => {
-        axios.get('/camera/')
-            .then(res => {
-                dispatch(fetchSources())
-            })
-            .catch(err => {
-                toast.error(err.response.data.message)
-            })
+        dispatch(fetchSources())
     }, [dispatch])
 
 
@@ -58,7 +48,7 @@ const SourcesView = (props) => {
                             </span>
                         </button>
                     </div>
-                    <div className="w-full mt-6 mb-16 sm:px-0">
+                    <div className="w-full mt-6 mb-16 sm:px-0 shadow rounded-xl">
                         <Tab.Group>
                             <Tab.List className="flex space-x-1 rounded-xl bg-primary p-1">
                                 <Tab

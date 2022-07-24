@@ -1,13 +1,50 @@
 import { createSlice } from '@reduxjs/toolkit'
+import axios from '../utility/api-instance'
+import { toast } from 'react-toastify'
 
-const initialState = []
+const initialState = {
+    data: [
+        {
+            "id": Math.random(),
+            "name": "string",
+            "utm_x": 0,
+            "utm_y": 0,
+            "created_at": new Date().toISOString(),
+        },
+        {
+            "id": Math.random(),
+            "name": "string",
+            "utm_x": 0,
+            "utm_y": 0,
+            "created_at": new Date().toISOString(),
+        },
+        {
+            "id": Math.random(),
+            "name": "string",
+            "utm_x": 0,
+            "utm_y": 0,
+            "created_at": new Date().toISOString(),
+        },
+    ],
+    fetchingSources: false,
+    fetchingSourcesError: null,
+}
 
 const sourcesSlice = createSlice({
     name: 'sources',
     initialState,
     reducers: {
-        fetchSources: (state, action) => {
-            state = action.payload
+        fetchingSources: (state, action) => {
+            state.fetchingSources = true
+            state.fetchingSourcesError = null;
+        },
+        fetchSourcesSuccess: (state, action) => {
+            state.fetchingSources = false
+            state.data = action.payload
+        },
+        fetchSourcesFailed: (state, action) => {
+            state.fetchingSources = false
+            state.fetchingSourcesError = action.payload;
         },
         addSource: (state, action) => {
             state.push(action.payload)
@@ -15,9 +52,22 @@ const sourcesSlice = createSlice({
     },
 })
 
+// Define a thunk that dispatches those action creators
+export const fetchSources = () => async (dispatch) => {
+    dispatch(fetchingSources())
+    axios.get('/camera/')
+        .then(res => {
+            dispatch(fetchSourcesSuccess(res.data))
+        })
+        .catch(err => {
+            dispatch(fetchSourcesFailed(err.response.data.msg))
+            toast.error(err.response.data.msg)
+        })
+}
+
 const { actions, reducer } = sourcesSlice
 
 // Action creators are generated for each case reducer function
-export const { fetchSources, addSource } = actions
+export const { fetchingSources, fetchSourcesSuccess, fetchSourcesFailed, addSource } = actions
 
 export default reducer
