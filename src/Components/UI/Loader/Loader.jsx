@@ -5,7 +5,7 @@ const Loader = props => {
     const { height } = props;
 
     return (
-        <div className={`flex justify-center items-center w-full h-${height}`} height={ height }>
+        <div className={`flex justify-center items-center w-full h-${height} h-96`} >
             <LoadingSpinner />
         </div>
     )

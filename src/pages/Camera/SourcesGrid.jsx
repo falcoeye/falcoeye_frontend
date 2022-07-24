@@ -7,7 +7,7 @@ const SourcesGrid = props => {
     const sources = useSelector((state) => state.sources);
 
     if (sources.fetchingSources) {
-        return <Loader height={96} />
+        return <Loader height='96' />
     }
     if (sources.data.length === 0 && !sources.fetchingSources) {
         return <p>there is no sources</p>
@@ -18,10 +18,8 @@ const SourcesGrid = props => {
     })
 
     return (
-        <div className="container mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {sourcesCards}
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {sourcesCards}
         </div>
     )
 }
