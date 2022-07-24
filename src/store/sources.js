@@ -47,7 +47,7 @@ const sourcesSlice = createSlice({
             state.fetchingSourcesError = action.payload;
         },
         addSource: (state, action) => {
-            state.push(action.payload)
+            state.data.push(action.payload)
         },
         deleteSource: (state, action) => {
             state.data = state.data.filter( item => item.id !== action.payload )
