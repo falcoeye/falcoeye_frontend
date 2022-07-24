@@ -1,12 +1,12 @@
 import Layout from "../../Components/Layout";
-import AllModels from "./AllModels";
+import AllWorkflows from "./AllWorkflows";
 import React from "react";
-const AiModals = () => {
+const Workflows = () => {
   return (
     <Layout>
-      <AllModels />
+      <AllWorkflows />
     </Layout>
   );
 };
 
-export default AiModals;
+export default Workflows;

@@ -1,7 +1,7 @@
 import { AiOutlineSearch } from "react-icons/ai";
 import AutoComplete from "../../Components/AutoComplete";
 import React from "react";
-const AiFilterBar = () => {
+const WorkflowsFilterBar = () => {
   return (
     <div className=" bg-backgroundLight flex items-center md:px-4 pt-2 rounded-md">
       <div className="flex  md:gap-4 justify-between md:flex-row flex-col w-full">
@@ -29,7 +29,7 @@ const AiFilterBar = () => {
             <select
               id="location"
               name="location"
-              className="mt-1 block bg-white  w-full pl-1  py-2 text-base  focus:outline-none  sm:text-sm rounded-md"
+              className="cursor-pointer block bg-white  w-full pl-1  py-2 text-base  focus:outline-none  sm:text-sm rounded-md"
             >
               <option>Videos</option>
               <option>Canada</option>
@@ -46,7 +46,7 @@ const AiFilterBar = () => {
             <select
               id="location"
               name="location"
-              className="mt-1 block bg-white  w-full pl-1  py-2 text-base  focus:outline-none  sm:text-sm rounded-md"
+              className="cursor-pointer block bg-white  w-full pl-1  py-2 text-base  focus:outline-none  sm:text-sm rounded-md"
             >
               <option>Date</option>
               <option>Canada</option>
@@ -63,7 +63,7 @@ const AiFilterBar = () => {
             <select
               id="location"
               name="location"
-              className="mt-1 block bg-white  w-full pl-1  py-2 text-base  focus:outline-none  sm:text-sm rounded-md"
+              className="cursor-pointer block bg-white  w-full pl-1  py-2 text-base  focus:outline-none  sm:text-sm rounded-md"
             >
               <option>A-Z</option>
               <option>Canada</option>
@@ -76,6 +76,6 @@ const AiFilterBar = () => {
   );
 };
 
-export default AiFilterBar;
+export default WorkflowsFilterBar;
 
 const suggestions = ["bla bla", "baby"];
