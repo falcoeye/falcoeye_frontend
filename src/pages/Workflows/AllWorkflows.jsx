@@ -8,6 +8,8 @@ import WorkflowsFilterBar from "./WorkflowsFilterBar";
 const AllWorkflows = () => {
   const dispatch = useDispatch();
   const workflowsData = useSelector((state) => state.workflows.data);
+  const isLoading = useSelector((state) => state.workflows.isLoading);
+  console.log(workflowsData);
 
   useEffect(() => {
     if (!workflowsData) {
@@ -15,11 +17,21 @@ const AllWorkflows = () => {
     }
   }, [dispatch, workflowsData]);
 
-  if (!workflowsData) {
+  if (isLoading) {
     return (
       <div className="main-container">
         <div className="bg-white mt-5 rounded-[10px] p-5 text-center">
           <LoadingSpinner />
+        </div>
+      </div>
+    );
+  }
+
+  if (!workflowsData && !isLoading) {
+    return (
+      <div className="main-container">
+        <div className="bg-white mt-5 rounded-[10px] p-5 text-center">
+          <h1>No workflows to show</h1>
         </div>
       </div>
     );
@@ -34,7 +46,7 @@ const AllWorkflows = () => {
           </h3>
           <WorkflowsFilterBar />
 
-          <div className=" grid md:grid-cols-3 sm:grid-cols-1 gap-4 mt-8">
+          <div className=" grid md:grid-cols-2 lg:grid-cols-3 sm:grid-cols-1 gap-4 mt-8">
             {workflowsData.map((item) => (
               <WorkflowCard
                 key={item.id}

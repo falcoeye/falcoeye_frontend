@@ -3,14 +3,17 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import AutoComplete from "../../Components/AutoComplete";
 import { workflowsActions } from "../../store/workflows";
-const WorkflowsFilterBar = () => {
-  const selectOrder = useSelector((state) => state.workflows.selectOrder);
-  const dispatch = useDispatch();
 
-  console.log(selectOrder);
+const WorkflowsFilterBar = () => {
+  const dispatch = useDispatch();
+  const dataType = useSelector((state) => state.workflows.dataType);
+  const dataOrder = useSelector((state) => state.workflows.dataOrder);
 
   const selectOrderHandler = (e) => {
     dispatch(workflowsActions.OrderingData(e.target.value));
+  };
+  const selectOrderTypeHandler = (e) => {
+    dispatch(workflowsActions.OrderingDataType(e.target.value));
   };
 
   return (
@@ -29,64 +32,54 @@ const WorkflowsFilterBar = () => {
             </div>
           </div>
         </div>
-        <div className="flex gap-4 md:flex-row flex-col items-center mb-2 md:px-0 px-4 w-full max-w-md">
-          {/* <div className="flex items-center md:max-w-sm w-full   bg-white  px-3 rounded-md">
-            <span
-              htmlFor="location"
-              className="block text-sm font-medium text-primary whitespace-nowrap"
-            >
-              Sort by:
-            </span>
-            <select
-              id="location"
-              name="location"
-              className="cursor-pointer block bg-white  w-full pl-1  py-2 text-base  focus:outline-none  sm:text-sm rounded-md"
-            >
-              <option>Videos</option>
-              <option>Canada</option>
-              <option>Mexico</option>
-            </select>
-          </div> */}
+        <div className="flex gap-4 md:flex-row flex-col items-center mb-2 md:px-0 px-4 w-full md:max-w-md">
           <div className="flex items-center md:max-w-lg w-full   bg-white  px-3 rounded-md">
             <span
-              htmlFor="location"
+              htmlFor="type"
               className="block text-sm font-medium text-primary whitespace-nowrap"
             >
               Sort by:
             </span>
             <select
-              id="location"
-              name="location"
+              id="type"
+              name="type"
               className="cursor-pointer block bg-white  w-full pl-1  py-2 text-base  focus:outline-none  sm:text-sm rounded-md"
-              defaultValue=""
+              onChange={selectOrderTypeHandler}
+              defaultValue="Title"
             >
-              <option disabled value="">
-                Choose Type
-              </option>
-              <option>Date</option>
               <option>Title</option>
               <option>Creator</option>
+              <option>Date</option>
             </select>
           </div>
           <div className="flex items-center md:max-w-lg w-full bg-white  px-3 rounded-md">
             <span
-              htmlFor="location"
+              htmlFor="order"
               className="block text-sm font-medium text-primary whitespace-nowrap"
             >
               Sort by:
             </span>
             <select
-              id="location"
-              name="location"
+              id="order"
+              name="order"
               className="cursor-pointer block bg-white  w-full pl-1  py-2 text-base  focus:outline-none  sm:text-sm rounded-md"
               onChange={selectOrderHandler}
-              defaultValue=""
+              value={dataOrder || ""}
             >
               <option disabled value="">
                 Choose Order
               </option>
-              <option value="a-z">A-Z</option>
-              <option value="z-a">Z-A</option>
+              {dataType === "Date" ? (
+                <>
+                  <option value="oldest">Oldest</option>
+                  <option value="newest">Newest</option>
+                </>
+              ) : (
+                <>
+                  <option value="a-z">A-Z</option>
+                  <option value="z-a">Z-A</option>
+                </>
+              )}
             </select>
           </div>
         </div>
