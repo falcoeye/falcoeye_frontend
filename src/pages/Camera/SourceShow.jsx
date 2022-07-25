@@ -1,37 +1,23 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useEffect, useState } from 'react';
-import axios from '../../utility/auth-instance';
+import { Fragment } from 'react';
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import Loader from '../../Components/UI/Loader/Loader';
-import { AiFillDelete } from "react-icons/ai";
-import { AiFillEdit } from "react-icons/ai";
-import { useDispatch } from 'react-redux';
 import { deleteSource } from '../../store/sources';
+import axios from '../../utility/auth-instance';
 
 export default function SourceShow(props) {
     const { open, handleClose, id, openEditModalHandler } = props;
 
     const dispatch = useDispatch()
+    const sources = useSelector((state) => state.sources);
 
-    const [data, setData] = useState(null);
-    const [fetching, setFetching] = useState(false);
+    let data = null;
 
-    
-    useEffect(() => {
-        if (!id) return;
-        console.log('once')
-        setFetching(true);
-        axios
-            .get(`/camera/${id}`)
-            .then((res) => {
-                setFetching(false);
-                setData(res.data.camera);
-            })
-            .catch((err) => {
-                setFetching(false);
-                toast.error(err.response?.data?.message);
-            });
-    }, [id]);
+    if (id) {
+        data = sources.data.find( item => item.id === id );
+    }
+
 
     const deleteSourceHandler = (  ) => {
         axios.delete(`/camera/${id}`)
@@ -47,10 +33,7 @@ export default function SourceShow(props) {
 
     let content;
 
-    if (fetching) {
-        content = <Loader />;
-    }
-    if (!data && !fetching) {
+    if (!data) {
         content = (
             <Fragment>
                 <Dialog.Title
@@ -62,14 +45,14 @@ export default function SourceShow(props) {
             </Fragment>
         );
     }
-    if (data && !fetching) {
+    if (data) {
         content = (
             <Fragment>
                 <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                 >
-                    Source Title
+                    {data.name}
                 </Dialog.Title>
                 <div className="mt-2">
                     <p className="text-sm text-gray-500">
