@@ -1,34 +1,34 @@
 /* eslint-disable jsx-a11y/no-redundant-roles */
-import { BsArrowRightCircle } from 'react-icons/bs';
-import React, { useState } from 'react';
-import useFetch from '../../hooks/UseFetch';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { AiTwotoneEdit, AiFillDelete } from 'react-icons/ai';
-import EditCamera from '../Modals/EditCamera';
-import axios from '../../axiosInstance';
-import { toast } from 'react-toastify';
+import { BsArrowRightCircle } from "react-icons/bs";
+import React, { useState } from "react";
+import useFetch from "../../hooks/UseFetch";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { AiTwotoneEdit, AiFillDelete } from "react-icons/ai";
+import EditCamera from "../Modals/EditCamera";
+import axios from "../../utility/auth-instance";
+import { toast } from "react-toastify";
 function CamerCards2() {
   const user = useSelector((state) => state.user);
   const [editCamera, setEditCamera] = useState(false);
-  const camerasList = useFetch('/camera/', {
+  const camerasList = useFetch("/camera/", {
     headers: {
       Authorization: `Bearer ${user.access_token}`,
     },
   });
 
   const handleDelete = (id) => {
-    if (window.confirm('Are you sure you want to delete?')) {
+    if (window.confirm("Are you sure you want to delete?")) {
       try {
         const res = axios.delete(`/camera/${id}`, null, {
           headers: {
             Authorization: `Bearer ${user.access_token}`,
           },
         });
-        console.log(res)
+        console.log(res);
       } catch (error) {
-        toast.error('Something went wrong', {
-          position: 'top-center',
+        toast.error("Something went wrong", {
+          position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -79,7 +79,7 @@ function CamerCards2() {
                   <div>
                     <div>
                       <span onClick={() => setEditCamera(true)}>
-                        {' '}
+                        {" "}
                         <div className="text-primary text-xl ">
                           <AiTwotoneEdit />
                         </div>
@@ -89,10 +89,10 @@ function CamerCards2() {
                         onClick={() => handleDelete(file.id)}
                       >
                         <AiFillDelete color="red" />
-                      </div>{' '}
+                      </div>{" "}
                       <br />
                     </div>
-                    <Link to={'/Streaming/' + file.id}>
+                    <Link to={"/Streaming/" + file.id}>
                       <BsArrowRightCircle className="text-primary text-xl" />
                     </Link>
                   </div>

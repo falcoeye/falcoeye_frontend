@@ -1,16 +1,22 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios from "../../axiosInstance";
+import AuthContext from "../../store/auth-context";
+import axios from "../../utility/auth-instance";
 import "./Auth.css";
+import LoadingSpinner from "./components/LoadingSpinner";
 //import { addUser } from "../../store/user";
 const Signup = () => {
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const authCtx = useContext(AuthContext);
+
   const navigate = useNavigate();
   const [data, setData] = useState({
-    username: null,
-    password: null,
-    email: null,
-    name: null,
+    username: "",
+    password: "",
+    email: "",
+    name: "",
   });
 
   const handleChange = (e) => {
@@ -21,7 +27,6 @@ const Signup = () => {
         [name]: value,
       };
     });
-    console.log(data);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,22 +46,41 @@ const Signup = () => {
         progress: undefined,
       });
     } else {
+      setIsLoading(true);
       try {
-        const registered = await axios.post("/auth/register", data);
-        localStorage.setItem("user", JSON.stringify(registered.data));
-      //  dispatch(addUser(registered.data));
-
+        const registeredData = await axios.post("/auth/register", data);
+        setIsLoading(false);
+        authCtx.login(
+          registeredData.data.access_token,
+          registeredData.data.user
+        );
         navigate("/");
+        if (errorMessage) {
+          setErrorMessage("");
+        }
       } catch (error) {
-        toast.error("Failed to register", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        setIsLoading(false);
+        if (error.response.data.message) {
+          setErrorMessage(
+            error.response.data.message || "Something went wrong!"
+          );
+        }
+
+        if (error.response.data.errors) {
+          Object.entries(error.response.data.errors).map((t, k) => {
+            const errorMessage = `${t[0]}: ${t[1][0]}`;
+
+            return toast.error(errorMessage, {
+              position: "bottom-center",
+              autoClose: 4000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: false,
+              progress: undefined,
+            });
+          });
+        }
       }
     }
   };
@@ -64,8 +88,7 @@ const Signup = () => {
     <div className="login_form_wrapper">
       <div className="login_form_box ">
         <div id="loginformContent">
-          
-          <form>
+          <form onSubmit={handleSubmit}>
             <input
               type="text"
               id="name"
@@ -106,20 +129,27 @@ const Signup = () => {
               value={data.password}
               required={true}
             />
-            <input
-              type="submit"
-              className="login_form_btn"
-              value="Signup"
-              onClick={handleSubmit}
-            />
 
-              <br/>
-            <a href="/login">
-             Click here to login now!
-            </a>
-            <br />
-            <br />
-             <br/>
+            {errorMessage && <p className="error_text">{errorMessage}</p>}
+
+            <button type="submit" className="login_form_btn" value="Signup">
+              {isLoading && <LoadingSpinner />}
+              {!isLoading && "Signup"}
+            </button>
+
+            <p>
+              Click here to{" "}
+              <Link to="/login" className="form_link">
+                login
+              </Link>{" "}
+              now!
+            </p>
+
+            {process.env.REACT_APP_VERSION && (
+              <p className=" text-center text-gray-400 text-base font-semibold mt-4">
+                {`${process.env.REACT_APP_VERSION}`}
+              </p>
+            )}
           </form>
         </div>
       </div>
