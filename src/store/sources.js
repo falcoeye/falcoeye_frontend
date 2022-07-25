@@ -3,29 +3,7 @@ import axios from '../utility/api-instance'
 import { toast } from 'react-toastify'
 
 const initialState = {
-    data: [
-        {
-            "id": Math.random(),
-            "name": "string",
-            "utm_x": 46.9182,
-            "utm_y": 8.2475,
-            "created_at": new Date().toISOString(),
-        },
-        {
-            "id": Math.random(),
-            "name": "string",
-            "utm_x": 47.8182,
-            "utm_y": 8.3275,
-            "created_at": new Date().toISOString(),
-        },
-        {
-            "id": Math.random(),
-            "name": "string",
-            "utm_x": 47.2182,
-            "utm_y": 8.4975,
-            "created_at": new Date().toISOString(),
-        },
-    ],
+    data: [],
     fetchingSources: false,
     fetchingSourcesError: null,
 }
@@ -64,7 +42,7 @@ export const fetchSources = () => async (dispatch) => {
     dispatch(fetchingSources())
     axios.get('/camera/')
         .then(res => {
-            dispatch(fetchSourcesSuccess(res.data))
+            dispatch(fetchSourcesSuccess(res.data.camera))
         })
         .catch(err => {
             dispatch(fetchSourcesFailed(err.response.data.msg))

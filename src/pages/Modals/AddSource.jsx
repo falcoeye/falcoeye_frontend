@@ -2,26 +2,31 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addSource } from "../../store/sources";
 import { toast } from "react-toastify";
-// import axios from "../../utility/api-instance";
+import axios from "../../utility/api-instance";
 import "./Modals.css";
 import LoadingSpinner from "../../Components/UI/LoadingSpinner/LoadingSpinner";
+import { Fragment } from "react";
+
+const streaminServerFields = [ 'name', 'latitude', 'longitude', 'streaming_type', 'url', 'status' ]
+const RSTPFields = [ 'name', 'latitude', 'longitude', 'streaming_type', 'url', 'status', 'host', 'port', 'user', 'password', 'thumbnail']
+
 const AddSource = ({ handleSourceModal }) => {
   const dispatch = useDispatch()
   const [disableSubmit, setDisableSubmit] = useState(true);
   const [ sendingRequest, setSendingRequest] = useState(false);
   const [ errorMessage, setErrorMessage] = useState(false);
-  //const [showRSTP, setShowRSTP] = React.useState(false);
   const [data, setData] = useState({
     name: '',
-    utm_x: '',
-    utm_y: '',
+    latitude: '',
+    longitude: '',
     streaming_type: '',
-    thumbnail: null,
     url: '',
     host: '',
     port: '',
     username: '',
     password: '',
+    thumbnail: null,
+    status: "RUNNING",
   });
 
   const handleStreamingTypeChange = (e) => {
@@ -34,7 +39,8 @@ const AddSource = ({ handleSourceModal }) => {
   };
 
   useEffect(() => {
-    const dataFields = Object.keys(data)
+    if(data.streaming_type === '' ) return;
+    const dataFields = data.streaming_type === 'StreamingServer' ? streaminServerFields : RSTPFields
     let hasNull = false
     dataFields.forEach(key => {
       if(data[key] === null || data[key] === '') {
@@ -90,16 +96,18 @@ const AddSource = ({ handleSourceModal }) => {
     e.preventDefault();
     setSendingRequest(true)
     try {
-      //const res = await axios.post("/camera/",data);
-      //dispatch(addSource(res.data.camera))
-      dispatch(addSource({
-        ...data,
-        "id": Math.random(),
-        "created_at": "2022-07-22T13:39:01.339Z"
-      }))
+      const dataFields = data.streaming_type === 'StreamingServer' ? streaminServerFields : RSTPFields
+      let sentData = {};
+      dataFields.forEach( field => {
+        sentData[field] = data[field]
+      } )
+      console.log(sentData)
+      const res = await axios.post("/camera/",sentData);
+      dispatch(addSource(res.data.camera))
       setSendingRequest(false)
       handleSourceModal(false);
     } catch (error) {
+      setSendingRequest(false)
       setErrorMessage(error.response.data.message || 'Something went wrong')
       if (error.response.data.errors) {
         let errorObjectKeys = Object.keys(error.response.data.errors)
@@ -107,7 +115,6 @@ const AddSource = ({ handleSourceModal }) => {
           toast.error(`${key}: ${error.response.data.errors[`${key}`]}`)
         } )
       }
-      setSendingRequest(false)
     }
   };
 
@@ -127,21 +134,21 @@ const AddSource = ({ handleSourceModal }) => {
           />
           <input
             type="number"
-            id="utm_x"
+            id="latitude"
             className="modal_form_input "
-            name="utm_x"
+            name="latitude"
             placeholder="longitude"
             onChange={handleChange}
-            value={data.utm_x}
+            value={data.latitude}
           />
           <input
             type="number"
-            id="utm_y"
+            id="longitude"
             className="modal_form_input "
-            name="utm_y"
+            name="longitude"
             placeholder="latitude"
             onChange={handleChange}
-            value={data.utm_y}
+            value={data.longitude}
           />
           <select
             id="streaming_type"
@@ -152,8 +159,8 @@ const AddSource = ({ handleSourceModal }) => {
             }}
           >
             <option value="-">--SELECT--</option>
-            <option value="RSTP">RSTP</option>
-            <option value="STREAMINGSERVER">STREAMING SERVER</option>
+            <option disabled value="RSTP">RSTP</option>
+            <option value="StreamingServer">STREAMING SERVER</option>
           </select>
           <input
             type="text"
@@ -163,64 +170,68 @@ const AddSource = ({ handleSourceModal }) => {
             placeholder="url"
             onChange={handleChange}
             value={data.url}
-          />
-          <input
-            type="text"
-            id="host"
-            className="modal_form_input "
-            name="host"
-            placeholder="host"
-            onChange={handleChange}
-            value={data.host}
-          />
-
-          <input
-            type="number"
-            id="port"
-            className="modal_form_input "
-            name="port"
-            placeholder="port"
-            onChange={handleChange}
-            value={data.port}
-          />
-
-          <input
-            type="text"
-            id="username"
-            className="modal_form_input "
-            name="username"
-            placeholder="username"
-            onChange={handleChange}
-            value={data.username}
-          />
-          <input
-            type="password"
-            id="password"
-            className="modal_form_input "
-            name="password"
-            placeholder="password"
-            onChange={handleChange}
-            value={data.password}
-          />
-          <div>
-            <label htmlFor="thumbnail" className="image_upload_label" style={{margin: '5px auto'}}>
-              Upload Source Thumbnail
-              <input
-                style={{
-                  visibility: "hidden",
-                  position: "absolute",
-                  zIndex: "-1",
-                }}
-                type="file"
-                id="thumbnail"
-                accept="image/*"
-                className="modal_form_input "
-                name="thumbnail"
-                placeholder="Source Thumbnail"
-                onChange={handleImageUpload}
-              />
-            </label>
-          </div>
+            />
+            {data.streaming_type === 'RSTP' &&  (
+              <Fragment>
+                <input
+                  type="text"
+                  id="host"
+                  className="modal_form_input "
+                  name="host"
+                  placeholder="host"
+                  onChange={handleChange}
+                  value={data.host}
+                />
+      
+                <input
+                  type="number"
+                  id="port"
+                  className="modal_form_input "
+                  name="port"
+                  placeholder="port"
+                  onChange={handleChange}
+                  value={data.port}
+                />
+      
+                <input
+                  type="text"
+                  id="username"
+                  className="modal_form_input "
+                  name="username"
+                  placeholder="username"
+                  onChange={handleChange}
+                  value={data.username}
+                />
+                <input
+                  type="password"
+                  id="password"
+                  className="modal_form_input "
+                  name="password"
+                  placeholder="password"
+                  onChange={handleChange}
+                  value={data.password}
+                />
+                <div>
+                  <label htmlFor="thumbnail" className="image_upload_label" style={{margin: '5px auto'}}>
+                    Upload Source Thumbnail
+                    <input
+                      style={{
+                        visibility: "hidden",
+                        position: "absolute",
+                        zIndex: "-1",
+                      }}
+                      type="file"
+                      id="thumbnail"
+                      accept="image/*"
+                      className="modal_form_input "
+                      name="thumbnail"
+                      placeholder="Source Thumbnail"
+                      onChange={handleImageUpload}
+                    />
+                  </label>
+                </div>
+              </Fragment>
+            ) }
           {errorMessage && <p className="error_text">{errorMessage}</p>}
           <button
             style={{ margin: "25px auto", display: 'block' }}
