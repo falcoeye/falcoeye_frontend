@@ -16,8 +16,10 @@ export default function SourceShow(props) {
     const [data, setData] = useState(null);
     const [fetching, setFetching] = useState(false);
 
+    
     useEffect(() => {
         if (!id) return;
+        console.log('once')
         setFetching(true);
         axios
             .get(`/camera/${id}`)
