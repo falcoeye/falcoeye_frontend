@@ -7,6 +7,7 @@ import {
 import React, { useCallback, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Loader from '../../Components/UI/Loader/Loader';
+import { mapStyles } from "./mapStyles";
 
 const mapContainerStyle = {
   width: '100%',
@@ -48,6 +49,7 @@ function SourcesMap() {
         onLoad={onMapLoad}
         options={{
           disableDefaultUI: true,
+          styles: mapStyles
         }}
         zoom={initialZoom}
         center={initialCenter}
