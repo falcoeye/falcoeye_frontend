@@ -52,6 +52,10 @@ const sourcesSlice = createSlice({
         deleteSource: (state, action) => {
             state.data = state.data.filter( item => item.id !== action.payload )
         },
+        editSource: (state, action) => {
+            const editedItemIndex = state.data.findIndex( item => item.id === action.payload.id )
+            state.data[editedItemIndex] = action.payload
+        },
     },
 })
 
