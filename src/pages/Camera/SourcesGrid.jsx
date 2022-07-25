@@ -1,6 +1,7 @@
 import { Fragment, useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import Loader from "../../Components/UI/Loader/Loader";
+import EditSource from "../Modals/EditSource";
 import SourceCard from "./SourceCard";
 import SourceShow from "./SourceShow";
 
@@ -8,6 +9,7 @@ const SourcesGrid = props => {
 
     const [ selectedCardId, setSelectedCardId ] = useState(null)
     const [ showModalOpened, setShowModalOpened] = useState(false)
+    const [ editModalOpened, setEditModalOpened ] = useState(false)
 
     const sources = useSelector((state) => state.sources);
 
@@ -20,6 +22,13 @@ const SourcesGrid = props => {
         setShowModalOpened(false)
         setSelectedCardId(null)
     }, [])
+    const openEditModalHandler = useCallback(() => {
+        setShowModalOpened(false)
+        setEditModalOpened(true);
+    }, []);
+    const closeEditModalHandler = useCallback(() => {
+        setEditModalOpened(false);
+    }, []);
 
     if (sources.fetchingSources) {
         return <Loader height='96' />
@@ -37,7 +46,8 @@ const SourcesGrid = props => {
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {sourcesCards}
             </div>
-            <SourceShow open={showModalOpened} handleClose={closeShowModalHandler} id={selectedCardId} />
+            <SourceShow open={showModalOpened} handleClose={closeShowModalHandler} openEditModalHandler={openEditModalHandler} id={selectedCardId} />
+            <EditSource open={editModalOpened} handleClose={closeEditModalHandler} id={selectedCardId} />
         </Fragment>
     )
 }

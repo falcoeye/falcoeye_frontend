@@ -37,12 +37,10 @@ const AddSource = ({ handleSourceModal }) => {
     const dataFields = Object.keys(data)
     let hasNull = false
     dataFields.forEach(key => {
-      console.log(data[key])
       if(data[key] === null || data[key] === '') {
         hasNull = true
       } 
     })
-    console.log(hasNull)
     setDisableSubmit(hasNull)
   }, [data]);
 

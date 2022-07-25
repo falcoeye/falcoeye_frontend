@@ -25,8 +25,6 @@ const SourcesView = (props) => {
         setAddSourceOpened(val);
     }, []);
 
-    
-
     return (
         <div>
             {addSourceOpened && (

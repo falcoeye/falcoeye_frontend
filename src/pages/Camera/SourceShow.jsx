@@ -9,12 +9,12 @@ import { useDispatch } from 'react-redux';
 import { deleteSource } from '../../store/sources';
 
 export default function SourceShow(props) {
-    const { open, handleClose, id } = props;
+    const { open, handleClose, id, openEditModalHandler } = props;
 
     const dispatch = useDispatch()
 
     const [data, setData] = useState(null);
-    const [fetching, setFetching] = useState(true);
+    const [fetching, setFetching] = useState(false);
 
     useEffect(() => {
         if (!id) return;
@@ -78,7 +78,7 @@ export default function SourceShow(props) {
                     <button
                         type="button"
                         className="mr-3 inline-flex items-center justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                        onClick={handleClose}
+                        onClick={openEditModalHandler}
                     >
                         <AiFillEdit className="mr-2"  />
                         Edit
