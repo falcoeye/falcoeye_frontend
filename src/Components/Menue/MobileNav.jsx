@@ -13,6 +13,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { BiSearchAlt } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import { useLocation } from "react-router-dom";
+import logoSrc from '../../images/logo.png'
 
 const MobileNav = ({ isOpen, toggleDrawer }) => {
   const { pathname } = useLocation();
@@ -24,11 +25,7 @@ const MobileNav = ({ isOpen, toggleDrawer }) => {
           <button onClick={toggleDrawer} className="text-primary text-xl">
             <GiHamburgerMenu />
           </button>
-          <img src={`logo`} alt="logo" />
-          <button className="text-primary text-xl">
-            
-            <AiOutlineSearch />
-          </button>
+          <img className='w-12' src={logoSrc} alt="logo" />
         </div>
         <button className="text-primary text-xl ">
           <BsThreeDots />
@@ -42,7 +39,7 @@ const MobileNav = ({ isOpen, toggleDrawer }) => {
       >
         <div className="px-5">
           <Link to={`/`} className="w-full ">
-            <img src="" alt="logo" />
+            <img src={logoSrc} className='w-16'  alt="logo" />
           </Link>
         </div>
         <ul className="flex flex-col gap-y-1  pr-4 mt-4 py-4 overflow-hidden">
