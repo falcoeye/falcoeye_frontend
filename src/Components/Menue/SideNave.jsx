@@ -10,6 +10,7 @@ import {
 import { RiCameraLensFill } from "react-icons/ri";
 import { BiSearchAlt } from "react-icons/bi";
 import { useLocation } from "react-router-dom";
+import logoSrc from '../../images/logo.png'
 
 const SideNave = ({ sideNav, toggle }) => {
   const { pathname } = useLocation();
@@ -21,7 +22,7 @@ const SideNave = ({ sideNav, toggle }) => {
         } h-screen fixed top-0 left-0  py-5 bg-white flex flex-col transition-all duration-500 `}
       >
         <Link to={`/`} className="w-full ">
-          <img src="" alt="logo" />
+          <img src={logoSrc} alt="logo" />
         </Link>
         <ul className="flex flex-col gap-y-1  pr-4 mt-4 py-4 overflow-hidden">
           {navLinks.map(({ id, icon, path, text }) => {
