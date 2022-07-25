@@ -55,13 +55,13 @@ function SourcesMap() {
         {sources.data.map((marker) => (
           <Marker
             key={marker.id}
-            position={{ lat: +marker.utm_x, lng: +marker.utm_y }}
+            position={{ lat: +marker.latitude, lng: +marker.longitude }}
             onClick={() => setSelected(marker)}
           />
         ))}
         {selected && (
           <InfoWindow
-            position={{ lat: +selected.utm_x, lng: +selected.utm_y }}
+            position={{ lat: +selected.latitude, lng: +selected.longitude }}
             onCloseClick={() => setSelected(null)}
           >
             <h2 className='text-sm font-semibold' >{selected.name}</h2>
