@@ -4,7 +4,6 @@ import {
   AiFillAppstore,
   AiFillCamera,
   AiFillRobot,
-  AiOutlineSearch,
 } from "react-icons/ai";
 import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";

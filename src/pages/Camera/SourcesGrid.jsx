@@ -4,6 +4,8 @@ import Loader from "../../Components/UI/Loader/Loader";
 import EditSource from "../Modals/EditSource";
 import SourceCard from "./SourceCard";
 import SourceShow from "./SourceShow";
+import noDataAnimation from '../../assets/animations/no-data.json'
+import Lottie from "lottie-react";
 
 const SourcesGrid = props => {
 
@@ -34,7 +36,7 @@ const SourcesGrid = props => {
         return <Loader height='96' />
     }
     if (sources.data.length === 0 && !sources.fetchingSources) {
-        return <p>there is no sources</p>
+        return <div className='h-96' ><Lottie animationData={noDataAnimation} loop={true}  style={{ 'width': '100%', 'height': '100%' }} /></div>
     }
 
     const sourcesCards = sources.data.map(source => {
