@@ -16,10 +16,10 @@ const mapContainerStyle = {
 };
 
 const initialCenter = {
-  lat: 46.8182,
+  lat: 26.8182,
   lng: 8.2275,
 };
-const initialZoom = 6;
+const initialZoom = 2;
 
 const libraries = ['places'];
 
