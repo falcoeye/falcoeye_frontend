@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import fish from "../../images/fish3.jpeg";
+import LoadingSpinner from "../Auth/components/LoadingSpinner";
 import WorkflowCard from "./WorkflowCard";
 import AiFilterBar from "./WorkflowsFilterBar";
-import InfiniteScroll from "react-infinite-scroll-component";
-import LoadingSpinner from "../Auth/components/LoadingSpinner";
+import axios from "../../utility/api-instance";
+import { workflowsActions } from "../../store/workflows";
+import { toast } from "react-toastify";
 
-const cardList = [
+export const cardList = [
   {
     id: 1,
     img: fish,
@@ -42,33 +45,59 @@ const cardList = [
     date: "20 dec 2021",
     desc: "lorem ipsum dolar sit amet lorem ipsum dolar sit amet  lorem ipsum dolar sit amet lorem ipsum dolar sit amet lorem ipsum dolar sit amet lorem ipsum dolar sit amet lorem ipsum dolar sit amet lorem ipsum dolar sit amet lorem ipsum dolar sit amet ",
   },
+  {
+    id: 5,
+    img: fish,
+    title:
+      "wenet: production orineted streaming and non-streaming End-to-End Speech Recognition Toolkit",
+    name: "rifat bin jahan5",
+    date: "20 dec 2021",
+    desc: "lorem ipsum dolar sit amet lorem ipsum dolar sit amet  lorem ipsum dolar sit amet lorem ipsum dolar sit amet lorem ipsum dolar sit amet lorem ipsum dolar sit amet lorem ipsum dolar sit amet lorem ipsum dolar sit amet lorem ipsum dolar sit amet ",
+  },
+  {
+    id: 6,
+    img: fish,
+    title:
+      "wenet: production orineted streaming and non-streaming End-to-End Speech Recognition Toolkit",
+    name: "rifat bin jahan6",
+    date: "20 dec 2021",
+    desc: "lorem ipsum dolar sit amet lorem ipsum dolar sit amet  lorem ipsum dolar sit amet lorem ipsum dolar sit amet lorem ipsum dolar sit amet lorem ipsum dolar sit amet lorem ipsum dolar sit amet lorem ipsum dolar sit amet lorem ipsum dolar sit amet ",
+  },
 ];
 
 const AllWorkflows = () => {
-  const [data, setData] = useState({
-    items: cardList.slice(0, 2),
-    hasMore: true,
-    offset: 2,
-  });
+  const dispatch = useDispatch();
+  const workflowsData = useSelector((state) => state.workflows.data);
 
-  const fetchMoreData = () => {
-    if (data.items.length === cardList.length) {
-      return setData((prevState) => ({
-        ...prevState,
-        hasMore: false,
-      }));
-    }
+  useEffect(() => {
+    axios
+      .get("/workflow/")
+      .then((response) => {
+        dispatch(workflowsActions.fetchworkflows(response.data.workflow));
+      })
+      .catch((err) => {
+        const errorMessage = err.response.data.msg || err.response.data.message;
+        toast.error(errorMessage || "Something went wrong!", {
+          position: "bottom-center",
+          autoClose: 4000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+        });
+      });
+  }, [dispatch]);
 
-    setTimeout(() => {
-      setData((prevState) => ({
-        ...prevState,
-        items: data.items.concat(cardList.slice(data.offset, data.offset + 2)),
-        offset: (data.offset += 2),
-      }));
-    }, 3000);
-  };
-
-  console.log(data);
+  if (workflowsData.length === 0) {
+    return (
+      <div className="main-container">
+        <div className="bg-white mt-5 rounded-[10px] p-5 text-center">
+          <LoadingSpinner />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -79,7 +108,7 @@ const AllWorkflows = () => {
           </h3>
           <AiFilterBar />
 
-          <div className="flex items-center gap-5 mt-5">
+          {/* <div className="flex items-center gap-5 mt-5">
             <button className="bg-gray-100 rounded-full border border-gray-50 text-xs px-2 py-1">
               Top
             </button>
@@ -89,30 +118,19 @@ const AllWorkflows = () => {
             <button className="bg-gray-100 rounded-full border border-gray-50 text-xs px-2 py-1">
               Greatest
             </button>
-          </div>
+          </div> */}
 
-          <InfiniteScroll
-            dataLength={data.items.length}
-            next={fetchMoreData}
-            hasMore={data.hasMore}
-            loader={
-              <div className="text-center bg-white mt-5 rounded-[10px] p-5">
-                <LoadingSpinner />
-              </div>
-            }
-          >
-            <div className="flex flex-col gap-8 mt-8">
-              {data.items.map((i, index) => (
-                <WorkflowCard
-                  key={i.id}
-                  img={i.img}
-                  name={i.name}
-                  date={i.date}
-                  title={i.title}
-                />
-              ))}
-            </div>
-          </InfiniteScroll>
+          <div className=" grid md:grid-cols-3 sm:grid-cols-1 gap-4 mt-8">
+            {workflowsData.map((i, index) => (
+              <WorkflowCard
+                key={i.id}
+                img={i.creator}
+                name={i.creator}
+                date={i.publish_date}
+                title={i.name}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
