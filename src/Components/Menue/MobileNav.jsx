@@ -97,7 +97,7 @@ const navLinks = [
   { id: 1, text: "dashboard", icon: <AiFillAppstore />, path: "/" },
   { id: 2, text: "camera", icon: <AiFillCamera />, path: "/camera" },
   { id: 3, text: "studio", icon: <RiCameraLensFill />, path: "/VideoImages" },
-  { id: 4, text: "ai store", icon: <AiFillRobot />, path: "/ai-store" },
+  { id: 4, text: "ai store", icon: <AiFillRobot />, path: "/workflows" },
   {
     id: 5,
     text: "jobs",
