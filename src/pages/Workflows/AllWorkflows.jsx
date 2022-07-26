@@ -4,6 +4,8 @@ import Loader from "../../Components/UI/Loader/Loader";
 import { fetchWorkflowsData } from "../../store/workflows";
 import WorkflowCard from "./WorkflowCard";
 import WorkflowsFilterBar from "./WorkflowsFilterBar";
+import noDataAnimation from "../../assets/animations/no-data.json";
+import Lottie from "lottie-react";
 
 const AllWorkflows = () => {
   const dispatch = useDispatch();
@@ -21,7 +23,7 @@ const AllWorkflows = () => {
     return (
       <div className="main-container">
         <div className="bg-white mt-5 rounded-[10px] p-5 text-center">
-          <Loader />
+          <Loader height="32" />
         </div>
       </div>
     );
@@ -31,7 +33,13 @@ const AllWorkflows = () => {
     return (
       <div className="main-container">
         <div className="bg-white mt-5 rounded-[10px] p-5 text-center">
-          <h1>No workflows to show</h1>
+          <div className="h-96">
+            <Lottie
+              animationData={noDataAnimation}
+              loop={true}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </div>
         </div>
       </div>
     );
