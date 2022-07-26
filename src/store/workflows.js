@@ -7,6 +7,7 @@ const initialState = {
   dataOrder: null,
   isLoading: true,
   dataType: null,
+  inputSearch: null,
 };
 
 export const workflowsSlice = createSlice({
@@ -24,85 +25,16 @@ export const workflowsSlice = createSlice({
       state.isLoading = false;
     },
 
-    OrderingData(state, action) {
-      state.dataOrder = action.payload;
-
-      if (
-        action.payload === "a-z" &&
-        (!state.dataType || state.dataType === "Title")
-      ) {
-        state.data = state.data.sort((a, b) => a.name.localeCompare(b.name));
-      }
-      if (
-        action.payload === "z-a" &&
-        (!state.dataType || state.dataType === "Title")
-      ) {
-        state.data = state.data.sort((a, b) => b.name.localeCompare(a.name));
-      }
-
-      if (action.payload === "a-z" && state.dataType === "Creator") {
-        state.data = state.data.sort((a, b) =>
-          a.creator.localeCompare(b.creator)
-        );
-      }
-      if (action.payload === "z-a" && state.dataType === "Creator") {
-        state.data = state.data.sort((a, b) =>
-          b.creator.localeCompare(a.creator)
-        );
-      }
-
-      if (action.payload === "oldest" && state.dataType === "Date") {
-        state.data = state.data.sort(
-          (a, b) => new Date(a.publish_date) - new Date(b.publish_date)
-        );
-      }
-      if (action.payload === "newest" && state.dataType === "Date") {
-        state.data = state.data.sort(
-          (a, b) => new Date(b.publish_date) - new Date(a.publish_date)
-        );
-      }
-    },
-    OrderingDataType(state, action) {
-      if (action.payload !== state.dataType) {
-        state.dataOrder = "";
-      }
-      state.dataType = action.payload;
-
-      if (!state.dataOrder) return;
-
-      if (
-        (action.payload === "Title" || !state.dataType) &&
-        state.dataOrder === "a-z"
-      ) {
-        state.data = state.data.sort((a, b) => a.name.localeCompare(b.name));
-      }
-      if (
-        (action.payload === "Title" || !state.dataType) &&
-        state.dataOrder === "z-a"
-      ) {
-        state.data = state.data.sort((a, b) => b.name.localeCompare(a.name));
-      }
-
-      if (action.payload === "Creator" && state.dataOrder === "a-z") {
-        state.data = state.data.sort((a, b) =>
-          a.creator.localeCompare(b.creator)
-        );
-      }
-      if (action.payload === "Creator" && state.dataOrder === "z-a") {
-        state.data = state.data.sort((a, b) =>
-          b.creator.localeCompare(a.creator)
-        );
-      }
-
-      if (action.payload === "Date" && state.dataOrder === "oldest") {
-        state.data = state.data.sort(
-          (a, b) => new Date(a.publish_date) - new Date(b.publish_date)
-        );
-      }
-      if (action.payload === "Date" && state.dataOrder === "newest") {
-        state.data = state.data.sort(
-          (a, b) => new Date(b.publish_date) - new Date(a.publish_date)
-        );
+    changeInputSearch(state, action) {
+      state.inputSearch = action.payload;
+      if (state.inputSearch) {
+        state.data = state.data.filter((item) => {
+          console.log(item.name);
+          return item.name
+            .toLowerCase()
+            .includes(state.inputSearch.toLowerCase());
+        });
+      } else {
       }
     },
   },
