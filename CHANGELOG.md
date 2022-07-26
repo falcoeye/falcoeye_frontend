@@ -4,6 +4,7 @@
 - Change Dashboard Header Design
 - Change App Logo and Favicon
 - Apply New Style Enhancements on Sources Sections, Usernow have both Map & Grid View
+- Update Styles of the Workflows Section
 - Add Animations in App to help User Experience
 ### 0.0.3
 - Integrate Login/Register API 
