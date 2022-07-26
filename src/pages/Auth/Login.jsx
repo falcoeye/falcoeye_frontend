@@ -5,7 +5,7 @@ import AuthContext from "../../store/auth-context";
 import axios from "../../utility/auth-instance";
 
 import "./Auth.css";
-import LoadingSpinner from "./components/LoadingSpinner";
+import LoadingSpinner from "../../Components/UI/LoadingSpinner/LoadingSpinner";
 
 const Login = () => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -115,7 +115,7 @@ const Login = () => {
             </button>
 
             <p>
-              Click here to{" "}
+              Click here to
               <Link to="/signup" className="form_link">
                 register
               </Link>{" "}

@@ -1,11 +1,9 @@
-/* eslint-disable jsx-a11y/no-redundant-roles */
 import React from "react";
 function CamerCards({ data }) {
   return (
     <div className="main-container ">
       <div className="bg-white mx-1 pt-9 px-7 pb-7 rounded-sm">
         <ul
-          role="list"
           className="grid sm:grid-cols-2 grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-3 sm:gap-x-3 lg:grid-cols-4 "
         >
           {data.map((file) => (
@@ -35,7 +33,7 @@ function CamerCards({ data }) {
                     href={file.url}
                     className="hover:text-white hover:bg-primary text-sm transition-all ease-in-out duration-300 bg-white text-primary border-2 border-primary px-4 py-2 rounded-3xl"
                   >
-                    {" "}
+                    
                     View More
                   </a>
                 </div>

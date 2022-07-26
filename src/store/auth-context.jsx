@@ -48,7 +48,7 @@ export const AuthContextProvider = (props) => {
           const errorMessage =
             err.response.data.msg || err.response.data.message;
 
-          toast.error(errorMessage || "Something went wrong!", {
+          toast.error(errorMessage || "Something went wrong getting User profile !", {
             position: "bottom-center",
             autoClose: 4000,
             hideProgressBar: true,

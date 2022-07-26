@@ -26,7 +26,7 @@ const ImgDetails = () => {
         </div>
 
         <p className="text-xs mt-2 mb-8">
-          Suggested:{" "}
+          Suggested:
           <span className="text-primary">
             graphics, ui/ux, z, flat, background, business design, logo
           </span>

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Loader from "../../Components/UI/Loader/Loader";
 import { fetchWorkflowsData } from "../../store/workflows";
-import LoadingSpinner from "../Auth/components/LoadingSpinner";
 import WorkflowCard from "./WorkflowCard";
 import WorkflowsFilterBar from "./WorkflowsFilterBar";
 
@@ -21,7 +21,7 @@ const AllWorkflows = () => {
     return (
       <div className="main-container">
         <div className="bg-white mt-5 rounded-[10px] p-5 text-center">
-          <LoadingSpinner />
+          <Loader />
         </div>
       </div>
     );

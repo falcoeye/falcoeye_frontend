@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-redundant-roles */
 import React from "react";
 import Pic1 from "../../images/cam4.jpg";
 function RecentAnalysis() {
@@ -26,7 +25,7 @@ function RecentAnalysis() {
                   </div>
                   <div className="px-2 pt-2 pb-6">
                     <h2 className="text-gray-900 text-base pb-2">
-                      {" "}
+                      
                       {file.title}
                     </h2>
 

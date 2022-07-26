@@ -1,21 +1,21 @@
-/* eslint-disable jsx-a11y/no-redundant-roles */
 import { BsArrowRightCircle } from "react-icons/bs";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import useFetch from "../../hooks/UseFetch";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AiTwotoneEdit, AiFillDelete } from "react-icons/ai";
-import EditCamera from "../Modals/EditCamera";
-import axios from "../../utility/auth-instance";
+import EditSource from "../Modals/EditSource";
+import axios from "../../utility/axios-instance";
 import { toast } from "react-toastify";
-function CamerCards2() {
+function SourcesCardsII() {
   const user = useSelector((state) => state.user);
-  const [editCamera, setEditCamera] = useState(false);
+  const [editSource, setEditSource] = useState(false);
   const camerasList = useFetch("/camera/", {
     headers: {
       Authorization: `Bearer ${user.access_token}`,
     },
   });
+  
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete?")) {
@@ -40,6 +40,10 @@ function CamerCards2() {
     }
   };
 
+  const editSourceModalChangeHandler = useCallback((val) => {
+    setEditSource(val);
+}, []);
+
   return (
     <div className="main-container ">
       <div className="bg-white mx-1 pt-9 px-7 pb-7 rounded-sm">
@@ -51,9 +55,9 @@ function CamerCards2() {
                   key={file.source}
                   className=" flex items-center justify-between shadow-xl rounded-lg px-3"
                 >
-                  {editCamera && (
-                    <EditCamera
-                      setEditCamera={setEditCamera}
+                  {editSource && (
+                    <EditSource
+                      handleEditModal={editSourceModalChangeHandler}
                       currentId={file.id}
                     />
                   )}
@@ -78,8 +82,8 @@ function CamerCards2() {
 
                   <div>
                     <div>
-                      <span onClick={() => setEditCamera(true)}>
-                        {" "}
+                      <span onClick={() => setEditSource(true)}>
+                        
                         <div className="text-primary text-xl ">
                           <AiTwotoneEdit />
                         </div>
@@ -89,7 +93,7 @@ function CamerCards2() {
                         onClick={() => handleDelete(file.id)}
                       >
                         <AiFillDelete color="red" />
-                      </div>{" "}
+                      </div>
                       <br />
                     </div>
                     <Link to={"/Streaming/" + file.id}>
@@ -105,4 +109,4 @@ function CamerCards2() {
   );
 }
 
-export default CamerCards2;
+export default SourcesCardsII;
