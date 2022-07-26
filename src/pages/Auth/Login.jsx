@@ -117,8 +117,8 @@ const Login = () => {
             <p>
               Click here to
               <Link to="/signup" className="form_link">
-                register
-              </Link>{" "}
+                register 
+              </Link>
               now!
             </p>
 

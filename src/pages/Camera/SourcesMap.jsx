@@ -2,12 +2,14 @@ import {
   GoogleMap,
   InfoWindow,
   Marker,
-  useLoadScript,
+  useLoadScript
 } from '@react-google-maps/api';
 import React, { useCallback, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Loader from '../../Components/UI/Loader/Loader';
 import { mapStyles } from "./mapStyles";
+import Lottie from 'lottie-react'
+import noMapDataAnimation from '../../assets/animations/no-map-data.json'
 
 const mapContainerStyle = {
   width: '100%',
@@ -43,7 +45,7 @@ function SourcesMap() {
   if (!isLoaded) return <Loader />;
 
   return (
-    <div>
+    <div className="relative" >
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         onLoad={onMapLoad}
@@ -70,6 +72,13 @@ function SourcesMap() {
           </InfoWindow>
         )}
       </GoogleMap>
+      {
+        sources.data.length === 0 && (
+        <div className="absolute w-full h-full inset-0 overflow-y-auto bg-slate-50/50">
+              <Lottie animationData={noMapDataAnimation} loop={true}  style={{ 'width': '100%', 'height': '100%' }} />
+        </div>
+        )
+      }
     </div>
   );
 }
