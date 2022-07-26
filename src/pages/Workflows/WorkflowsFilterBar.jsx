@@ -1,23 +1,23 @@
 import React from "react";
 import { AiOutlineSearch } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
-import { workflowsActions } from "../../store/workflows";
 
-const WorkflowsFilterBar = () => {
-  const dispatch = useDispatch();
-  const dataType = useSelector((state) => state.workflows.dataType);
-  const dataOrder = useSelector((state) => state.workflows.dataOrder);
-  const searchInput = useSelector((state) => state.workflows.searchInput);
-
+const WorkflowsFilterBar = ({
+  onChangeDataType,
+  onChangeDataOrder,
+  dataType,
+  dataOrder,
+  onChangeSearchInput,
+  searchInput,
+}) => {
   const inputSearchChangeHandler = (e) => {
-    dispatch(workflowsActions.changeInputSearch(e.target.value));
+    onChangeSearchInput(e.target.value);
   };
 
   const selectOrderHandler = (e) => {
-    dispatch(workflowsActions.OrderingData(e.target.value));
+    onChangeDataOrder(e.target.value);
   };
   const selectOrderTypeHandler = (e) => {
-    dispatch(workflowsActions.OrderingDataType(e.target.value));
+    onChangeDataType(e.target.value);
   };
 
   return (
@@ -53,7 +53,7 @@ const WorkflowsFilterBar = () => {
               name="type"
               className="cursor-pointer block bg-white  w-full pl-1  py-2 text-base  focus:outline-none  sm:text-sm rounded-md"
               onChange={selectOrderTypeHandler}
-              defaultValue="Title"
+              value={dataType}
             >
               <option>Title</option>
               <option>Creator</option>
