@@ -16,6 +16,21 @@ import { IoSettings } from "react-icons/io5";
 import { LoadingSkelton } from "../Searchbar";
 import DropDown from "../DropDown/DropDown";
 
+const navLinks = [
+  { id: 1, text: "dashboard", icon: <AiFillAppstore />, path: "/" },
+  { id: 2, text: "camera", icon: <AiFillCamera />, path: "/camera" },
+  { id: 3, text: "studio", icon: <RiCameraLensFill />, path: "/VideoImages" },
+  { id: 4, text: "ai store", icon: <AiFillRobot />, path: "/workflows" },
+  {
+    id: 5,
+    text: "jobs",
+    icon: <BiSearchAlt />,
+    path: "/analysis jobs",
+  },
+  { id: 6, text: "Settings", icon: <IoSettings />, path: "/settings" },
+];
+
+
 const MobileNav = ({ isOpen, toggleDrawer }) => {
   const { pathname } = useLocation();
 
@@ -98,17 +113,3 @@ const MobileNav = ({ isOpen, toggleDrawer }) => {
 };
 
 export default MobileNav;
-
-const navLinks = [
-  { id: 1, text: "dashboard", icon: <AiFillAppstore />, path: "/" },
-  { id: 2, text: "camera", icon: <AiFillCamera />, path: "/camera" },
-  { id: 3, text: "studio", icon: <RiCameraLensFill />, path: "/VideoImages" },
-  { id: 4, text: "ai store", icon: <AiFillRobot />, path: "/workflows" },
-  {
-    id: 5,
-    text: "jobs",
-    icon: <BiSearchAlt />,
-    path: "/analysis jobs",
-  },
-  { id: 6, text: "Settings", icon: <IoSettings />, path: "/settings" },
-];
