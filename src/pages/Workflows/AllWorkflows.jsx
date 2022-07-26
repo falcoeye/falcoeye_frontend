@@ -11,7 +11,6 @@ const AllWorkflows = () => {
   const dispatch = useDispatch();
   const workflowsData = useSelector((state) => state.workflows.data);
   const isLoading = useSelector((state) => state.workflows.isLoading);
-  console.log(workflowsData);
 
   useEffect(() => {
     if (!workflowsData) {
@@ -45,6 +44,32 @@ const AllWorkflows = () => {
     );
   }
 
+  let content;
+  if (workflowsData.length === 0) {
+    content = (
+      <div className="h-96">
+        <Lottie
+          animationData={noDataAnimation}
+          loop={true}
+          style={{ width: "100%", height: "100%" }}
+        />
+      </div>
+    );
+  } else {
+    content = (
+      <div className=" grid md:grid-cols-2 lg:grid-cols-3 sm:grid-cols-1 gap-4 mt-8">
+        {workflowsData.map((item) => (
+          <WorkflowCard
+            key={item.id}
+            creator={item.creator}
+            date={item.publish_date}
+            title={item.name}
+          />
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="main-container">
@@ -54,16 +79,7 @@ const AllWorkflows = () => {
           </h3>
           <WorkflowsFilterBar />
 
-          <div className=" grid md:grid-cols-2 lg:grid-cols-3 sm:grid-cols-1 gap-4 mt-8">
-            {workflowsData.map((item) => (
-              <WorkflowCard
-                key={item.id}
-                creator={item.creator}
-                date={item.publish_date}
-                title={item.name}
-              />
-            ))}
-          </div>
+          {content}
         </div>
       </div>
     </div>

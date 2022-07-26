@@ -1,13 +1,17 @@
 import React from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import AutoComplete from "../../Components/AutoComplete";
 import { workflowsActions } from "../../store/workflows";
 
 const WorkflowsFilterBar = () => {
   const dispatch = useDispatch();
   const dataType = useSelector((state) => state.workflows.dataType);
   const dataOrder = useSelector((state) => state.workflows.dataOrder);
+  const searchInput = useSelector((state) => state.workflows.searchInput);
+
+  const inputSearchChangeHandler = (e) => {
+    dispatch(workflowsActions.changeInputSearch(e.target.value));
+  };
 
   const selectOrderHandler = (e) => {
     dispatch(workflowsActions.OrderingData(e.target.value));
@@ -25,10 +29,14 @@ const WorkflowsFilterBar = () => {
               <span className="text-primary text-xl mr-4 ">
                 <AiOutlineSearch />
               </span>
-              <AutoComplete
-                data={suggestions}
-                placeholder={`Type into search ...`}
-              />
+              <div className="w-full relative">
+                <input
+                  className="focus:outline-none text-primary placeholder-primary text-sm bg-transparent w-full"
+                  type="text"
+                  value={searchInput}
+                  onChange={inputSearchChangeHandler}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -89,5 +97,3 @@ const WorkflowsFilterBar = () => {
 };
 
 export default WorkflowsFilterBar;
-
-const suggestions = ["bla bla", "baby"];

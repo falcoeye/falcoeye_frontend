@@ -7,6 +7,7 @@ const initialState = {
   dataOrder: null,
   isLoading: true,
   dataType: null,
+  inputSearch: null,
 };
 
 export const workflowsSlice = createSlice({
@@ -103,6 +104,18 @@ export const workflowsSlice = createSlice({
         state.data = state.data.sort(
           (a, b) => new Date(b.publish_date) - new Date(a.publish_date)
         );
+      }
+    },
+    changeInputSearch(state, action) {
+      state.inputSearch = action.payload;
+      if (state.inputSearch) {
+        state.data = state.data.filter((item) => {
+          console.log(item.name);
+          return item.name
+            .toLowerCase()
+            .includes(state.inputSearch.toLowerCase());
+        });
+      } else {
       }
     },
   },
