@@ -4,7 +4,6 @@ function CamerCards({ data }) {
     <div className="main-container ">
       <div className="bg-white mx-1 pt-9 px-7 pb-7 rounded-sm">
         <ul
-          role="list"
           className="grid sm:grid-cols-2 grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-3 sm:gap-x-3 lg:grid-cols-4 "
         >
           {data.map((file) => (
