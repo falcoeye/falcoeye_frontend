@@ -22,32 +22,34 @@ const SideNave = ({ sideNav, toggle }) => {
           sideNav ? "w-[200px]" : "w-[70px]"
         } h-screen fixed top-0 left-0  py-5 bg-white flex flex-col justify-between transition-all duration-500 `}
       >
-        <Link to={`/`} className="w-full ">
+        <Link to={`/`} className="w-16 ">
           <img src={logoSrc} alt="logo" />
         </Link>
-        <ul className="flex flex-col gap-y-1  pr-4 mt-4 py-4 overflow-hidden">
-          {navLinks.map(({ id, icon, path, text }) => {
-            return (
-              <li key={id}>
-                <Link to={path}>
-                  <span
-                    className={`${
-                      pathname === path
-                        ? "bg-primary text-white curve"
-                        : "bg-white text-primary"
-                    } flex text-xl items-center gap-x-8   relative  w-full rounded-r-full  h-[45px]  px-6`}
-                  >
-                    <span className="min-w-max">{icon}</span>
-                    <span className="capitalize text-sm min-w-max">{text}</span>
-                  </span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-        <button onClick={toggle} className="text-primary text-xl mx-auto mt-8">
-          {sideNav ? <AiOutlineBackward /> : <AiOutlineForward />}
-        </button>
+        <div className="grow text-center" >
+          <ul className="flex flex-col gap-y-1  pr-4 mt-4 py-4 overflow-hidden">
+            {navLinks.map(({ id, icon, path, text }) => {
+              return (
+                <li key={id}>
+                  <Link to={path}>
+                    <span
+                      className={`${
+                        pathname === path
+                          ? "bg-primary text-white curve"
+                          : "bg-white text-primary"
+                      } flex text-xl items-center gap-x-8   relative  w-full rounded-r-full  h-[45px]  px-6`}
+                    >
+                      <span className="min-w-max">{icon}</span>
+                      <span className="capitalize text-sm min-w-max">{text}</span>
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+          <button onClick={toggle} className="text-primary text-xl mx-auto mt-8">
+            {sideNav ? <AiOutlineBackward /> : <AiOutlineForward />}
+          </button>
+        </div>
           {process.env.REACT_APP_VERSION && (
             <span className=" text-center text-gray-400 text-base font-semibold">
               {`${process.env.REACT_APP_VERSION}`}
