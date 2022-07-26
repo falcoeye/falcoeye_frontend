@@ -147,7 +147,7 @@ const AllWorkflows = () => {
   let content;
 
   if (isLoading) {
-    content = <Loader height="32" />;
+    content = <Loader />;
   }
 
   if (!workflowsData && !isLoading) {
