@@ -144,6 +144,12 @@ const Signup = () => {
               </Link>{" "}
               now!
             </p>
+
+            {process.env.REACT_APP_VERSION && (
+              <p className=" text-center text-gray-400 text-base font-semibold mt-4">
+                {`${process.env.REACT_APP_VERSION}`}
+              </p>
+            )}
           </form>
         </div>
       </div>
