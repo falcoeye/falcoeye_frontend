@@ -53,6 +53,6 @@ export const fetchSources = () => async (dispatch) => {
 const { actions, reducer } = sourcesSlice
 
 // Action creators are generated for each case reducer function
-export const { fetchingSources, fetchSourcesSuccess, fetchSourcesFailed, addSource, deleteSource } = actions
+export const { fetchingSources, fetchSourcesSuccess, fetchSourcesFailed, addSource, deleteSource, editSource } = actions
 
 export default reducer

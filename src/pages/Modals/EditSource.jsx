@@ -2,44 +2,56 @@ import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import Loader from '../../Components/UI/Loader/Loader';
 import LoadingSpinner from '../../Components/UI/LoadingSpinner/LoadingSpinner';
-import axios from '../../utility/api-instance';
 import './Modals.css';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from "../../utility/api-instance";
+import { editSource } from '../../store/sources';
+
+
+const streaminServerFields = [ 'name', 'latitude', 'longitude', 'streaming_type', 'url', 'status' ]
+const RSTPFields = [ 'name', 'latitude', 'longitude', 'streaming_type', 'url', 'status', 'host', 'port', 'user', 'password', 'thumbnail']
+
 const EditSource = ({ handleClose, id, open }) => {
+	const dispatch = useDispatch()
 	const [disableSubmit, setDisableSubmit] = useState(true);
 	const [sendingRequest, setSendingRequest] = useState(false);
 	const [errorMessage, setErrorMessage] = useState(false);
 
-	const [data, setData] = useState(null);
-	const [fetching, setFetching] = useState(false);
+	const sources = useSelector((state) => state.sources);
+	
+	const [data, setData] = useState({
+		name: '',
+		latitude: '',
+		longitude: '',
+		streaming_type: '',
+		url: '',
+		host: '',
+		port: '',
+		username: '',
+		password: '',
+		thumbnail: null,
+		status: "RUNNING",
+	});
 
 	useEffect(() => {
-		if (!id) return;
-		setFetching(true);
-		axios
-			.get(`/camera/${id}`)
-			.then((res) => {
-				setFetching(false);
-				setData(res.data.camera);
-			})
-			.catch((err) => {
-				setFetching(false);
-				toast.error(err.response?.data?.message);
-			});
-	}, [id]);
+		if( !id ) return;
+		let sourceData = sources.data.find(item => item.id === id);
+		setData(sourceData)
+	}, [id, sources.data])
 
 	useEffect(() => {
-		if (!data) return;
-		const dataFields = Object.keys(data);
-		let hasNull = false;
-		dataFields.forEach((key) => {
-			if (data[key] === null || data[key] === '') {
-				hasNull = true;
-			}
-		});
-		setDisableSubmit(hasNull);
-	}, [data]);
+		if( !id ) return;
+		const dataFields = data.streaming_type === 'StreamingServer' ? streaminServerFields : RSTPFields
+		let hasNull = false
+		dataFields.forEach(key => {
+			if(data[key] === null || data[key] === '') {
+				hasNull = true
+			} 
+		})
+		setDisableSubmit(hasNull)
+	}, [id, data]);
+
 
 	const handleChange = (e) => {
 		const { name, value, type } = e.target;
@@ -95,9 +107,13 @@ const EditSource = ({ handleClose, id, open }) => {
 		e.preventDefault();
 		setSendingRequest(true);
 		try {
-			//const res = await axios.put("/camera/", data);
-			//dispatch(editSource(res.data.camera))
-			/* dispatch(editSource(data)) */
+			const dataFields = data.streaming_type === 'StreamingServer' ? streaminServerFields : RSTPFields
+			let sentData = {};
+			dataFields.forEach( field => {
+				sentData[field] = data[field]
+			} )
+			const res = await axios.put("/camera/", sentData);
+			dispatch(editSource(res.data.camera))
 			setSendingRequest(false);
 			handleClose();
 		} catch (error) {
@@ -111,147 +127,6 @@ const EditSource = ({ handleClose, id, open }) => {
 			setSendingRequest(false);
 		}
 	};
-
-	let content;
-
-	if (fetching) {
-		content = <Loader />;
-	}
-	if (!data && !fetching) {
-		content = (
-			<h3 className="text-lg text-center font-medium leading-6 text-gray-900">
-				There is no info about this source
-			</h3>
-		);
-	}
-	if (data && !fetching) {
-		content = (
-			<Fragment>
-				<div className="cmb_heading">Edit a Source</div>
-				<form>
-					<input
-						type="text"
-						id="name"
-						className="modal_form_input"
-						name="name"
-						placeholder="Name"
-						onChange={handleChange}
-						value={data.name}
-					/>
-					<input
-						type="number"
-						id="utm_x"
-						className="modal_form_input "
-						name="utm_x"
-						placeholder="longitude"
-						onChange={handleChange}
-						value={data.utm_x}
-					/>
-					<input
-						type="number"
-						id="utm_y"
-						className="modal_form_input "
-						name="utm_y"
-						placeholder="latitude"
-						onChange={handleChange}
-						value={data.utm_y}
-					/>
-					<select
-						id="streaming_type"
-						className="modal_form_input "
-						name="streaming_type"
-						onChange={(e) => {
-							handleStreamingTypeChange(e);
-						}}
-					>
-						<option value="-">--SELECT--</option>
-						<option value="RSTP">RSTP</option>
-						<option value="STREAMINGSERVER">STREAMING SERVER</option>
-					</select>
-					<input
-						type="text"
-						id="url"
-						className="modal_form_input "
-						name="url"
-						placeholder="url"
-						onChange={handleChange}
-						value={data.url}
-					/>
-					<input
-						type="text"
-						id="host"
-						className="modal_form_input "
-						name="host"
-						placeholder="host"
-						onChange={handleChange}
-						value={data.host}
-					/>
-
-					<input
-						type="number"
-						id="port"
-						className="modal_form_input "
-						name="port"
-						placeholder="port"
-						onChange={handleChange}
-						value={data.port}
-					/>
-
-					<input
-						type="text"
-						id="username"
-						className="modal_form_input "
-						name="username"
-						placeholder="username"
-						onChange={handleChange}
-						value={data.username}
-					/>
-					<input
-						type="password"
-						id="password"
-						className="modal_form_input "
-						name="password"
-						placeholder="password"
-						onChange={handleChange}
-						value={data.password}
-					/>
-					<div>
-						<label
-							htmlFor="thumbnail"
-							className="image_upload_label"
-							style={{ margin: '5px auto' }}
-						>
-							Upload Source Thumbnail
-							<input
-								style={{
-									visibility: 'hidden',
-									position: 'absolute',
-									zIndex: '-1',
-								}}
-								type="file"
-								id="thumbnail"
-								accept="image/*"
-								className="modal_form_input "
-								name="thumbnail"
-								placeholder="Source Thumbnail"
-								onChange={handleImageUpload}
-							/>
-						</label>
-					</div>
-					{errorMessage && <p className="error_text">{errorMessage}</p>}
-					<button
-						style={{ margin: '25px auto', display: 'block' }}
-						className={`login_form_btn ${
-							disableSubmit && 'disable_submit_btn'
-						}`}
-						onClick={handleSubmit}
-					>
-						{sendingRequest ? <LoadingSpinner /> : 'Edit Source'}
-					</button>
-				</form>
-			</Fragment>
-		);
-	}
 
 	return (
 		<Transition appear show={open} as={Fragment}>
@@ -280,7 +155,126 @@ const EditSource = ({ handleClose, id, open }) => {
 							leaveTo="opacity-0 scale-95"
 						>
 							<Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-								{content}
+								<div className="cmb_heading">Edit a Source</div>
+								<form>
+									<input
+										type="text"
+										id="name"
+										className="modal_form_input"
+										name="name"
+										placeholder="Name"
+										onChange={handleChange}
+										value={data.name}
+									/>
+									<input
+										type="number"
+										id="latitude"
+										className="modal_form_input "
+										name="latitude"
+										placeholder="longitude"
+										onChange={handleChange}
+										value={data.latitude}
+									/>
+									<input
+										type="number"
+										id="longitude"
+										className="modal_form_input "
+										name="longitude"
+										placeholder="latitude"
+										onChange={handleChange}
+										value={data.longitude}
+									/>
+									<select
+										id="streaming_type"
+										className="modal_form_input "
+										name="streaming_type"
+										value={data.streaming_type}
+										onChange={(e) => {
+											handleStreamingTypeChange(e);
+										}}
+									>
+										<option value="-">--SELECT--</option>
+										<option disabled value="RSTP">RSTP</option>
+										<option value="StreamingServer">STREAMING SERVER</option>
+									</select>
+									<input
+										type="text"
+										id="url"
+										className="modal_form_input "
+										name="url"
+										placeholder="url"
+										onChange={handleChange}
+										value={data.url}
+									/>
+									{data.streaming_type === 'RSTP' && (
+										<Fragment>
+											<input
+												type="text"
+												id="host"
+												className="modal_form_input "
+												name="host"
+												placeholder="host"
+												onChange={handleChange}
+												value={data.host}
+											/>
+
+											<input
+												type="number"
+												id="port"
+												className="modal_form_input "
+												name="port"
+												placeholder="port"
+												onChange={handleChange}
+												value={data.port}
+											/>
+
+											<input
+												type="text"
+												id="username"
+												className="modal_form_input "
+												name="username"
+												placeholder="username"
+												onChange={handleChange}
+												value={data.username}
+											/>
+											<input
+												type="password"
+												id="password"
+												className="modal_form_input "
+												name="password"
+												placeholder="password"
+												onChange={handleChange}
+												value={data.password}
+											/>
+											<div>
+												<label htmlFor="thumbnail" className="image_upload_label" style={{ margin: '5px auto' }}>
+													Upload Source Thumbnail
+													<input
+														style={{
+															visibility: "hidden",
+															position: "absolute",
+															zIndex: "-1",
+														}}
+														type="file"
+														id="thumbnail"
+														accept="image/*"
+														className="modal_form_input "
+														name="thumbnail"
+														placeholder="Source Thumbnail"
+														onChange={handleImageUpload}
+													/>
+												</label>
+											</div>
+										</Fragment>
+									)}
+									{errorMessage && <p className="error_text">{errorMessage}</p>}
+									<button
+										style={{ margin: "25px auto", display: 'block' }}
+										className={`login_form_btn ${disableSubmit && "disable_submit_btn"
+											}`}
+										onClick={handleSubmit}
+									>{sendingRequest ? <LoadingSpinner /> : "Edit Source"}</button>
+								</form>
 							</Dialog.Panel>
 						</Transition.Child>
 					</div>

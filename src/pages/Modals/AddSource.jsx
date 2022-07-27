@@ -29,15 +29,6 @@ const AddSource = ({ handleSourceModal }) => {
     status: "RUNNING",
   });
 
-  const handleStreamingTypeChange = (e) => {
-    handleChange(e);
-    if (e.target.value === "RSTP") {
-      // setShowRSTP(true);
-    } else {
-      // setShowRSTP(false);
-    }
-  };
-
   useEffect(() => {
     if(data.streaming_type === '' ) return;
     const dataFields = data.streaming_type === 'StreamingServer' ? streaminServerFields : RSTPFields
@@ -49,6 +40,16 @@ const AddSource = ({ handleSourceModal }) => {
     })
     setDisableSubmit(hasNull)
   }, [data]);
+
+  const handleStreamingTypeChange = (e) => {
+    handleChange(e);
+    if (e.target.value === "RSTP") {
+      // setShowRSTP(true);
+    } else {
+      // setShowRSTP(false);
+    }
+  };
+
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
@@ -101,7 +102,6 @@ const AddSource = ({ handleSourceModal }) => {
       dataFields.forEach( field => {
         sentData[field] = data[field]
       } )
-      console.log(sentData)
       const res = await axios.post("/camera/",sentData);
       dispatch(addSource(res.data.camera))
       setSendingRequest(false)
