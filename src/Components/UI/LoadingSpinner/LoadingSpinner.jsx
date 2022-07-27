@@ -4,7 +4,7 @@ const LoadingSpinner = () => {
   return (
     <div role="status">
       <svg
-        className="inline mr-2 w-6 h-6 text-gray-200 animate-spin fill-gray-600"
+        className="inline mr-2 w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -18,7 +18,6 @@ const LoadingSpinner = () => {
           fill="currentFill"
         />
       </svg>
-      <span className="sr-only">Loading...</span>
     </div>
   );
 };

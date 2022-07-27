@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import AuthContext from "../../store/auth-context";
 import axios from "../../utility/auth-instance";
 import "./Auth.css";
-import LoadingSpinner from "./components/LoadingSpinner";
+import LoadingSpinner from "../../Components/UI/LoadingSpinner/LoadingSpinner";
 //import { addUser } from "../../store/user";
 const Signup = () => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -138,7 +138,7 @@ const Signup = () => {
             </button>
 
             <p>
-              Click here to{" "}
+              Click here to
               <Link to="/login" className="form_link">
                 login
               </Link>{" "}

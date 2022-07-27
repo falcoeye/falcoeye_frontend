@@ -9,7 +9,7 @@ import {
   IoMdArrowDropdown,
 } from "react-icons/io";
 import Info from "./Info";
-import Setting from "./Setting";
+import Setting from "../Settings/Settings";
 function LiveStreaming(props) {
   const [show, setShow] = useState("Settings");
   const handleClick = (kuch) => {
@@ -70,7 +70,7 @@ function LiveStreaming(props) {
                     href="/"
                     className="flex bg-primary items-center  px-4 gap-1 py-1 rounded-3xl"
                   >
-                    {" "}
+                    
                     <IoMdArrowDropleft />
                     <span>Right</span>
                     <IoMdArrowDropright />
@@ -89,7 +89,7 @@ function LiveStreaming(props) {
                     href="/"
                     className="flex  justify-center items-center  px-4 gap-1 py-1 rounded-3xl"
                   >
-                    {" "}
+                    
                     <div className="border-2 border-white rounded-sm p-[2px] text-2xl">
                       <IoMdArrowDropup />
                     </div>

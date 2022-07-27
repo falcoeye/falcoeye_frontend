@@ -1,3 +1,11 @@
+### 0.0.4
+- Integrate Workflows Show API & Apply Filtering on the frontend
+- Integrate Sources (CRUD) API
+- Change Dashboard Header Design in Desktop and Mobile
+- Change App Logo and Favicon
+- Apply New Style Enhancements on Sources Sections, Usernow have both Map & Grid View
+- Update Styles of the Workflows Section
+- Add Animations in App to help User Experience
 ### 0.0.3
 - Integrate Login/Register API 
 - Integrate User Profile API

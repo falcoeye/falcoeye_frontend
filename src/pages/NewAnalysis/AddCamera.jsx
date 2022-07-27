@@ -19,7 +19,7 @@ const AddCamera = () => {
               <button className="btn-primary">
                 <span>
                   <BsCamera />
-                </span>{" "}
+                </span>
                 + Add Camera
               </button>
             </div>
@@ -95,7 +95,7 @@ const AddCamera = () => {
               <button className="btn-primary">
                 <span className="text-base">
                   <BiSave />
-                </span>{" "}
+                </span>
                 Submit
               </button>
             </div>

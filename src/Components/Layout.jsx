@@ -3,6 +3,7 @@ import MobileNav from "./Menue/MobileNav";
 import SideNave from "./Menue/SideNave";
 import Searchbar from "./Searchbar";
 import { useLocation } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 const Layout = ({ children }) => {
   const [sideNavToggle, setSideNavToggle] = useState(false);
@@ -23,6 +24,17 @@ const Layout = ({ children }) => {
         <div className="flex flex-1 flex-col w-full">
           <MobileNav isOpen={sideNavToggle} toggleDrawer={handleSideNav} />
           {searchPaths.includes(pathname) ? "" : <Searchbar />}
+          <ToastContainer
+                position="bottom-right"
+                autoClose={4000}
+                hideProgressBar={true}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnHover={false}
+                progress={undefined}
+                draggable={false}
+            />
           {children}
         </div>
       </div>

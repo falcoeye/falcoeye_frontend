@@ -1,19 +1,23 @@
 import React from "react";
 import { AiOutlineSearch } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
-import AutoComplete from "../../Components/AutoComplete";
-import { workflowsActions } from "../../store/workflows";
 
-const WorkflowsFilterBar = () => {
-  const dispatch = useDispatch();
-  const dataType = useSelector((state) => state.workflows.dataType);
-  const dataOrder = useSelector((state) => state.workflows.dataOrder);
+const WorkflowsFilterBar = ({
+  onChangeDataType,
+  onChangeDataOrder,
+  dataType,
+  dataOrder,
+  onChangeSearchInput,
+  searchInput,
+}) => {
+  const inputSearchChangeHandler = (e) => {
+    onChangeSearchInput(e.target.value);
+  };
 
   const selectOrderHandler = (e) => {
-    dispatch(workflowsActions.OrderingData(e.target.value));
+    onChangeDataOrder(e.target.value);
   };
   const selectOrderTypeHandler = (e) => {
-    dispatch(workflowsActions.OrderingDataType(e.target.value));
+    onChangeDataType(e.target.value);
   };
 
   return (
@@ -25,10 +29,14 @@ const WorkflowsFilterBar = () => {
               <span className="text-primary text-xl mr-4 ">
                 <AiOutlineSearch />
               </span>
-              <AutoComplete
-                data={suggestions}
-                placeholder={`Type into search ...`}
-              />
+              <div className="w-full relative">
+                <input
+                  className="focus:outline-none text-primary placeholder-primary text-sm bg-transparent w-full"
+                  type="text"
+                  value={searchInput}
+                  onChange={inputSearchChangeHandler}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -45,7 +53,7 @@ const WorkflowsFilterBar = () => {
               name="type"
               className="cursor-pointer block bg-white  w-full pl-1  py-2 text-base  focus:outline-none  sm:text-sm rounded-md"
               onChange={selectOrderTypeHandler}
-              defaultValue="Title"
+              value={dataType}
             >
               <option>Title</option>
               <option>Creator</option>
@@ -89,5 +97,3 @@ const WorkflowsFilterBar = () => {
 };
 
 export default WorkflowsFilterBar;
-
-const suggestions = ["bla bla", "baby"];

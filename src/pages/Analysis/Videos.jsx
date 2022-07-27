@@ -12,7 +12,7 @@ const Videos = () => {
       <div>
         <h3 className="text-[#525252] capitalize text-xl flex items-center gap-5 pb-5 border-b border-[#f5f5f5] mb-4">
           <span className="text-[#c2667b] text-2xl flex gap-2 items-center">
-            <IoChevronBackCircleOutline />{" "}
+            <IoChevronBackCircleOutline />
             <span className="text-xl"> Back</span>
           </span>
           Cut video segments where certain type of fish exist
@@ -72,7 +72,7 @@ const Videos = () => {
         <button className="rounded-full bg-[#5dbf98] text-white inline-flex items-center gap-2 mt-16 justify-center capitalize text-base min-h-[38px] px-4">
           <span>
             <BiNavigation />
-          </span>{" "}
+          </span>
           publish to media
         </button>
       </div>

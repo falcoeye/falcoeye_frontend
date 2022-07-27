@@ -1,9 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "../store/user";
+import { configureStore } from '@reduxjs/toolkit'
+import sourcesReducer  from './sources'
 import workflowReducer from "./workflows";
 export const store = configureStore({
-  reducer: {
-    user: userReducer,
-    workflows: workflowReducer,
-  },
-});
+    reducer: {
+        sources: sourcesReducer,
+        workflows: workflowReducer,
+    },
+})

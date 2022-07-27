@@ -10,6 +10,7 @@ import {
 import { RiCameraLensFill } from "react-icons/ri";
 import { BiSearchAlt } from "react-icons/bi";
 import { useLocation } from "react-router-dom";
+import logoSrc from "../../images/logo.png";
 import { IoSettings } from "react-icons/io5";
 
 const SideNave = ({ sideNav, toggle }) => {
@@ -21,10 +22,10 @@ const SideNave = ({ sideNav, toggle }) => {
           sideNav ? "w-[200px]" : "w-[70px]"
         } h-screen fixed top-0 left-0  py-5 bg-white flex flex-col justify-between transition-all duration-500 `}
       >
-        <div className="text-center">
-          <Link to={`/`} className="w-full ">
-            <img src="" alt="logo" />
-          </Link>
+        <Link to={`/`} className="w-16 ">
+          <img src={logoSrc} alt="logo" />
+        </Link>
+        <div className="grow text-center">
           <ul className="flex flex-col gap-y-1  pr-4 mt-4 py-4 overflow-hidden">
             {navLinks.map(({ id, icon, path, text }) => {
               return (
@@ -49,7 +50,7 @@ const SideNave = ({ sideNav, toggle }) => {
           </ul>
           <button
             onClick={toggle}
-            className="text-primary text-xl mx-auto mt-8 "
+            className="text-primary text-xl mx-auto mt-8"
           >
             {sideNav ? <AiOutlineBackward /> : <AiOutlineForward />}
           </button>
@@ -70,7 +71,7 @@ const navLinks = [
   { id: 1, text: "dashboard", icon: <AiFillAppstore />, path: "/" },
   { id: 2, text: "camera", icon: <AiFillCamera />, path: "/camera" },
   { id: 3, text: "studio", icon: <RiCameraLensFill />, path: "/VideoImages" },
-  { id: 4, text: "ai store", icon: <AiFillRobot />, path: "/workflows" },
+  { id: 4, text: "workflows", icon: <AiFillRobot />, path: "/workflows" },
   {
     id: 5,
     text: "jobs",
