@@ -3,7 +3,6 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { fetchSources } from "../../store/sources";
 import AddSource from "../Modals/AddSource";
-import SourceModal from "../Modals/SourceModal";
 import SourcesGrid from "./SourcesGrid";
 import SourcesMap from "./SourcesMap";
 
@@ -11,20 +10,8 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 const SourcesView = (props) => {
-  const [selectedCardId, setSelectedCardId] = useState(null);
-  const [selectedCardUrl, setSelectedCardUrl] = useState(null);
-  const [sourceModal, setSourceModal] = useState(false);
   const [addSourceOpened, setAddSourceOpened] = useState(false);
   const dispatch = useDispatch();
-
-  const openSourceModalHandler = (id, url) => {
-    setSourceModal(true);
-    setSelectedCardId(id);
-    setSelectedCardUrl(url);
-  };
-  const closeSourceModalHandler = () => {
-    setSourceModal(false);
-  };
 
   useEffect(() => {
     dispatch(fetchSources());
@@ -92,7 +79,7 @@ const SourcesView = (props) => {
                       "ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
                     )}
                   >
-                    <SourcesGrid onOpenSourceModal={openSourceModalHandler} />
+                    <SourcesGrid />
                   </Tab.Panel>
                   <Tab.Panel
                     className={classNames(
@@ -108,13 +95,6 @@ const SourcesView = (props) => {
           </div>
         </div>
       </div>
-
-      <SourceModal
-        open={sourceModal}
-        onCloseSourceModal={closeSourceModalHandler}
-        selectedCardId={selectedCardId}
-        selectedCardUrl={selectedCardUrl}
-      />
     </>
   );
 };

@@ -1,25 +1,24 @@
 import Lottie from "lottie-react";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { useSelector } from "react-redux";
 import noDataAnimation from "../../assets/animations/no-data.json";
 import Loader from "../../Components/UI/Loader/Loader";
+import SourceModal from "../Modals/SourceModal";
 import SourceCard from "./SourceCard";
 
-const SourcesGrid = ({ onOpenSourceModal }) => {
-  //   const [selectedCardId, setSelectedCardId] = useState(null);
-  //   const [showModalOpened, setShowModalOpened] = useState(false);
-  //   const [editModalOpened, setEditModalOpened] = useState(false);
-  //   const closeShowModalHandler = useCallback(() => {
-  //     setShowModalOpened(false);
-  //     setSelectedCardId(null);
-  //   }, []);
-  //   const openEditModalHandler = useCallback(() => {
-  //     setShowModalOpened(false);
-  //     setEditModalOpened(true);
-  //   }, []);
-  //   const closeEditModalHandler = useCallback(() => {
-  //     setEditModalOpened(false);
-  //   }, []);
+const SourcesGrid = () => {
+  const [selectedCardId, setSelectedCardId] = useState(null);
+  const [selectedCardUrl, setSelectedCardUrl] = useState(null);
+  const [sourceModal, setSourceModal] = useState(false);
+
+  const openSourceModalHandler = (id, url) => {
+    setSourceModal(true);
+    setSelectedCardId(id);
+    setSelectedCardUrl(url);
+  };
+  const closeSourceModalHandler = () => {
+    setSourceModal(false);
+  };
 
   const sources = useSelector((state) => state.sources);
 
@@ -43,7 +42,7 @@ const SourcesGrid = ({ onOpenSourceModal }) => {
       <SourceCard
         key={source.id}
         source={source}
-        handleClick={onOpenSourceModal}
+        handleClick={openSourceModalHandler}
       />
     );
   });
@@ -59,6 +58,13 @@ const SourcesGrid = ({ onOpenSourceModal }) => {
         openEditModalHandler={onOpenEditModal}
         id={selectedCardId}
       /> */}
+
+      <SourceModal
+        open={sourceModal}
+        onCloseSourceModal={closeSourceModalHandler}
+        selectedCardId={selectedCardId}
+        selectedCardUrl={selectedCardUrl}
+      />
     </Fragment>
   );
 };
