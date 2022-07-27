@@ -31,18 +31,17 @@ const SourcesView = (props) => {
                 <AddSource handleSourceModal={addSourceModalChangeHandler} />
             )}
             <div className="main-container mt-6 ">
-                <div className=" bg-white mx-1 pt-3 px-7 pb-7 rounded-sm">
+                <div className=" bg-white mx-1 pt-3 px-4 md:px-7 pb-7 rounded-sm">
                     <div className="flex justify-between sm:flex-row flex-col">
                         <div>
                             <h2 className="text-gray-900 text-lg capitalize">My sources</h2>
                         </div>
                         <button type="button" className="flex gap-5 sm:pt-0 pt-4">
-                            <FaCamera className="md:hidden block" />
                             <span
                                 onClick={() => setAddSourceOpened(true)}
                                 className="bg-primary text-white text-sm py-2  flex justify-center items-center md:px-4 px-3 md:rounded-3xl rounded-full"
                             >
-                                <span className="md:block hidden capitalize"> Add source</span>
+                                <span className="capitalize"> Add source</span>
                             </span>
                         </button>
                     </div>
