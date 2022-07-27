@@ -9,7 +9,7 @@ import {
   IoMdArrowDropdown,
 } from "react-icons/io";
 import Info from "./Info";
-import Setting from "./Setting";
+import Setting from "../Settings/Settings";
 function LiveStreaming(props) {
   const [show, setShow] = useState("Settings");
   const handleClick = (kuch) => {

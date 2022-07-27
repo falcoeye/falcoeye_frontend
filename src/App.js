@@ -15,6 +15,7 @@ import NewAnalysis from "./pages/NewAnalysis";
 import SnapShot from "./pages/Snapshots";
 import Streaming from "./pages/Streaming";
 import VideoImages from "./pages/VideoImages";
+import Settings from "./pages/Settings/Settings";
 
 toast.configure();
 
@@ -106,6 +107,14 @@ function App() {
         element={
           <RequireAuth>
             <Charts />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="settings"
+        element={
+          <RequireAuth>
+            <Settings />
           </RequireAuth>
         }
       />
