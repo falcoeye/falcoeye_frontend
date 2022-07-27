@@ -1,6 +1,5 @@
 import { Tab } from '@headlessui/react';
 import { useCallback, useEffect, useState } from 'react';
-import { FaCamera } from 'react-icons/fa';
 import { useDispatch } from "react-redux";
 import { fetchSources } from "../../store/sources";
 import AddSource from '../Modals/AddSource';
