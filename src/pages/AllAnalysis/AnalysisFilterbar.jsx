@@ -1,7 +1,12 @@
-import { AiOutlineSearch } from "react-icons/ai";
-import AutoComplete from "../../Components/AutoComplete";
 import React from "react";
-const AnalysisFilterbar = () => {
+import { AiOutlineSearch } from "react-icons/ai";
+
+const AnalysisFilterbar = ({
+  onSearchInputChange,
+  searchInput,
+  onAnalysisStatusChange,
+  alanysisStatus,
+}) => {
   return (
     <div className=" bg-backgroundLight flex items-center md:px-4 pt-2 rounded-md">
       <div className="flex  md:gap-4 justify-between md:flex-row flex-col w-full">
@@ -11,15 +16,20 @@ const AnalysisFilterbar = () => {
               <span className="text-primary text-xl mr-4 ">
                 <AiOutlineSearch />
               </span>
-              <AutoComplete
-                data={suggestions}
-                placeholder={`Type into search ...`}
-              />
+              <div className="w-full relative">
+                <input
+                  className="focus:outline-none text-primary placeholder-primary text-sm bg-transparent w-full"
+                  type="text"
+                  placeholder="Type Into Search ..."
+                  onChange={onSearchInputChange}
+                  value={searchInput}
+                />
+              </div>
             </div>
           </div>
         </div>
-        <div className="flex gap-4 md:flex-row flex-col items-center mb-2 md:px-0 px-4">
-          <div className="flex items-center md:max-w-sm w-full   bg-white  px-3 rounded-md">
+        <div className="flex-1 flex gap-4 md:flex-row flex-col items-center justify-end mb-2 md:px-0 px-4">
+          <div className="flex items-center md:max-w-[12rem] w-full  bg-white  px-3 rounded-md">
             <span
               htmlFor="location"
               className="block text-sm font-medium text-primary whitespace-nowrap"
@@ -29,45 +39,14 @@ const AnalysisFilterbar = () => {
             <select
               id="location"
               name="location"
-              className="mt-1 block bg-white  w-full pl-1  py-2 text-base  focus:outline-none  sm:text-sm rounded-md"
+              className="block bg-white  w-full pl-1  py-2 text-base  focus:outline-none  sm:text-sm rounded-md"
+              onChange={onAnalysisStatusChange}
+              value={alanysisStatus}
             >
-              <option>Videos</option>
-              <option>Canada</option>
-              <option>Mexico</option>
-            </select>
-          </div>
-          <div className="flex items-center md:max-w-sm w-full   bg-white  px-3 rounded-md">
-            <span
-              htmlFor="location"
-              className="block text-sm font-medium text-primary whitespace-nowrap"
-            >
-              Sort by:
-            </span>
-            <select
-              id="location"
-              name="location"
-              className="mt-1 block bg-white  w-full pl-1  py-2 text-base  focus:outline-none  sm:text-sm rounded-md"
-            >
-              <option>Date</option>
-              <option>Canada</option>
-              <option>Mexico</option>
-            </select>
-          </div>
-          <div className="flex items-center md:max-w-md w-full   bg-white  px-3 rounded-md">
-            <span
-              htmlFor="location"
-              className="block text-sm font-medium text-primary whitespace-nowrap"
-            >
-              Sort by:
-            </span>
-            <select
-              id="location"
-              name="location"
-              className="mt-1 block bg-white  w-full pl-1  py-2 text-base  focus:outline-none  sm:text-sm rounded-md"
-            >
-              <option>A-Z</option>
-              <option>Canada</option>
-              <option>Mexico</option>
+              <option value="all">All</option>
+              <option value="active">Active</option>
+              <option value="done">Done</option>
+              <option value="error">Error</option>
             </select>
           </div>
         </div>
@@ -77,5 +56,3 @@ const AnalysisFilterbar = () => {
 };
 
 export default AnalysisFilterbar;
-
-const suggestions = ["bla bla", "baby"];

@@ -1,0 +1,58 @@
+export const DUMMY_DATA = [
+  {
+    id: 1,
+    name: "Mustafa",
+    created_at: "20/2/2022",
+    workflow_id: "1",
+    status: "active",
+  },
+  {
+    id: 2,
+    name: "Hossam",
+    created_at: "20/2/2022",
+    workflow_id: "2",
+    status: "done",
+  },
+  {
+    id: 3,
+    name: "Kareem",
+    created_at: "20/2/2022",
+    workflow_id: "3",
+    status: "error",
+  },
+  {
+    id: 4,
+    name: "Fahim",
+    created_at: "20/2/2022",
+    workflow_id: "4",
+    status: "active",
+  },
+  {
+    id: 5,
+    name: "Alaa",
+    created_at: "20/2/2022",
+    workflow_id: "5",
+    status: "error",
+  },
+  {
+    id: 6,
+    name: "Klay",
+    created_at: "20/2/2022",
+    workflow_id: "6",
+    status: "active",
+  },
+  {
+    id: 7,
+    name: "Diyaa",
+    created_at: "20/2/2022",
+    workflow_id: "7",
+    status: "done",
+  },
+  {
+    id: 8,
+    name: "Essam",
+    created_at: "20/2/2022",
+    workflow_id: "8",
+    status: "error",
+  },
+];
