@@ -3,7 +3,7 @@ import { Fragment, useState } from "react";
 import { useSelector } from "react-redux";
 import noDataAnimation from "../../assets/animations/no-data.json";
 import Loader from "../../Components/UI/Loader/Loader";
-import SourceModal from "../Modals/SourceModal";
+import ShowSource from "../Modals/ShowSource";
 import SourceCard from "./SourceCard";
 
 const SourcesGrid = () => {
@@ -59,7 +59,7 @@ const SourcesGrid = () => {
         id={selectedCardId}
       /> */}
 
-      <SourceModal
+      <ShowSource
         open={sourceModal}
         onCloseSourceModal={closeSourceModalHandler}
         selectedCardId={selectedCardId}

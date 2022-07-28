@@ -10,7 +10,7 @@ import YoutubeView from "../Camera/components/YoutubeView";
 import LoadingSpinner from "../../Components/UI/LoadingSpinner/LoadingSpinner";
 import SliderModal from "./SliderModal";
 
-const SourceModal = ({
+const ShowSource = ({
   open,
   onCloseSourceModal,
   selectedCardId,
@@ -168,4 +168,4 @@ const SourceModal = ({
   );
 };
 
-export default SourceModal;
+export default ShowSource;
