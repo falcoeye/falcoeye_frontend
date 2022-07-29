@@ -1,8 +1,37 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
+import Stepper from "./components/Stepper";
+import StepperControl from "./components/StepperControl";
+import Information from "./components/steps/Information";
+import WorkflowsStep from "./components/steps/WorkflowsStep";
+import Final from "./components/steps/Final";
+import { UseContextProvider } from "./contexts/StepperContext";
 import "./Modals.css";
 
 const AddAnalysis = ({ handleClose, open }) => {
+  const [currentStep, setCurrentStep] = useState(1);
+
+  const steps = ["Information", "Worksflows", "Complete"];
+
+  const displayStep = (step) => {
+    switch (step) {
+      case 1:
+        return <Information />;
+      case 2:
+        return <WorkflowsStep />;
+      case 3:
+        return <Final />;
+      default:
+    }
+  };
+
+  const handleClick = (direction) => {
+    let newStep = currentStep;
+
+    direction === "next" ? newStep++ : newStep--;
+    newStep > 0 && newStep <= steps.length && setCurrentStep(newStep);
+  };
+
   return (
     <Transition appear show={open} as={Fragment}>
       <Dialog as="div" className="relative z-[300]" onClose={handleClose}>
@@ -29,24 +58,30 @@ const AddAnalysis = ({ handleClose, open }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white p-3 md:p-6 text-left align-middle shadow-xl transition-all">
                 <div className="text-[#42a7df] text-lg font-semibold text-center">
                   Add Analysis
                 </div>
 
-                <label
-                  htmlFor="first_name"
-                  className="block mb-2 text-sm font-medium text-gray-900 "
-                >
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="first_name"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                  placeholder="John"
-                  required
-                />
+                <div>
+                  <div className="horizontal container mt-5 ">
+                    <Stepper steps={steps} currentStep={currentStep} />
+
+                    <div className="my-2 p-2">
+                      <UseContextProvider>
+                        {displayStep(currentStep)}
+                      </UseContextProvider>
+                    </div>
+                  </div>
+
+                  {currentStep !== steps.length && (
+                    <StepperControl
+                      handleClick={handleClick}
+                      currentStep={currentStep}
+                      steps={steps}
+                    />
+                  )}
+                </div>
               </Dialog.Panel>
             </Transition.Child>
           </div>
