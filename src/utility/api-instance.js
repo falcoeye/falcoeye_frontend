@@ -11,7 +11,7 @@ instance.interceptors.request.use(
     config.headers["Accept"] = "*/*";
     config.headers["Content-Type"] = "application/json";
     if (token) {
-      config.headers["X-API-KEY"] = `${token}`;
+      config.headers["X-API-KEY"] = `JWT ${token}`;
     }
     return config;
   },
