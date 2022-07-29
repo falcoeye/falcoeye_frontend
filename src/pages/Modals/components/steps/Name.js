@@ -1,13 +1,4 @@
-import { useStepperContext } from "../../contexts/StepperContext";
-
 const Name = () => {
-  const { userData, setUserData } = useStepperContext();
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUserData({ ...userData, [name]: value });
-  };
-
   return (
     <div className="flex flex-col ">
       <div className="mx-2 w-full flex-1">
@@ -16,8 +7,6 @@ const Name = () => {
         </div>
         <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
           <input
-            onChange={handleChange}
-            value={userData["name"] || ""}
             name="name"
             placeholder="Name"
             className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"

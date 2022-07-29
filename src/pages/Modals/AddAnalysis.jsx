@@ -5,7 +5,6 @@ import StepperControl from "./components/StepperControl";
 import Name from "./components/steps/Name";
 import WorkflowsStep from "./components/steps/WorkflowsStep";
 import Final from "./components/steps/Final";
-import { UseContextProvider } from "./contexts/StepperContext";
 import "./Modals.css";
 
 const AddAnalysis = ({ handleClose, open }) => {
@@ -67,11 +66,7 @@ const AddAnalysis = ({ handleClose, open }) => {
                   <div className="horizontal container mt-5 ">
                     <Stepper steps={steps} currentStep={currentStep} />
 
-                    <div className="my-2 p-2">
-                      <UseContextProvider>
-                        {displayStep(currentStep)}
-                      </UseContextProvider>
-                    </div>
+                    <div className="my-2 p-2">{displayStep(currentStep)}</div>
                   </div>
 
                   {currentStep !== steps.length && (
