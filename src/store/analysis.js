@@ -6,6 +6,7 @@ const initialState = {
   data: null,
   isLoading: true,
   error: false,
+  AnalysisData: null,
 };
 
 export const analysisSlice = createSlice({
@@ -24,6 +25,12 @@ export const analysisSlice = createSlice({
     noDataError(state) {
       state.error = true;
     },
+    deleteAnalysis: (state, action) => {
+      state.data = state.data.filter((item) => item.id !== action.payload);
+    },
+    getAnalysisData(state, fetchedData) {
+      state.AnalysisData = fetchedData.payload;
+    },
   },
 });
 
@@ -39,6 +46,36 @@ export const fetchAnalysisData = () => {
     try {
       const responseData = await fetchData();
       dispatch(analysisActions.fetchAnalysis(responseData.data.analysis));
+      dispatch(analysisActions.endLoading());
+    } catch (err) {
+      dispatch(analysisActions.noDataError());
+      const errorMessage = err.response.data.msg || err.response.data.message;
+      toast.error(errorMessage || "Something went wrong!", {
+        position: "bottom-center",
+        autoClose: 4000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+      dispatch(analysisActions.endLoading());
+    }
+  };
+};
+
+export const getOneAnalysisData = (id) => {
+  return async (dispatch) => {
+    dispatch(analysisActions.startLoading());
+
+    const fetchData = async () => {
+      const response = await axios.get(`/analysis/${id}`);
+      return response;
+    };
+
+    try {
+      const responseData = await fetchData();
+      dispatch(analysisActions.getAnalysisData(responseData.data.analysis));
       dispatch(analysisActions.endLoading());
     } catch (err) {
       dispatch(analysisActions.noDataError());

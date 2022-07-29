@@ -2,7 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import Stepper from "./components/Stepper";
 import StepperControl from "./components/StepperControl";
-import Information from "./components/steps/Information";
+import Name from "./components/steps/Name";
 import WorkflowsStep from "./components/steps/WorkflowsStep";
 import Final from "./components/steps/Final";
 import { UseContextProvider } from "./contexts/StepperContext";
@@ -11,12 +11,12 @@ import "./Modals.css";
 const AddAnalysis = ({ handleClose, open }) => {
   const [currentStep, setCurrentStep] = useState(1);
 
-  const steps = ["Information", "Worksflows", "Complete"];
+  const steps = ["Name", "Worksflows", "Completed"];
 
   const displayStep = (step) => {
     switch (step) {
       case 1:
-        return <Information />;
+        return <Name />;
       case 2:
         return <WorkflowsStep />;
       case 3:

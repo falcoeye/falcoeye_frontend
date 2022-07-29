@@ -1,9 +1,9 @@
+import Lottie from "lottie-react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import noDataAnimation from "../../../../assets/animations/no-data.json";
 import Loader from "../../../../Components/UI/Loader/Loader";
 import { fetchWorkflowsData } from "../../../../store/workflows";
-import noDataAnimation from "../../../../assets/animations/no-data.json";
-import Lottie from "lottie-react";
 
 const WorkflowsStep = () => {
   const dispatch = useDispatch();

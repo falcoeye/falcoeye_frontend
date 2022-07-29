@@ -56,3 +56,12 @@ export const DUMMY_DATA = [
     status: "error",
   },
 ];
+export const DUMMY_DATA2 = {
+  id: "string",
+  name: "Welcome to falcoeye",
+  creator: "Mustafa",
+  created_at: "2022-07-29T14:50:10.693Z",
+  workflow_id: "1",
+  status: "Error",
+  results_path: "string",
+};

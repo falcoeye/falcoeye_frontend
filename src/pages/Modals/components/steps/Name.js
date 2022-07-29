@@ -1,6 +1,6 @@
 import { useStepperContext } from "../../contexts/StepperContext";
 
-const Information = () => {
+const Name = () => {
   const { userData, setUserData } = useStepperContext();
 
   const handleChange = (e) => {
@@ -28,4 +28,4 @@ const Information = () => {
   );
 };
 
-export default Information;
+export default Name;

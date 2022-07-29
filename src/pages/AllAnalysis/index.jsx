@@ -6,6 +6,7 @@ import Layout from "../../Components/Layout";
 import Loader from "../../Components/UI/Loader/Loader";
 import fish from "../../images/fish4.jpg";
 import AddAnalysis from "../Modals/AddAnalysis";
+import ShowAnalysis from "../Modals/ShowAnalysis";
 import AnalysisFilterbar from "./AnalysisFilterbar";
 import { DUMMY_DATA } from "./DUMMY_DATA";
 
@@ -19,9 +20,17 @@ const AllAnalysis = () => {
   const [alanysisStatus, setAlanysisStatus] = useState("all");
 
   const [addAnalysisModal, setAddAnalysisModal] = useState(false);
+  const [showAnalysisModal, setShowAnalysisModal] = useState(false);
+  const [analysisId, setAnalysId] = useState("");
 
   const openAddAnalysisModalHandler = () => setAddAnalysisModal(true);
   const closeAddAnalysisModalHandler = () => setAddAnalysisModal(false);
+
+  const openShowAnalysisModalHandler = (id) => {
+    setAnalysId(id);
+    setShowAnalysisModal(true);
+  };
+  const closeShowAnalysisModalHandler = () => setShowAnalysisModal(false);
 
   const analysisStatusChangeHandler = (e) => {
     const status = e.target.value;
@@ -154,7 +163,14 @@ const AllAnalysis = () => {
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <button className="btn-primary">view details</button>
+                          <button
+                            className="btn-primary"
+                            onClick={() =>
+                              openShowAnalysisModalHandler(file.id)
+                            }
+                          >
+                            view details
+                          </button>
                         </td>
                       </tr>
                     );
@@ -202,6 +218,11 @@ const AllAnalysis = () => {
       <AddAnalysis
         handleClose={closeAddAnalysisModalHandler}
         open={addAnalysisModal}
+      />
+      <ShowAnalysis
+        handleClose={closeShowAnalysisModalHandler}
+        open={showAnalysisModal}
+        id={analysisId}
       />
     </>
   );
