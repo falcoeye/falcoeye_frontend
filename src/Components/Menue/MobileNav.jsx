@@ -15,7 +15,7 @@ import ToggleMode from "../UI/ToggleMode/ToggleMode";
 
 const navLinks = [
   { id: 1, text: "dashboard", icon: <AiFillAppstore />, path: "/" },
-  { id: 2, text: "camera", icon: <AiFillCamera />, path: "/camera" },
+  { id: 2, text: "sources", icon: <AiFillCamera />, path: "/sources" },
   { id: 3, text: "studio", icon: <RiCameraLensFill />, path: "/VideoImages" },
   { id: 4, text: "workflows", icon: <AiFillRobot />, path: "/workflows" },
   {

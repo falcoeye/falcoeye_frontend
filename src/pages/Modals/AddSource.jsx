@@ -158,7 +158,7 @@ const AddSource = ({ handleSourceModal }) => {
               handleStreamingTypeChange(e);
             }}
           >
-            <option value="-">--SELECT--</option>
+            <option value="-">--TYPE--</option>
             <option disabled value="RSTP">RSTP</option>
             <option value="StreamingServer">STREAMING SERVER</option>
           </select>

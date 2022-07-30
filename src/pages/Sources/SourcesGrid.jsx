@@ -3,21 +3,19 @@ import { Fragment, useState } from "react";
 import { useSelector } from "react-redux";
 import noDataAnimation from "../../assets/animations/no-data.json";
 import Loader from "../../Components/UI/Loader/Loader";
-import ShowSource from "../Modals/ShowSource";
+import ShowSource from "../Modals/ShowSource/ShowSource";
 import SourceCard from "./SourceCard";
 
 const SourcesGrid = () => {
   const [selectedCardId, setSelectedCardId] = useState(null);
-  const [selectedCardUrl, setSelectedCardUrl] = useState(null);
-  const [sourceModal, setSourceModal] = useState(false);
+  const [showSourceOpened, setShowSourceOpened] = useState(false);
 
-  const openSourceModalHandler = (id, url) => {
-    setSourceModal(true);
+  const openSourceModalHandler = (id) => {
+    setShowSourceOpened(true);
     setSelectedCardId(id);
-    setSelectedCardUrl(url);
   };
   const closeSourceModalHandler = () => {
-    setSourceModal(false);
+    setShowSourceOpened(false);
   };
 
   const sources = useSelector((state) => state.sources);
@@ -52,18 +50,10 @@ const SourcesGrid = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {sourcesCards}
       </div>
-      {/* <SourceShow
-        open={showModalOpened}
-        handleClose={closeShowModalHandler}
-        openEditModalHandler={onOpenEditModal}
-        id={selectedCardId}
-      /> */}
-
       <ShowSource
-        open={sourceModal}
+        open={showSourceOpened}
         onCloseSourceModal={closeSourceModalHandler}
-        selectedCardId={selectedCardId}
-        selectedCardUrl={selectedCardUrl}
+        id={selectedCardId}
       />
     </Fragment>
   );

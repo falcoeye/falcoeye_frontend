@@ -8,7 +8,7 @@ import AnalysisJobs from "./pages/Analysis";
 import AnalysisDetailsIndex from "./pages/AnalysisDetails";
 import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
-import Camera from "./pages/Camera";
+import Sources from "./pages/Sources";
 import Charts from "./pages/Charts";
 import Home from "./pages/Home";
 import NewAnalysis from "./pages/NewAnalysis";
@@ -16,6 +16,7 @@ import SnapShot from "./pages/Snapshots";
 import Streaming from "./pages/Streaming";
 import VideoImages from "./pages/VideoImages";
 import Settings from "./pages/Settings/Settings";
+import Page404 from "./Components/UI/Page404/Page404";
 
 toast.configure();
 
@@ -31,10 +32,10 @@ function App() {
         }
       />
       <Route
-        path="Camera"
+        path="sources"
         element={
           <RequireAuth>
-            <Camera />
+            <Sources />
           </RequireAuth>
         }
       />
@@ -120,6 +121,7 @@ function App() {
       />
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<Signup />} />
+      <Route path="*" element={<Page404 />} />
     </Routes>
   );
 }

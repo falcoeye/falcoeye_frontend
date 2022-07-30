@@ -215,7 +215,7 @@ const EditSource = ({ handleClose, id, open }) => {
                       handleStreamingTypeChange(e);
                     }}
                   >
-                    <option value="-">--SELECT--</option>
+                    <option value="-">--TYPE--</option>
                     <option disabled value="RSTP">
                       RSTP
                     </option>

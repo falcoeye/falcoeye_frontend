@@ -14,8 +14,8 @@ const SourceCard = (props) => {
 
   return (
     <div
-      className="p-4 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md cursor-pointer"
-      onClick={() => handleClick(source.id, source.url)}
+      className="p-4 bg-white rounded-lg border border-gray-200 shadow-md cursor-pointer"
+      onClick={() => handleClick(source.id)}
     >
       <h5 className="mb-1 text-xl font-semibold tracking-tight text-gray-900  capitalize ">
         {source.name}

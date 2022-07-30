@@ -1,8 +1,8 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import "./Modals.css";
+import "../../Modals.css";
 
-const SliderModal = ({ handleClose, open, onTriggerCapture }) => {
+const VideoCaptureModal = ({ handleClose, open, onTriggerCapture }) => {
   const [sliderInput, setSliderInput] = useState(10);
 
   const changeSliderInputHandler = (e) => {
@@ -35,11 +35,10 @@ const SliderModal = ({ handleClose, open, onTriggerCapture }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md  transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-sm  transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all text-center">
                 <div className="text-[#42a7df] text-lg font-semibold text-center">
                   Select Capture Length
                 </div>
-
                 <div className="flex justify-end mt-2">
                   <label
                     htmlFor="steps-range"
@@ -55,9 +54,20 @@ const SliderModal = ({ handleClose, open, onTriggerCapture }) => {
                   max="120"
                   value={sliderInput}
                   step="10"
-                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer text-primary"
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer text-primary mb-6"
                   onChange={changeSliderInputHandler}
-                ></input>
+                />
+                <input
+                  type="number"
+                  id="name"
+                  className="modal_form_input"
+                  name="name"
+                  placeholder="Name"
+                  min="10"
+                  max='120'
+                  onChange={changeSliderInputHandler}
+                  value={sliderInput}
+                />
                 <button
                   onClick={() => {
                     handleClose();
@@ -77,4 +87,4 @@ const SliderModal = ({ handleClose, open, onTriggerCapture }) => {
   );
 };
 
-export default SliderModal;
+export default VideoCaptureModal;

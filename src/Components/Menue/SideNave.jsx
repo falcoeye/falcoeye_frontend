@@ -13,7 +13,21 @@ import { useLocation } from "react-router-dom";
 import logoSrc from "../../images/logo.png";
 import { IoSettings } from "react-icons/io5";
 
-const SideNave = ({ sideNav, toggle }) => {
+const navLinks = [
+  { id: 1, text: "dashboard", icon: <AiFillAppstore />, path: "/" },
+  { id: 2, text: "sources", icon: <AiFillCamera />, path: "/sources" },
+  { id: 3, text: "studio", icon: <RiCameraLensFill />, path: "/VideoImages" },
+  { id: 4, text: "workflows", icon: <AiFillRobot />, path: "/workflows" },
+  {
+    id: 5,
+    text: "jobs",
+    icon: <BiSearchAlt />,
+    path: "/all-analysis",
+  },
+  { id: 6, text: "Settings", icon: <IoSettings />, path: "/settings" },
+];
+
+const SideNav = ({ sideNav, toggle }) => {
   const { pathname } = useLocation();
   return (
     <div className="w-full md:block hidden relative">
@@ -65,18 +79,4 @@ const SideNave = ({ sideNav, toggle }) => {
   );
 };
 
-export default SideNave;
-
-const navLinks = [
-  { id: 1, text: "dashboard", icon: <AiFillAppstore />, path: "/" },
-  { id: 2, text: "camera", icon: <AiFillCamera />, path: "/camera" },
-  { id: 3, text: "studio", icon: <RiCameraLensFill />, path: "/VideoImages" },
-  { id: 4, text: "workflows", icon: <AiFillRobot />, path: "/workflows" },
-  {
-    id: 5,
-    text: "jobs",
-    icon: <BiSearchAlt />,
-    path: "/all-analysis",
-  },
-  { id: 6, text: "Settings", icon: <IoSettings />, path: "/settings" },
-];
+export default SideNav;
