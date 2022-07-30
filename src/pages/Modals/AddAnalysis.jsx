@@ -24,6 +24,15 @@ const AddAnalysis = ({ handleClose, open }) => {
     }
   };
 
+  const closeModalHandler = () => {
+    handleClose();
+    if (currentStep === 3) {
+      setTimeout(() => {
+        setCurrentStep(1);
+      }, 200);
+    }
+  };
+
   const handleClick = (direction) => {
     let newStep = currentStep;
 
@@ -33,7 +42,7 @@ const AddAnalysis = ({ handleClose, open }) => {
 
   return (
     <Transition appear show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-[300]" onClose={handleClose}>
+      <Dialog as="div" className="relative z-[300]" onClose={closeModalHandler}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -57,8 +66,8 @@ const AddAnalysis = ({ handleClose, open }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white p-3 md:p-6 text-left align-middle shadow-xl transition-all">
-                <div className="text-[#42a7df] text-lg font-semibold text-center">
+              <Dialog.Panel className="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-3 md:p-6 text-left align-middle shadow-xl transition-all">
+                <div className="text-[#42a7df] text-2xl font-bold  text-center">
                   Add Analysis
                 </div>
 
