@@ -1,6 +1,6 @@
 ### 0.0.5
 - New Design of Show Source Modal that Shows the User a Youtube Player and also on The Same Modal he can Capture an Image or Video
-- Apply New Style Enhancements on So Analysis Section Grid view, User also now can create a new analysis using a stepper.
+- Apply New Style Enhancements on Analysis Section Grid view, User also now can create a new analysis using a stepper.
 ### 0.0.4
 - Integrate Workflows Show API & Apply Filtering on the frontend
 - Integrate Sources (CRUD) API
