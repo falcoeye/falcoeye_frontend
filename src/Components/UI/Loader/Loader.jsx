@@ -7,7 +7,7 @@ const Loader = (props) => {
     <div
       className={
         height
-          ? `flex justify-center items-center w-full h-${height} `
+          ? `flex justify-center items-center w-full h-${height}`
           : `flex justify-center items-center w-full h-96`
       }
     >
