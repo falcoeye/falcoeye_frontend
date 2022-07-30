@@ -8,7 +8,7 @@ const Final = () => {
         <div className="h-44">
           <Lottie
             animationData={submittedAnalysis}
-            loop={true}
+            loop={false}
             style={{ width: "100%", height: "100%" }}
           />
         </div>

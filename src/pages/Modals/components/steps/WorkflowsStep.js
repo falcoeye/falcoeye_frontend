@@ -100,7 +100,7 @@ const WorkflowsStep = () => {
 
     content = (
       <div className="mt-5 md:mt-0">
-        <div className="w-full py-1 mb-3 flex items-center px-4 rounded-full bg-gray-50/30 shadow md:max-w-xs">
+        <div className="w-full py-2 mb-3 flex items-center px-4 rounded-full bg-gray-50 shadow">
           <span className="text-primary text-xl mr-4 ">
             <AiOutlineSearch />
           </span>
@@ -108,6 +108,7 @@ const WorkflowsStep = () => {
             <input
               className="focus:outline-none text-primary placeholder-primary text-sm bg-transparent w-full"
               type="text"
+              placeholder="Search Workflows"
               onChange={changeSearchInputHandler}
               value={searchInput}
             />
