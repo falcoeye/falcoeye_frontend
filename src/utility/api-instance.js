@@ -6,17 +6,12 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use(
-    function (config) {
-        let token = Cookies.getCookie("token");
-        config.headers["Accept"] = "*/*";
-        config.headers["Content-Type"] = "application/json";
-        if (token) {
-            config.headers["X-API-KEY"] = `JWT ${token}`;
-        }
-        return config;
-    },
-    (error) => {
-        return Promise.reject(error);
+  function (config) {
+    let token = Cookies.getCookie("token");
+    config.headers["Accept"] = "*/*";
+    config.headers["Content-Type"] = "application/json";
+    if (token) {
+      config.headers["X-API-KEY"] = `JWT ${token}`;
     }
     return config;
   },
@@ -24,7 +19,6 @@ instance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
 instance.interceptors.response.use(
   function (response) {
     return response;
