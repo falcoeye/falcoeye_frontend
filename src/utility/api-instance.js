@@ -19,6 +19,7 @@ instance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
 instance.interceptors.response.use(
   function (response) {
     return response;
