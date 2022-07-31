@@ -6,18 +6,34 @@ import Name from "./components/steps/Name";
 import WorkflowsStep from "./components/steps/WorkflowsStep";
 import Final from "./components/steps/Final";
 import "./Modals.css";
+import { AiOutlineClose } from "react-icons/ai";
 
 const AddAnalysis = ({ handleClose, open }) => {
   const [currentStep, setCurrentStep] = useState(1);
 
   const steps = ["Name", "Worksflows", "Completed"];
+  const [selectedWorkflow, setSelectedWorkflow] = useState(null);
+  const [analysisName, setAnalysisName] = useState("");
+
+  const selectWorkflowHanlder = (data) => setSelectedWorkflow(data);
+  const analysisNameChangeHandler = (name) => setAnalysisName(name);
 
   const displayStep = (step) => {
     switch (step) {
       case 1:
-        return <Name />;
+        return (
+          <Name
+            onAnalysisNameChange={analysisNameChangeHandler}
+            analysisName={analysisName}
+          />
+        );
       case 2:
-        return <WorkflowsStep />;
+        return (
+          <WorkflowsStep
+            onSelectWorkflow={selectWorkflowHanlder}
+            selectedWorkflow={selectedWorkflow}
+          />
+        );
       case 3:
         return <Final />;
       default:
@@ -26,11 +42,15 @@ const AddAnalysis = ({ handleClose, open }) => {
 
   const closeModalHandler = () => {
     handleClose();
-    if (currentStep === 3) {
-      setTimeout(() => {
-        setCurrentStep(1);
-      }, 200);
-    }
+
+    setTimeout(() => {
+      setCurrentStep(1);
+
+      if (currentStep === 3) {
+        analysisNameChangeHandler("");
+        setSelectedWorkflow(null);
+      }
+    }, 200);
   };
 
   const handleClick = (direction) => {
@@ -56,7 +76,7 @@ const AddAnalysis = ({ handleClose, open }) => {
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
+          <div className="flex min-h-full items-center justify-center md:p-4 text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -66,13 +86,21 @@ const AddAnalysis = ({ handleClose, open }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-3 md:p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full h-screen md:h-fit  md:max-w-3xl transform overflow-hidden md:rounded-2xl bg-white p-3 md:p-6 text-left align-middle shadow-xl transition-all">
+                <div className="flex justify-end gap-5">
+                  <button
+                    className="md:hidden bg-gray-50 hover:bg-gray-200 transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
+                    onClick={closeModalHandler}
+                  >
+                    <AiOutlineClose />
+                  </button>
+                </div>
                 <div className="text-[#42a7df] text-2xl font-bold  text-center">
                   Add Analysis
                 </div>
 
                 <div>
-                  <div className="horizontal container mt-5 ">
+                  <div className="horizontal mt-5 ">
                     <Stepper steps={steps} currentStep={currentStep} />
 
                     <div className="my-2 p-2">{displayStep(currentStep)}</div>
@@ -83,6 +111,8 @@ const AddAnalysis = ({ handleClose, open }) => {
                       handleClick={handleClick}
                       currentStep={currentStep}
                       steps={steps}
+                      analysisName={analysisName}
+                      selectedWorkflow={selectedWorkflow}
                     />
                   )}
                 </div>

@@ -1,39 +1,87 @@
 import Lottie from "lottie-react";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AiOutlineSearch, AiOutlineUser } from "react-icons/ai";
+import { BsBookmarkHeartFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import noDataAnimation from "../../../../assets/animations/no-data.json";
 import Loader from "../../../../Components/UI/Loader/Loader";
 import { fetchWorkflowsData } from "../../../../store/workflows";
 
-const WorkflowsStep = () => {
+const WorkflowsStep = ({ onSelectWorkflow, selectedWorkflow }) => {
   const dispatch = useDispatch();
   const workflowsData = useSelector((state) => state.workflows.data);
   const isLoading = useSelector((state) => state.workflows.isLoading);
 
-  const loadedData = workflowsData?.slice();
   const [filteredData, setFilteredData] = useState(null);
   const [searchInput, setSearchInput] = useState("");
+
+  const checkSelectedWorkflowHandler = useCallback(() => {
+    let data = workflowsData;
+    if (selectedWorkflow) {
+      data = workflowsData.map((item) => {
+        if (item.id === selectedWorkflow.id) {
+          return {
+            ...selectedWorkflow,
+          };
+        } else {
+          return item;
+        }
+      });
+    }
+
+    return data;
+  }, [selectedWorkflow, workflowsData]);
+
+  useEffect(() => {
+    const data = checkSelectedWorkflowHandler();
+    setFilteredData(data);
+  }, [checkSelectedWorkflowHandler]);
 
   const changeSearchInputHandler = (e) => {
     const { value } = e.target;
     setSearchInput(value);
+
     if (value) {
+      if (filteredData && filteredData.length === 0) {
+        const data = checkSelectedWorkflowHandler();
+        return setFilteredData(
+          data.filter((item) =>
+            item.name.toLowerCase().includes(value.toLowerCase())
+          )
+        );
+      }
+
       setFilteredData((prevState) => {
-        if (prevState) {
-          return prevState.filter((item) =>
-            item.name.toLowerCase().includes(value.toLowerCase())
-          );
-        } else {
-          return loadedData.filter((item) =>
-            item.name.toLowerCase().includes(value.toLowerCase())
-          );
-        }
+        return prevState.filter((item) =>
+          item.name.toLowerCase().includes(value.toLowerCase())
+        );
       });
     } else {
-      setFilteredData(loadedData);
+      const data = checkSelectedWorkflowHandler();
+      setFilteredData(data);
     }
+  };
+
+  const addActiveStyleHandler = (id) => {
+    const filteredDataWithActiveStyle = filteredData.map((item) => {
+      if (item.id === id) {
+        return {
+          ...item,
+          selected: true,
+        };
+      } else {
+        return {
+          ...item,
+          selected: false,
+        };
+      }
+    });
+    const selectedItem = filteredDataWithActiveStyle.find(
+      (item) => item.selected
+    );
+    onSelectWorkflow(selectedItem);
+    setFilteredData(filteredDataWithActiveStyle);
   };
 
   useEffect(() => {
@@ -60,13 +108,25 @@ const WorkflowsStep = () => {
   }
   if (workflowsData && !isLoading) {
     let dataContent;
-    if (filteredData) {
+    if (filteredData && filteredData.length !== 0) {
       dataContent = filteredData.map((item) => (
         <div
           key={item.id}
-          className="shadow rounded-md bg-gray-50 py-3 px-4 flex flex-col gap-2 cursor-pointer"
+          onClick={() => addActiveStyleHandler(item.id)}
+          className={`relative shadow rounded-md  py-3 px-4 flex flex-col gap-2 cursor-pointer h-fit transition duration-300 ease-in-out ${
+            item.selected
+              ? "bg-primary/10 hover:bg-primary/10"
+              : "bg-gray-50 hover:bg-gray-100/90"
+          }`}
         >
-          <h1 className="text-base font-bold text-gray-600">{item.name}</h1>
+          <div className="flex justify-between min-h-[30px]">
+            <h1 className="text-base font-bold text-gray-600">{item.name}</h1>
+            {item.selected && (
+              <span className="text-white text-sm bg-primary w-fit p-2 rounded-full">
+                <BsBookmarkHeartFill />
+              </span>
+            )}
+          </div>
           <p className="text-sm text-gray-400/80">
             {moment.utc(item.publish_date).format("MMM DD YYYY")}
           </p>
@@ -78,24 +138,16 @@ const WorkflowsStep = () => {
           </p>
         </div>
       ));
-    } else {
-      dataContent = workflowsData.map((item) => (
-        <div
-          key={item.id}
-          className="shadow rounded-md bg-gray-50 py-3 px-4 flex flex-col gap-2 cursor-pointer"
-        >
-          <h1 className="text-base font-bold text-gray-600">{item.name}</h1>
-          <p className="text-sm text-gray-400/80">
-            {moment.utc(item.publish_date).format("MMM DD YYYY")}
-          </p>
-          <p className="flex items-center gap-1 capitalize text-green bg-green/5 w-fit p-2 rounded-md">
-            <span>
-              <AiOutlineUser />
-            </span>
-            {item.creator}
-          </p>
+    } else if (filteredData && filteredData.length === 0) {
+      dataContent = (
+        <div className="h-80 col-span-2">
+          <Lottie
+            animationData={noDataAnimation}
+            loop={true}
+            style={{ width: "100%", height: "100%" }}
+          />
         </div>
-      ));
+      );
     }
 
     content = (
@@ -115,7 +167,7 @@ const WorkflowsStep = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 h-52 overflow-y-scroll pr-3">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 h-[calc(100vh-366px)] md:h-[21rem] overflow-y-scroll pr-3">
           {dataContent}
         </div>
       </div>
