@@ -134,7 +134,7 @@ const EditSource = ({ handleClose, id, open }) => {
       dataFields.forEach((field) => {
         sentData[field] = data[field];
       });
-      const res = await axios.put("/camera/", sentData);
+      const res = await axios.put(`/camera/${id}`, sentData);
       dispatch(editSource(res.data.camera));
       setSendingRequest(false);
       handleClose();

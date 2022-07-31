@@ -1,8 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import Lottie from 'lottie-react';
 import React, { Fragment, useCallback, useState } from 'react';
-import { AiFillCamera, AiOutlineClose } from 'react-icons/ai';
-import { BsSliders } from 'react-icons/bs';
+import { AiFillCamera, AiFillVideoCamera, AiOutlineClose } from 'react-icons/ai';
 import { FaEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { useSelector } from 'react-redux';
@@ -10,9 +9,9 @@ import noDataAnimation from '../../../assets/animations/no-data.json';
 import LoadingSpinner from '../../../Components/UI/LoadingSpinner/LoadingSpinner';
 import DeleteSource from '../DeleteSource';
 import EditSource from '../EditSource';
+import "../Modals.css";
 import VideoCaptureModal from './components/VideoCaptureModal';
 import YoutubeView from './components/YoutubeView';
-import "../Modals.css";
 
 const ShowSource = ({ open, onCloseSourceModal, id }) => {
   const sources = useSelector((state) => state.sources);
@@ -126,7 +125,7 @@ const ShowSource = ({ open, onCloseSourceModal, id }) => {
                 className={`bg-primary/80 hover:bg-primary transition duration-300 text-white font-bold p-3 rounded-full inline-flex items-center text-xl  ${ disableSubmit && "disable_submit_btn" }`}
                 onClick={openSliderModalHandler}
               >
-                <BsSliders />
+                <AiFillVideoCamera />
               </button>
             </div>
 
