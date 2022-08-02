@@ -29,7 +29,7 @@ const RSTPFields = [
   "thumbnail",
 ];
 
-const EditSource = ({ handleClose, id, open }) => {
+const EditSource = ({ handleClose, id, open, onCloseSourceModal }) => {
   const dispatch = useDispatch();
   const [disableSubmit, setDisableSubmit] = useState(true);
   const [sendingRequest, setSendingRequest] = useState(false);
@@ -138,6 +138,10 @@ const EditSource = ({ handleClose, id, open }) => {
       dispatch(editSource(res.data.camera));
       setSendingRequest(false);
       handleClose();
+      setTimeout(() => {
+        onCloseSourceModal();
+      }, 100);
+      toast.success("Source has been updated successfully");
     } catch (error) {
       setErrorMessage(error.response.data.message || "Something went wrong");
       if (error.response.data.errors) {

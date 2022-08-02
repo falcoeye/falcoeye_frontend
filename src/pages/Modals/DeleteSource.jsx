@@ -6,7 +6,7 @@ import { deleteSource } from "../../store/sources";
 import axios from "../../utility/auth-instance";
 import "./Modals.css";
 
-const DeleteSource = ({ handleClose, id, open }) => {
+const DeleteSource = ({ handleClose, id, open, onCloseSourceModal }) => {
   const dispatch = useDispatch();
   const deleteSourceHandler = () => {
     axios
@@ -14,7 +14,10 @@ const DeleteSource = ({ handleClose, id, open }) => {
       .then((res) => {
         handleClose();
         dispatch(deleteSource(id));
-        toast.success("Source deleted successfully");
+        setTimeout(() => {
+          onCloseSourceModal();
+        }, 100);
+        toast.success("Source has been deleted successfully");
       })
       .catch((err) => {
         handleClose();
