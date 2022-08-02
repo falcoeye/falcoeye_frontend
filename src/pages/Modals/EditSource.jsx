@@ -29,7 +29,7 @@ const RSTPFields = [
   "thumbnail",
 ];
 
-const EditSource = ({ handleClose, id, open, onCloseSourceModal }) => {
+const EditSource = ({ handleClose, id, open, handleShowClose }) => {
   const dispatch = useDispatch();
   const [disableSubmit, setDisableSubmit] = useState(true);
   const [sendingRequest, setSendingRequest] = useState(false);
@@ -136,13 +136,11 @@ const EditSource = ({ handleClose, id, open, onCloseSourceModal }) => {
       });
       const res = await axios.put(`/camera/${id}`, sentData);
       dispatch(editSource(res.data.camera));
-      setSendingRequest(false);
       handleClose();
-      setTimeout(() => {
-        onCloseSourceModal();
-      }, 100);
+      handleShowClose();
       toast.success("Source has been updated successfully");
     } catch (error) {
+      setSendingRequest(false);
       setErrorMessage(error.response.data.message || "Something went wrong");
       if (error.response.data.errors) {
         let errorObjectKeys = Object.keys(error.response.data.errors);
@@ -150,7 +148,6 @@ const EditSource = ({ handleClose, id, open, onCloseSourceModal }) => {
           toast.error(`${key}: ${error.response.data.errors[`${key}`]}`);
         });
       }
-      setSendingRequest(false);
     }
   };
 

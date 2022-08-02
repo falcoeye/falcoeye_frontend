@@ -17,7 +17,7 @@ import "../Modals.css";
 import VideoCaptureModal from "./components/VideoCaptureModal";
 import YoutubeView from "./components/YoutubeView";
 
-const ShowSource = ({ open, onCloseSourceModal, id }) => {
+const ShowSource = ({ open, handleClose , id }) => {
   const sources = useSelector((state) => state.sources);
   const [deleteModal, setDeleteModal] = useState(false);
   const [editModalOpened, setEditModalOpened] = useState(false);
@@ -50,7 +50,7 @@ const ShowSource = ({ open, onCloseSourceModal, id }) => {
   }
 
   const closeSourceModalHandler = () => {
-    onCloseSourceModal();
+    handleClose();
     setTimeout(() => {
       setCaptureFailed(false);
     }, 300);
@@ -73,7 +73,7 @@ const ShowSource = ({ open, onCloseSourceModal, id }) => {
         <div className="flex justify-end gap-5">
           <button
             className="bg-gray-50 hover:bg-gray-200 transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
-            onClick={closeSourceModalHandler}
+            onClick={handleClose}
           >
             <AiOutlineClose />
           </button>
@@ -108,7 +108,7 @@ const ShowSource = ({ open, onCloseSourceModal, id }) => {
           </button>
           <button
             className="bg-gray-50 hover:bg-gray-200 transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
-            onClick={closeSourceModalHandler}
+            onClick={handleClose}
           >
             <AiOutlineClose />
           </button>
@@ -158,13 +158,13 @@ const ShowSource = ({ open, onCloseSourceModal, id }) => {
           open={editModalOpened}
           handleClose={closeEditModalHandler}
           id={id}
-          onCloseSourceModal={closeSourceModalHandler}
+          handleShowClose={handleClose}
         />
         <DeleteSource
           open={deleteModal}
           handleClose={closeDeleteModalHandler}
           id={id}
-          onCloseSourceModal={closeSourceModalHandler}
+          handleShowClose={handleClose}
         />
         <VideoCaptureModal
           open={captureModalOpened}

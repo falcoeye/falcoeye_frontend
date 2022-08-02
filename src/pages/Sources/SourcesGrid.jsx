@@ -52,7 +52,7 @@ const SourcesGrid = () => {
       </div>
       <ShowSource
         open={showSourceOpened}
-        onCloseSourceModal={closeSourceModalHandler}
+        handleClose={closeSourceModalHandler}
         id={selectedCardId}
       />
     </Fragment>

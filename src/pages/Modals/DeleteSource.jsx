@@ -1,26 +1,30 @@
 import { Dialog, Transition } from "@headlessui/react";
+import { useState } from "react";
 import { Fragment } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import LoadingSpinner from "../../Components/UI/LoadingSpinner/LoadingSpinner";
 import { deleteSource } from "../../store/sources";
-import axios from "../../utility/auth-instance";
+import axios from "../../utility/api-instance";
 import "./Modals.css";
 
-const DeleteSource = ({ handleClose, id, open, onCloseSourceModal }) => {
+const DeleteSource = ({ handleClose, id, open, handleShowClose }) => {
   const dispatch = useDispatch();
+  const [ deleting, setDeleting ] = useState()
+
+
   const deleteSourceHandler = () => {
+    setDeleting(true)
     axios
       .delete(`/camera/${id}`)
       .then((res) => {
         handleClose();
         dispatch(deleteSource(id));
-        setTimeout(() => {
-          onCloseSourceModal();
-        }, 100);
+        handleShowClose()
         toast.success("Source has been deleted successfully");
       })
       .catch((err) => {
-        handleClose();
+        setDeleting(false)
         toast.error(
           err.response?.data?.message ||
             "Error Deleting Source, Try again later"
@@ -65,7 +69,7 @@ const DeleteSource = ({ handleClose, id, open, onCloseSourceModal }) => {
                     type="button"
                     className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5"
                   >
-                    Yes
+                    {deleting ? <LoadingSpinner /> : "Yes"}
                   </button>
                   <button
                     onClick={handleClose}
