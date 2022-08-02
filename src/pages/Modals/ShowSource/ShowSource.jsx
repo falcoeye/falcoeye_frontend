@@ -1,17 +1,21 @@
-import { Dialog, Transition } from '@headlessui/react';
-import Lottie from 'lottie-react';
-import React, { Fragment, useCallback, useState } from 'react';
-import { AiFillCamera, AiFillVideoCamera, AiOutlineClose } from 'react-icons/ai';
-import { FaEdit } from 'react-icons/fa';
-import { MdDelete } from 'react-icons/md';
-import { useSelector } from 'react-redux';
-import noDataAnimation from '../../../assets/animations/no-data.json';
-import LoadingSpinner from '../../../Components/UI/LoadingSpinner/LoadingSpinner';
-import DeleteSource from '../DeleteSource';
-import EditSource from '../EditSource';
+import { Dialog, Transition } from "@headlessui/react";
+import Lottie from "lottie-react";
+import React, { Fragment, useCallback, useState } from "react";
+import {
+  AiFillCamera,
+  AiFillVideoCamera,
+  AiOutlineClose,
+} from "react-icons/ai";
+import { FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { useSelector } from "react-redux";
+import noDataAnimation from "../../../assets/animations/no-data.json";
+import LoadingSpinner from "../../../Components/UI/LoadingSpinner/LoadingSpinner";
+import DeleteSource from "../DeleteSource";
+import EditSource from "../EditSource";
 import "../Modals.css";
-import VideoCaptureModal from './components/VideoCaptureModal';
-import YoutubeView from './components/YoutubeView';
+import VideoCaptureModal from "./components/VideoCaptureModal";
+import YoutubeView from "./components/YoutubeView";
 
 const ShowSource = ({ open, onCloseSourceModal, id }) => {
   const sources = useSelector((state) => state.sources);
@@ -78,14 +82,14 @@ const ShowSource = ({ open, onCloseSourceModal, id }) => {
           <Lottie
             animationData={noDataAnimation}
             loop={true}
-            style={{ width: '100%', height: '100%' }}
+            style={{ width: "100%", height: "100%" }}
           />
         </div>
       </Fragment>
     );
   }
   if (id && data) {
-    const videoID = data?.url?.split('v=')[1]?.split('&')[0];
+    const videoID = data?.url?.split("v=")[1]?.split("&")[0];
     const disableSubmit = captureLoading || captureModalOpened;
     content = (
       <Fragment>
@@ -115,14 +119,18 @@ const ShowSource = ({ open, onCloseSourceModal, id }) => {
             <div className="flex items-center justify-center gap-8 mt-5">
               <button
                 disabled={disableSubmit}
-                className={`bg-primary/80 hover:bg-primary transition duration-300 text-white font-bold p-3 rounded-full inline-flex items-center text-xl ${ disableSubmit && "disable_submit_btn" }`}
+                className={`bg-primary/80 hover:bg-primary transition duration-300 text-white font-bold p-3 rounded-full inline-flex items-center text-xl ${
+                  disableSubmit && "disable_submit_btn"
+                }`}
                 onClick={triggerCaptureHandler}
               >
                 <AiFillCamera />
               </button>
               <button
                 disabled={disableSubmit}
-                className={`bg-primary/80 hover:bg-primary transition duration-300 text-white font-bold p-3 rounded-full inline-flex items-center text-xl  ${ disableSubmit && "disable_submit_btn" }`}
+                className={`bg-primary/80 hover:bg-primary transition duration-300 text-white font-bold p-3 rounded-full inline-flex items-center text-xl  ${
+                  disableSubmit && "disable_submit_btn"
+                }`}
                 onClick={openSliderModalHandler}
               >
                 <AiFillVideoCamera />
@@ -131,7 +139,7 @@ const ShowSource = ({ open, onCloseSourceModal, id }) => {
 
             {captureLoading && (
               <div className="flex items-center mt-2">
-                <LoadingSpinner />{' '}
+                <LoadingSpinner />{" "}
                 <span className="font-semibold text-gray-700">
                   Capture in progress.
                 </span>
@@ -150,11 +158,13 @@ const ShowSource = ({ open, onCloseSourceModal, id }) => {
           open={editModalOpened}
           handleClose={closeEditModalHandler}
           id={id}
+          onCloseSourceModal={closeSourceModalHandler}
         />
         <DeleteSource
           open={deleteModal}
           handleClose={closeDeleteModalHandler}
           id={id}
+          onCloseSourceModal={closeSourceModalHandler}
         />
         <VideoCaptureModal
           open={captureModalOpened}
