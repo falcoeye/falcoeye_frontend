@@ -1,4 +1,5 @@
 import Lottie from "lottie-react";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import noDataAnimation from "../../assets/animations/no-data.json";
@@ -154,7 +155,7 @@ const AllAnalysis = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-500">
-                            {file.created_at}
+                            {moment.utc(file.created_at).format('MM-DD-YYYY')}
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">

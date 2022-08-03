@@ -16,7 +16,6 @@ const MediaView = (props) => {
 
   const [filteredMedia, setFilteredMedia] = useState(data);
 
-
   const [term, setTerm] = useState('');
   const [type, setType] = useState('all');
   const [date, setDate] = useState('');

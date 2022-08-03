@@ -45,7 +45,7 @@ const MediaCard = (props) => {
           <span className="mr-1">
             <AiOutlineCalendar />
           </span>
-          {moment.utc(media.created_at).format('MMM DD YYYY')}
+          {moment.utc(media.created_at).format('MM-DD-YYYY')}
         </p>
         <div className="flex">
           <span className="inline-flex items-center py-1 px-1 text-sm justify-center text-white capitalize bg-orange-500 rounded-md">
