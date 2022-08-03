@@ -16,7 +16,7 @@ import { IoSettings } from "react-icons/io5";
 const navLinks = [
   { id: 1, text: "dashboard", icon: <AiFillAppstore />, path: "/" },
   { id: 2, text: "sources", icon: <AiFillCamera />, path: "/sources" },
-  { id: 3, text: "studio", icon: <RiCameraLensFill />, path: "/VideoImages" },
+  { id: 3, text: "media", icon: <RiCameraLensFill />, path: "/media" },
   { id: 4, text: "workflows", icon: <AiFillRobot />, path: "/workflows" },
   {
     id: 5,

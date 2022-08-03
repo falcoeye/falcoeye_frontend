@@ -1,30 +1,33 @@
-import { Dialog, Transition } from "@headlessui/react";
-import Lottie from "lottie-react";
-import React, { Fragment, useCallback, useState } from "react";
+import { Dialog, Transition } from '@headlessui/react';
+import Lottie from 'lottie-react';
+import React, { Fragment, useCallback, useState } from 'react';
 import {
   AiFillCamera,
   AiFillVideoCamera,
-  AiOutlineClose,
-} from "react-icons/ai";
-import { FaEdit } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
-import { useSelector } from "react-redux";
-import noDataAnimation from "../../../assets/animations/no-data.json";
-import LoadingSpinner from "../../../Components/UI/LoadingSpinner/LoadingSpinner";
-import DeleteSource from "../DeleteSource";
-import EditSource from "../EditSource";
-import "../Modals.css";
-import VideoCaptureModal from "./components/VideoCaptureModal";
-import YoutubeView from "./components/YoutubeView";
+  AiOutlineClose
+} from 'react-icons/ai';
+import { FaEdit } from 'react-icons/fa';
+import { MdDelete } from 'react-icons/md';
+import { useSelector } from 'react-redux';
+import noDataAnimation from '../../../assets/animations/no-data.json';
+import LoadingSpinner from '../../../Components/UI/LoadingSpinner/LoadingSpinner';
+import DeleteSource from '../DeleteSource';
+import EditSource from '../EditSource';
+import '../Modals.css';
+import axios from './../../../utility/api-instance';
+import VideoCaptureModal from './components/VideoCaptureModal';
+import YoutubeView from './components/YoutubeView';
 
-const ShowSource = ({ open, handleClose , id }) => {
+const ShowSource = ({ open, handleClose, id }) => {
   const sources = useSelector((state) => state.sources);
   const [deleteModal, setDeleteModal] = useState(false);
   const [editModalOpened, setEditModalOpened] = useState(false);
   const [captureLoading, setCaptureLoading] = useState(false);
   const [captureFailed, setCaptureFailed] = useState(false);
+  const [captureSuccess, setCaptureSuccess] = useState(false);
+  const [captureMessage, setCaptureMessage] = useState(false);
   const [captureModalOpened, setCaptureModalOpened] = useState(false);
-
+ /*  const [registerationKey, setRegisterationKey] = useState(null); */
   const openDeleteModalHandler = useCallback(() => setDeleteModal(true), []);
   const closeDeleteModalHandler = useCallback(() => setDeleteModal(false), []);
 
@@ -49,12 +52,6 @@ const ShowSource = ({ open, handleClose , id }) => {
     data = sources.data.find((item) => item.id === id);
   }
 
-  const closeSourceModalHandler = () => {
-    handleClose();
-    setTimeout(() => {
-      setCaptureFailed(false);
-    }, 300);
-  };
   const triggerCaptureHandler = () => {
     setCaptureLoading(true);
     setCaptureFailed(false);
@@ -63,6 +60,28 @@ const ShowSource = ({ open, handleClose , id }) => {
       setCaptureLoading(false);
       setCaptureFailed(true);
     }, 1500);
+  };
+
+  const captureImageClickHandler = () => {
+    setCaptureLoading(true);
+    setCaptureSuccess(false);
+    setCaptureFailed(false);
+    axios
+      .post(`/capture`, {
+        camera_id: id,
+        capture_type: 'image',
+        length: 0,
+      })
+      .then((res) => {
+        setCaptureMessage(res.data.message);
+        setCaptureLoading(false);
+        setCaptureSuccess(true);
+      })
+      .catch((err) => {
+        setCaptureMessage(err.data.message);
+        setCaptureLoading(false);
+        setCaptureFailed(true);
+      });
   };
 
   let content;
@@ -82,14 +101,14 @@ const ShowSource = ({ open, handleClose , id }) => {
           <Lottie
             animationData={noDataAnimation}
             loop={true}
-            style={{ width: "100%", height: "100%" }}
+            style={{ width: '100%', height: '100%' }}
           />
         </div>
       </Fragment>
     );
   }
   if (id && data) {
-    const videoID = data?.url?.split("v=")[1]?.split("&")[0];
+    const videoID = data?.url?.split('v=')[1]?.split('&')[0];
     const disableSubmit = captureLoading || captureModalOpened;
     content = (
       <Fragment>
@@ -120,16 +139,16 @@ const ShowSource = ({ open, handleClose , id }) => {
               <button
                 disabled={disableSubmit}
                 className={`bg-primary/80 hover:bg-primary transition duration-300 text-white font-bold p-3 rounded-full inline-flex items-center text-xl ${
-                  disableSubmit && "disable_submit_btn"
+                  disableSubmit && 'disable_submit_btn'
                 }`}
-                onClick={triggerCaptureHandler}
+                onClick={captureImageClickHandler}
               >
                 <AiFillCamera />
               </button>
               <button
                 disabled={disableSubmit}
                 className={`bg-primary/80 hover:bg-primary transition duration-300 text-white font-bold p-3 rounded-full inline-flex items-center text-xl  ${
-                  disableSubmit && "disable_submit_btn"
+                  disableSubmit && 'disable_submit_btn'
                 }`}
                 onClick={openSliderModalHandler}
               >
@@ -139,16 +158,23 @@ const ShowSource = ({ open, handleClose , id }) => {
 
             {captureLoading && (
               <div className="flex items-center mt-2">
-                <LoadingSpinner />{" "}
-                <span className="font-semibold text-gray-700">
+                <LoadingSpinner />
+                <span className="font-semibold text-gray-700 ml-2">
                   Capture in progress.
+                </span>
+              </div>
+            )}
+            {captureSuccess && (
+              <div className="flex items-center mt-2">
+                <span className="font-semibold text-lime-500 capitalize">
+                  {captureMessage}
                 </span>
               </div>
             )}
             {captureFailed && (
               <div className="flex items-center mt-2">
-                <span className="font-semibold text-red-700">
-                  Capture failed.
+                <span className="font-semibold text-red-700 capitalize">
+                  {captureMessage}
                 </span>
               </div>
             )}
@@ -176,13 +202,8 @@ const ShowSource = ({ open, handleClose , id }) => {
   }
 
   return (
-    <>
       <Transition appear show={open} as={Fragment}>
-        <Dialog
-          as="div"
-          className="relative z-[200]"
-          onClose={closeSourceModalHandler}
-        >
+        <Dialog as="div" className="relative z-[200]" onClose={handleClose}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -214,7 +235,6 @@ const ShowSource = ({ open, handleClose , id }) => {
           </div>
         </Dialog>
       </Transition>
-    </>
   );
 };
 

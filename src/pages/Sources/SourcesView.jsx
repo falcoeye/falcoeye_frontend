@@ -27,7 +27,7 @@ const SourcesView = (props) => {
         {addSourceOpened && (
           <AddSource handleSourceModal={addSourceModalChangeHandler} />
         )}
-        <div className="main-container mt-6 ">
+        <div className="main-container my-6 ">
           <div className=" bg-white mx-1 pt-3 px-4 md:px-7 pb-7 rounded-sm">
             <div className="flex justify-between sm:flex-row flex-col">
               <div>
