@@ -6,9 +6,10 @@ import Loader from "../../Components/UI/Loader/Loader";
 import ShowMedia from "../Modals/ShowMedia";
 import MediaCard from "./MediaCard";
 
-const MediaGrid = () => {
+const MediaGrid = ( { data } ) => {
   const [selectedCardId, setSelectedCardId] = useState(null);
   const [showMediaOpened, setShowMediaOpened] = useState(false);
+  const media = useSelector((state) => state.media);
 
   const openMediaModalHandler = (id) => {
     setShowMediaOpened(true);
@@ -18,12 +19,10 @@ const MediaGrid = () => {
     setShowMediaOpened(false);
   };
 
-  const media = useSelector((state) => state.media);
-
   if (media.fetchingMedia) {
     return <Loader height="96" />;
   }
-  if (media.data.length === 0 && !media.fetchingMedia) {
+  if (data.length === 0 && !media.fetchingMedia) {
     return (
       <div className="h-96">
         <Lottie
@@ -35,7 +34,7 @@ const MediaGrid = () => {
     );
   }
 
-  const mediaCards = media.data.map((media) => {
+  const mediaCards = data.map((media) => {
     return (
       <MediaCard
         key={media.id}
