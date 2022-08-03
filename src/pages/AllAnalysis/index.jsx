@@ -1,21 +1,22 @@
 import Lottie from "lottie-react";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import noDataAnimation from "../../assets/animations/no-data.json";
 import Layout from "../../Components/Layout";
 import Loader from "../../Components/UI/Loader/Loader";
 import fish from "../../images/fish4.jpg";
+import { fetchAnalysisData } from "../../store/analysis";
 import AddAnalysis from "../Modals/AddAnalysis";
 import ShowAnalysis from "../Modals/ShowAnalysis";
 import AnalysisFilterbar from "./AnalysisFilterbar";
-import { DUMMY_DATA } from "./DUMMY_DATA";
 
 const AllAnalysis = () => {
   const isError = useSelector((state) => state.analysis.error);
   const isLoading = useSelector((state) => state.analysis.isLoading);
-  // const dispatch = useDispatch();
+  const analysises = useSelector((state) => state.analysis.data);
+  const dispatch = useDispatch();
 
-  const [analysisData, setAnalysisData] = useState([...DUMMY_DATA]);
+  const [analysisData, setAnalysisData] = useState([...analysises]);
   const [searchInput, setSearchInput] = useState("");
   const [alanysisStatus, setAlanysisStatus] = useState("all");
 
@@ -37,9 +38,9 @@ const AllAnalysis = () => {
     setAlanysisStatus(status);
 
     if (status === "all") {
-      setAnalysisData([...DUMMY_DATA]);
+      setAnalysisData([...analysises]);
     } else {
-      setAnalysisData(DUMMY_DATA.filter((item) => item.status === status));
+      setAnalysisData(analysises.filter((item) => item.status === status));
     }
   };
 
@@ -54,13 +55,13 @@ const AllAnalysis = () => {
         )
       );
     } else {
-      setAnalysisData([...DUMMY_DATA]);
+      setAnalysisData([...analysises]);
     }
   };
 
-  // useEffect(() => {
-  //   dispatch(fetchAnalysisData());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchAnalysisData());
+  }, [dispatch]);
 
   let content;
 
@@ -80,8 +81,7 @@ const AllAnalysis = () => {
     );
   }
 
-  // if(!isError && !isLoading){
-  if (analysisData.length === 0) {
+  if (analysisData.length === 0 && !isLoading) {
     content = (
       <div className="h-96">
         <Lottie
@@ -183,7 +183,6 @@ const AllAnalysis = () => {
       </div>
     );
   }
-  // }
 
   return (
     <>

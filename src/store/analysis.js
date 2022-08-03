@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import axios from "../utility/api-instance";
 
 const initialState = {
-  data: null,
+  data: [],
   isLoading: true,
   error: false,
   AnalysisData: null,
