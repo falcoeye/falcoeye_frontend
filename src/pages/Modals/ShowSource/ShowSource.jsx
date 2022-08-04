@@ -38,6 +38,8 @@ const ShowSource = ({ open, handleClose, id }) => {
 
   const [capturePreviewOpened, setCapturePreviewOpened] = useState(false);
 
+  let data = sources.data.find((item) => item.id === id);
+
   const openDeleteModalHandler = useCallback(() => setDeleteModal(true), []);
   const closeDeleteModalHandler = useCallback(() => setDeleteModal(false), []);
 
@@ -65,7 +67,7 @@ const ShowSource = ({ open, handleClose, id }) => {
     []
   );
 
-  let data = sources.data.find((item) => item.id === id);
+  console.log(data)
 
   const triggerCaptureHandler = () => {
     setCaptureLoading(true);

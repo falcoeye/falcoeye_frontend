@@ -6,7 +6,7 @@ const SourceCard = (props) => {
   const { source } = props;
   const [showSourceOpened, setShowSourceOpened] = useState(false);
 
-  const openSourceModalHandler = (id) => {
+  const openSourceModalHandler = () => {
     setShowSourceOpened(true);
   };
   const closeSourceModalHandler = () => {
