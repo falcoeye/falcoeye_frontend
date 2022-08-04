@@ -253,7 +253,6 @@ const ShowSource = ({ open, handleClose, id }) => {
                 <AiFillVideoCamera />
               </button>
             </div>
-
             {captureLoading && (
               <div className="flex items-center mt-2">
                 <LoadingSpinner />
