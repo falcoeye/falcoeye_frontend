@@ -4,30 +4,36 @@ import { Fragment } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import LoadingSpinner from "../../Components/UI/LoadingSpinner/LoadingSpinner";
-import { deleteSource } from "../../store/sources";
+import { deleteMedia } from "../../store/media";
 import axios from "../../utility/api-instance";
 import "./Modals.css";
 
-const DeleteSource = ({ handleClose, id, open, handleShowClose }) => {
+const DeleteMedia = ({ handleClose, id, type, open, handleShowClose }) => {
   const dispatch = useDispatch();
   const [ deleting, setDeleting ] = useState()
 
 
-  const deleteSourceHandler = () => {
+  const deleteMediaHandler = () => {
     setDeleting(true)
+    let url;
+    if (type === "image") {
+      url = '/media/image/'
+    } else if ( type === 'video' ) {
+      url = '/media/video/'
+    }
     axios
-      .delete(`/camera/${id}`)
+      .delete(`${url}${id}`)
       .then((res) => {
         handleClose();
-        dispatch(deleteSource(id));
+        dispatch(deleteMedia(id));
         handleShowClose()
-        toast.success("Source has been deleted successfully");
+        toast.success("Media has been deleted successfully");
       })
       .catch((err) => {
         setDeleting(false)
         toast.error(
           err.response?.data?.message ||
-            "Error Deleting Source, Try again later"
+            "Error Deleting Media, Try again later"
         );
       });
   };
@@ -60,12 +66,12 @@ const DeleteSource = ({ handleClose, id, open, handleShowClose }) => {
             >
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <div className="text-[#42a7df] text-lg font-semibold text-center">
-                  Are You Sure You Want To Delete This Source ?
+                  Are You Sure You Want To Delete This Media ?
                 </div>
 
                 <div className="flex items-center justify-center mt-5 gap-3">
                   <button
-                    onClick={deleteSourceHandler}
+                    onClick={deleteMediaHandler}
                     type="button"
                     className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5"
                   >
@@ -88,4 +94,4 @@ const DeleteSource = ({ handleClose, id, open, handleShowClose }) => {
   );
 };
 
-export default DeleteSource;
+export default DeleteMedia;

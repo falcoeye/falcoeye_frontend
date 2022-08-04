@@ -1,15 +1,14 @@
 import {
-  GoogleMap,
-  InfoWindow,
-  Marker,
+  GoogleMap, Marker,
   useLoadScript
 } from '@react-google-maps/api';
+import Lottie from 'lottie-react';
 import React, { useCallback, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import noMapDataAnimation from '../../assets/animations/no-map-data.json';
 import Loader from '../../Components/UI/Loader/Loader';
+import ShowSource from '../Modals/ShowSource/ShowSource';
 import { mapStyles } from "./mapStyles";
-import Lottie from 'lottie-react'
-import noMapDataAnimation from '../../assets/animations/no-map-data.json'
 
 const mapContainerStyle = {
   width: '100%',
@@ -29,6 +28,17 @@ function SourcesMap() {
   const sources = useSelector((state) => state.sources);
 
   const [selected, setSelected] = useState(null);
+
+  const [showSourceOpened, setShowSourceOpened] = useState(false);
+
+  const markerClickHandler = (id) => {
+    setSelected(id)
+    setShowSourceOpened(true);
+  };
+  const closeSourceModalHandler = () => {
+    setShowSourceOpened(false);
+    setSelected(null)
+  };
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: 'AIzaSyCvQYmlYtxWzuXKU_kZEi-iJLEUAj53FUM',
@@ -60,16 +70,15 @@ function SourcesMap() {
           <Marker
             key={marker.id}
             position={{ lat: +marker.latitude, lng: +marker.longitude }}
-            onClick={() => setSelected(marker)}
+            onClick={() => markerClickHandler(marker.id)}
           />
         ))}
-        {selected && (
-          <InfoWindow
-            position={{ lat: +selected.latitude, lng: +selected.longitude }}
-            onCloseClick={() => setSelected(null)}
-          >
-            <h2 className='text-sm font-semibold' >{selected.name}</h2>
-          </InfoWindow>
+        {selected && showSourceOpened && (
+          <ShowSource
+              open={showSourceOpened}
+              handleClose={closeSourceModalHandler}
+              id={selected}
+            />
         )}
       </GoogleMap>
       {

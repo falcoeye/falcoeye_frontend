@@ -44,9 +44,8 @@ const AnalysisFilterbar = ({
               value={alanysisStatus}
             >
               <option value="all">All</option>
-              <option value="active">Active</option>
-              <option value="done">Done</option>
-              <option value="error">Error</option>
+              <option value="new">New</option>
+              <option value="old">old</option>
             </select>
           </div>
         </div>

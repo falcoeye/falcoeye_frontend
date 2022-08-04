@@ -1,21 +1,22 @@
 import Lottie from "lottie-react";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import moment from "moment";
+import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import noDataAnimation from "../../assets/animations/no-data.json";
 import Layout from "../../Components/Layout";
 import Loader from "../../Components/UI/Loader/Loader";
 import fish from "../../images/fish4.jpg";
-import AddAnalysis from "../Modals/AddAnalysis";
+import { fetchAnalysisData } from "../../store/analysis";
+import AddAnalysis from "../Modals/AddAnalysis/AddAnalysis";
 import ShowAnalysis from "../Modals/ShowAnalysis";
 import AnalysisFilterbar from "./AnalysisFilterbar";
-import { DUMMY_DATA } from "./DUMMY_DATA";
 
 const AllAnalysis = () => {
-  const isError = useSelector((state) => state.analysis.error);
   const isLoading = useSelector((state) => state.analysis.isLoading);
-  // const dispatch = useDispatch();
+  const analysises = useSelector((state) => state.analysis.data);
+  const dispatch = useDispatch();
 
-  const [analysisData, setAnalysisData] = useState([...DUMMY_DATA]);
+  const [filteredAnalysises, setFilteredAnalysises] = useState(analysises);
   const [searchInput, setSearchInput] = useState("");
   const [alanysisStatus, setAlanysisStatus] = useState("all");
 
@@ -33,42 +34,51 @@ const AllAnalysis = () => {
   const closeShowAnalysisModalHandler = () => setShowAnalysisModal(false);
 
   const analysisStatusChangeHandler = (e) => {
-    const status = e.target.value;
-    setAlanysisStatus(status);
-
-    if (status === "all") {
-      setAnalysisData([...DUMMY_DATA]);
-    } else {
-      setAnalysisData(DUMMY_DATA.filter((item) => item.status === status));
-    }
+    setAlanysisStatus(e.target.value);
   };
 
   const searchInputChangeHandler = (e) => {
-    const value = e.target.value;
     setSearchInput(e.target.value);
-
-    if (value) {
-      setAnalysisData((prevState) =>
-        prevState.filter((item) =>
-          item.name.toLowerCase().includes(value.toLowerCase())
-        )
-      );
-    } else {
-      setAnalysisData([...DUMMY_DATA]);
-    }
   };
 
-  // useEffect(() => {
-  //   dispatch(fetchAnalysisData());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchAnalysisData());
+  }, [dispatch]);
+
+  const searchFilter = ( term, items ) => {
+    if ( term.length === 0 ) return items;
+    const searchFilteredData = items.filter( item => {
+      return item.name.toLowerCase().includes(term.toLowerCase())
+    } )
+    return searchFilteredData
+  }
+
+  const typeFilter = ( type, items ) => {
+    switch ( type ) {
+      case 'all' : return items
+      default : 
+        return items.filter( item => item.status === type)
+    }
+  }
+
+  const filterationHandler = useCallback(() => {
+    let filteredData = [...analysises]
+    const searchFilteredResults = searchFilter(searchInput,filteredData)
+    const typeFiltersResults = typeFilter( alanysisStatus, searchFilteredResults )
+    setFilteredAnalysises(typeFiltersResults)
+  }, [alanysisStatus, analysises, searchInput])
+
+  useEffect(() =>{
+    if ( analysises.length > 0) {
+      filterationHandler()
+    } 
+  }, [analysises, filterationHandler] )
 
   let content;
 
-  if (isLoading && !isError) {
+  if (isLoading) {
     content = <Loader />;
-  }
-
-  if (isError && !isLoading) {
+  } else if (filteredAnalysises.length === 0 && !isLoading) {
     content = (
       <div className="h-96">
         <Lottie
@@ -78,20 +88,7 @@ const AllAnalysis = () => {
         />
       </div>
     );
-  }
-
-  // if(!isError && !isLoading){
-  if (analysisData.length === 0) {
-    content = (
-      <div className="h-96">
-        <Lottie
-          animationData={noDataAnimation}
-          loop={true}
-          style={{ width: "100%", height: "100%" }}
-        />
-      </div>
-    );
-  } else {
+  } else if  (  filteredAnalysises.length > 0 && !isLoading ) {
     content = (
       <div className="flex flex-col px-4 mt-6">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -125,7 +122,7 @@ const AllAnalysis = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {analysisData.map((file) => {
+                  {filteredAnalysises.map((file) => {
                     let statusStyle = "";
                     if (file.status === "active") {
                       statusStyle = "text-primary";
@@ -146,15 +143,13 @@ const AllAnalysis = () => {
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="">
                             <div className="text-sm font-medium text-gray-900">
                               {file.name}
                             </div>
-                          </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-500">
-                            {file.created_at}
+                            {moment.utc(file.created_at).format('MM-DD-YYYY')}
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
@@ -183,7 +178,6 @@ const AllAnalysis = () => {
       </div>
     );
   }
-  // }
 
   return (
     <>

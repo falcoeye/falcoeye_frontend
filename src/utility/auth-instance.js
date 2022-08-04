@@ -11,7 +11,7 @@ instance.interceptors.request.use(
     config.headers["Accept"] = "*/*";
     config.headers["Content-Type"] = "application/json";
     if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`;
+      config.headers["Authorization"] = `JWT ${token}`;
     }
     return config;
   },

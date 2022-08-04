@@ -14,7 +14,7 @@ import Home from "./pages/Home";
 import NewAnalysis from "./pages/NewAnalysis";
 import SnapShot from "./pages/Snapshots";
 import Streaming from "./pages/Streaming";
-import VideoImages from "./pages/VideoImages";
+import Media from "./pages/Media";
 import Settings from "./pages/Settings/Settings";
 import Page404 from "./Components/UI/Page404/Page404";
 
@@ -40,10 +40,10 @@ function App() {
         }
       />
       <Route
-        path="VideoImages"
+        path="media"
         element={
           <RequireAuth>
-            <VideoImages />
+            <Media />
           </RequireAuth>
         }
       />
