@@ -1,6 +1,7 @@
 ### 0.0.6
 - Enhancements to the Show / Edit Source flow with showing notifications on success or errors and The modals are closed instantly after successful requests
 - Apply Style Enhancements for Media Section with List & Grid View Style so user choose his favourite one
+- Add Show Media Modal
 - Enhance Functionality of Media Filteration so user can get accurate results
 - Integrate the API for Media ( GET - DELETE) to preview media and delete them
 - Integrate the API for analysis ( GET - DELETE )
