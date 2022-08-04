@@ -1,22 +1,12 @@
 import Lottie from "lottie-react";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { useSelector } from "react-redux";
 import noDataAnimation from "../../assets/animations/no-data.json";
 import Loader from "../../Components/UI/Loader/Loader";
-import ShowSource from "../Modals/ShowSource/ShowSource";
 import SourceCard from "./SourceCard";
 
 const SourcesGrid = () => {
-  const [selectedCardId, setSelectedCardId] = useState(null);
-  const [showSourceOpened, setShowSourceOpened] = useState(false);
 
-  const openSourceModalHandler = (id) => {
-    setShowSourceOpened(true);
-    setSelectedCardId(id);
-  };
-  const closeSourceModalHandler = () => {
-    setShowSourceOpened(false);
-  };
 
   const sources = useSelector((state) => state.sources);
 
@@ -40,7 +30,6 @@ const SourcesGrid = () => {
       <SourceCard
         key={source.id}
         source={source}
-        handleClick={openSourceModalHandler}
       />
     );
   });
@@ -50,11 +39,6 @@ const SourcesGrid = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {sourcesCards}
       </div>
-      <ShowSource
-        open={showSourceOpened}
-        handleClose={closeSourceModalHandler}
-        id={selectedCardId}
-      />
     </Fragment>
   );
 };

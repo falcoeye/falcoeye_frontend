@@ -1,39 +1,58 @@
 import { Dialog, Transition } from '@headlessui/react';
 import Lottie from 'lottie-react';
-import React, { Fragment, useCallback, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import {
-  AiFillCamera,
-  AiFillVideoCamera,
+  AiFillCamera, AiFillCheckCircle, AiFillCloseCircle, AiFillVideoCamera,
   AiOutlineClose
 } from 'react-icons/ai';
 import { FaEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import noDataAnimation from '../../../assets/animations/no-data.json';
 import LoadingSpinner from '../../../Components/UI/LoadingSpinner/LoadingSpinner';
 import DeleteSource from '../DeleteSource';
 import EditSource from '../EditSource';
 import '../Modals.css';
 import axios from './../../../utility/api-instance';
+import PreviewCapture from './components/PreviewCapture';
 import VideoCaptureModal from './components/VideoCaptureModal';
 import YoutubeView from './components/YoutubeView';
+
 
 const ShowSource = ({ open, handleClose, id }) => {
   const sources = useSelector((state) => state.sources);
   const [deleteModal, setDeleteModal] = useState(false);
   const [editModalOpened, setEditModalOpened] = useState(false);
+
   const [captureLoading, setCaptureLoading] = useState(false);
   const [captureFailed, setCaptureFailed] = useState(false);
   const [captureSuccess, setCaptureSuccess] = useState(false);
   const [captureMessage, setCaptureMessage] = useState(false);
+
   const [captureModalOpened, setCaptureModalOpened] = useState(false);
- /*  const [registerationKey, setRegisterationKey] = useState(null); */
+  const [registerationKey, setRegisterationKey] = useState(null);
+
+  const [gettingCaptureStatus, setGettingCaptureStatus] = useState(false);
+  const [captureStatus, setCaptureStatus] = useState(null);
+
+  const [capturePreviewOpened, setCapturePreviewOpened] = useState(false);
+
   const openDeleteModalHandler = useCallback(() => setDeleteModal(true), []);
   const closeDeleteModalHandler = useCallback(() => setDeleteModal(false), []);
 
   const openEditModalHandler = useCallback(() => setEditModalOpened(true), []);
   const closeEditModalHandler = useCallback(
     () => setEditModalOpened(false),
+    []
+  );
+
+  const capturePreviewOpenHandler = useCallback(
+    () => setCapturePreviewOpened(true),
+    []
+  );
+  const capturePreviewCloselHandler = useCallback(
+    () => setCapturePreviewOpened(false),
     []
   );
 
@@ -46,11 +65,7 @@ const ShowSource = ({ open, handleClose, id }) => {
     []
   );
 
-  let data;
-
-  if (id) {
-    data = sources.data.find((item) => item.id === id);
-  }
+  let data = sources.data.find((item) => item.id === id);
 
   const triggerCaptureHandler = () => {
     setCaptureLoading(true);
@@ -66,6 +81,8 @@ const ShowSource = ({ open, handleClose, id }) => {
     setCaptureLoading(true);
     setCaptureSuccess(false);
     setCaptureFailed(false);
+    setRegisterationKey(null);
+    setCaptureStatus(null);
     axios
       .post(`/capture`, {
         camera_id: id,
@@ -76,6 +93,7 @@ const ShowSource = ({ open, handleClose, id }) => {
         setCaptureMessage(res.data.message);
         setCaptureLoading(false);
         setCaptureSuccess(true);
+        setRegisterationKey(res.data.registry_key);
       })
       .catch((err) => {
         setCaptureMessage(err.data.message);
@@ -83,6 +101,44 @@ const ShowSource = ({ open, handleClose, id }) => {
         setCaptureFailed(true);
       });
   };
+
+  const checkCaptureStatus = useCallback(() => {
+    setGettingCaptureStatus(true);
+    axios
+      .get(`/capture/${registerationKey}`)
+      .then((res) => {
+        setCaptureStatus(res.data);
+      })
+      .catch((err) => {
+        toast.error(err.data?.message || 'Error Getting Capture Info');
+      });
+  }, [registerationKey]);
+
+  useEffect(() => {
+    if (registerationKey && !captureStatus) {
+      checkCaptureStatus();
+    }
+  }, [captureStatus, checkCaptureStatus, registerationKey]);
+
+  useEffect(() => {
+    let refetchInterval;
+    if (
+      registerationKey &&
+      captureStatus &&
+      captureStatus.capture_status === 'STARTED'
+    ) {
+      refetchInterval = setInterval(() => checkCaptureStatus(), 2000);
+    }
+    return () => {
+      if (
+        registerationKey &&
+        captureStatus &&
+        captureStatus.capture_status === 'STARTED'
+      ) {
+        clearInterval(refetchInterval);
+      }
+    };
+  }, [captureStatus, checkCaptureStatus, registerationKey]);
 
   let content;
 
@@ -110,6 +166,48 @@ const ShowSource = ({ open, handleClose, id }) => {
   if (id && data) {
     const videoID = data?.url?.split('v=')[1]?.split('&')[0];
     const disableSubmit = captureLoading || captureModalOpened;
+
+    const captureSuccessContent = captureSuccess && (
+      <div className=" mt-2">
+        <span className="font-semibold text-lime-500 capitalize inline-block">
+          {captureMessage}
+        </span>
+        {gettingCaptureStatus && (
+          <div className="flex items-center mt-3">
+            <span className="font-semibold text-gray-700 mr-2">
+              Your Capture is in progress.
+            </span>
+            {captureStatus?.capture_status === 'STARTED' &&  <LoadingSpinner />}
+            {captureStatus?.capture_status === 'SUCCEEDED' &&  <span className='text-emerald-400' ><AiFillCheckCircle /></span>}
+            {captureStatus?.capture_status === 'FAILED' &&  <span className='text-rose-700	' ><AiFillCloseCircle /></span>}
+          </div>
+        )}
+        {captureStatus?.capture_status === 'SUCCEEDED' && (
+        <div className="flex mt-4">
+          <button
+            onClick={capturePreviewOpenHandler}
+            type="button"
+            className="capitalize focus:outline-none text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:ring-green/30 font-medium rounded-lg text-sm px-5 py-2.5"
+          >
+            preview
+          </button>
+          <PreviewCapture
+            open={capturePreviewOpened}
+            handleClose={capturePreviewCloselHandler}
+            registerKey={registerationKey}
+          />
+        </div>
+        )}
+        {captureStatus?.capture_status === 'FAILED' && (
+        <div className="flex mt-3">
+          <span className="font-semibold text-red-700 capitalize">
+            Your Capture Failed
+          </span>
+        </div>
+        )}
+      </div>
+    )
+
     content = (
       <Fragment>
         <div className="flex justify-end gap-5">
@@ -134,7 +232,7 @@ const ShowSource = ({ open, handleClose, id }) => {
         </div>
         <YoutubeView videoID={videoID} />
         {videoID && (
-          <>
+          <Fragment>
             <div className="flex items-center justify-center gap-8 mt-5">
               <button
                 disabled={disableSubmit}
@@ -164,13 +262,7 @@ const ShowSource = ({ open, handleClose, id }) => {
                 </span>
               </div>
             )}
-            {captureSuccess && (
-              <div className="flex items-center mt-2">
-                <span className="font-semibold text-lime-500 capitalize">
-                  {captureMessage}
-                </span>
-              </div>
-            )}
+            {captureSuccessContent}
             {captureFailed && (
               <div className="flex items-center mt-2">
                 <span className="font-semibold text-red-700 capitalize">
@@ -178,7 +270,7 @@ const ShowSource = ({ open, handleClose, id }) => {
                 </span>
               </div>
             )}
-          </>
+          </Fragment>
         )}
         <EditSource
           open={editModalOpened}
@@ -202,39 +294,39 @@ const ShowSource = ({ open, handleClose, id }) => {
   }
 
   return (
-      <Transition appear show={open} as={Fragment}>
-        <Dialog as="div" className="relative z-[200]" onClose={handleClose}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
+    <Transition appear show={open} as={Fragment}>
+      <Dialog as="div" className="relative z-[200]" onClose={handleClose}>
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-black bg-opacity-25" />
+        </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center md:p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full h-screen md:h-fit md:max-w-4xl md:w-11/12 transform overflow-hidden md:rounded-2xl bg-white py-6 px-3 md:px-6  text-left align-middle shadow-xl transition-all">
-                  {content}
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
+        <div className="fixed inset-0 overflow-y-auto">
+          <div className="flex min-h-full items-center justify-center md:p-4 text-center">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
+            >
+              <Dialog.Panel className="w-full h-screen md:h-fit md:max-w-4xl md:w-11/12 transform overflow-hidden md:rounded-2xl bg-white py-6 px-3 md:px-6  text-left align-middle shadow-xl transition-all">
+                {content}
+              </Dialog.Panel>
+            </Transition.Child>
           </div>
-        </Dialog>
-      </Transition>
+        </div>
+      </Dialog>
+    </Transition>
   );
 };
 
