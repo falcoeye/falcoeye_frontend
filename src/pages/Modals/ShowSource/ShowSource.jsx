@@ -67,8 +67,6 @@ const ShowSource = ({ open, handleClose, id }) => {
     []
   );
 
-  console.log(data)
-
   const triggerCaptureHandler = () => {
     setCaptureLoading(true);
     setCaptureFailed(false);
