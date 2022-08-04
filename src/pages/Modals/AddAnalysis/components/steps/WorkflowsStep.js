@@ -4,9 +4,9 @@ import { useCallback, useEffect, useState } from "react";
 import { AiOutlineSearch, AiOutlineUser } from "react-icons/ai";
 import { BsBookmarkHeartFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import noDataAnimation from "../../../../assets/animations/no-data.json";
-import Loader from "../../../../Components/UI/Loader/Loader";
-import { fetchWorkflowsData } from "../../../../store/workflows";
+import noDataAnimation from "../../../../../assets/animations/no-data.json";
+import Loader from "../../../../../Components/UI/Loader/Loader";
+import { fetchWorkflowsData } from "../../../../../store/workflows";
 
 const WorkflowsStep = ({ onSelectWorkflow, selectedWorkflow }) => {
   const dispatch = useDispatch();

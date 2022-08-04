@@ -7,7 +7,7 @@ import Layout from "../../Components/Layout";
 import Loader from "../../Components/UI/Loader/Loader";
 import fish from "../../images/fish4.jpg";
 import { fetchAnalysisData } from "../../store/analysis";
-import AddAnalysis from "../Modals/AddAnalysis";
+import AddAnalysis from "../Modals/AddAnalysis/AddAnalysis";
 import ShowAnalysis from "../Modals/ShowAnalysis";
 import AnalysisFilterbar from "./AnalysisFilterbar";
 

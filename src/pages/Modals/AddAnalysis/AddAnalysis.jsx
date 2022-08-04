@@ -5,7 +5,7 @@ import StepperControl from "./components/StepperControl";
 import Name from "./components/steps/Name";
 import WorkflowsStep from "./components/steps/WorkflowsStep";
 import Final from "./components/steps/Final";
-import "./Modals.css";
+import "../Modals.css";
 import { AiOutlineClose } from "react-icons/ai";
 
 const AddAnalysis = ({ handleClose, open }) => {

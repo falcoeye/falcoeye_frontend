@@ -1,5 +1,5 @@
 import Lottie from "lottie-react";
-import submittedAnalysis from "../../../../assets/animations/submitted-analysis.json";
+import submittedAnalysis from "../../../../../assets/animations/submitted-analysis.json";
 
 const Final = () => {
   return (
