@@ -5,7 +5,7 @@ import { AiOutlineUser } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { analysisActions } from '../../store/analysis';
-import axios from '../../utility/auth-instance';
+import axios from '../../utility/api-instance';
 import noDataAnimation from '../../assets/animations/no-data.json';
 import Lottie from 'lottie-react';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -14,7 +14,6 @@ import './Modals.css';
 const ShowAnalysis = ({ handleClose, id, open }) => {
   const analysis = useSelector((state) => state.analysis.data);
   const data = analysis.find( item => item.id === id )
-  console.log(data)
   const dispatch = useDispatch();
   const deleteAnalysisHandler = () => {
     axios
