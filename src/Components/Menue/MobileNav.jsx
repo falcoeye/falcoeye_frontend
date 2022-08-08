@@ -34,7 +34,6 @@ const MobileNav = ({ isOpen, toggleDrawer }) => {
   let firstUserNameLetter;
 
   if (userData) {
-    console.log(userData)
     firstUserNameLetter = userData.name?.slice(0, 1).toUpperCase();
   }
 

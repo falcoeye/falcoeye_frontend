@@ -26,9 +26,6 @@ const MediaCard = (props) => {
       <div
         className="p-4 bg-white"
       >
-        <h5 className="mb-1 text-xl font-semibold tracking-tight text-gray-900  capitalize ">
-          {media.note}
-        </h5>
         <div
           className={`inline-flex items-center mb-3 py-1 px-2 text-base font-medium text-center text-white capitalize ${
             media.media_type === 'image' ? 'bg-sky-400' : 'bg-emerald-500'
