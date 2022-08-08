@@ -168,6 +168,7 @@ const AllWorkflows = () => {
       dataContent = filteredData.map((item) => (
         <WorkflowCard
           key={item.id}
+          id={item.id}
           creator={item.creator}
           date={item.publish_date}
           title={item.name}
@@ -177,6 +178,7 @@ const AllWorkflows = () => {
       dataContent = workflowsData.map((item) => (
         <WorkflowCard
           key={item.id}
+          id={item.id}
           creator={item.creator}
           date={item.publish_date}
           title={item.name}
