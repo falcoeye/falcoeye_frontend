@@ -14,7 +14,6 @@ const PreviewCapture = ({ handleClose, open, registerKey }) => {
     const [submitting, setSubmitting] = useState(false);
 
     const [data, setData] = useState({
-        name: '',
         note: '',
         tags: '',
     });
@@ -90,15 +89,6 @@ const PreviewCapture = ({ handleClose, open, registerKey }) => {
                     />
                 </div>
                 <form>
-                    <input
-                        type="text"
-                        id="name"
-                        className="modal_form_input"
-                        name="name"
-                        placeholder="Name"
-                        onChange={handleChange}
-                        value={data.name}
-                    />
                     <input
                         type="text"
                         id="note"
