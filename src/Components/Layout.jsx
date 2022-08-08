@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import MobileNav from "./Menue/MobileNav";
 import SideNave from "./Menue/SideNave";
-import Searchbar from "./Searchbar";
-import { useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import Header from "./Header";
 
 const Layout = ({ children }) => {
   const [sideNavToggle, setSideNavToggle] = useState(false);
   const handleSideNav = () => {
     setSideNavToggle(!sideNavToggle);
-  };
-  const { pathname } = useLocation();
+  }
   return (
     <>
       <div className={`flex`}>
@@ -23,7 +21,7 @@ const Layout = ({ children }) => {
         </div>
         <div className="flex flex-1 flex-col w-full">
           <MobileNav isOpen={sideNavToggle} toggleDrawer={handleSideNav} />
-          {searchPaths.includes(pathname) ? "" : <Searchbar />}
+          <Header />
           <ToastContainer
                 position="bottom-right"
                 autoClose={4000}
@@ -44,4 +42,3 @@ const Layout = ({ children }) => {
 
 export default Layout;
 
-const searchPaths = ["/analysis-jobs"];

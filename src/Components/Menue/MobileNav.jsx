@@ -9,7 +9,7 @@ import { BiSearchAlt } from "react-icons/bi";
 import { useLocation } from "react-router-dom";
 import logoSrc from "../../images/logo.png";
 import { IoSettings } from "react-icons/io5";
-import { LoadingSkelton } from "../Searchbar";
+import { LoadingSkelton } from "../Header";
 import DropDown from "../DropDown/DropDown";
 import ToggleMode from "../UI/ToggleMode/ToggleMode";
 
@@ -34,7 +34,8 @@ const MobileNav = ({ isOpen, toggleDrawer }) => {
   let firstUserNameLetter;
 
   if (userData) {
-    firstUserNameLetter = userData.name.slice(0, 1).toUpperCase();
+    console.log(userData)
+    firstUserNameLetter = userData.name?.slice(0, 1).toUpperCase();
   }
 
   return (
