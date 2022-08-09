@@ -159,7 +159,7 @@ const AddSource = ({ handleSourceModal }) => {
             }}
           >
             <option value="-">--TYPE--</option>
-            <option disabled value="RSTP">RSTP</option>
+            <option value="RSTP">RSTP</option>
             <option value="StreamingServer">STREAMING SERVER</option>
           </select>
           <input

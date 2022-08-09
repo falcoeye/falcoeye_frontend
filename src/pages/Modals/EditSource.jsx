@@ -217,7 +217,7 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
                     }}
                   >
                     <option value="-">--TYPE--</option>
-                    <option disabled value="RSTP">
+                    <option value="RSTP">
                       RSTP
                     </option>
                     <option value="StreamingServer">STREAMING SERVER</option>
