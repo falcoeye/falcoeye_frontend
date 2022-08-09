@@ -17,7 +17,6 @@ const WorkflowCard = ({ id, title, date, creator }) => {
         setImage(url);
       })
       .catch((err) => {
-        console.log(err)
         toast.error(err.response.data.message);
       });
   }, [id]);
