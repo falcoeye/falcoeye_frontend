@@ -165,7 +165,7 @@ const ShowSource = ({ open, handleClose, id }) => {
   }
   if (id && data) {
     const videoID = data?.url?.split('v=')[1]?.split('&')[0];
-    const disableSubmit = captureLoading || captureModalOpened;
+    const disableSubmit = captureLoading || captureModalOpened || (gettingCaptureStatus && !captureStatus ) || (gettingCaptureStatus && captureStatus?.capture_status === 'STARTED' )  ;
 
     const captureSuccessContent = captureSuccess && (
       <div className=" mt-2">
