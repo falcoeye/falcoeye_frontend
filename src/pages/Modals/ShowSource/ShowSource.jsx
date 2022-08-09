@@ -25,6 +25,7 @@ const ShowSource = ({ open, handleClose, id }) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [editModalOpened, setEditModalOpened] = useState(false);
 
+  const [ captureType, setCaptureType ] = useState(null)
   const [captureLoading, setCaptureLoading] = useState(false);
   const [captureFailed, setCaptureFailed] = useState(false);
   const [captureSuccess, setCaptureSuccess] = useState(false);
@@ -67,17 +68,9 @@ const ShowSource = ({ open, handleClose, id }) => {
     []
   );
 
-  const triggerCaptureHandler = () => {
-    setCaptureLoading(true);
-    setCaptureFailed(false);
 
-    setTimeout(() => {
-      setCaptureLoading(false);
-      setCaptureFailed(true);
-    }, 1500);
-  };
-
-  const captureImageClickHandler = () => {
+  const captureHandler = useCallback((type, length) => {
+    setCaptureType(null)
     setCaptureLoading(true);
     setCaptureSuccess(false);
     setCaptureFailed(false);
@@ -86,20 +79,29 @@ const ShowSource = ({ open, handleClose, id }) => {
     axios
       .post(`/capture`, {
         camera_id: id,
-        capture_type: 'image',
-        length: 0,
+        capture_type: type,
+        length: length || 0,
       })
       .then((res) => {
         setCaptureMessage(res.data.message);
         setCaptureLoading(false);
         setCaptureSuccess(true);
         setRegisterationKey(res.data.registry_key);
+        setCaptureType(type)
       })
       .catch((err) => {
         setCaptureMessage(err.data.message);
         setCaptureLoading(false);
         setCaptureFailed(true);
       });
+  }, [id])
+
+  const triggerCaptureHandler = useCallback( (length) => {
+    captureHandler('video', length)
+  }, [captureHandler]);
+
+  const captureImageClickHandler = () => {
+    captureHandler('image')
   };
 
   const checkCaptureStatus = useCallback(() => {
@@ -127,7 +129,7 @@ const ShowSource = ({ open, handleClose, id }) => {
       captureStatus &&
       captureStatus.capture_status === 'STARTED'
     ) {
-      refetchInterval = setInterval(() => checkCaptureStatus(), 2000);
+      refetchInterval = setInterval(() => checkCaptureStatus(), 5000);
     }
     return () => {
       if (
@@ -192,6 +194,7 @@ const ShowSource = ({ open, handleClose, id }) => {
             preview
           </button>
           <PreviewCapture
+            type={captureType}
             open={capturePreviewOpened}
             handleClose={capturePreviewCloselHandler}
             registerKey={registerationKey}

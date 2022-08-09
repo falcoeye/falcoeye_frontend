@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import axios from './../../../../utility/api-instance';
 import LoadingSpinner from '../../../../Components/UI/LoadingSpinner/LoadingSpinner';
 
-const PreviewCapture = ({ handleClose, open, registerKey }) => {
+const PreviewCapture = ({ handleClose, open, registerKey, type }) => {
     const [captureData, setCaptureData] = useState(null);
     const [loading, setLoading] = useState(null);
     const [submitting, setSubmitting] = useState(false);
@@ -44,21 +44,25 @@ const PreviewCapture = ({ handleClose, open, registerKey }) => {
 
     const approveCapture = useCallback(() => {
         setSubmitting(true);
+        let url = `/media/image`
+        if ( type === 'video' ) {
+            url = `/media/video`
+        }
         axios
-        .post(`/media/image`, {
-            ...data,
+            .post(url, {
+                ...data,
                 registry_key: registerKey,
             })
             .then((res) => {
                 setSubmitting(false);
                 handleClose();
-                toast.success('Your Capture has been submitted')
+                toast.success('Your Capture has been submitted');
             })
             .catch((err) => {
                 setSubmitting(false);
                 toast.error(err.data?.message || 'Error Submitting Capture');
             });
-    }, [data, handleClose, registerKey]);
+    }, [data, handleClose, registerKey, type]);
 
     useEffect(() => {
         getCaptureData();
@@ -79,15 +83,28 @@ const PreviewCapture = ({ handleClose, open, registerKey }) => {
             </div>
         );
     } else if (captureData && !loading) {
+        let mediaPreview;
+
+        if (type === 'image') {
+            mediaPreview = (
+                <img
+                    src={captureData.temporary_path}
+                    alt="capture"
+                    className="max-w-full aspect-video block"
+                />
+            );
+        } else if (type === 'video') {
+            mediaPreview = (
+                <video className="max-w-full aspect-video block" controls>
+                    <source src={captureData.temporary_path} type="video/mp4"/>
+                    Your browser does not support the video tag.
+                </video>
+            );
+        }
+
         content = (
             <div>
-                <div className='aspect-video my-5' >
-                    <img
-                        src={captureData.temporary_path}
-                        alt="capture"
-                        className="max-w-full aspect-video block"
-                    />
-                </div>
+                <div className="aspect-video my-5">{mediaPreview}</div>
                 <form>
                     <input
                         type="text"
