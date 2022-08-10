@@ -20,6 +20,7 @@ const ShowMedia = ({ open, handleClose, id }) => {
 	let data = useRef(null);
 	const [deleteModalOpened, setDeleteModalOpened] = useState(false);
 	const [mediaPreview, setMediaPreview] = useState(null);
+	const [ loading, setLoading ] = useState(false)
 
 	const openDeleteModalHandler = useCallback(
 		() => setDeleteModalOpened(true),
@@ -37,6 +38,7 @@ const ShowMedia = ({ open, handleClose, id }) => {
 			url = `media/video/${id}/video_original.mp4`;
 			type = {}
 		}
+		setLoading(true)
 		axios
 			.get(url, type)
 			.then((res) => {
@@ -46,10 +48,12 @@ const ShowMedia = ({ open, handleClose, id }) => {
 					const url = URL.createObjectURL(new_blob);
 					setMediaPreview(url);
 					return;
-				} 
+				}
+				setLoading(false)
 				setMediaPreview(res.data);
 			})
 			.catch((err) => {
+				setLoading(false)
 				toast.error(err.response.data.message);
 			});
 	}, []);
@@ -91,7 +95,7 @@ const ShowMedia = ({ open, handleClose, id }) => {
 
 	if (id && data.current) {
 		let renderedPreview = (
-			<div className="flex justify-center items-center h-96 bg-gray-300 mb-3">
+			<div className={`flex justify-center items-center h-96 bg-gray-300 mb-3 ${loading && 'animate-pulse'}`}>
 				<svg
 					className="w-12 h-12 text-gray-200"
 					xmlns="http://www.w3.org/2000/svg"

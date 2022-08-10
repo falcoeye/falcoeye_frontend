@@ -6,8 +6,10 @@ import { toast } from 'react-toastify';
 
 const WorkflowCard = ({ id, title, date, creator }) => {
   const [image, setImage] = useState(null);
+  const [ loading, setLoading ] = useState(false)
 
   const fetchImage = useCallback(() => {
+    setLoading(true)
     axios
       .get(`workflow/${id}/img_260.jpg`, {responseType: 'blob'})
       .then(res => {
@@ -15,8 +17,10 @@ const WorkflowCard = ({ id, title, date, creator }) => {
         const new_blob = new Blob( [ res.data ], { type: 'image/jpg' } );
         const url = URL.createObjectURL( new_blob );
         setImage(url);
+        setLoading(false)
       })
       .catch((err) => {
+        setLoading(false)
         toast.error(err.response.data.message);
       });
   }, [id]);
@@ -26,7 +30,7 @@ const WorkflowCard = ({ id, title, date, creator }) => {
   }, [fetchImage]);
 
   let renderedImage = (
-    <div className="flex justify-center items-center h-48 bg-gray-300 xl:flex-[2]">
+    <div className={`flex justify-center items-center h-48 bg-gray-300 xl:flex-[2] ${loading && 'animate-pulse'} `}>
       <svg
         className="w-12 h-12 text-gray-200"
         xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +45,7 @@ const WorkflowCard = ({ id, title, date, creator }) => {
 
   if (image) {
     renderedImage = (
-      <div className="flex justify-center items-center h-48 bg-gray-300 xl:flex-[2]">
+      <div className={`flex justify-center items-center h-48 bg-gray-300 xl:flex-[2]`} >
         <img src={image} alt={title} className="w-full h-full object-cover	" />
       </div>
     );

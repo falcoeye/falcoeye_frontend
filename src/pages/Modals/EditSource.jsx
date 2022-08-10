@@ -47,7 +47,7 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
     port: "",
     username: "",
     password: "",
-    thumbnail: null,
+    image: null,
     status: "RUNNING",
   });
 
@@ -116,10 +116,10 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
     setData((preVal) => {
       return {
         ...preVal,
-        thumbnail: base64,
+        image: base64,
       };
     });
-    data.thumbnail = base64;
+    //data.thumbnail = base64;
   };
 
   const handleSubmit = async (e) => {
@@ -242,7 +242,6 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
                         onChange={handleChange}
                         value={data.host}
                       />
-
                       <input
                         type="number"
                         id="port"
@@ -252,7 +251,6 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
                         onChange={handleChange}
                         value={data.port}
                       />
-
                       <input
                         type="text"
                         id="username"
@@ -285,10 +283,10 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
                               zIndex: "-1",
                             }}
                             type="file"
-                            id="thumbnail"
+                            id="image"
                             accept="image/*"
                             className="modal_form_input "
-                            name="thumbnail"
+                            name="image"
                             placeholder="Source Thumbnail"
                             onChange={handleImageUpload}
                           />

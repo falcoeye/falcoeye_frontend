@@ -12,12 +12,14 @@ const MediaCard = (props) => {
   const { media, handleClick } = props;
   const { id, media_type } = media;
   const [image, setImage] = useState(null);
+  const [ loading, setLoading ] = useState(false)
 
   const fetchImage = useCallback(() => {
     let url = `media/image/${id}/img_260.jpg`;
     if (media_type === 'video') {
       url = `media/video/${id}/video_260.jpg`;
     }
+    setLoading(true)
     axios
       .get(url, { responseType: 'blob' })
       .then((res) => {
@@ -25,8 +27,10 @@ const MediaCard = (props) => {
         const new_blob = new Blob([res.data], { type: 'image/jpg' });
         const url = URL.createObjectURL(new_blob);
         setImage(url);
+        setLoading(false)
       })
       .catch((err) => {
+        setLoading(false)
         toast.error(err.response.data.message);
       });
   }, [id, media_type]);
@@ -36,7 +40,7 @@ const MediaCard = (props) => {
   }, [fetchImage]);
 
   let renderedImage = (
-    <div className="flex justify-center items-center h-48 bg-gray-300 ">
+    <div className={`flex justify-center items-center h-48 bg-gray-300 ${loading && 'animate-pulse'}`} >
       <svg
         className="w-12 h-12 text-gray-200"
         xmlns="http://www.w3.org/2000/svg"
