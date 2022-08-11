@@ -1,12 +1,13 @@
 import Lottie from "lottie-react";
 import moment from "moment";
 import { useCallback, useEffect, useState } from "react";
-import { AiOutlineSearch, AiOutlineUser } from "react-icons/ai";
+import { AiOutlineSearch } from "react-icons/ai";
 import { BsBookmarkHeartFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import noDataAnimation from "../../../../../assets/animations/no-data.json";
 import Loader from "../../../../../Components/UI/Loader/Loader";
 import { fetchWorkflowsData } from "../../../../../store/workflows";
+import ShowWorkflow from "../../../ShowWorkflow";
 
 const WorkflowsStep = ({ onSelectWorkflow, selectedWorkflow }) => {
   const dispatch = useDispatch();
@@ -15,6 +16,15 @@ const WorkflowsStep = ({ onSelectWorkflow, selectedWorkflow }) => {
 
   const [filteredData, setFilteredData] = useState(null);
   const [searchInput, setSearchInput] = useState("");
+
+  const [showWorkflowOpened, setShowWorkflowOpened] = useState(false);
+
+  const openWorkflowModalHandler = () => {
+    setShowWorkflowOpened(true);
+  };
+  const closeWorkflowModalHandler = () => {
+    setShowWorkflowOpened(false);
+  };
 
   const checkSelectedWorkflowHandler = useCallback(() => {
     let data = workflowsData;
@@ -127,15 +137,16 @@ const WorkflowsStep = ({ onSelectWorkflow, selectedWorkflow }) => {
               </span>
             )}
           </div>
-          <p className="text-sm text-gray-400/80">
+          <p className="text-sm text-gray-400/80 mb-3">
             {moment.utc(item.publish_date).format("MMM DD YYYY")}
           </p>
-          <p className="flex items-center gap-1 capitalize text-green bg-green/5 w-fit p-2 rounded-md">
-            <span>
-              <AiOutlineUser />
-            </span>
-            {item.creator}
-          </p>
+          <button
+              onClick={openWorkflowModalHandler}
+              type="button"
+              className="focus:outline-none text-white bg-cyan-500 hover:bg-cyan-600 font-medium rounded-lg text-sm px-5 py-2.5 transition w-max	"
+            >
+              Read More
+            </button>
         </div>
       ));
     } else if (filteredData && filteredData.length === 0) {
@@ -170,6 +181,13 @@ const WorkflowsStep = ({ onSelectWorkflow, selectedWorkflow }) => {
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 h-[calc(100vh-366px)] md:h-[21rem] overflow-y-scroll pr-3">
           {dataContent}
         </div>
+        {showWorkflowOpened && (
+        <ShowWorkflow
+          open={showWorkflowOpened}
+          handleClose={closeWorkflowModalHandler}
+          id={selectedWorkflow.id}
+        />
+      ) }
       </div>
     );
   }

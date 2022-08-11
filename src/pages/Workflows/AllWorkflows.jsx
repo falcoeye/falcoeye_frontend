@@ -23,7 +23,6 @@ const AllWorkflows = () => {
   const [showWorkflowOpened, setShowWorkflowOpened] = useState(false);
 
   const openWorkflowModalHandler = (id) => {
-    console.log(id)
     setShowWorkflowOpened(true);
     setSelectedCardId(id);
   };

@@ -180,7 +180,7 @@ const ShowWorkflow = ({ open, handleClose, id }) => {
 
 	return (
 		<Transition appear show={open} as={Fragment}>
-			<Dialog as="div" className="relative z-[200]" onClose={handleClose}>
+			<Dialog as="div" className="relative z-[400]" onClose={handleClose}>
 				<Transition.Child
 					as={Fragment}
 					enter="ease-out duration-300"
