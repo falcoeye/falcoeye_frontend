@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addSource } from "../../store/sources";
 import { toast } from "react-toastify";
@@ -8,7 +8,7 @@ import LoadingSpinner from "../../Components/UI/LoadingSpinner/LoadingSpinner";
 import { Fragment } from "react";
 
 const streaminServerFields = [ 'name', 'latitude', 'longitude', 'streaming_type', 'url', 'status' ]
-const RSTPFields = [ 'name', 'latitude', 'longitude', 'streaming_type', 'url', 'status', 'host', 'port', 'user', 'password', 'thumbnail']
+const RSTPFields = [ 'name', 'latitude', 'longitude', 'streaming_type', 'url', 'status', 'host', 'port', 'user', 'password', 'image']
 
 const AddSource = ({ handleSourceModal }) => {
   const dispatch = useDispatch()
@@ -25,7 +25,7 @@ const AddSource = ({ handleSourceModal }) => {
     port: '',
     username: '',
     password: '',
-    thumbnail: null,
+    image: null,
     status: "RUNNING",
   });
 
@@ -69,7 +69,7 @@ const AddSource = ({ handleSourceModal }) => {
       };
     });
   };
-  const convertBase64 = (file) => {
+  const convertToDataURL = (file) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
@@ -81,17 +81,24 @@ const AddSource = ({ handleSourceModal }) => {
       };
     });
   };
-  const handleImageUpload = async (event) => {
+
+  const getBase64StringFromDataURL = (dataURL) =>{
+    return dataURL.replace('data:', '').replace(/^.+,/, '');
+  }
+
+  const handleImageUpload = useCallback(async (event) => {
     const file = event.target.files[0];
-    const base64 = await convertBase64(file);
+    const dataUrl = await convertToDataURL(file);
+    // Convert to Base64 string
+    const base64 =  getBase64StringFromDataURL(dataUrl);
     setData((preVal) => {
       return {
         ...preVal,
-        thumbnail: base64
+        image: base64
       }
     })
-    data.thumbnail = base64;
-  };
+    //data.thumbnail = base64;
+  }, []) 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -212,7 +219,7 @@ const AddSource = ({ handleSourceModal }) => {
                   value={data.password}
                 />
                 <div>
-                  <label htmlFor="thumbnail" className="image_upload_label" style={{margin: '5px auto'}}>
+                  <label htmlFor="image" className="image_upload_label" style={{margin: '5px auto'}}>
                     Upload Source Thumbnail
                     <input
                       style={{
@@ -221,10 +228,10 @@ const AddSource = ({ handleSourceModal }) => {
                         zIndex: "-1",
                       }}
                       type="file"
-                      id="thumbnail"
+                      id="image"
                       accept="image/*"
                       className="modal_form_input "
-                      name="thumbnail"
+                      name="image"
                       placeholder="Source Thumbnail"
                       onChange={handleImageUpload}
                     />
