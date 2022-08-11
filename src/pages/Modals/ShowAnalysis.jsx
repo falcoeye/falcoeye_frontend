@@ -74,12 +74,6 @@ const ShowAnalysis = ({ handleClose, id, open }) => {
               {data.status}
             </p>
           </div>
-          <p className="flex items-center gap-1 capitalize text-gray-400">
-            <span>
-              <AiOutlineUser />
-            </span>
-            {data.creator}
-          </p>
 
           <p className="flex items-center gap-1 capitalize text-gray-400">
             <span className="text-gray-500 font-semibold">
