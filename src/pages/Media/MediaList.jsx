@@ -135,12 +135,13 @@ const MediaList = ({ data }) => {
           </div>
         </div>
       </div>
-
-      <ShowMedia
-        open={showMediaOpened}
-        handleClose={closeMediaModalHandler}
-        id={selectedCardId}
-      />
+      {showMediaOpened && (
+        <ShowMedia
+          open={showMediaOpened}
+          handleClose={closeMediaModalHandler}
+          id={selectedCardId}
+        />
+      ) }
     </Fragment>
   );
 };

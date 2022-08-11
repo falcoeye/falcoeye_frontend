@@ -4,7 +4,7 @@ import moment from 'moment';
 import axios from '../../utility/api-instance';
 import { toast } from 'react-toastify';
 
-const WorkflowCard = ({ id, title, date, creator }) => {
+const WorkflowCard = ({ id, title, date, creator, handleClick }) => {
   const [image, setImage] = useState(null);
   const [ loading, setLoading ] = useState(false)
 
@@ -52,7 +52,7 @@ const WorkflowCard = ({ id, title, date, creator }) => {
   }
 
   return (
-    <div className="sm:max-w-[370px] sm:my-0 sm:mx-auto md:max-w-full md:w-full  flex xl:flex-row flex-col  xl:items-center gap-4  px-4 py-5 shadow rounded border border-[#f5f5f5]">
+    <div className="sm:max-w-[370px] sm:my-0 sm:mx-auto md:max-w-full md:w-full  flex xl:flex-row flex-col  xl:items-center gap-4  px-4 py-5 shadow rounded border border-[#f5f5f5] cursor-pointer" onClick={handleClick.bind(null, id)} >
       {renderedImage}
       <div className="xl:flex-[2]">
         <h3 className="text-base capitalize mb-3  font-bold text-gray-700">

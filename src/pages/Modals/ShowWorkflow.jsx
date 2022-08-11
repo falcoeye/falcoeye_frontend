@@ -1,26 +1,24 @@
 import { Dialog, Transition } from '@headlessui/react';
 import Lottie from 'lottie-react';
+import moment from 'moment';
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
-import {
-	AiFillCamera,
-	AiFillVideoCamera,
-	AiOutlineClose,
-} from 'react-icons/ai';
+import { AiOutlineCalendar, AiOutlineClose, AiOutlineUser } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
-import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import noDataAnimation from '../../assets/animations/no-data.json';
-import DeleteMedia from './DeleteMedia';
-import './Modals.css';
+import Loader from '../../Components/UI/Loader/Loader';
 import axios from '../../utility/api-instance';
-import { useRef } from 'react';
+import DeleteWorkflow from './DeleteWorkflow';
+import './Modals.css';
 
-const ShowMedia = ({ open, handleClose, id }) => {
-	const media = useSelector((state) => state.media);
-	let data = useRef(null);
+
+const ShowWorkflow = ({ open, handleClose, id }) => {
 	const [deleteModalOpened, setDeleteModalOpened] = useState(false);
-	const [mediaPreview, setMediaPreview] = useState(null);
-	const [ loading, setLoading ] = useState(false)
+	const [image, setImage] = useState(null);
+	const [loading, setLoading] = useState(false);
+
+	const [data, setData] = useState(null)
+	const [fetching, setFetching] = useState(false)
 
 	const openDeleteModalHandler = useCallback(
 		() => setDeleteModalOpened(true),
@@ -31,47 +29,55 @@ const ShowMedia = ({ open, handleClose, id }) => {
 		[]
 	);
 
-	const fetchMediaPreview = useCallback((id, mediaType) => {
-		let url = `media/image/${id}/img_original.jpg`;
-		let type = { responseType: 'blob' }
-		if (mediaType === 'video') {
-			url = `media/video/${id}/video_original.mp4`;
-			type = {}
-		}
+	const fetchData = useCallback(() => {
+		setFetching(true)
+		axios
+			.get(`workflow/${id}`)
+			.then(res => {
+				setData(res.data.workflow)
+				setFetching(false)
+			})
+			.catch((err) => {
+				setFetching(false)
+				toast.error(err.response.data.message);
+			});
+	}, [id]);
+
+	useEffect(() => {
+		fetchData();
+	}, [fetchData]);
+
+	const fetchImage = useCallback(() => {
 		setLoading(true)
 		axios
-			.get(url, type)
-			.then((res) => {
-				if ( mediaType === 'image' ) {
-					// we can all pass them to the Blob constructor directly
-					const new_blob = new Blob([res.data], { type: 'image/jpg' });
-					const url = URL.createObjectURL(new_blob);
-					setMediaPreview(url);
-					return;
-				}
+			.get(`workflow/${id}/img_original.jpg`, { responseType: 'blob' })
+			.then(res => {
+				// we can all pass them to the Blob constructor directly
+				const new_blob = new Blob([res.data], { type: 'image/jpg' });
+				const url = URL.createObjectURL(new_blob);
+				setImage(url);
 				setLoading(false)
-				setMediaPreview(res.data);
 			})
 			.catch((err) => {
 				setLoading(false)
 				toast.error(err.response.data.message);
 			});
-	}, []);
+	}, [id]);
 
 	useEffect(() => {
-		if (id && data.current) {
-			fetchMediaPreview(id, data.current.media_type)
-		}
-	}, [id, fetchMediaPreview])
+		fetchImage();
+	}, [fetchImage]);
 
 
-	if (id) {
-		data.current = media.data.find((item) => item.id === id);
-	}
 
 	let content;
 
-	if (id && !data.current) {
+	if (id && !data && fetching) {
+		content = (
+			<Loader height="96" />
+		)
+	}
+	if (id && !data && !fetching) {
 		content = (
 			<Fragment>
 				<div className="flex justify-end gap-5">
@@ -93,7 +99,7 @@ const ShowMedia = ({ open, handleClose, id }) => {
 		);
 	}
 
-	if (id && data.current) {
+	if (id && data) {
 		let renderedPreview = (
 			<div className={`flex justify-center items-center h-96 bg-gray-300 mb-3 ${loading && 'animate-pulse'}`}>
 				<svg
@@ -107,10 +113,10 @@ const ShowMedia = ({ open, handleClose, id }) => {
 				</svg>
 			</div>
 		)
-		if ( mediaPreview && data.current.media_type === 'image' ) {
+		if (image && !loading) {
 			renderedPreview = (
 				<div className="flex justify-center items-center h-96 bg-gray-300 mb-3">
-					<img src ={mediaPreview} alt={data.current.media_type} className="w-full h-full object-cover"  />
+					<img src={image} alt={data.name} className="w-full h-full object-cover" />
 				</div>
 			)
 		}
@@ -131,22 +137,41 @@ const ShowMedia = ({ open, handleClose, id }) => {
 					</button>
 				</div>
 				{renderedPreview}
-				<div
-					className={`inline-flex items-center mb-3 py-1 px-2 text-base font-medium text-center text-white capitalize ${media.media_type === 'image' ? 'bg-sky-400' : 'bg-emerald-500'
-						} rounded-lg`}
-				>
-					{data.current.media_type === 'image' ? (
-						<AiFillCamera className="mr-2" />
-					) : (
-						<AiFillVideoCamera className="mr-2" />
-					)}
-					{data.current.media_type}
+				<h3 className="text-base capitalize mb-3  font-bold text-gray-700">
+					{data.name}
+				</h3>
+				<div className="flex flex-col gap-2 text-sm">
+					<p className="flex items-center gap-1 capitalize text-gray-600 bg-gray-100 w-fit p-2 rounded-md">
+						<span>
+							<AiOutlineCalendar />
+						</span>
+						{moment.utc(data.date).format('MMM DD YYYY')}
+					</p>
+					<p className="flex items-center gap-1 capitalize text-green bg-green/5 w-fit p-2 rounded-md">
+						<span>
+							<AiOutlineUser />
+						</span>
+						{data.creator}
+					</p>
 				</div>
-				<DeleteMedia
+				<div  className="flex flex-col gap-2 text-sm mt-5" >
+					<p>
+						<span className='font-bold inline-block mr-2' >Used For:</span>
+						{data.usedfor}
+					</p>
+					<p>
+						<span className='font-bold inline-block mr-2' >Consideration:</span>
+						{data.consideration}
+					</p>
+					<p>
+						<span className='font-bold inline-block mr-2' >Assumption:</span>
+						{data.assumption}
+					</p>
+				</div>
+				<DeleteWorkflow
 					open={deleteModalOpened}
 					handleClose={closeDeleteModalHandler}
 					id={id}
-					type={data.current.media_type}
 					handleShowClose={handleClose}
 				/>
 			</Fragment>
@@ -189,4 +214,4 @@ const ShowMedia = ({ open, handleClose, id }) => {
 		</Transition>
 	);
 };
-export default ShowMedia;
+export default ShowWorkflow;

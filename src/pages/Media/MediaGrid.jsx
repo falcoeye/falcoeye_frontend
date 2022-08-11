@@ -1,12 +1,12 @@
-import Lottie from "lottie-react";
-import { Fragment, useState } from "react";
-import { useSelector } from "react-redux";
-import noDataAnimation from "../../assets/animations/no-data.json";
-import Loader from "../../Components/UI/Loader/Loader";
-import ShowMedia from "../Modals/ShowMedia";
-import MediaCard from "./MediaCard";
+import Lottie from 'lottie-react';
+import { Fragment, useState } from 'react';
+import { useSelector } from 'react-redux';
+import noDataAnimation from '../../assets/animations/no-data.json';
+import Loader from '../../Components/UI/Loader/Loader';
+import ShowMedia from '../Modals/ShowMedia';
+import MediaCard from './MediaCard';
 
-const MediaGrid = ( { data } ) => {
+const MediaGrid = ({ data }) => {
   const [selectedCardId, setSelectedCardId] = useState(null);
   const [showMediaOpened, setShowMediaOpened] = useState(false);
   const media = useSelector((state) => state.media);
@@ -28,7 +28,7 @@ const MediaGrid = ( { data } ) => {
         <Lottie
           animationData={noDataAnimation}
           loop={true}
-          style={{ width: "100%", height: "100%" }}
+          style={{ width: '100%', height: '100%' }}
         />
       </div>
     );
@@ -49,11 +49,13 @@ const MediaGrid = ( { data } ) => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
         {mediaCards}
       </div>
-      <ShowMedia
-        open={showMediaOpened}
-        handleClose={closeMediaModalHandler}
-        id={selectedCardId}
-      />
+      {showMediaOpened && (
+        <ShowMedia
+          open={showMediaOpened}
+          handleClose={closeMediaModalHandler}
+          id={selectedCardId}
+        />
+      )}
     </Fragment>
   );
 };
