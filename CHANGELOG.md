@@ -1,3 +1,16 @@
+### 0.0.7
+- Delete Note From Media Card And Show Media Modal and make search input filters based on tags
+- Remove name from preview image capture modal
+- Get Workflows cards thumbnails
+- Get Media cards thumbnails
+- Show Original Image in Show Media Modal
+- Make Capture Buttons Always disabled while there is an active capture
+- Implement Capture Video but process is not completed yet because of the block from the backend
+- Enable RTSP in Sources
+- Enable the user to Upload a thumbnail for the Source on Create or on Edit
+- Get Sources Cards thumbnails
+- Add Show Workflow Modal That shows Original Image and Other Infos
+- Add view button to each workflow card in the create analysis stepper so user can view the workflow before choosing it
 ### 0.0.6
 - Enhancements to the Show / Edit Source flow with showing notifications on success or errors and The modals are closed instantly after successful requests
 - Apply Style Enhancements for Media Section with List & Grid View Style so user choose his favourite one

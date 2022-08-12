@@ -3,31 +3,21 @@ import Lottie from 'lottie-react';
 import moment from 'moment';
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { AiOutlineCalendar, AiOutlineClose, AiOutlineUser } from 'react-icons/ai';
-import { MdDelete } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import noDataAnimation from '../../assets/animations/no-data.json';
 import Loader from '../../Components/UI/Loader/Loader';
 import axios from '../../utility/api-instance';
-import DeleteWorkflow from './DeleteWorkflow';
 import './Modals.css';
 
 
 const ShowWorkflow = ({ open, handleClose, id }) => {
-	const [deleteModalOpened, setDeleteModalOpened] = useState(false);
 	const [image, setImage] = useState(null);
 	const [loading, setLoading] = useState(false);
 
 	const [data, setData] = useState(null)
 	const [fetching, setFetching] = useState(false)
 
-	const openDeleteModalHandler = useCallback(
-		() => setDeleteModalOpened(true),
-		[]
-	);
-	const closeDeleteModalHandler = useCallback(
-		() => setDeleteModalOpened(false),
-		[]
-	);
+
 
 	const fetchData = useCallback(() => {
 		setFetching(true)
@@ -124,12 +114,6 @@ const ShowWorkflow = ({ open, handleClose, id }) => {
 			<Fragment>
 				<div className="flex justify-end gap-5 mb-5">
 					<button
-						className="bg-red-600/90 hover:bg-red-600 text-white transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
-						onClick={openDeleteModalHandler}
-					>
-						<MdDelete />
-					</button>
-					<button
 						className="bg-gray-50 hover:bg-gray-200 transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
 						onClick={handleClose}
 					>
@@ -168,12 +152,6 @@ const ShowWorkflow = ({ open, handleClose, id }) => {
 						{data.assumption}
 					</p>
 				</div>
-				<DeleteWorkflow
-					open={deleteModalOpened}
-					handleClose={closeDeleteModalHandler}
-					id={id}
-					handleShowClose={handleClose}
-				/>
 			</Fragment>
 		);
 	}
