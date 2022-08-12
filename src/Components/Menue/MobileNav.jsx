@@ -9,7 +9,7 @@ import { BiSearchAlt } from "react-icons/bi";
 import { useLocation } from "react-router-dom";
 import logoSrc from "../../images/logo.png";
 import { IoSettings } from "react-icons/io5";
-import { LoadingSkelton } from "../Searchbar";
+import { LoadingSkelton } from "../Header";
 import DropDown from "../DropDown/DropDown";
 import ToggleMode from "../UI/ToggleMode/ToggleMode";
 
@@ -20,9 +20,9 @@ const navLinks = [
   { id: 4, text: "workflows", icon: <AiFillRobot />, path: "/workflows" },
   {
     id: 5,
-    text: "jobs",
+    text: "Analysis",
     icon: <BiSearchAlt />,
-    path: "/analysis jobs",
+    path: "/analysis",
   },
   { id: 6, text: "Settings", icon: <IoSettings />, path: "/settings" },
 ];
@@ -34,7 +34,7 @@ const MobileNav = ({ isOpen, toggleDrawer }) => {
   let firstUserNameLetter;
 
   if (userData) {
-    firstUserNameLetter = userData.name.slice(0, 1).toUpperCase();
+    firstUserNameLetter = userData.name?.slice(0, 1).toUpperCase();
   }
 
   return (

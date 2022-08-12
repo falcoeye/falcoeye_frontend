@@ -45,7 +45,7 @@ const AnalysisFilterbar = ({
             >
               <option value="all">All</option>
               <option value="new">New</option>
-              <option value="old">old</option>
+              <option value="old">Old</option>
             </select>
           </div>
         </div>

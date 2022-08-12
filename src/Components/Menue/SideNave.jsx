@@ -20,9 +20,9 @@ const navLinks = [
   { id: 4, text: "workflows", icon: <AiFillRobot />, path: "/workflows" },
   {
     id: 5,
-    text: "jobs",
+    text: "Analysis",
     icon: <BiSearchAlt />,
-    path: "/all-analysis",
+    path: "/analysis",
   },
   { id: 6, text: "Settings", icon: <IoSettings />, path: "/settings" },
 ];

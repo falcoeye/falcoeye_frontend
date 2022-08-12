@@ -6,6 +6,7 @@ import WorkflowCard from "./WorkflowCard";
 import WorkflowsFilterBar from "./WorkflowsFilterBar";
 import noDataAnimation from "../../assets/animations/no-data.json";
 import Lottie from "lottie-react";
+import ShowWorkflow from "../Modals/ShowWorkflow";
 
 const AllWorkflows = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,17 @@ const AllWorkflows = () => {
   const [dataOrder, setDataOrder] = useState(null);
   const [dataType, setDataType] = useState("Title");
   const [searchInput, setSearchInput] = useState("");
+
+  const [selectedCardId, setSelectedCardId] = useState(null);
+  const [showWorkflowOpened, setShowWorkflowOpened] = useState(false);
+
+  const openWorkflowModalHandler = (id) => {
+    setShowWorkflowOpened(true);
+    setSelectedCardId(id);
+  };
+  const closeWorkflowModalHandler = () => {
+    setShowWorkflowOpened(false);
+  };
 
   const changeSearchInputHandler = (value) => {
     setSearchInput(value);
@@ -168,18 +180,22 @@ const AllWorkflows = () => {
       dataContent = filteredData.map((item) => (
         <WorkflowCard
           key={item.id}
+          id={item.id}
           creator={item.creator}
           date={item.publish_date}
           title={item.name}
-        />
-      ));
-    } else {
-      dataContent = workflowsData.map((item) => (
-        <WorkflowCard
-          key={item.id}
-          creator={item.creator}
-          date={item.publish_date}
-          title={item.name}
+          handleClick={openWorkflowModalHandler}
+          />
+          ));
+        } else {
+          dataContent = workflowsData.map((item) => (
+            <WorkflowCard
+            key={item.id}
+            id={item.id}
+            creator={item.creator}
+            date={item.publish_date}
+            title={item.name}
+            handleClick={openWorkflowModalHandler}
         />
       ));
     }
@@ -211,6 +227,13 @@ const AllWorkflows = () => {
           {content}
         </div>
       </div>
+      {showWorkflowOpened && (
+        <ShowWorkflow
+          open={showWorkflowOpened}
+          handleClose={closeWorkflowModalHandler}
+          id={selectedCardId}
+        />
+      ) }
     </div>
   );
 };

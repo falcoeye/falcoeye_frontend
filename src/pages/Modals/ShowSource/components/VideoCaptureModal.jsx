@@ -1,12 +1,17 @@
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
-import "../../Modals.css";
+import { Dialog, Transition } from '@headlessui/react';
+import { Fragment, useState } from 'react';
+import '../../Modals.css';
 
 const VideoCaptureModal = ({ handleClose, open, onTriggerCapture }) => {
-  const [sliderInput, setSliderInput] = useState(10);
+  const [sliderInput, setSliderInput] = useState(60);
 
   const changeSliderInputHandler = (e) => {
     setSliderInput(e.target.value);
+  };
+
+  const submitHandler = () => {
+    handleClose();
+    onTriggerCapture(sliderInput);
   };
 
   return (
@@ -44,7 +49,7 @@ const VideoCaptureModal = ({ handleClose, open, onTriggerCapture }) => {
                     htmlFor="steps-range"
                     className="block mb-2 text-sm font-semibold text-white bg-primary w-fit p-2 rounded-lg "
                   >
-                    {sliderInput}
+                    {`${sliderInput} S`}
                   </label>
                 </div>
                 <input
@@ -64,15 +69,12 @@ const VideoCaptureModal = ({ handleClose, open, onTriggerCapture }) => {
                   name="name"
                   placeholder="Name"
                   min="10"
-                  max='120'
+                  max="120"
                   onChange={changeSliderInputHandler}
                   value={sliderInput}
                 />
                 <button
-                  onClick={() => {
-                    handleClose();
-                    onTriggerCapture();
-                  }}
+                  onClick={submitHandler}
                   type="button"
                   className="focus:outline-none text-white bg-green/70 hover:bg-green focus:ring-4 focus:ring-green/30 font-medium rounded-lg text-sm px-5 py-2.5 mt-5"
                 >

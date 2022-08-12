@@ -37,12 +37,15 @@ export const workflowsSlice = createSlice({
       } else {
       }
     },
+    deleteWorkflow: (state, action) => {
+      state.data = state.data.filter( item => item.id !== action.payload )
+    },
   },
 });
 
 export const fetchWorkflowsData = () => {
   return async (dispatch) => {
-    dispatch(workflowsActions.startLoading());
+    dispatch(startLoading());
 
     const fetchData = async () => {
       const response = await axios.get("/workflow/");
@@ -51,8 +54,8 @@ export const fetchWorkflowsData = () => {
 
     try {
       const responseData = await fetchData();
-      dispatch(workflowsActions.fetchWorkflows(responseData.data.workflow));
-      dispatch(workflowsActions.endLoading());
+      dispatch(fetchWorkflows(responseData.data.workflow));
+      dispatch(endLoading());
     } catch (err) {
       const errorMessage = err.response.data.msg || err.response.data.message;
       toast.error(errorMessage || "Something went wrong!", {
@@ -64,10 +67,10 @@ export const fetchWorkflowsData = () => {
         draggable: false,
         progress: undefined,
       });
-      dispatch(workflowsActions.endLoading());
+      dispatch(endLoading());
     }
   };
 };
 
-export const workflowsActions = workflowsSlice.actions;
+export const {startLoading,  fetchWorkflows, endLoading, deleteWorkflow } = workflowsSlice.actions;
 export default workflowsSlice.reducer;

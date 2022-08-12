@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import RequireAuth from "./Components/RequireAuth/RequireAuth";
 import Workflows from "./pages/Workflows/Workflows";
-import AllAnalysis from "./pages/AllAnalysis";
+import Analysis from "./pages/Analysis";
 import AnalysisJobs from "./pages/Analysis";
 import AnalysisDetailsIndex from "./pages/AnalysisDetails";
 import Login from "./pages/Auth/Login";
@@ -96,10 +96,10 @@ function App() {
         }
       />
       <Route
-        path="all-analysis"
+        path="analysis"
         element={
           <RequireAuth>
-            <AllAnalysis />
+            <Analysis />
           </RequireAuth>
         }
       />

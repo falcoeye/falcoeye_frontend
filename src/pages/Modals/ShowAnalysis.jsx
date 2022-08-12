@@ -1,14 +1,13 @@
 import { Dialog, Transition } from '@headlessui/react';
+import Lottie from 'lottie-react';
 import moment from 'moment';
 import { Fragment } from 'react';
-import { AiOutlineUser } from 'react-icons/ai';
+import { AiOutlineClose } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import noDataAnimation from '../../assets/animations/no-data.json';
 import { analysisActions } from '../../store/analysis';
 import axios from '../../utility/api-instance';
-import noDataAnimation from '../../assets/animations/no-data.json';
-import Lottie from 'lottie-react';
-import { AiOutlineClose } from 'react-icons/ai';
 import './Modals.css';
 
 const ShowAnalysis = ({ handleClose, id, open }) => {
@@ -74,12 +73,6 @@ const ShowAnalysis = ({ handleClose, id, open }) => {
               {data.status}
             </p>
           </div>
-          <p className="flex items-center gap-1 capitalize text-gray-400">
-            <span>
-              <AiOutlineUser />
-            </span>
-            {data.creator}
-          </p>
 
           <p className="flex items-center gap-1 capitalize text-gray-400">
             <span className="text-gray-500 font-semibold">

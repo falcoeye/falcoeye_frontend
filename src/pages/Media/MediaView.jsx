@@ -41,7 +41,7 @@ const MediaView = (props) => {
   const searchFilter = ( term, items ) => {
     if ( term.length === 0 ) return items;
     const searchFilteredData = items.filter( item => {
-      return item.note.toLowerCase().includes(term.toLowerCase())
+      return item.tags.toLowerCase().includes(term.toLowerCase())
     } )
     return searchFilteredData
   }

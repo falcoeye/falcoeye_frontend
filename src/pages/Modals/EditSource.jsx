@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import LoadingSpinner from "../../Components/UI/LoadingSpinner/LoadingSpinner";
@@ -26,7 +26,7 @@ const RSTPFields = [
   "port",
   "user",
   "password",
-  "thumbnail",
+  "image",
 ];
 
 const EditSource = ({ handleClose, id, open, handleShowClose }) => {
@@ -47,7 +47,7 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
     port: "",
     username: "",
     password: "",
-    thumbnail: null,
+    image: null,
     status: "RUNNING",
   });
 
@@ -98,7 +98,7 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
       // setShowRSTP(false);
     }
   };
-  const convertBase64 = (file) => {
+  const convertToDataURL = (file) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
@@ -110,17 +110,24 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
       };
     });
   };
-  const handleImageUpload = async (event) => {
+
+  const getBase64StringFromDataURL = (dataURL) =>{
+    return dataURL.replace('data:', '').replace(/^.+,/, '');
+  }
+
+  const handleImageUpload = useCallback(async (event) => {
     const file = event.target.files[0];
-    const base64 = await convertBase64(file);
+    const dataUrl = await convertToDataURL(file);
+    // Convert to Base64 string
+    const base64 =  getBase64StringFromDataURL(dataUrl);
     setData((preVal) => {
       return {
         ...preVal,
-        thumbnail: base64,
-      };
-    });
-    data.thumbnail = base64;
-  };
+        image: base64
+      }
+    })
+    //data.thumbnail = base64;
+  }, []) 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -217,7 +224,7 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
                     }}
                   >
                     <option value="-">--TYPE--</option>
-                    <option disabled value="RSTP">
+                    <option value="RSTP">
                       RSTP
                     </option>
                     <option value="StreamingServer">STREAMING SERVER</option>
@@ -242,7 +249,6 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
                         onChange={handleChange}
                         value={data.host}
                       />
-
                       <input
                         type="number"
                         id="port"
@@ -252,7 +258,6 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
                         onChange={handleChange}
                         value={data.port}
                       />
-
                       <input
                         type="text"
                         id="username"
@@ -273,7 +278,7 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
                       />
                       <div>
                         <label
-                          htmlFor="thumbnail"
+                          htmlFor="image"
                           className="image_upload_label"
                           style={{ margin: "5px auto" }}
                         >
@@ -285,10 +290,10 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
                               zIndex: "-1",
                             }}
                             type="file"
-                            id="thumbnail"
+                            id="image"
                             accept="image/*"
                             className="modal_form_input "
-                            name="thumbnail"
+                            name="image"
                             placeholder="Source Thumbnail"
                             onChange={handleImageUpload}
                           />
