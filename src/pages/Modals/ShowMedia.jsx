@@ -54,6 +54,7 @@ const ShowMedia = ({ open, handleClose, id }) => {
 			})
 			.catch((err) => {
 				setLoading(false)
+				console.log(err)
 				toast.error(err.response.data.message);
 			});
 	}, []);
@@ -111,6 +112,17 @@ const ShowMedia = ({ open, handleClose, id }) => {
 			renderedPreview = (
 				<div className="flex justify-center items-center h-96 bg-gray-300 mb-3">
 					<img src ={mediaPreview} alt={data.current.media_type} className="w-full h-full object-cover"  />
+				</div>
+			)
+		}
+		if ( mediaPreview && data.current.media_type === 'video' ) {
+			console.log(mediaPreview)
+			renderedPreview = (
+				<div className="flex justify-center items-center h-96 bg-gray-300 mb-3">
+					<video className="w-full h-full object-cover block" controls>
+						<source src={mediaPreview} type="video/mp4"/>
+						Your browser does not support the video tag.
+					</video>
 				</div>
 			)
 		}
