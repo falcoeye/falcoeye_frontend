@@ -7,8 +7,8 @@ import "./Modals.css";
 import LoadingSpinner from "../../Components/UI/LoadingSpinner/LoadingSpinner";
 import { Fragment } from "react";
 
-const streaminServerFields = [ 'name', 'latitude', 'longitude', 'streaming_type', 'url', 'status' ]
-const RSTPFields = [ 'name', 'latitude', 'longitude', 'streaming_type', 'url', 'status', 'host', 'port', 'user', 'password', 'image']
+const streaminServerFields = [ 'name', 'latitude', 'longitude', 'streaming_type', 'url', 'status','image' ]
+const RSTPFields = [ 'name', 'latitude', 'longitude', 'streaming_type', 'status', 'host', 'port', 'user', 'password', 'image']
 
 const AddSource = ({ handleSourceModal }) => {
   const dispatch = useDispatch()
@@ -169,15 +169,17 @@ const AddSource = ({ handleSourceModal }) => {
             <option value="RSTP">RSTP</option>
             <option value="StreamingServer">STREAMING SERVER</option>
           </select>
-          <input
-            type="text"
-            id="url"
-            className="modal_form_input "
-            name="url"
-            placeholder="url"
-            onChange={handleChange}
-            value={data.url}
-            />
+          {data.streaming_type === 'StreamingServer' &&  (
+            <input
+              type="text"
+              id="url"
+              className="modal_form_input "
+              name="url"
+              placeholder="url"
+              onChange={handleChange}
+              value={data.url}
+              />
+          )}
             {data.streaming_type === 'RSTP' &&  (
               <Fragment>
                 <input
@@ -218,27 +220,27 @@ const AddSource = ({ handleSourceModal }) => {
                   onChange={handleChange}
                   value={data.password}
                 />
-                <div>
-                  <label htmlFor="image" className="image_upload_label" style={{margin: '5px auto'}}>
-                    Upload Source Thumbnail
-                    <input
-                      style={{
-                        visibility: "hidden",
-                        position: "absolute",
-                        zIndex: "-1",
-                      }}
-                      type="file"
-                      id="image"
-                      accept="image/*"
-                      className="modal_form_input "
-                      name="image"
-                      placeholder="Source Thumbnail"
-                      onChange={handleImageUpload}
-                    />
-                  </label>
-                </div>
               </Fragment>
             ) }
+          <div>
+            <label htmlFor="image" className="image_upload_label" style={{margin: '5px auto'}}>
+              Upload Source Thumbnail
+              <input
+                style={{
+                  visibility: "hidden",
+                  position: "absolute",
+                  zIndex: "-1",
+                }}
+                type="file"
+                id="image"
+                accept="image/*"
+                className="modal_form_input "
+                name="image"
+                placeholder="Source Thumbnail"
+                onChange={handleImageUpload}
+              />
+            </label>
+          </div>
           {errorMessage && <p className="error_text">{errorMessage}</p>}
           <button
             style={{ margin: "25px auto", display: 'block' }}
