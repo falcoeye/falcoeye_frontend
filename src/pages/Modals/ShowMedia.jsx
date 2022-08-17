@@ -142,6 +142,14 @@ const ShowMedia = ({ open, handleClose, id }) => {
 					)}
 					{data.current.media_type}
 				</div>
+				<h5 className="mb-2 text-xl font-semibold tracking-tight text-gray-900  capitalize ">
+					{data.current.note}
+				</h5>
+				<div className="flex">
+					<span className="inline-flex items-center py-1 px-2 text-sm justify-center text-white capitalize bg-orange-500 rounded-md">
+						{data.current.tags}
+					</span>
+					</div>
 				<DeleteMedia
 					open={deleteModalOpened}
 					handleClose={closeDeleteModalHandler}
