@@ -130,6 +130,18 @@ const AddSource = ({ handleSourceModal }) => {
       <div className="custom_modal_box" onClick={(e) => e.stopPropagation()}>
         <div className="cmb_heading">Add a Source</div>
         <form>
+          <select
+            id="streaming_type"
+            className="modal_form_input "
+            name="streaming_type"
+            onChange={(e) => {
+              handleStreamingTypeChange(e);
+            }}
+          >
+            <option value="-">--TYPE--</option>
+            <option value="RSTP">RSTP</option>
+            <option value="StreamingServer">STREAMING SERVER</option>
+          </select>
           <input
             type="text"
             id="name"
@@ -157,18 +169,6 @@ const AddSource = ({ handleSourceModal }) => {
             onChange={handleChange}
             value={data.longitude}
           />
-          <select
-            id="streaming_type"
-            className="modal_form_input "
-            name="streaming_type"
-            onChange={(e) => {
-              handleStreamingTypeChange(e);
-            }}
-          >
-            <option value="-">--TYPE--</option>
-            <option value="RSTP">RSTP</option>
-            <option value="StreamingServer">STREAMING SERVER</option>
-          </select>
           {data.streaming_type === 'StreamingServer' &&  (
             <input
               type="text"
