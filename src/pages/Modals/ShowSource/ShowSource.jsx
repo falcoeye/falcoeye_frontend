@@ -234,46 +234,44 @@ const ShowSource = ({ open, handleClose, id }) => {
           </button>
         </div>
         <YoutubeView videoID={videoID} />
-        {videoID && (
-          <Fragment>
-            <div className="flex items-center justify-center gap-8 mt-5">
-              <button
-                disabled={disableSubmit}
-                className={`bg-primary/80 hover:bg-primary transition duration-300 text-white font-bold p-3 rounded-full inline-flex items-center text-xl ${
-                  disableSubmit && 'disable_submit_btn'
-                }`}
-                onClick={captureImageClickHandler}
-              >
-                <AiFillCamera />
-              </button>
-              <button
-                disabled={disableSubmit}
-                className={`bg-primary/80 hover:bg-primary transition duration-300 text-white font-bold p-3 rounded-full inline-flex items-center text-xl  ${
-                  disableSubmit && 'disable_submit_btn'
-                }`}
-                onClick={openSliderModalHandler}
-              >
-                <AiFillVideoCamera />
-              </button>
+        <Fragment>
+          <div className="flex items-center justify-center gap-8 mt-5">
+            <button
+              disabled={disableSubmit}
+              className={`bg-primary/80 hover:bg-primary transition duration-300 text-white font-bold p-3 rounded-full inline-flex items-center text-xl ${
+                disableSubmit && 'disable_submit_btn'
+              }`}
+              onClick={captureImageClickHandler}
+            >
+              <AiFillCamera />
+            </button>
+            <button
+              disabled={disableSubmit}
+              className={`bg-primary/80 hover:bg-primary transition duration-300 text-white font-bold p-3 rounded-full inline-flex items-center text-xl  ${
+                disableSubmit && 'disable_submit_btn'
+              }`}
+              onClick={openSliderModalHandler}
+            >
+              <AiFillVideoCamera />
+            </button>
+          </div>
+          {captureLoading && (
+            <div className="flex items-center mt-2">
+              <LoadingSpinner />
+              <span className="font-semibold text-gray-700 ml-2">
+                Capture in progress.
+              </span>
             </div>
-            {captureLoading && (
-              <div className="flex items-center mt-2">
-                <LoadingSpinner />
-                <span className="font-semibold text-gray-700 ml-2">
-                  Capture in progress.
-                </span>
-              </div>
-            )}
-            {captureSuccessContent}
-            {captureFailed && (
-              <div className="flex items-center mt-2">
-                <span className="font-semibold text-red-700 capitalize">
-                  {captureMessage}
-                </span>
-              </div>
-            )}
-          </Fragment>
-        )}
+          )}
+          {captureSuccessContent}
+          {captureFailed && (
+            <div className="flex items-center mt-2">
+              <span className="font-semibold text-red-700 capitalize">
+                {captureMessage}
+              </span>
+            </div>
+          )}
+        </Fragment>
         <EditSource
           open={editModalOpened}
           handleClose={closeEditModalHandler}

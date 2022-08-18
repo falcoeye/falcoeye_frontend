@@ -95,7 +95,7 @@ const PreviewCapture = ({ handleClose, open, registerKey, type }) => {
             );
         } else if (type === 'video') {
             mediaPreview = (
-                <video className="max-w-full aspect-video block" controls>
+                <video className="w-full aspect-video block" controls>
                     <source src={captureData.temporary_path} type="video/mp4"/>
                     Your browser does not support the video tag.
                 </video>

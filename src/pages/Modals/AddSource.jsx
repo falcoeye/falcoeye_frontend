@@ -8,7 +8,7 @@ import LoadingSpinner from "../../Components/UI/LoadingSpinner/LoadingSpinner";
 import { Fragment } from "react";
 
 const streaminServerFields = [ 'name', 'latitude', 'longitude', 'streaming_type', 'url', 'status','image' ]
-const RSTPFields = [ 'name', 'latitude', 'longitude', 'streaming_type', 'status', 'host', 'port', 'user', 'password', 'image']
+const RTSPFields = [ 'name', 'latitude', 'longitude', 'streaming_type', 'status', 'host', 'port', 'user', 'password', 'image']
 
 const AddSource = ({ handleSourceModal }) => {
   const dispatch = useDispatch()
@@ -31,7 +31,7 @@ const AddSource = ({ handleSourceModal }) => {
 
   useEffect(() => {
     if(data.streaming_type === '' ) return;
-    const dataFields = data.streaming_type === 'StreamingServer' ? streaminServerFields : RSTPFields
+    const dataFields = data.streaming_type === 'StreamingServer' ? streaminServerFields : RTSPFields
     let hasNull = false
     dataFields.forEach(key => {
       if(data[key] === null || data[key] === '') {
@@ -43,10 +43,10 @@ const AddSource = ({ handleSourceModal }) => {
 
   const handleStreamingTypeChange = (e) => {
     handleChange(e);
-    if (e.target.value === "RSTP") {
-      // setShowRSTP(true);
+    if (e.target.value === "RTSP") {
+      // setShowRTSP(true);
     } else {
-      // setShowRSTP(false);
+      // setShowRTSP(false);
     }
   };
 
@@ -104,7 +104,7 @@ const AddSource = ({ handleSourceModal }) => {
     e.preventDefault();
     setSendingRequest(true)
     try {
-      const dataFields = data.streaming_type === 'StreamingServer' ? streaminServerFields : RSTPFields
+      const dataFields = data.streaming_type === 'StreamingServer' ? streaminServerFields : RTSPFields
       let sentData = {};
       dataFields.forEach( field => {
         sentData[field] = data[field]
@@ -139,7 +139,7 @@ const AddSource = ({ handleSourceModal }) => {
             }}
           >
             <option value="-">--TYPE--</option>
-            <option value="RSTP">RSTP</option>
+            <option value="RTSP">RTSP</option>
             <option value="StreamingServer">STREAMING SERVER</option>
           </select>
           <input
@@ -180,7 +180,7 @@ const AddSource = ({ handleSourceModal }) => {
               value={data.url}
               />
           )}
-            {data.streaming_type === 'RSTP' &&  (
+            {data.streaming_type === 'RTSP' &&  (
               <Fragment>
                 <input
                   type="text"

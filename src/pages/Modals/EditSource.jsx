@@ -15,7 +15,7 @@ const streaminServerFields = [
   "url",
   "status",
 ];
-const RSTPFields = [
+const RTSPFields = [
   "name",
   "latitude",
   "longitude",
@@ -62,7 +62,7 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
     const dataFields =
       data.streaming_type === "StreamingServer"
         ? streaminServerFields
-        : RSTPFields;
+        : RTSPFields;
     let hasNull = false;
     dataFields.forEach((key) => {
       if (data[key] === null || data[key] === "") {
@@ -92,10 +92,10 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
   };
   const handleStreamingTypeChange = (e) => {
     handleChange(e);
-    if (e.target.value === "RSTP") {
-      // setShowRSTP(true);
+    if (e.target.value === "RTSP") {
+      // setShowRTSP(true);
     } else {
-      // setShowRSTP(false);
+      // setShowRTSP(false);
     }
   };
   const convertToDataURL = (file) => {
@@ -136,7 +136,7 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
       const dataFields =
         data.streaming_type === "StreamingServer"
           ? streaminServerFields
-          : RSTPFields;
+          : RTSPFields;
       let sentData = {};
       dataFields.forEach((field) => {
         sentData[field] = data[field];
@@ -224,8 +224,8 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
                     }}
                   >
                     <option value="-">--TYPE--</option>
-                    <option value="RSTP">
-                      RSTP
+                    <option value="RTSP">
+                      RTSP
                     </option>
                     <option value="StreamingServer">STREAMING SERVER</option>
                   </select>
@@ -238,7 +238,7 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
                     onChange={handleChange}
                     value={data.url}
                   />
-                  {data.streaming_type === "RSTP" && (
+                  {data.streaming_type === "RTSP" && (
                     <Fragment>
                       <input
                         type="text"
