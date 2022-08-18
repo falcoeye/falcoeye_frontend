@@ -169,7 +169,7 @@ const UploadMedia = ({ handleClose, open }) => {
                   {content}
                 </div>
 
-                <div className="flex justify-center mt-5 min-h-[45px]">
+                <div className="flex justify-center items-end mt-5 min-h-[45px]">
                   {ButtonsContent}
                 </div>
               </Dialog.Panel>
