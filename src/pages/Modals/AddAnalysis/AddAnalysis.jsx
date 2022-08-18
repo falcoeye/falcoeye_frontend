@@ -12,7 +12,7 @@ import axios from "../../../utility/api-instance";
 import { toast } from "react-toastify";
 import Informations from "./components/steps/Informations";
 
-const steps = ["Name", "Workflows", 'Source', 'Informations'  ,"Completed"];
+const steps = ["Name", "Workflows", 'Source', 'Informations', "Completed"];
 
 const AddAnalysis = ({ handleClose, open }) => {
 
@@ -28,7 +28,9 @@ const AddAnalysis = ({ handleClose, open }) => {
 
   const [params, setParams] = useState(null);
 
-  const [ informations, setInformations] = useState(null);
+  const [informations, setInformations] = useState(null);
+
+  const [submitting, setSubmitting] = useState(false)
 
   const fetchParams = useCallback(() => {
     setFetchingParams(true)
@@ -52,23 +54,51 @@ const AddAnalysis = ({ handleClose, open }) => {
     id && currentStep === 3 && fetchParams();
   }, [currentStep, fetchParams, selectedWorkflow]);
 
-  const selectWorkflowHandler = useCallback( (data) => setSelectedWorkflow(data) , [] );
+  const selectWorkflowHandler = useCallback((data) => setSelectedWorkflow(data), []);
   const analysisNameChangeHandler = useCallback((name) => setAnalysisName(name), []);
 
   const selectedTypeChangeHandler = useCallback((type) => {
     setSelectedType(type)
     setSelectedSource(null)
-  } , []);
-  const selectedSourceChangeHandler = useCallback( (source) => setSelectedSource(source), []);
+  }, []);
+  const selectedSourceChangeHandler = useCallback((source) => setSelectedSource(source), []);
 
   const informatinChangeHandler = useCallback((data) => { setInformations(data) }, [])
 
-  const handleActionsClick = useCallback((direction) => {
-    let newStep = currentStep;
+  const submitAnalysis = useCallback(() => {
+    const payload = {
+      name: analysisName,
+      workflow_id: selectedWorkflow.id,
+      feeds: {
+        source: {
+          type: selectedType,
+          id: selectedSource
+        },
+        params: informations
+      }
+    }
+    setSubmitting(true)
+    axios.post(`analysis/`, payload)
+      .then(res => {
+        setSubmitting(false)
+        setCurrentStep(cur => cur + 1)
+      })
+      .catch(err => {
+        setSubmitting(false)
+        const errorMessage = err.response.data.msg || err.response.data.message;
+        toast.error(errorMessage || 'Error Submitting Analysis!');
+      })
+  }, [analysisName, informations, selectedSource, selectedType, selectedWorkflow.id])
 
+  const handleActionsClick = useCallback((direction) => {
+    if (currentStep === steps.length - 1 && direction === 'next' ) {
+      submitAnalysis()
+      return;
+    }
+    let newStep = currentStep;
     direction === "next" ? ++newStep : --newStep;
     newStep > 0 && newStep <= steps.length && setCurrentStep(newStep);
-  }, [currentStep]);
+  }, [currentStep, submitAnalysis]);
 
   const handleActionsValidation = useCallback(() => {
     let isValid = false;
@@ -169,8 +199,9 @@ const AddAnalysis = ({ handleClose, open }) => {
                   </div>
 
                   {currentStep !== steps.length && (
-                    <StepperControl handleClick={handleActionsClick} currentStep={currentStep} steps={steps}
-                      analysisName={analysisName} selectedWorkflow={selectedWorkflow} nextEnabled={handleActionsValidation}
+                    <StepperControl 
+                      handleClick={handleActionsClick} currentStep={currentStep} steps={steps}
+                      nextEnabled={handleActionsValidation} submitting={submitting}
                     />
                   )}
                 </div>
