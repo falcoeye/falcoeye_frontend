@@ -29,7 +29,6 @@ export const workflowsSlice = createSlice({
       state.inputSearch = action.payload;
       if (state.inputSearch) {
         state.data = state.data.filter((item) => {
-          console.log(item.name);
           return item.name
             .toLowerCase()
             .includes(state.inputSearch.toLowerCase());

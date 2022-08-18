@@ -15,7 +15,6 @@ import { FiRotateCw } from "react-icons/fi";
 
 const SideFilterBar = ({ sideNav, toggle, isModal }) => {
   const [filters, setFilters] = useState([]);
-  console.log(filters, "filters");
 
   const handleInputChange = (e) => {
     //const name = e.target.name
