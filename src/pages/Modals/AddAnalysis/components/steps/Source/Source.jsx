@@ -17,7 +17,7 @@ const Source = (props) => {
                     {params.sources.map((source, index) => {
                         return (
                             <Chip key={index} clickHandler={updateType.bind(null, source)} active={selectedType === source} >
-                                {source}
+                                {source.replace('_', ' ')}
                             </Chip>
                         )
                     })}
