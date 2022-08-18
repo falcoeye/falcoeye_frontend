@@ -6,7 +6,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import noDataAnimation from '../../assets/animations/no-data.json';
-import { analysisActions } from '../../store/analysis';
+import { deleteAnalysis } from '../../store/analysis';
 import axios from '../../utility/api-instance';
 import './Modals.css';
 
@@ -19,7 +19,7 @@ const ShowAnalysis = ({ handleClose, id, open }) => {
       .delete(`/analysis/${id}`)
       .then((res) => {
         handleClose();
-        dispatch(analysisActions.deleteAnalysis(id));
+        dispatch(deleteAnalysis(id));
         toast.success('Analysis deleted successfully');
       })
       .catch((err) => {

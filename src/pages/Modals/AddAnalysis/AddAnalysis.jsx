@@ -11,10 +11,14 @@ import Source from "./components/steps/Source/Source";
 import axios from "../../../utility/api-instance";
 import { toast } from "react-toastify";
 import Informations from "./components/steps/Informations";
+import { useDispatch } from "react-redux";
+import { addAnalysis } from "../../../store/analysis";
 
 const steps = ["Name", "Workflows", 'Source', 'Informations', "Completed"];
 
 const AddAnalysis = ({ handleClose, open }) => {
+
+  const dispatch = useDispatch()
 
   const [currentStep, setCurrentStep] = useState(1);
 
@@ -82,13 +86,14 @@ const AddAnalysis = ({ handleClose, open }) => {
       .then(res => {
         setSubmitting(false)
         setCurrentStep(cur => cur + 1)
+        dispatch(addAnalysis(res.data.analysis))
       })
       .catch(err => {
         setSubmitting(false)
         const errorMessage = err.response.data.msg || err.response.data.message;
         toast.error(errorMessage || 'Error Submitting Analysis!');
       })
-  }, [analysisName, informations, selectedSource, selectedType, selectedWorkflow.id])
+  }, [analysisName, dispatch, informations, selectedSource, selectedType, selectedWorkflow.id])
 
   const handleActionsClick = useCallback((direction) => {
     if (currentStep === steps.length - 1 && direction === 'next' ) {

@@ -31,12 +31,15 @@ export const analysisSlice = createSlice({
     getAnalysisData(state, fetchedData) {
       state.AnalysisData = fetchedData.payload;
     },
+    addAnalysis: (state, action) => {
+      state.data.push(action.payload)
+    },
   },
 });
 
 export const fetchAnalysisData = () => {
   return async (dispatch) => {
-    dispatch(analysisActions.startLoading());
+    dispatch(startLoading());
 
     const fetchData = async () => {
       const response = await axios.get("/analysis/");
@@ -45,10 +48,10 @@ export const fetchAnalysisData = () => {
 
     try {
       const responseData = await fetchData();
-      dispatch(analysisActions.fetchAnalysis(responseData.data.analysis));
-      dispatch(analysisActions.endLoading());
+      dispatch(fetchAnalysis(responseData.data.analysis));
+      dispatch(endLoading());
     } catch (err) {
-      dispatch(analysisActions.noDataError());
+      dispatch(noDataError());
       const errorMessage = err.response.data.msg || err.response.data.message;
       toast.error(errorMessage || "Something went wrong!", {
         position: "bottom-center",
@@ -59,14 +62,14 @@ export const fetchAnalysisData = () => {
         draggable: false,
         progress: undefined,
       });
-      dispatch(analysisActions.endLoading());
+      dispatch(endLoading());
     }
   };
 };
 
 export const getOneAnalysisData = (id) => {
   return async (dispatch) => {
-    dispatch(analysisActions.startLoading());
+    dispatch(startLoading());
 
     const fetchData = async () => {
       const response = await axios.get(`/analysis/${id}`);
@@ -75,10 +78,10 @@ export const getOneAnalysisData = (id) => {
 
     try {
       const responseData = await fetchData();
-      dispatch(analysisActions.getAnalysisData(responseData.data.analysis));
-      dispatch(analysisActions.endLoading());
+      dispatch(getAnalysisData(responseData.data.analysis));
+      dispatch(endLoading());
     } catch (err) {
-      dispatch(analysisActions.noDataError());
+      dispatch(noDataError());
       const errorMessage = err.response.data.msg || err.response.data.message;
       toast.error(errorMessage || "Something went wrong!", {
         position: "bottom-center",
@@ -89,10 +92,10 @@ export const getOneAnalysisData = (id) => {
         draggable: false,
         progress: undefined,
       });
-      dispatch(analysisActions.endLoading());
+      dispatch(endLoading());
     }
   };
 };
 
-export const analysisActions = analysisSlice.actions;
+export const {addAnalysis, startLoading, endLoading, noDataError,fetchAnalysis, getAnalysisData, deleteAnalysis } = analysisSlice.actions;
 export default analysisSlice.reducer;

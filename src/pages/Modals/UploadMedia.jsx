@@ -2,12 +2,16 @@ import { Dialog, Transition } from "@headlessui/react";
 import { useState } from "react";
 import { Fragment, useCallback } from "react";
 import { BsFillCameraVideoFill } from "react-icons/bs";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import LoadingSpinner from "../../Components/UI/LoadingSpinner/LoadingSpinner";
+import { addMedia } from "../../store/media";
 import axios from "../../utility/api-instance";
 import "./Modals.css";
 
 const UploadMedia = ({ handleClose, open }) => {
+  const dispatch = useDispatch()
+
   const [videoURL, setVideoURL] = useState(null);
   const [videoKey, setVideoKey] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -58,13 +62,16 @@ const UploadMedia = ({ handleClose, open }) => {
     setSubmitLoading(true);
 
     try {
-      const res = await axios.post(`/capture/${videoKey}`);
+      const res = await axios.post(`/media/video`, {
+          registry_key: videoKey
+      });
       setSubmitLoading(false);
-      console.log(res);
+      dispatch(addMedia(res.data.video))
+      toast.success(res.data.message)
+      handleClose()
     } catch (error) {
-      console.log(error.response);
       setSubmitLoading(false);
-      toast.error("Something went wrong!");
+      toast.error(error.data.message || "Something went wrong!");
     }
   };
 
