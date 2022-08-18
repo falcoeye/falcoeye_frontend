@@ -1,26 +1,27 @@
-import { Dialog, Transition } from '@headlessui/react';
-import Lottie from 'lottie-react';
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
+import { Dialog, Transition } from "@headlessui/react";
+import Lottie from "lottie-react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import {
-	AiFillCamera,
-	AiFillVideoCamera,
-	AiOutlineClose,
-} from 'react-icons/ai';
-import { MdDelete } from 'react-icons/md';
-import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
-import noDataAnimation from '../../assets/animations/no-data.json';
-import DeleteMedia from './DeleteMedia';
-import './Modals.css';
-import axios from '../../utility/api-instance';
-import { useRef } from 'react';
+  AiFillCamera,
+  AiFillVideoCamera,
+  AiOutlineClose,
+} from "react-icons/ai";
+import { MdDelete } from "react-icons/md";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import noDataAnimation from "../../assets/animations/no-data.json";
+import DeleteMedia from "./DeleteMedia";
+import "./Modals.css";
+import axios from "../../utility/api-instance";
+import { useRef } from "react";
 
 const ShowMedia = ({ open, handleClose, id }) => {
-	const media = useSelector((state) => state.media);
-	let data = useRef(null);
-	const [deleteModalOpened, setDeleteModalOpened] = useState(false);
-	const [mediaPreview, setMediaPreview] = useState(null);
-	const [ loading, setLoading ] = useState(false)
+  const media = useSelector((state) => state.media);
+  let data = useRef(null);
+  const [deleteModalOpened, setDeleteModalOpened] = useState(false);
+  const [mediaPreview, setMediaPreview] = useState(null);
+  const [loading, setLoading] = useState(false);
+
 
 	const openDeleteModalHandler = useCallback(
 		() => setDeleteModalOpened(true),
@@ -58,16 +59,15 @@ const ShowMedia = ({ open, handleClose, id }) => {
 			});
 	}, []);
 
-	useEffect(() => {
-		if (id && data.current) {
-			fetchMediaPreview(id, data.current.media_type)
-		}
-	}, [id, fetchMediaPreview])
+  useEffect(() => {
+    if (id && data.current) {
+      fetchMediaPreview(id, data.current.media_type);
+    }
+  }, [id, fetchMediaPreview]);
 
-
-	if (id) {
-		data.current = media.data.find((item) => item.id === id);
-	}
+  if (id) {
+    data.current = media.data.find((item) => item.id === id);
+  }
 
 	let content;
 
@@ -171,6 +171,7 @@ const ShowMedia = ({ open, handleClose, id }) => {
 		);
 	}
 
+
 	return (
 		<Transition appear show={open} as={Fragment}>
 			<Dialog as="div" className="relative z-[400]" onClose={handleClose}>
@@ -186,25 +187,26 @@ const ShowMedia = ({ open, handleClose, id }) => {
 					<div className="fixed inset-0 bg-black bg-opacity-25" />
 				</Transition.Child>
 
-				<div className="fixed inset-0 overflow-y-auto">
-					<div className="flex min-h-full items-center justify-center md:p-4 text-center">
-						<Transition.Child
-							as={Fragment}
-							enter="ease-out duration-300"
-							enterFrom="opacity-0 scale-95"
-							enterTo="opacity-100 scale-100"
-							leave="ease-in duration-200"
-							leaveFrom="opacity-100 scale-100"
-							leaveTo="opacity-0 scale-95"
-						>
-							<Dialog.Panel className="w-full h-screen md:h-fit md:max-w-4xl md:w-11/12 transform overflow-hidden md:rounded-2xl bg-white py-6 px-3 md:px-6  text-left align-middle shadow-xl transition-all">
-								{content}
-							</Dialog.Panel>
-						</Transition.Child>
-					</div>
-				</div>
-			</Dialog>
-		</Transition>
-	);
+
+        <div className="fixed inset-0 overflow-y-auto">
+          <div className="flex min-h-full items-center justify-center md:p-4 text-center">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
+            >
+              <Dialog.Panel className="w-full h-screen md:h-fit md:max-w-4xl md:w-11/12 transform overflow-hidden md:rounded-2xl bg-white py-6 px-3 md:px-6  text-left align-middle shadow-xl transition-all">
+                {content}
+              </Dialog.Panel>
+            </Transition.Child>
+          </div>
+        </div>
+      </Dialog>
+    </Transition>
+  );
 };
 export default ShowMedia;
