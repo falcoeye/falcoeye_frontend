@@ -76,7 +76,7 @@ const SourceCard = (props) => {
   return (
     <Fragment>
       <div
-        className="p-4 bg-white rounded-lg border border-gray-200 shadow-md cursor-pointer"
+        className={`p-4 rounded-lg border border-gray-200 shadow-md cursor-pointer bg-white ${selectedSourceId === source.id && "bg-primary/10 hover:bg-primary/10"}`}
         onClick={handleClick.bind(null, source.id)}
       >
         {renderedImage}

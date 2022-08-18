@@ -65,8 +65,7 @@ const MediaCard = (props) => {
             onClick={() => handleClick(id)}
         >
             {renderedImage}
-            <div className={`p-4 bg-white ${selectedMediaId === media.id ? "bg-primary/10 hover:bg-primary/10"
-                : "bg-gray-50 hover:bg-gray-100/90"}`}>
+            <div className={`p-4 bg-white ${selectedMediaId === media.id && "bg-primary/10 hover:bg-primary/10"}`}>
                 <p className="flex items-center gap-1 capitalize text-gray-600 mb-3">
                     <span className="mr-1">
                         <AiOutlineCalendar />
