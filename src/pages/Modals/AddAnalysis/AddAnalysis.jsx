@@ -14,11 +14,10 @@ import Informations from "./components/steps/Informations";
 import { useDispatch } from "react-redux";
 import { addAnalysis } from "../../../store/analysis";
 
-const steps = ["Name", "Workflows", 'Source', 'Informations', "Completed"];
+const steps = ["Name", "Workflows", "Source", "Informations", "Completed"];
 
 const AddAnalysis = ({ handleClose, open }) => {
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const [currentStep, setCurrentStep] = useState(1);
 
@@ -34,22 +33,22 @@ const AddAnalysis = ({ handleClose, open }) => {
 
   const [informations, setInformations] = useState(null);
 
-  const [submitting, setSubmitting] = useState(false)
+  const [submitting, setSubmitting] = useState(false);
 
   const fetchParams = useCallback(() => {
-    setFetchingParams(true)
+    setFetchingParams(true);
     const { id } = selectedWorkflow;
     axios
       .get(`/workflow/${id}/params`)
       .then((res) => {
-        setFetchingParams(false)
-        setParams(res.data.workflow_params)
+        setFetchingParams(false);
+        setParams(res.data.workflow_params);
       })
       .catch((err) => {
-        setFetchingParams(false)
-        setParams(null)
+        setFetchingParams(false);
+        setParams(null);
         const errorMessage = err.response.data.msg || err.response.data.message;
-        toast.error(errorMessage || 'Something went wrong!');
+        toast.error(errorMessage || "Something went wrong!");
       });
   }, [selectedWorkflow]);
 
@@ -58,16 +57,27 @@ const AddAnalysis = ({ handleClose, open }) => {
     id && currentStep === 3 && fetchParams();
   }, [currentStep, fetchParams, selectedWorkflow]);
 
-  const selectWorkflowHandler = useCallback((data) => setSelectedWorkflow(data), []);
-  const analysisNameChangeHandler = useCallback((name) => setAnalysisName(name), []);
+  const selectWorkflowHandler = useCallback(
+    (data) => setSelectedWorkflow(data),
+    []
+  );
+  const analysisNameChangeHandler = useCallback(
+    (name) => setAnalysisName(name),
+    []
+  );
 
   const selectedTypeChangeHandler = useCallback((type) => {
-    setSelectedType(type)
-    setSelectedSource(null)
+    setSelectedType(type);
+    setSelectedSource(null);
   }, []);
-  const selectedSourceChangeHandler = useCallback((source) => setSelectedSource(source), []);
+  const selectedSourceChangeHandler = useCallback(
+    (source) => setSelectedSource(source),
+    []
+  );
 
-  const informatinChangeHandler = useCallback((data) => { setInformations(data) }, [])
+  const informatinChangeHandler = useCallback((data) => {
+    setInformations(data);
+  }, []);
 
   const submitAnalysis = useCallback(() => {
     const payload = {
@@ -76,34 +86,45 @@ const AddAnalysis = ({ handleClose, open }) => {
       feeds: {
         source: {
           type: selectedType,
-          id: selectedSource
+          id: selectedSource,
         },
-        params: informations
-      }
-    }
-    setSubmitting(true)
-    axios.post(`analysis/`, payload)
-      .then(res => {
-        setSubmitting(false)
-        setCurrentStep(cur => cur + 1)
-        dispatch(addAnalysis(res.data.analysis))
+        params: informations,
+      },
+    };
+    setSubmitting(true);
+    axios
+      .post(`analysis/`, payload)
+      .then((res) => {
+        setSubmitting(false);
+        setCurrentStep((cur) => cur + 1);
+        dispatch(addAnalysis(res.data.analysis));
       })
-      .catch(err => {
-        setSubmitting(false)
+      .catch((err) => {
+        setSubmitting(false);
         const errorMessage = err.response.data.msg || err.response.data.message;
-        toast.error(errorMessage || 'Error Submitting Analysis!');
-      })
-  }, [analysisName, dispatch, informations, selectedSource, selectedType, selectedWorkflow.id])
+        toast.error(errorMessage || "Error Submitting Analysis!");
+      });
+  }, [
+    analysisName,
+    dispatch,
+    informations,
+    selectedSource,
+    selectedType,
+    selectedWorkflow.id,
+  ]);
 
-  const handleActionsClick = useCallback((direction) => {
-    if (currentStep === steps.length - 1 && direction === 'next' ) {
-      submitAnalysis()
-      return;
-    }
-    let newStep = currentStep;
-    direction === "next" ? ++newStep : --newStep;
-    newStep > 0 && newStep <= steps.length && setCurrentStep(newStep);
-  }, [currentStep, submitAnalysis]);
+  const handleActionsClick = useCallback(
+    (direction) => {
+      if (currentStep === steps.length - 1 && direction === "next") {
+        submitAnalysis();
+        return;
+      }
+      let newStep = currentStep;
+      direction === "next" ? ++newStep : --newStep;
+      newStep > 0 && newStep <= steps.length && setCurrentStep(newStep);
+    },
+    [currentStep, submitAnalysis]
+  );
 
   const handleActionsValidation = useCallback(() => {
     let isValid = false;
@@ -114,18 +135,31 @@ const AddAnalysis = ({ handleClose, open }) => {
         }
         break;
       case 2:
-        if (selectedWorkflow.id) { isValid = true; }
+        if (selectedWorkflow.id) {
+          isValid = true;
+        }
         break;
       case 3:
-        if (selectedType && selectedSource) { isValid = true; }
+        if (selectedType && selectedSource) {
+          isValid = true;
+        }
         break;
       case 4:
-        if (informations) { isValid = true; }
+        if (informations) {
+          isValid = true;
+        }
         break;
       default:
     }
     return isValid;
-  }, [analysisName.length, currentStep, informations, selectedSource, selectedType, selectedWorkflow.id])
+  }, [
+    analysisName.length,
+    currentStep,
+    informations,
+    selectedSource,
+    selectedType,
+    selectedWorkflow.id,
+  ]);
 
   const renderStep = (step) => {
     switch (step) {
@@ -144,13 +178,20 @@ const AddAnalysis = ({ handleClose, open }) => {
           />
         );
       case 3:
-        return <Source
-          fetchingParams={fetchingParams} params={params}
-          selectedType={selectedType} selectedSource={selectedSource}
-          updateType={selectedTypeChangeHandler} updateSource={selectedSourceChangeHandler}
-        />
+        return (
+          <Source
+            fetchingParams={fetchingParams}
+            params={params}
+            selectedType={selectedType}
+            selectedSource={selectedSource}
+            updateType={selectedTypeChangeHandler}
+            updateSource={selectedSourceChangeHandler}
+          />
+        );
       case 4:
-        return <Informations params={params} updateData={informatinChangeHandler} />;
+        return (
+          <Informations params={params} updateData={informatinChangeHandler} />
+        );
       case 5:
         return <Final />;
       default:
@@ -183,7 +224,7 @@ const AddAnalysis = ({ handleClose, open }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full h-screen max-h-screen md:h-fit  md:max-w-3xl transform overflow-auto md:rounded-2xl bg-white p-3 md:p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full h-screen max-h-screen md:h-fit  md:max-w-3xl transform overflow-auto md:rounded-2xl bg-white py-3 px-2 md:py-6 md:px-6 text-left align-middle shadow-xl transition-all">
                 <div className="flex justify-end gap-5">
                   <button
                     className="md:hidden bg-gray-50 hover:bg-gray-200 transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
@@ -200,13 +241,18 @@ const AddAnalysis = ({ handleClose, open }) => {
                   <div className="horizontal mt-5 ">
                     <Stepper steps={steps} currentStep={currentStep} />
 
-                    <div className="my-2 p-2 md:max-h-[50vh] lg:max-h-[60vh] overflow-auto">{renderStep(currentStep)}</div>
+                    <div className="my-2 p-2 md:max-h-[50vh] lg:max-h-[60vh] overflow-auto">
+                      {renderStep(currentStep)}
+                    </div>
                   </div>
 
                   {currentStep !== steps.length && (
-                    <StepperControl 
-                      handleClick={handleActionsClick} currentStep={currentStep} steps={steps}
-                      nextEnabled={handleActionsValidation} submitting={submitting}
+                    <StepperControl
+                      handleClick={handleActionsClick}
+                      currentStep={currentStep}
+                      steps={steps}
+                      nextEnabled={handleActionsValidation}
+                      submitting={submitting}
                     />
                   )}
                 </div>
