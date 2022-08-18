@@ -72,9 +72,10 @@ const MediaCards = props => {
         return (
             <MediaCard
                 key={media.id}
+                selectedMediaId={selectedSource}
                 media={media}
                 handleClick={updateSource}
-                handleSowClick={openMediaModalHandler}
+                handleShowClick={openMediaModalHandler}
             />
         );
     });

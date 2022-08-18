@@ -39,6 +39,7 @@ const AddAnalysis = ({ handleClose, open }) => {
       })
       .catch((err) => {
         setFetchingParams(false)
+        setParams(null)
         const errorMessage = err.response.data.msg || err.response.data.message;
         toast.error(errorMessage || 'Something went wrong!');
       });
@@ -73,10 +74,13 @@ const AddAnalysis = ({ handleClose, open }) => {
       case 2:
         if (selectedWorkflow.id) { isValid = true; }
         break;
+      case 3:
+        if (selectedType && selectedSource) { isValid = true; }
+        break;
       default:
     }
     return isValid;
-  }, [analysisName.length, currentStep, selectedWorkflow])
+  }, [analysisName.length, currentStep, selectedSource, selectedType, selectedWorkflow.id])
 
   const renderStep = (step) => {
     switch (step) {
@@ -95,9 +99,9 @@ const AddAnalysis = ({ handleClose, open }) => {
           />
         );
       case 3:
-        return <Source id={selectedWorkflow.id}
+        return <Source
           fetchingParams={fetchingParams} params={params}
-          selectedType={selectedType} selectedSource={selectedType}
+          selectedType={selectedType} selectedSource={selectedSource}
           updateType={selectedTypeChangeHandler} updateSource={selectedSourceChangeHandler}
         />
       case 4:

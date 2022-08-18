@@ -1,15 +1,13 @@
 import moment from 'moment';
 import { useCallback, useEffect, useState } from 'react';
 import {
-    AiFillCamera,
-    AiFillVideoCamera,
     AiOutlineCalendar,
 } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 import axios from '../../../../../../../../../utility/api-instance';
 
 const MediaCard = (props) => {
-    const { media, handleClick, handleShowClick } = props;
+    const { media, handleClick, handleShowClick, selectedMediaId } = props;
     const { id, media_type } = media;
     const [image, setImage] = useState(null);
     const [loading, setLoading] = useState(false)
@@ -63,32 +61,31 @@ const MediaCard = (props) => {
 
     return (
         <div
-            className="rounded-lg  cursor-pointer shadow-md"
+            className={`rounded-lg  cursor-pointer shadow-md`}
             onClick={() => handleClick(id)}
         >
             {renderedImage}
-            <div className="p-4 bg-white">
-                <div
-                    className={`inline-flex items-center mb-3 py-1 px-2 text-base font-medium text-center text-white capitalize ${media_type === 'image' ? 'bg-sky-400' : 'bg-emerald-500'
-                        } rounded-lg`}
-                >
-                    {media_type === 'image' ? (
-                        <AiFillCamera className="mr-2" />
-                    ) : (
-                        <AiFillVideoCamera className="mr-2" />
-                    )}
-                    {media_type}
-                </div>
+            <div className={`p-4 bg-white ${selectedMediaId === media.id ? "bg-primary/10 hover:bg-primary/10"
+                : "bg-gray-50 hover:bg-gray-100/90"}`}>
                 <p className="flex items-center gap-1 capitalize text-gray-600 mb-3">
                     <span className="mr-1">
                         <AiOutlineCalendar />
                     </span>
                     {moment.utc(media.created_at).format('MM-DD-YYYY')}
                 </p>
-                <div className="flex">
-                    <span className="inline-flex items-center py-1 px-2 text-sm justify-center text-white capitalize bg-orange-500 rounded-md">
-                        {media.tags}
-                    </span>
+                <div className="flex justify-between items-center" >
+                    <button
+                        onClick={handleShowClick.bind(null, id)}
+                        type="button"
+                        className="focus:outline-none text-white bg-cyan-500 hover:bg-cyan-600 font-medium rounded-lg text-sm px-5 py-2.5 transition w-max	"
+                    >
+                        View Details
+                    </button>
+                    {selectedMediaId === media.id && (
+                        <div className='rounded-full transition duration-500 ease-in-out bg-green text-white font-bold border border-green h-8 w-8 flex items-center justify-center py-3' >
+                            <span className="text-white font-bold text-md">&#10003;</span>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
