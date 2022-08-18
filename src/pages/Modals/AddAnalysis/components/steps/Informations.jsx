@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import { useMemo, useState } from "react";
 import '../../../Modals.css'
 
@@ -14,11 +14,18 @@ const Informations = props => {
             const { name, default: defaultValue } = field
             obj[`${name}`] = defaultValue
         })
-        updateData(obj)
         return obj
-    }, [questionFields, updateData])
+    }, [questionFields])
+
+    const notIntialRender = useRef(false);
 
     const [data, setData] = useState(initialState)
+
+    useEffect(() => {
+        if ( !notIntialRender.current ) {
+            updateData(initialState)
+        } 
+    }, [updateData, initialState])
 
     const handleChange = (e) => {
         const { name, value, type } = e.target;
@@ -47,9 +54,8 @@ const Informations = props => {
             {questionFields.map((field, index) => {
                 const type = ( field.type === 'int' || field.type === 'float' ) ? 'number' : 'text';
                 return  (
-                    <Fragment>
+                    <Fragment key={index}  >
                         <input
-                            key={index}
                             type={type}
                             id={field.name}
                             className="modal_form_input "
