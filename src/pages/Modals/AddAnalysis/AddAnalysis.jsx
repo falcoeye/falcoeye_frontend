@@ -10,8 +10,9 @@ import { AiOutlineClose } from "react-icons/ai";
 import Source from "./components/steps/Source/Source";
 import axios from "../../../utility/api-instance";
 import { toast } from "react-toastify";
+import Informations from "./components/steps/Informations";
 
-const steps = ["Name", "Workflows", 'Source', "Completed"];
+const steps = ["Name", "Workflows", 'Source', 'Informations'  ,"Completed"];
 
 const AddAnalysis = ({ handleClose, open }) => {
 
@@ -27,6 +28,7 @@ const AddAnalysis = ({ handleClose, open }) => {
 
   const [params, setParams] = useState(null);
 
+  const [ informations, setInformations] = useState(null);
 
   const fetchParams = useCallback(() => {
     setFetchingParams(true)
@@ -50,14 +52,16 @@ const AddAnalysis = ({ handleClose, open }) => {
     id && currentStep === 3 && fetchParams();
   }, [currentStep, fetchParams, selectedWorkflow]);
 
-  const selectWorkflowHandler = (data) => setSelectedWorkflow(data);
-  const analysisNameChangeHandler = (name) => setAnalysisName(name);
+  const selectWorkflowHandler = useCallback( (data) => setSelectedWorkflow(data) , [] );
+  const analysisNameChangeHandler = useCallback((name) => setAnalysisName(name), []);
 
-  const selectedTypeChangeHandler = (type) => {
+  const selectedTypeChangeHandler = useCallback((type) => {
     setSelectedType(type)
     setSelectedSource(null)
-  } ;
-  const selectedSourceChangeHandler = (source) => setSelectedSource(source);
+  } , []);
+  const selectedSourceChangeHandler = useCallback( (source) => setSelectedSource(source), []);
+
+  const informatinChangeHandler = useCallback((data) => { setInformations(data) }, [])
 
   const handleActionsClick = useCallback((direction) => {
     let newStep = currentStep;
@@ -80,10 +84,13 @@ const AddAnalysis = ({ handleClose, open }) => {
       case 3:
         if (selectedType && selectedSource) { isValid = true; }
         break;
+      case 4:
+        if (informations) { isValid = true; }
+        break;
       default:
     }
     return isValid;
-  }, [analysisName.length, currentStep, selectedSource, selectedType, selectedWorkflow.id])
+  }, [analysisName.length, currentStep, informations, selectedSource, selectedType, selectedWorkflow.id])
 
   const renderStep = (step) => {
     switch (step) {
@@ -108,6 +115,8 @@ const AddAnalysis = ({ handleClose, open }) => {
           updateType={selectedTypeChangeHandler} updateSource={selectedSourceChangeHandler}
         />
       case 4:
+        return <Informations params={params} updateData={informatinChangeHandler} />;
+      case 5:
         return <Final />;
       default:
     }
