@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import Layout from "../../Components/Layout";
-import AddAnalysis from "../Modals/AddAnalysis/AddAnalysis";
-import AnalysisList from "./AnalysisList";
+import React, { useState } from 'react';
+import Layout from '../../Components/Layout';
+import AddAnalysis from '../Modals/AddAnalysis/AddAnalysis';
+import AnalysisList from './AnalysisList';
 
 const Analysis = () => {
   const [addAnalysisModal, setAddAnalysisModal] = useState(false);
@@ -31,11 +31,12 @@ const Analysis = () => {
           </div>
         </div>
       </Layout>
-
-      <AddAnalysis
-        handleClose={closeAddAnalysisModalHandler}
-        open={addAnalysisModal}
-      />
+      {addAnalysisModal && (
+        <AddAnalysis
+          handleClose={closeAddAnalysisModalHandler}
+          open={addAnalysisModal}
+        />
+      )}
     </>
   );
 };

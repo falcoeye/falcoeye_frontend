@@ -2,15 +2,9 @@ export default function StepperControl({
   handleClick,
   currentStep,
   steps,
-  analysisName,
-  selectedWorkflow,
+  nextEnabled
 }) {
-  const disabledButton =
-    currentStep === 1
-      ? !analysisName
-      : currentStep === 2
-      ? !selectedWorkflow
-      : false;
+
 
   return (
     <div className="mt-4 flex justify-around">
@@ -24,7 +18,7 @@ export default function StepperControl({
       </button>
 
       <button
-        disabled={disabledButton}
+        disabled={!nextEnabled()}
         onClick={() => handleClick("next")}
         className="cursor-pointer rounded-lg bg-primary py-2 px-4 font-semibold uppercase border-2 border-primary text-white transition duration-200 ease-in-out hover:bg-slate-700 hover:border-slate-700 hover:text-white disabled:bg-gray-800 disabled:cursor-not-allowed disabled:border-gray-800"
       >

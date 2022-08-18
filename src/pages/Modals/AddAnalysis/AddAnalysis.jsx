@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useCallback, useState } from "react";
 import Stepper from "./components/Stepper";
 import StepperControl from "./components/StepperControl";
 import Name from "./components/steps/Name";
@@ -8,15 +8,39 @@ import Final from "./components/steps/Final";
 import "../Modals.css";
 import { AiOutlineClose } from "react-icons/ai";
 
+const steps = ["Name", "Worksflows", "Completed"];
+
 const AddAnalysis = ({ handleClose, open }) => {
   const [currentStep, setCurrentStep] = useState(1);
 
-  const steps = ["Name", "Worksflows", "Completed"];
   const [selectedWorkflow, setSelectedWorkflow] = useState(null);
   const [analysisName, setAnalysisName] = useState("");
 
-  const selectWorkflowHanlder = (data) => setSelectedWorkflow(data);
+  const selectWorkflowHandler = (data) => setSelectedWorkflow(data);
   const analysisNameChangeHandler = (name) => setAnalysisName(name);
+
+  const handleActionsClick =  useCallback((direction) => {
+    let newStep = currentStep;
+
+    direction === "next" ? ++newStep : --newStep;
+    newStep > 0 && newStep <= steps.length && setCurrentStep(newStep);
+  }, [currentStep]);
+  
+  const handleActionsValidation = useCallback( () => {
+    let isValid = false;
+    switch (currentStep) {
+      case 1: 
+      if (analysisName.length > 0) {
+        isValid = true;
+      }
+      break;
+      case 2:
+        if (selectedWorkflow) { isValid = true; }
+        break;
+      default:
+    }
+    return isValid;
+  } ,[analysisName.length, currentStep, selectedWorkflow] )
 
   const displayStep = (step) => {
     switch (step) {
@@ -30,7 +54,7 @@ const AddAnalysis = ({ handleClose, open }) => {
       case 2:
         return (
           <WorkflowsStep
-            onSelectWorkflow={selectWorkflowHanlder}
+            onSelectWorkflow={selectWorkflowHandler}
             selectedWorkflow={selectedWorkflow}
           />
         );
@@ -40,29 +64,9 @@ const AddAnalysis = ({ handleClose, open }) => {
     }
   };
 
-  const closeModalHandler = () => {
-    handleClose();
-
-    setTimeout(() => {
-      setCurrentStep(1);
-
-      if (currentStep === 3) {
-        analysisNameChangeHandler("");
-        setSelectedWorkflow(null);
-      }
-    }, 200);
-  };
-
-  const handleClick = (direction) => {
-    let newStep = currentStep;
-
-    direction === "next" ? newStep++ : newStep--;
-    newStep > 0 && newStep <= steps.length && setCurrentStep(newStep);
-  };
-
   return (
     <Transition appear show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-[300]" onClose={closeModalHandler}>
+      <Dialog as="div" className="relative z-[300]" onClose={handleClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -90,7 +94,7 @@ const AddAnalysis = ({ handleClose, open }) => {
                 <div className="flex justify-end gap-5">
                   <button
                     className="md:hidden bg-gray-50 hover:bg-gray-200 transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
-                    onClick={closeModalHandler}
+                    onClick={handleClose}
                   >
                     <AiOutlineClose />
                   </button>
@@ -107,12 +111,8 @@ const AddAnalysis = ({ handleClose, open }) => {
                   </div>
 
                   {currentStep !== steps.length && (
-                    <StepperControl
-                      handleClick={handleClick}
-                      currentStep={currentStep}
-                      steps={steps}
-                      analysisName={analysisName}
-                      selectedWorkflow={selectedWorkflow}
+                    <StepperControl handleClick={handleActionsClick} currentStep={currentStep} steps={steps}
+                      analysisName={analysisName} selectedWorkflow={selectedWorkflow} nextEnabled={handleActionsValidation}
                     />
                   )}
                 </div>
