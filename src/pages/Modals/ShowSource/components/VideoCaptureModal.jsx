@@ -16,7 +16,7 @@ const VideoCaptureModal = ({ handleClose, open, onTriggerCapture }) => {
 
   return (
     <Transition appear show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-[300]" onClose={handleClose}>
+      <Dialog as="div" className="relative z-[450]" onClose={handleClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"

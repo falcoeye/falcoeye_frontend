@@ -12,7 +12,6 @@ const Informations = props => {
         let obj = {};
         questionFields.forEach(field => {
             const { name, default: defaultValue } = field
-            console.log(name, defaultValue)
             obj[`${name}`] = defaultValue
         })
         updateData(obj)

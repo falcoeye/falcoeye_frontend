@@ -7,7 +7,9 @@ import SourceCards from './components/SourceCards/SourceCards';
 const Source = (props) => {
     const { selectedType, selectedSource, updateType, updateSource, fetchingParams, params } = props;
 
-    if (fetchingParams && !params) {
+    console.log(fetchingParams, params)
+
+    if (fetchingParams) {
         return <Loader height="96" />;
     }
     let content;
