@@ -10,7 +10,7 @@ import axios from "../../utility/api-instance";
 import "./Modals.css";
 
 const UploadMedia = ({ handleClose, open }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const [videoURL, setVideoURL] = useState(null);
   const [videoKey, setVideoKey] = useState(null);
@@ -63,12 +63,12 @@ const UploadMedia = ({ handleClose, open }) => {
 
     try {
       const res = await axios.post(`/media/video`, {
-          registry_key: videoKey
+        registry_key: videoKey,
       });
       setSubmitLoading(false);
-      dispatch(addMedia(res.data.video))
-      toast.success(res.data.message)
-      handleClose()
+      dispatch(addMedia(res.data.video));
+      toast.success(res.data.message);
+      handleClose();
     } catch (error) {
       setSubmitLoading(false);
       toast.error(error.data.message || "Something went wrong!");
@@ -81,12 +81,12 @@ const UploadMedia = ({ handleClose, open }) => {
       <button
         type="button"
         onClick={submitVideoHandler}
-        className="text-white bg-green/90 hover:bg-green focus:ring-4 focus:ring-green/30 font-medium text-base px-5 py-2.5  focus:outline-none flex items-center"
+        className="text-white bg-green/90 hover:bg-green rounded-lg font-medium text-base px-5 py-2.5  focus:outline-none flex items-center"
       >
         {submitLoading && (
           <svg
             role="status"
-            class="inline mr-3 w-4 h-4 text-white animate-spin"
+            className="inline mr-3 w-4 h-4 text-white animate-spin"
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -171,7 +171,7 @@ const UploadMedia = ({ handleClose, open }) => {
                 <div
                   className={`${
                     videoURL ? "" : "border"
-                  }  border-dashed border-gray-500 h-64 flex justify-center items-center`}
+                  }  border-dashed border-gray-500 aspect-video flex justify-center items-center`}
                 >
                   {content}
                 </div>
