@@ -16,7 +16,6 @@ const Index = (props) => {
     },
    });
 
-  console.log("resp "+camera.response);
   return (
     <Layout>
       <div className="">

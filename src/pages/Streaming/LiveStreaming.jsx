@@ -15,7 +15,6 @@ function LiveStreaming(props) {
   const handleClick = (kuch) => {
     setShow(kuch);
   };
-  console.log("show"+  props.camera);
   return (
     <div>
       <div className="main-container ">
