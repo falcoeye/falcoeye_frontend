@@ -13,7 +13,7 @@ const Final = () => {
           />
         </div>
 
-        <div className="text-xl font-bold text-green">
+        <div className="text-xl font-bold text-green text-center">
           The analysis is submitted and running
         </div>
       </div>
