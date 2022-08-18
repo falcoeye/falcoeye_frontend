@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 import Chip from '../../../../../../Components/UI/Chip/Chip';
 import Loader from '../../../../../../Components/UI/Loader/Loader';
 import MediaCards from './components/MediaCards/MediaCards';
+import SourceCards from './components/SourceCards/SourceCards';
 
 const Source = (props) => {
     const { selectedType, selectedSource, updateType, updateSource, fetchingParams, params } = props;
@@ -24,6 +25,7 @@ const Source = (props) => {
                 </div>
                 <div className="mt-5">
                     { (selectedType === 'video'  || selectedType === 'image') && <MediaCards selectedType={selectedType} selectedSource={selectedSource} updateSource={updateSource} />}
+                    { (selectedType === 'streaming_source' ) && <SourceCards selectedType={selectedType} selectedSource={selectedSource} updateSource={updateSource} />}
                 </div>
             </div>
         )

@@ -53,7 +53,10 @@ const AddAnalysis = ({ handleClose, open }) => {
   const selectWorkflowHandler = (data) => setSelectedWorkflow(data);
   const analysisNameChangeHandler = (name) => setAnalysisName(name);
 
-  const selectedTypeChangeHandler = (type) => setSelectedType(type);
+  const selectedTypeChangeHandler = (type) => {
+    setSelectedType(type)
+    setSelectedSource(null)
+  } ;
   const selectedSourceChangeHandler = (source) => setSelectedSource(source);
 
   const handleActionsClick = useCallback((direction) => {
