@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useCallback, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import Stepper from "./components/Stepper";
 import StepperControl from "./components/StepperControl";
 import Name from "./components/steps/Name";
@@ -7,42 +7,78 @@ import WorkflowsStep from "./components/steps/WorkflowsStep";
 import Final from "./components/steps/Final";
 import "../Modals.css";
 import { AiOutlineClose } from "react-icons/ai";
+import Source from "./components/steps/Source/Source";
+import axios from "../../../utility/api-instance";
+import { toast } from "react-toastify";
 
-const steps = ["Name", "Worksflows", "Completed"];
+const steps = ["Name", "Workflows", 'Source', "Completed"];
 
 const AddAnalysis = ({ handleClose, open }) => {
+
   const [currentStep, setCurrentStep] = useState(1);
 
-  const [selectedWorkflow, setSelectedWorkflow] = useState(null);
   const [analysisName, setAnalysisName] = useState("");
+  const [selectedWorkflow, setSelectedWorkflow] = useState({ id: null });
+
+  const [selectedType, setSelectedType] = useState(null);
+  const [selectedSource, setSelectedSource] = useState(null);
+
+  const [fetchingParams, setFetchingParams] = useState(false);
+
+  const [params, setParams] = useState(null);
+
+
+  const fetchParams = useCallback(() => {
+    setFetchingParams(true)
+    const { id } = selectedWorkflow;
+    axios
+      .get(`/workflow/${id}/params`)
+      .then((res) => {
+        setFetchingParams(false)
+        setParams(res.data.workflow_params)
+      })
+      .catch((err) => {
+        setFetchingParams(false)
+        const errorMessage = err.response.data.msg || err.response.data.message;
+        toast.error(errorMessage || 'Something went wrong!');
+      });
+  }, [selectedWorkflow]);
+
+  useEffect(() => {
+    const { id } = selectedWorkflow;
+    id && currentStep === 3 && fetchParams();
+  }, [currentStep, fetchParams, selectedWorkflow]);
 
   const selectWorkflowHandler = (data) => setSelectedWorkflow(data);
   const analysisNameChangeHandler = (name) => setAnalysisName(name);
 
-  const handleActionsClick =  useCallback((direction) => {
+  const selectedTypeChangeHandler = (type) => setSelectedType(type);
+  const selectedSourceChangeHandler = (source) => setSelectedSource(source);
+
+  const handleActionsClick = useCallback((direction) => {
     let newStep = currentStep;
 
     direction === "next" ? ++newStep : --newStep;
     newStep > 0 && newStep <= steps.length && setCurrentStep(newStep);
   }, [currentStep]);
-  
-  const handleActionsValidation = useCallback( () => {
+
+  const handleActionsValidation = useCallback(() => {
     let isValid = false;
     switch (currentStep) {
-      case 1: 
-      if (analysisName.length > 0) {
-        isValid = true;
-      }
-      break;
+      case 1:
+        if (analysisName.length > 0) {
+          isValid = true;
+        }
+        break;
       case 2:
-        if (selectedWorkflow) { isValid = true; }
+        if (selectedWorkflow.id) { isValid = true; }
         break;
       default:
     }
     return isValid;
-  } ,[analysisName.length, currentStep, selectedWorkflow] )
+  }, [analysisName.length, currentStep, selectedWorkflow])
 
-  const displayStep = (step) => {
+  const renderStep = (step) => {
     switch (step) {
       case 1:
         return (
@@ -59,6 +95,12 @@ const AddAnalysis = ({ handleClose, open }) => {
           />
         );
       case 3:
+        return <Source id={selectedWorkflow.id}
+          fetchingParams={fetchingParams} params={params}
+          selectedType={selectedType} selectedSource={selectedType}
+          updateType={selectedTypeChangeHandler} updateSource={selectedSourceChangeHandler}
+        />
+      case 4:
         return <Final />;
       default:
     }
@@ -90,7 +132,7 @@ const AddAnalysis = ({ handleClose, open }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full h-screen md:h-fit  md:max-w-3xl transform overflow-hidden md:rounded-2xl bg-white p-3 md:p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full h-screen max-h-screen md:h-fit  md:max-w-3xl transform overflow-auto md:rounded-2xl bg-white p-3 md:p-6 text-left align-middle shadow-xl transition-all">
                 <div className="flex justify-end gap-5">
                   <button
                     className="md:hidden bg-gray-50 hover:bg-gray-200 transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
@@ -107,7 +149,7 @@ const AddAnalysis = ({ handleClose, open }) => {
                   <div className="horizontal mt-5 ">
                     <Stepper steps={steps} currentStep={currentStep} />
 
-                    <div className="my-2 p-2">{displayStep(currentStep)}</div>
+                    <div className="my-2 p-2 md:max-h-[50vh] lg:max-h-[60vh] overflow-auto">{renderStep(currentStep)}</div>
                   </div>
 
                   {currentStep !== steps.length && (

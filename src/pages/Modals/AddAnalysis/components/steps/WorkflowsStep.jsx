@@ -28,7 +28,7 @@ const WorkflowsStep = ({ onSelectWorkflow, selectedWorkflow }) => {
 
   const checkSelectedWorkflowHandler = useCallback(() => {
     let data = workflowsData;
-    if (selectedWorkflow) {
+    if (selectedWorkflow.id) {
       data = workflowsData.map((item) => {
         if (item.id === selectedWorkflow.id) {
           return {
