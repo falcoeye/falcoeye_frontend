@@ -1,19 +1,24 @@
+import axios from "axios";
 import moment from "moment";
 import React, { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import axios from "../../utility/api-instance";
+import { Cookies } from "../../shared/utility";
+import instance from "../../utility/api-instance";
 
-const AnalysisRow = ({ file, onOpenAnalysisModal }) => {
+const AnalysisRow = ({
+  file,
+  onOpenAnalysisModal,
+  onGetAnalysisData,
+  onLoadingAnalysisData,
+}) => {
   const { id, workflow_id, status, name, created_at } = file;
 
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
-  // eslint-disable-next-line no-unused-vars
-  const [analysisMetaData, setAnalysisMetaData] = useState(null);
 
   const fetchImage = useCallback(() => {
     setLoading(true);
-    axios
+    instance
       .get(`workflow/${workflow_id}/img_260.jpg`, { responseType: "blob" })
       .then((res) => {
         // we can all pass them to the Blob constructor directly
@@ -29,41 +34,60 @@ const AnalysisRow = ({ file, onOpenAnalysisModal }) => {
   }, [workflow_id]);
 
   const fetchAnalysisData = useCallback(() => {
-    axios
-      .get(`analysis/${id}/meta.json`)
-      .then((res) => {
-        setAnalysisMetaData(res.data);
-      })
-      .catch((err) => {
-        // console.log(err.response);
-        // const { message } = err.response.data;
-        // toast.error(message);
-      });
-  }, [id]);
+    const token = Cookies.getCookie("token");
+    const headers = {
+      Accept: "*/*",
+      "Content-Type": "application/json",
+      "X-API-KEY": `JWT ${token}`,
+    };
+    const analysisEndPoint = `${instance.defaults.baseURL}/analysis/${id}`;
+    const getAnalysisData = axios.get(analysisEndPoint, {
+      headers: headers,
+    });
+    const analysisMetaDataEndPoint = `${instance.defaults.baseURL}/analysis/${id}/meta.json`;
+    const getAnalysisMetaData = axios.get(analysisMetaDataEndPoint, {
+      headers: headers,
+    });
 
-  useEffect(() => {
-    fetchAnalysisData();
-  }, [fetchAnalysisData]);
+    onLoadingAnalysisData(true);
+    axios
+      .all([getAnalysisData, getAnalysisMetaData])
+      .then(
+        axios.spread((...responses) => {
+          onLoadingAnalysisData(false);
+          onGetAnalysisData(responses[0].data);
+          console.log(responses[1]);
+        })
+      )
+      .catch((error) => {
+        onLoadingAnalysisData(false);
+        console.log(error.response);
+        const { message } = error.response.data;
+        toast.error(message || "Something went wrong!");
+      });
+  }, [id, onGetAnalysisData, onLoadingAnalysisData]);
 
   useEffect(() => {
     fetchImage();
   }, [fetchImage]);
 
-  let renderedImage = (
-    <svg
-      className="w-12 h-12 text-gray-200"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-      fill="currentColor"
-      viewBox="0 0 640 512"
-    >
-      <path d="M480 80C480 35.82 515.8 0 560 0C604.2 0 640 35.82 640 80C640 124.2 604.2 160 560 160C515.8 160 480 124.2 480 80zM0 456.1C0 445.6 2.964 435.3 8.551 426.4L225.3 81.01C231.9 70.42 243.5 64 256 64C268.5 64 280.1 70.42 286.8 81.01L412.7 281.7L460.9 202.7C464.1 196.1 472.2 192 480 192C487.8 192 495 196.1 499.1 202.7L631.1 419.1C636.9 428.6 640 439.7 640 450.9C640 484.6 612.6 512 578.9 512H55.91C25.03 512 .0006 486.1 .0006 456.1L0 456.1z" />
-    </svg>
-  );
+  let renderedImage;
 
   if (image) {
     renderedImage = (
       <img src={image} alt={name} className="w-full h-full object-cover" />
+    );
+  } else {
+    renderedImage = (
+      <svg
+        className="w-12 h-12 text-gray-200"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        fill="currentColor"
+        viewBox="0 0 640 512"
+      >
+        <path d="M480 80C480 35.82 515.8 0 560 0C604.2 0 640 35.82 640 80C640 124.2 604.2 160 560 160C515.8 160 480 124.2 480 80zM0 456.1C0 445.6 2.964 435.3 8.551 426.4L225.3 81.01C231.9 70.42 243.5 64 256 64C268.5 64 280.1 70.42 286.8 81.01L412.7 281.7L460.9 202.7C464.1 196.1 472.2 192 480 192C487.8 192 495 196.1 499.1 202.7L631.1 419.1C636.9 428.6 640 439.7 640 450.9C640 484.6 612.6 512 578.9 512H55.91C25.03 512 .0006 486.1 .0006 456.1L0 456.1z" />
+      </svg>
     );
   }
 
@@ -78,35 +102,43 @@ const AnalysisRow = ({ file, onOpenAnalysisModal }) => {
     statusStyle = "text-[#74ab96]";
   }
   return (
-    <tr>
-      <td className="px-6 py-4 whitespace-nowrap">
-        <div className="flex items-center">
-          <div
-            className={`w-[130px] min-w-[80px] h-20 rounded-t-md rounded-br-md overflow-hidden bg-gray-300 flex justify-center items-center ${
-              loading && "animate-pulse"
-            }`}
-          >
-            {renderedImage}
+    <>
+      <tr>
+        <td className="px-6 py-4 whitespace-nowrap">
+          <div className="flex items-center">
+            <div
+              className={`w-[130px] min-w-[80px] h-20 rounded-t-md rounded-br-md overflow-hidden bg-gray-300 flex justify-center items-center ${
+                loading && "animate-pulse"
+              }`}
+            >
+              {renderedImage}
+            </div>
           </div>
-        </div>
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap">
-        <div className="text-sm font-medium text-gray-900">{name}</div>
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap">
-        <div className="text-sm text-gray-500">
-          {moment.utc(created_at).format("MM-DD-YYYY")}
-        </div>
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap">
-        <div className={`text-sm ${statusStyle} capitalize `}>{status}</div>
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap">
-        <button className="btn-primary" onClick={() => onOpenAnalysisModal(id)}>
-          view details
-        </button>
-      </td>
-    </tr>
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap">
+          <div className="text-sm font-medium text-gray-900">{name}</div>
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap">
+          <div className="text-sm text-gray-500">
+            {moment.utc(created_at).format("MM-DD-YYYY")}
+          </div>
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap">
+          <div className={`text-sm ${statusStyle} capitalize `}>{status}</div>
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap">
+          <button
+            className="btn-primary"
+            onClick={() => {
+              onOpenAnalysisModal(id);
+              fetchAnalysisData();
+            }}
+          >
+            view details
+          </button>
+        </td>
+      </tr>
+    </>
   );
 };
 

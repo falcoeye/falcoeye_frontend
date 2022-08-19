@@ -18,10 +18,15 @@ const AnalysisList = (props) => {
   const [alanysisStatus, setAlanysisStatus] = useState("all");
 
   const [showAnalysisModal, setShowAnalysisModal] = useState(false);
-  const [analysisId, setAnalysId] = useState("");
+
+  const [analysisData, setAnalysisData] = useState(null);
+  const [loadingAnalysisData, setLoadingAnalysisData] = useState(true);
+
+  const loadingAnalysisDataHandler = (value) => setLoadingAnalysisData(value);
+  const getAnalysisDataHandler = (data) => setAnalysisData(data);
+  const clearAnalysisDataHandler = (data) => setAnalysisData(null);
 
   const openShowAnalysisModalHandler = (id) => {
-    setAnalysId(id);
     setShowAnalysisModal(true);
   };
   const closeShowAnalysisModalHandler = () => setShowAnalysisModal(false);
@@ -124,6 +129,8 @@ const AnalysisList = (props) => {
                       key={file.id}
                       file={file}
                       onOpenAnalysisModal={openShowAnalysisModalHandler}
+                      onGetAnalysisData={getAnalysisDataHandler}
+                      onLoadingAnalysisData={loadingAnalysisDataHandler}
                     />
                   ))}
                 </tbody>
@@ -143,11 +150,17 @@ const AnalysisList = (props) => {
         alanysisStatus={alanysisStatus}
       />
       {content}
-      <ShowAnalysis
-        handleClose={closeShowAnalysisModalHandler}
-        open={showAnalysisModal}
-        id={analysisId}
-      />
+
+      {showAnalysisModal && (
+        <ShowAnalysis
+          handleClose={closeShowAnalysisModalHandler}
+          open={showAnalysisModal}
+          analysisData={analysisData}
+          loadingAnalysisData={loadingAnalysisData}
+          id={analysisData?.analysis?.id}
+          onClearAnalysisData={clearAnalysisDataHandler}
+        />
+      )}
     </Fragment>
   );
 };

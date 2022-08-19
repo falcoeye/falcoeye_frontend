@@ -58,14 +58,6 @@ const UploadMedia = ({ handleClose, open }) => {
     content = <LoadingSpinner />;
   }
 
-  const closeModalHandler = () => {
-    handleClose();
-    setTimeout(() => {
-      setVideoURL(null);
-      setVideoKey(null);
-    }, 300);
-  };
-
   const submitVideoHandler = async () => {
     setSubmitLoading(true);
 
@@ -76,7 +68,7 @@ const UploadMedia = ({ handleClose, open }) => {
       setSubmitLoading(false);
       dispatch(addMedia(res.data.video));
       toast.success(res.data.message);
-      closeModalHandler();
+      handleClose();
     } catch (error) {
       setSubmitLoading(false);
       toast.error(error.data.message || "Something went wrong!");
@@ -140,7 +132,7 @@ const UploadMedia = ({ handleClose, open }) => {
 
   return (
     <Transition appear show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-[300]" onClose={closeModalHandler}>
+      <Dialog as="div" className="relative z-[300]" onClose={handleClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
