@@ -36,6 +36,8 @@ const MediaView = (props) => {
     setOrder(e.target.value);
   }, []);
 
+  const closeModalHandler = () => setUploadMediaImage(false);
+
   useEffect(() => {
     dispatch(fetchMedia());
   }, [dispatch]);
@@ -152,10 +154,9 @@ const MediaView = (props) => {
         </div>
       </div>
 
-      <UploadMedia
-        handleClose={() => setUploadMediaImage(false)}
-        open={uploadMediaImage}
-      />
+      {uploadMediaImage && (
+        <UploadMedia handleClose={closeModalHandler} open={uploadMediaImage} />
+      )}
     </>
   );
 };
