@@ -13,5 +13,5 @@ jobs:
           source_repo: "sourcya/falcoeye-user-app"
           source_branch: "main"
           destination_branch: "main"
-          destination_repo: ${{secrets.GITLAB_ACCESS}}
-          source_ssh_private_key: ${{ secrets.ZAZAN_SSH_PRIVATE_KEY }}
+          destination_repo: ${{secrets.FALCOEYE_repo}}
+          source_ssh_private_key: ${{ secrets.FALCOEYE_SSH_KEY }}
