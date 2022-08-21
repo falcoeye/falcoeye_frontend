@@ -14,4 +14,5 @@ jobs:
           source_branch: "main"
           destination_branch: "main"
           destination_repo: "falcoeye/falcoeye_frontend"
-          source_ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source_ssh_private_key: ${{ secrets.SYNC_SOURCE_PRIVATE_KEY }}
+          destination_ssh_private_key: ${{ secrets.SYNC_DESTINATION_PRIVATE_KEY }}
