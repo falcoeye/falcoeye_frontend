@@ -42,6 +42,10 @@ export const fetchMedia = () => async (dispatch) => {
     dispatch(fetchingMedia())
     axios.get('/media/')
         .then(res => {
+            if ( !res.data ) {
+                dispatch(fetchMediaSuccess([]))
+                return;
+            }
             dispatch(fetchMediaSuccess(res.data.media))
         })
         .catch(err => {
