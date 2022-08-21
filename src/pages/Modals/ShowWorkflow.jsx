@@ -62,7 +62,7 @@ const ShowWorkflow = ({ open, handleClose, id }) => {
   let content;
 
   if (id && !data && fetching) {
-    content = <Loader height="96" />;
+    content = <Loader height="h-[96px]" />;
   }
   if (id && !data && !fetching) {
     content = (
