@@ -95,7 +95,7 @@ const MediaView = (props) => {
   }, [data, date, order, term, type]);
 
   useEffect(() => {
-    if (data.length > 0) {
+    if (data.length >= 0) {
       filterationHandler();
     }
   }, [data, filterationHandler]);
