@@ -13,5 +13,5 @@ jobs:
           source_repo: "sourcya/falcoeye-user-app"
           source_branch: "main"
           destination_branch: "main"
-          destination_repo: "falcoeye/falcoeye_frontend"
+          destination_repo: "git@github.com:falcoeye/falcoeye_frontend.git:main"
           source_ssh_private_key: ${{ secrets.FALCOEYE_SSH_KEY }}
