@@ -1,3 +1,14 @@
+### 0.0.8
+- Enable Video in Preview Capture Modal
+- Implement Create Analysis
+- Make upload thumbnail available for streaming server camera & remove url field from rtsp camera
+- Make camera type at the top of the form on creating new one
+- Show notes and tags on Show Media Modal
+- Fix Show Workflow View and responsiveness
+- Implement Upload In Media
+- Add Video preview in Show Media modal
+- Allow capture for RTSP Camera
+- Make Analysis Thumbnail same as the Workflow one
 ### 0.0.7
 - Delete Note From Media Card And Show Media Modal and make search input filters based on tags
 - Remove name from preview image capture modal
