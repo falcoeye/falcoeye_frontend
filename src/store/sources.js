@@ -42,6 +42,10 @@ export const fetchSources = () => async (dispatch) => {
     dispatch(fetchingSources())
     axios.get('/camera/')
         .then(res => {
+            if ( !res.data ) {
+                dispatch(fetchSourcesSuccess([]))
+                return;
+            }
             dispatch(fetchSourcesSuccess(res.data.camera))
         })
         .catch(err => {
