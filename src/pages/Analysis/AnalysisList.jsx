@@ -71,7 +71,7 @@ const AnalysisList = (props) => {
   }, [alanysisStatus, analysises, searchInput]);
 
   useEffect(() => {
-    if (analysises.length > 0) {
+    if (analysises.length >= 0) {
       filterationHandler();
     }
   }, [analysises, filterationHandler]);

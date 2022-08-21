@@ -39,7 +39,7 @@ const MediaCards = props => {
     }, [data, selectedType])
 
     useEffect(() => {
-        if (data.length > 0) {
+        if (data.length >= 0) {
             filterationHandler()
         }
     }, [data, filterationHandler])
