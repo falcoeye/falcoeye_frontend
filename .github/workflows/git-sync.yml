@@ -1,0 +1,17 @@
+name: SYNC WITH falcoeye Github
+'on':
+  push:
+    branches:
+      - main
+jobs:
+  git-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: git-sync
+        uses: wei/git-sync@v3
+        with:
+          source_repo: "sourcya/falcoeye-user-app"
+          source_branch: "main"
+          destination_branch: "main"
+          destination_repo: ${{secrets.FALCOEYE_repo}}
+          source_ssh_private_key: ${{ secrets.FALCOEYE_SSH_KEY }}
