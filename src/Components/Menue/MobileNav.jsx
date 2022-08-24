@@ -41,7 +41,10 @@ const MobileNav = ({ isOpen, toggleDrawer, isLight, colorTheme, setTheme }) => {
     <div className="w-full md:hidden bg-white dark:bg-gray-700 min-h-[70px] flex items-center">
       <div className="main-container flex items-center justify-between">
         <div className="flex items-center gap-x-5">
-          <button onClick={toggleDrawer} className="text-primary text-xl">
+          <button
+            onClick={toggleDrawer}
+            className="text-primary text-xl dark:text-white"
+          >
             <GiHamburgerMenu />
           </button>
           <img className="w-12" src={logoSrc} alt="logo" />
