@@ -6,6 +6,7 @@ const DropDown = () => {
   const toggleOptionsHandler = () => {
     setShowOptions((prevState) => !prevState);
   };
+  const closeOptionsHandler = () => setShowOptions(false);
 
   const { logout, userData } = useContext(AuthContext);
 
@@ -20,10 +21,11 @@ const DropDown = () => {
         <button
           onClick={toggleOptionsHandler}
           type="button"
-          className="inline-flex justify-center mt-2 rounded-md  text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-primary"
+          className="inline-flex justify-center mt-2 rounded-md  text-sm font-medium text-gray-500 dark:text-gray-50 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-primary"
           id="menu-button"
           aria-expanded="true"
           aria-haspopup="true"
+          onBlur={closeOptionsHandler}
         >
           <svg
             className=" h-5 w-5"
@@ -43,7 +45,7 @@ const DropDown = () => {
 
       {showOptions && (
         <div
-          className="origin-top-right absolute right-0 mt-2 w-56 z-50 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+          className="origin-top-right absolute right-0 mt-2 w-56 z-50 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="menu-button"
@@ -51,7 +53,7 @@ const DropDown = () => {
         >
           <div className="py-2 space-y-4" role="none">
             <div
-              className="text-white px-4 py-2 text-base bg-primary/80"
+              className="text-white px-4 py-2 text-base bg-primary"
               role="menuitem"
               tabIndex="-1"
               id="menu-item-0"

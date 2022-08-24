@@ -26,7 +26,7 @@ export const LoadingSkelton = () => {
   );
 };
 
-const Header = () => {
+const Header = ({ isLight, colorTheme, setTheme }) => {
   const { userData } = useContext(AuthContext);
 
   let firstUserNameLetter;
@@ -37,10 +37,14 @@ const Header = () => {
   return (
     <>
       <div className="main-container pt-6 md:block hidden">
-        <div className="flex md:flex-row flex-col flex-wrap lg:flex-nowrap justify-between rounded-lg lg:rounded-full gap-y-3  bg-white px-4 md:px-8 lg:px-5 py-3 lg:py-1 min-h-[42px]">
+        <div className="flex md:flex-row flex-col flex-wrap lg:flex-nowrap justify-between rounded-lg lg:rounded-full gap-y-3  bg-white dark:bg-gray-700 px-4 md:px-8 lg:px-5 py-3 lg:py-1 min-h-[42px]">
           <div className="flex-1 md:justify-end md:order-none order-first lg:basis-1/6 bas flex items-center px-3 gap-x-4">
             <div className="flex gap-x-5 items-center">
-              <ToggleMode />
+              <ToggleMode
+                isLight={isLight}
+                colorTheme={colorTheme}
+                setTheme={setTheme}
+              />
               {firstUserNameLetter ? (
                 <div className="w-10 h-10 rounded-full bg-green text-white flex items-center justify-center font-bold text-lg">
                   {firstUserNameLetter}
