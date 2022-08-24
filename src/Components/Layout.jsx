@@ -3,36 +3,51 @@ import MobileNav from "./Menue/MobileNav";
 import SideNave from "./Menue/SideNave";
 import { ToastContainer } from "react-toastify";
 import Header from "./Header";
+import useDarkMode from "../hooks/useDarkMode";
 
 const Layout = ({ children }) => {
   const [sideNavToggle, setSideNavToggle] = useState(false);
   const handleSideNav = () => {
     setSideNavToggle(!sideNavToggle);
-  }
+  };
+
+  const [colorTheme, setTheme] = useDarkMode();
+  const isLight = colorTheme !== "dark";
+
   return (
     <>
-      <div className={`flex`}>
+      <div className="flex">
         <div
           className={`${
             sideNavToggle ? "w-[200px]" : "w-[70px]"
-          } transition-all duration-500 md:block hidden`}
+          } transition-all duration-500 md:block hidden `}
         >
           <SideNave toggle={handleSideNav} sideNav={sideNavToggle} />
         </div>
-        <div className="flex flex-1 flex-col w-full">
-          <MobileNav isOpen={sideNavToggle} toggleDrawer={handleSideNav} />
-          <Header />
+        <div className="flex flex-1 flex-col w-full ">
+          <MobileNav
+            isOpen={sideNavToggle}
+            toggleDrawer={handleSideNav}
+            colorTheme={colorTheme}
+            setTheme={setTheme}
+            isLight={isLight}
+          />
+          <Header
+            colorTheme={colorTheme}
+            setTheme={setTheme}
+            isLight={isLight}
+          />
           <ToastContainer
-                position="bottom-right"
-                autoClose={4000}
-                hideProgressBar={true}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnHover={false}
-                progress={undefined}
-                draggable={false}
-            />
+            position="bottom-right"
+            autoClose={4000}
+            hideProgressBar={true}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnHover={false}
+            progress={undefined}
+            draggable={false}
+          />
           {children}
         </div>
       </div>
@@ -41,4 +56,3 @@ const Layout = ({ children }) => {
 };
 
 export default Layout;
-

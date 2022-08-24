@@ -34,7 +34,7 @@ const SideNav = ({ sideNav, toggle }) => {
       <div
         className={`${
           sideNav ? "w-[200px]" : "w-[70px]"
-        } h-screen fixed top-0 left-0  py-5 bg-white flex flex-col justify-between transition-all duration-500 `}
+        } h-screen fixed top-0 left-0  py-5 bg-white dark:bg-gray-700 flex flex-col justify-between transition-all duration-500 `}
       >
         <Link to={`/`} className="w-16 ">
           <img src={logoSrc} alt="logo" />
@@ -49,7 +49,7 @@ const SideNav = ({ sideNav, toggle }) => {
                       className={`${
                         pathname === path
                           ? "bg-primary text-white curve"
-                          : "bg-white text-primary"
+                          : "bg-white dark:bg-gray-800 text-primary"
                       } flex text-xl items-center gap-x-8   relative  w-full rounded-r-full  h-[45px]  px-6`}
                     >
                       <span className="min-w-max">{icon}</span>

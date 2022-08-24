@@ -27,7 +27,7 @@ const navLinks = [
   { id: 6, text: "Settings", icon: <IoSettings />, path: "/settings" },
 ];
 
-const MobileNav = ({ isOpen, toggleDrawer }) => {
+const MobileNav = ({ isOpen, toggleDrawer, isLight, colorTheme, setTheme }) => {
   const { pathname } = useLocation();
 
   const userData = JSON.parse(localStorage.getItem("user"));
@@ -38,7 +38,7 @@ const MobileNav = ({ isOpen, toggleDrawer }) => {
   }
 
   return (
-    <div className="w-full md:hidden bg-white min-h-[70px] flex items-center">
+    <div className="w-full md:hidden bg-white dark:bg-gray-700 min-h-[70px] flex items-center">
       <div className="main-container flex items-center justify-between">
         <div className="flex items-center gap-x-5">
           <button onClick={toggleDrawer} className="text-primary text-xl">
@@ -48,7 +48,11 @@ const MobileNav = ({ isOpen, toggleDrawer }) => {
         </div>
         <div>
           <div className="flex gap-x-5 items-center">
-            <ToggleMode />
+            <ToggleMode
+              isLight={isLight}
+              colorTheme={colorTheme}
+              setTheme={setTheme}
+            />
             {firstUserNameLetter ? (
               <div className="w-10 h-10 rounded-full bg-green text-white flex items-center justify-center font-bold text-lg">
                 {firstUserNameLetter}
@@ -65,7 +69,7 @@ const MobileNav = ({ isOpen, toggleDrawer }) => {
         open={isOpen}
         onClose={toggleDrawer}
         direction="left"
-        className="py-8"
+        className="py-8 !bg-white dark:!bg-gray-700"
       >
         <div className="px-5">
           <Link to={`/`} className="w-full ">
@@ -81,7 +85,7 @@ const MobileNav = ({ isOpen, toggleDrawer }) => {
                     className={`${
                       pathname === path
                         ? "bg-primary text-white curve"
-                        : "bg-white text-primary"
+                        : "bg-white dark:bg-gray-800 text-primary"
                     } flex text-xl items-center gap-x-8   relative  w-full rounded-r-full  h-[45px]  px-6`}
                   >
                     <span className="min-w-max">{icon}</span>
