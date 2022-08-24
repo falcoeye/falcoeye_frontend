@@ -1,6 +1,6 @@
-import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState } from 'react';
-import '../../Modals.css';
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment, useState } from "react";
+import "../../Modals.css";
 
 const VideoCaptureModal = ({ handleClose, open, onTriggerCapture }) => {
   const [sliderInput, setSliderInput] = useState(60);
@@ -40,8 +40,8 @@ const VideoCaptureModal = ({ handleClose, open, onTriggerCapture }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-sm  transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all text-center">
-                <div className="text-[#42a7df] text-lg font-semibold text-center">
+              <Dialog.Panel className="w-full max-w-sm  transform overflow-hidden rounded-2xl bg-white dark:bg-gray-700  p-6 align-middle shadow-xl transition-all text-center">
+                <div className="text-[#42a7df] text-lg font-semibold text-center dark:text-white">
                   Select Capture Length
                 </div>
                 <div className="flex justify-end mt-2">
@@ -59,13 +59,13 @@ const VideoCaptureModal = ({ handleClose, open, onTriggerCapture }) => {
                   max="120"
                   value={sliderInput}
                   step="10"
-                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer text-primary mb-6"
+                  className="w-full h-2 bg-gray-200 dark:bg-gray-800  rounded-lg appearance-none cursor-pointer text-primary mb-6"
                   onChange={changeSliderInputHandler}
                 />
                 <input
                   type="number"
                   id="name"
-                  className="modal_form_input"
+                  className="modal_form_input !ml-0 dark:!bg-gray-800 dark:!border-gray-800 dark:!text-white"
                   name="name"
                   placeholder="Name"
                   min="10"

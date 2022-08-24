@@ -2,14 +2,14 @@ import { Fragment, useCallback, useEffect } from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import ShowSource from "../Modals/ShowSource/ShowSource";
-import axios from '../../utility/api-instance';
+import axios from "../../utility/api-instance";
 
 const SourceCard = (props) => {
   const { source } = props;
   const { id } = source;
   const [showSourceOpened, setShowSourceOpened] = useState(false);
   const [image, setImage] = useState(null);
-  const [ loading, setLoading ] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const openSourceModalHandler = () => {
     setShowSourceOpened(true);
@@ -20,18 +20,18 @@ const SourceCard = (props) => {
 
   const fetchImage = useCallback(() => {
     let url = `/camera/${id}/img_260.jpg`;
-    setLoading(true)
+    setLoading(true);
     axios
-      .get(url, { responseType: 'blob' })
+      .get(url, { responseType: "blob" })
       .then((res) => {
         // we can all pass them to the Blob constructor directly
-        const new_blob = new Blob([res.data], { type: 'image/jpg' });
+        const new_blob = new Blob([res.data], { type: "image/jpg" });
         const url = URL.createObjectURL(new_blob);
         setImage(url);
-        setLoading(false)
+        setLoading(false);
       })
       .catch((err) => {
-        setLoading(false)
+        setLoading(false);
         toast.error(err.response.data.message);
       });
   }, [id]);
@@ -41,7 +41,11 @@ const SourceCard = (props) => {
   }, [fetchImage]);
 
   let renderedImage = (
-    <div className={`flex justify-center items-center h-48 bg-gray-300 ${loading && 'animate-pulse'} mb-5`} >
+    <div
+      className={`flex justify-center items-center h-48 bg-gray-300 ${
+        loading && "animate-pulse"
+      } mb-5`}
+    >
       <svg
         className="w-12 h-12 text-gray-200"
         xmlns="http://www.w3.org/2000/svg"
@@ -57,8 +61,12 @@ const SourceCard = (props) => {
   if (image) {
     renderedImage = (
       <div className="flex justify-center items-center h-48 bg-gray-300 mb-5">
-        <img src={image} alt={source.name} className="w-full h-full object-cover	" />
-    </div>
+        <img
+          src={image}
+          alt={source.name}
+          className="w-full h-full object-cover	"
+        />
+      </div>
     );
   }
 
@@ -76,14 +84,14 @@ const SourceCard = (props) => {
   return (
     <Fragment>
       <div
-        className="p-4 bg-white rounded-lg border border-gray-200 shadow-md cursor-pointer"
+        className="p-4 bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-700  shadow-md cursor-pointer"
         onClick={openSourceModalHandler}
       >
         {renderedImage}
-        <h5 className="mb-1 text-xl font-semibold tracking-tight text-gray-900  capitalize ">
+        <h5 className="mb-1 text-xl font-semibold tracking-tight text-gray-900  capitalize dark:text-white ">
           {source.name}
         </h5>
-        <p className="mb-3 text-sm font-normal text-gray-500 capitalize">
+        <p className="mb-3 text-sm font-normal text-gray-500 capitalize dark:text-gray-200">
           {type}
         </p>
         <div
@@ -96,11 +104,11 @@ const SourceCard = (props) => {
       </div>
       {showSourceOpened && (
         <ShowSource
-            open={showSourceOpened}
-            handleClose={closeSourceModalHandler}
-            id={source.id}
-          />
-      ) }
+          open={showSourceOpened}
+          handleClose={closeSourceModalHandler}
+          id={source.id}
+        />
+      )}
     </Fragment>
   );
 };

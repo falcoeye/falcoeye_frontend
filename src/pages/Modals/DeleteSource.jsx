@@ -10,21 +10,20 @@ import "./Modals.css";
 
 const DeleteSource = ({ handleClose, id, open, handleShowClose }) => {
   const dispatch = useDispatch();
-  const [ deleting, setDeleting ] = useState()
-
+  const [deleting, setDeleting] = useState();
 
   const deleteSourceHandler = () => {
-    setDeleting(true)
+    setDeleting(true);
     axios
       .delete(`/camera/${id}`)
       .then((res) => {
         handleClose();
         dispatch(deleteSource(id));
-        handleShowClose()
+        handleShowClose();
         toast.success("Source has been deleted successfully");
       })
       .catch((err) => {
-        setDeleting(false)
+        setDeleting(false);
         toast.error(
           err.response?.data?.message ||
             "Error Deleting Source, Try again later"
@@ -58,8 +57,8 @@ const DeleteSource = ({ handleClose, id, open, handleShowClose }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                <div className="text-[#42a7df] text-lg font-semibold text-center">
+              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white dark:bg-gray-700 p-6 text-left align-middle shadow-xl transition-all">
+                <div className="text-[#42a7df] text-lg font-semibold text-center dark:text-white">
                   Are You Sure You Want To Delete This Source ?
                 </div>
 
