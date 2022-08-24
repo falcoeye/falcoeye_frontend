@@ -125,28 +125,30 @@ const WorkflowsStep = ({ onSelectWorkflow, selectedWorkflow }) => {
           onClick={() => addActiveStyleHandler(item.id)}
           className={`relative shadow rounded-md  py-3 px-4 flex flex-col gap-2 cursor-pointer h-fit transition duration-300 ease-in-out ${
             item.selected
-              ? "bg-primary/10 hover:bg-primary/10"
-              : "bg-gray-50 hover:bg-gray-100/90"
+              ? "bg-primary/10 hover:bg-primary/10 dark:bg-gray-100/10"
+              : "bg-gray-50 hover:bg-gray-100/90 dark:bg-gray-800"
           }`}
         >
           <div className="flex justify-between min-h-[30px]">
-            <h1 className="text-base font-bold text-gray-600">{item.name}</h1>
+            <h1 className="text-base font-bold text-gray-600 dark:text-white">
+              {item.name}
+            </h1>
             {item.selected && (
               <span className="text-white text-sm bg-primary w-fit p-2 rounded-full">
                 <BsBookmarkHeartFill />
               </span>
             )}
           </div>
-          <p className="text-sm text-gray-400/80 mb-3">
+          <p className="text-sm text-gray-400/80 mb-3 dark:text-gray-200">
             {moment.utc(item.publish_date).format("MMM DD YYYY")}
           </p>
           <button
-              onClick={openWorkflowModalHandler}
-              type="button"
-              className="focus:outline-none text-white bg-cyan-500 hover:bg-cyan-600 font-medium rounded-lg text-sm px-5 py-2.5 transition w-max	"
-            >
-              Read More
-            </button>
+            onClick={openWorkflowModalHandler}
+            type="button"
+            className="focus:outline-none text-white bg-cyan-500 hover:bg-cyan-600 font-medium rounded-lg text-sm px-5 py-2.5 transition w-max	"
+          >
+            Read More
+          </button>
         </div>
       ));
     } else if (filteredData && filteredData.length === 0) {
@@ -163,13 +165,13 @@ const WorkflowsStep = ({ onSelectWorkflow, selectedWorkflow }) => {
 
     content = (
       <div className="mt-5 md:mt-0">
-        <div className="w-full py-2 mb-3 flex items-center px-4 rounded-full bg-gray-50 shadow">
-          <span className="text-primary text-xl mr-4 ">
+        <div className="w-full py-2 mb-3 flex items-center px-4 rounded-full bg-gray-50 shadow dark:bg-gray-800 ">
+          <span className="text-primary text-xl mr-4 dark:text-white">
             <AiOutlineSearch />
           </span>
-          <div className="w-full relative">
+          <div className="w-full relative ">
             <input
-              className="focus:outline-none text-primary placeholder-primary text-sm bg-transparent w-full"
+              className="focus:outline-none text-primary dark:text-white dark:placeholder-white placeholder-primary text-sm bg-transparent w-full dark:bg-gray-800"
               type="text"
               placeholder="Search Workflows"
               onChange={changeSearchInputHandler}
@@ -182,12 +184,12 @@ const WorkflowsStep = ({ onSelectWorkflow, selectedWorkflow }) => {
           {dataContent}
         </div>
         {showWorkflowOpened && (
-        <ShowWorkflow
-          open={showWorkflowOpened}
-          handleClose={closeWorkflowModalHandler}
-          id={selectedWorkflow.id}
-        />
-      ) }
+          <ShowWorkflow
+            open={showWorkflowOpened}
+            handleClose={closeWorkflowModalHandler}
+            id={selectedWorkflow.id}
+          />
+        )}
       </div>
     );
   }
