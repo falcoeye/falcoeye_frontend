@@ -1,36 +1,36 @@
-import moment from 'moment';
-import { useCallback, useEffect, useState } from 'react';
+import moment from "moment";
+import { useCallback, useEffect, useState } from "react";
 import {
   AiFillCamera,
   AiFillVideoCamera,
   AiOutlineCalendar,
-} from 'react-icons/ai';
-import { toast } from 'react-toastify';
-import axios from '../../utility/api-instance';
+} from "react-icons/ai";
+import { toast } from "react-toastify";
+import axios from "../../utility/api-instance";
 
 const MediaCard = (props) => {
   const { media, handleClick } = props;
   const { id, media_type } = media;
   const [image, setImage] = useState(null);
-  const [ loading, setLoading ] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const fetchImage = useCallback(() => {
     let url = `media/image/${id}/img_260.jpg`;
-    if (media_type === 'video') {
+    if (media_type === "video") {
       url = `media/video/${id}/video_260.jpg`;
     }
-    setLoading(true)
+    setLoading(true);
     axios
-      .get(url, { responseType: 'blob' })
+      .get(url, { responseType: "blob" })
       .then((res) => {
         // we can all pass them to the Blob constructor directly
-        const new_blob = new Blob([res.data], { type: 'image/jpg' });
+        const new_blob = new Blob([res.data], { type: "image/jpg" });
         const url = URL.createObjectURL(new_blob);
         setImage(url);
-        setLoading(false)
+        setLoading(false);
       })
       .catch((err) => {
-        setLoading(false)
+        setLoading(false);
         toast.error(err.response.data.message);
       });
   }, [id, media_type]);
@@ -40,7 +40,11 @@ const MediaCard = (props) => {
   }, [fetchImage]);
 
   let renderedImage = (
-    <div className={`flex justify-center items-center h-48 bg-gray-300 ${loading && 'animate-pulse'}`} >
+    <div
+      className={`flex justify-center items-center h-48 bg-gray-300 ${
+        loading && "animate-pulse"
+      }`}
+    >
       <svg
         className="w-12 h-12 text-gray-200"
         xmlns="http://www.w3.org/2000/svg"
@@ -56,35 +60,39 @@ const MediaCard = (props) => {
   if (image) {
     renderedImage = (
       <div className="flex justify-center items-center h-48 bg-gray-300 ">
-        <img src={image} alt={media_type} className="w-full h-full object-cover	" />
-    </div>
+        <img
+          src={image}
+          alt={media_type}
+          className="w-full h-full object-cover	"
+        />
+      </div>
     );
   }
 
   return (
     <div
-      className="rounded-lg  cursor-pointer shadow-md"
+      className="rounded-lg  cursor-pointer shadow-md overflow-hidden"
       onClick={() => handleClick(id)}
     >
       {renderedImage}
-      <div className="p-4 bg-white">
+      <div className="p-4 bg-white dark:bg-gray-700 h-full">
         <div
           className={`inline-flex items-center mb-3 py-1 px-2 text-base font-medium text-center text-white capitalize ${
-            media_type === 'image' ? 'bg-sky-400' : 'bg-emerald-500'
+            media_type === "image" ? "bg-sky-400" : "bg-emerald-500"
           } rounded-lg`}
         >
-          {media_type === 'image' ? (
+          {media_type === "image" ? (
             <AiFillCamera className="mr-2" />
           ) : (
             <AiFillVideoCamera className="mr-2" />
           )}
           {media_type}
         </div>
-        <p className="flex items-center gap-1 capitalize text-gray-600 mb-3">
+        <p className="flex items-center gap-1 capitalize text-gray-600 mb-3 dark:text-white">
           <span className="mr-1">
             <AiOutlineCalendar />
           </span>
-          {moment.utc(media.created_at).format('MM-DD-YYYY')}
+          {moment.utc(media.created_at).format("MM-DD-YYYY")}
         </p>
         <div className="flex">
           <span className="inline-flex items-center py-1 px-2 text-sm justify-center text-white capitalize bg-orange-500 rounded-md">

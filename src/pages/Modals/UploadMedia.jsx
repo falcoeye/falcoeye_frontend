@@ -108,7 +108,6 @@ const UploadMedia = ({ handleClose, open }) => {
     ButtonsContent = (
       <label
         htmlFor="image"
-        // className="relative w-8 h-8  bg-green cursor-pointer text-white rounded-full flex items-center justify-center"
         className={`relative transition h-fit duration-300 p-2 rounded-full inline-flex items-center justify-center bg-green cursor-pointer text-white`}
       >
         <BsFillCameraVideoFill className="relative fill-current z-50" />
@@ -156,7 +155,7 @@ const UploadMedia = ({ handleClose, open }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-xl transform overflow-hidden rounded-2xl bg-white py-12 px-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-xl transform overflow-hidden rounded-2xl bg-white dark:bg-gray-700 py-12 px-6 text-left align-middle shadow-xl transition-all">
                 <div
                   className={`${
                     videoURL ? "" : "border"
