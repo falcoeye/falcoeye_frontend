@@ -1,26 +1,26 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { AiOutlineCalendar, AiOutlineUser } from 'react-icons/ai';
-import moment from 'moment';
-import axios from '../../utility/api-instance';
-import { toast } from 'react-toastify';
+import React, { useCallback, useEffect, useState } from "react";
+import { AiOutlineCalendar, AiOutlineUser } from "react-icons/ai";
+import moment from "moment";
+import axios from "../../utility/api-instance";
+import { toast } from "react-toastify";
 
 const WorkflowCard = ({ id, title, date, creator, handleClick }) => {
   const [image, setImage] = useState(null);
-  const [ loading, setLoading ] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const fetchImage = useCallback(() => {
-    setLoading(true)
+    setLoading(true);
     axios
-      .get(`workflow/${id}/img_260.jpg`, {responseType: 'blob'})
-      .then(res => {
+      .get(`workflow/${id}/img_260.jpg`, { responseType: "blob" })
+      .then((res) => {
         // we can all pass them to the Blob constructor directly
-        const new_blob = new Blob( [ res.data ], { type: 'image/jpg' } );
-        const url = URL.createObjectURL( new_blob );
+        const new_blob = new Blob([res.data], { type: "image/jpg" });
+        const url = URL.createObjectURL(new_blob);
         setImage(url);
-        setLoading(false)
+        setLoading(false);
       })
       .catch((err) => {
-        setLoading(false)
+        setLoading(false);
         toast.error(err.response.data.message);
       });
   }, [id]);
@@ -30,7 +30,11 @@ const WorkflowCard = ({ id, title, date, creator, handleClick }) => {
   }, [fetchImage]);
 
   let renderedImage = (
-    <div className={`flex justify-center items-center h-48 bg-gray-300 xl:flex-[2] ${loading && 'animate-pulse'} `}>
+    <div
+      className={`flex justify-center items-center h-48 bg-gray-300 xl:flex-[2] ${
+        loading && "animate-pulse"
+      } `}
+    >
       <svg
         className="w-12 h-12 text-gray-200"
         xmlns="http://www.w3.org/2000/svg"
@@ -45,27 +49,32 @@ const WorkflowCard = ({ id, title, date, creator, handleClick }) => {
 
   if (image) {
     renderedImage = (
-      <div className={`flex justify-center items-center h-48 bg-gray-300 xl:flex-[2]`} >
+      <div
+        className={`flex justify-center items-center h-48 bg-gray-300 xl:flex-[2]`}
+      >
         <img src={image} alt={title} className="w-full h-full object-cover	" />
       </div>
     );
   }
 
   return (
-    <div className="sm:max-w-[370px] sm:my-0 sm:mx-auto md:max-w-full md:w-full  flex xl:flex-row flex-col  xl:items-center gap-4  px-4 py-5 shadow rounded border border-[#f5f5f5] cursor-pointer" onClick={handleClick.bind(null, id)} >
+    <div
+      className="sm:max-w-[370px] sm:my-0 sm:mx-auto md:max-w-full md:w-full  flex xl:flex-row flex-col  xl:items-center gap-4  px-4 py-5 shadow rounded border border-[#f5f5f5] cursor-pointer dark:bg-gray-800 dark:border-gray-800"
+      onClick={handleClick.bind(null, id)}
+    >
       {renderedImage}
       <div className="xl:flex-[2]">
-        <h3 className="text-base capitalize mb-3  font-bold text-gray-700">
+        <h3 className="text-base capitalize mb-3  font-bold text-gray-700 dark:text-white">
           {title}
         </h3>
         <div className="flex flex-col gap-2 text-sm">
-          <p className="flex items-center gap-1 capitalize text-gray-600 bg-gray-100 w-fit p-2 rounded-md">
+          <p className="flex items-center gap-1 capitalize text-gray-600 bg-gray-100 dark:bg-gray-700 dark:text-white w-fit p-2 rounded-md">
             <span>
               <AiOutlineCalendar />
             </span>
-            {moment.utc(date).format('MMM DD YYYY')}
+            {moment.utc(date).format("MMM DD YYYY")}
           </p>
-          <p className="flex items-center gap-1 capitalize text-green bg-green/5 w-fit p-2 rounded-md">
+          <p className="flex items-center gap-1 capitalize text-green bg-green/5 dark:bg-green/10 w-fit p-2 rounded-md">
             <span>
               <AiOutlineUser />
             </span>

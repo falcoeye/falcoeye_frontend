@@ -110,35 +110,35 @@ const ShowWorkflow = ({ open, handleClose, id }) => {
     content = (
       <Fragment>
         {renderedPreview}
-        <h3 className="text-base capitalize mb-3  font-bold text-gray-700">
+        <h3 className="text-base capitalize mb-3  font-bold text-gray-700 dark:text-white">
           {data.name}
         </h3>
         <div className="flex flex-col gap-2 text-sm">
-          <p className="flex items-center gap-1 capitalize text-gray-600 bg-gray-100 w-fit p-2 rounded-md">
+          <p className="flex items-center gap-1 capitalize text-gray-600 bg-gray-100 dark:bg-gray-800 dark:text-white w-fit p-2 rounded-md">
             <span>
               <AiOutlineCalendar />
             </span>
             {moment.utc(data.date).format("MMM DD YYYY")}
           </p>
-          <p className="flex items-center gap-1 capitalize text-green bg-green/5 w-fit p-2 rounded-md">
+          <p className="flex items-center gap-1 capitalize text-green bg-green/5 dark:bg-green/10 w-fit p-2 rounded-md">
             <span>
               <AiOutlineUser />
             </span>
             {data.creator}
           </p>
         </div>
-        <div className="flex flex-col gap-2 text-sm mt-5">
+        <div className="flex flex-col gap-2 text-sm mt-5 dark:text-white">
           <p>
             <span className="font-bold inline-block mr-2">Used For:</span>
-            {data.usedfor}
+            <span className="dark:text-gray-200">{data.usedfor}</span>
           </p>
           <p>
             <span className="font-bold inline-block mr-2">Consideration:</span>
-            {data.consideration}
+            <span className="dark:text-gray-200">{data.consideration}</span>
           </p>
           <p>
             <span className="font-bold inline-block mr-2">Assumption:</span>
-            {data.assumption}
+            <span className="dark:text-gray-200">{data.assumption}</span>
           </p>
         </div>
       </Fragment>
@@ -171,10 +171,10 @@ const ShowWorkflow = ({ open, handleClose, id }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full h-screen md:h-fit md:max-w-4xl md:w-11/12 transform overflow-hidden md:rounded-2xl bg-white py-6 px-3 md:px-6  text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full h-screen md:h-fit md:max-w-4xl md:w-11/12 transform overflow-hidden md:rounded-2xl bg-white dark:bg-gray-700 py-6 px-3 md:px-6  text-left align-middle shadow-xl transition-all">
                 <div className="flex justify-end mb-5 gap-5">
                   <button
-                    className="bg-gray-50 hover:bg-gray-200 transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
+                    className="bg-gray-50 dark:bg-gray-800 dark:text-white hover:bg-gray-200 transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
                     onClick={handleClose}
                   >
                     <AiOutlineClose />
