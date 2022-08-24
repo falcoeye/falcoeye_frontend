@@ -24,14 +24,18 @@ const SourcesView = (props) => {
   return (
     <>
       <div>
-        {addSourceOpened && (
-          <AddSource handleSourceModal={addSourceModalChangeHandler} />
-        )}
+        <AddSource
+          open={addSourceOpened}
+          handleClose={addSourceModalChangeHandler}
+        />
+
         <div className="main-container my-6 ">
-          <div className=" bg-white mx-1 pt-3 px-4 md:px-7 pb-7 rounded-sm">
+          <div className=" bg-white dark:bg-gray-700 mx-1 pt-3 px-4 md:px-7 pb-7 rounded-sm">
             <div className="flex justify-between sm:flex-row flex-col">
               <div>
-                <h2 className="text-gray-900 text-lg capitalize">My sources</h2>
+                <h2 className="text-gray-900 text-lg capitalize dark:text-white">
+                  My sources
+                </h2>
               </div>
               <button type="button" className="flex gap-5 sm:pt-0 pt-4">
                 <span
@@ -51,7 +55,7 @@ const SourcesView = (props) => {
                         "w-full rounded-lg py-2.5 text-sm font-medium leading-5",
                         "ring-white ring-opacity-60 ",
                         selected
-                          ? "bg-white shadow text-primary"
+                          ? "bg-white dark:bg-gray-700 dark:text-white  shadow text-primary"
                           : "text-white hover:bg-white/[0.12] hover:text-white"
                       )
                     }
@@ -64,7 +68,7 @@ const SourcesView = (props) => {
                         "w-full rounded-lg py-2.5 text-sm font-medium leading-5",
                         "ring-white ring-opacity-60 ",
                         selected
-                          ? "bg-white shadow text-primary"
+                          ? "bg-white dark:bg-gray-700 dark:text-white shadow text-primary"
                           : "text-white hover:bg-white/[0.12] hover:text-white"
                       )
                     }
@@ -75,7 +79,7 @@ const SourcesView = (props) => {
                 <Tab.Panels className="mt-2">
                   <Tab.Panel
                     className={classNames(
-                      "rounded-xl bg-white p-3",
+                      "rounded-xl bg-white dark:bg-gray-800 p-3",
                       "ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
                     )}
                   >
@@ -83,7 +87,7 @@ const SourcesView = (props) => {
                   </Tab.Panel>
                   <Tab.Panel
                     className={classNames(
-                      "rounded-xl bg-white p-3",
+                      "rounded-xl bg-white dark:bg-gray-800  p-3",
                       "ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
                     )}
                   >
