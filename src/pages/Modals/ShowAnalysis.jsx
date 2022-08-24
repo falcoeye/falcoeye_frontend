@@ -60,7 +60,11 @@ const ShowAnalysis = ({
           <Lottie
             animationData={noDataAnimation}
             loop={true}
-            style={{ width: "100%", height: "100%" }}
+            style={{
+              width: "100%",
+              height: "100%",
+              backgroundColor: "inherit",
+            }}
           />
         </div>
       </Fragment>

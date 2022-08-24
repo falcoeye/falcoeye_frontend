@@ -85,14 +85,14 @@ const Signup = () => {
     }
   };
   return (
-    <div className="login_form_wrapper">
+    <div className="login_form_wrapper dark:!bg-black">
       <div className="login_form_box ">
-        <div id="loginformContent">
+        <div id="loginformContent" className="dark:!bg-gray-700">
           <form onSubmit={handleSubmit}>
             <input
               type="text"
               id="name"
-              className="login_form_input "
+              className="login_form_input dark:!bg-gray-800 dark:!border-gray-800 dark:!text-white "
               name="name"
               placeholder="Name"
               onChange={handleChange}
@@ -102,7 +102,7 @@ const Signup = () => {
             <input
               type="text"
               id="username"
-              className="login_form_input "
+              className="login_form_input dark:!bg-gray-800 dark:!border-gray-800 dark:!text-white "
               name="username"
               placeholder="Username"
               onChange={handleChange}
@@ -112,7 +112,7 @@ const Signup = () => {
             <input
               type="email"
               id="email"
-              className="login_form_input "
+              className="login_form_input dark:!bg-gray-800 dark:!border-gray-800 dark:!text-white "
               name="email"
               placeholder="Email Address"
               onChange={handleChange}
@@ -122,7 +122,7 @@ const Signup = () => {
             <input
               type="password"
               id="password"
-              className="login_form_input "
+              className="login_form_input dark:!bg-gray-800 dark:!border-gray-800 dark:!text-white "
               name="password"
               placeholder="Password"
               onChange={handleChange}
@@ -137,7 +137,7 @@ const Signup = () => {
               {!isLoading && "Signup"}
             </button>
 
-            <p>
+            <p className="dark:text-white">
               Click here to{" "}
               <Link to="/login" className="form_link">
                 login

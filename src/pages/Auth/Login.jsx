@@ -82,14 +82,14 @@ const Login = () => {
   };
 
   return (
-    <div className="login_form_wrapper">
+    <div className="login_form_wrapper dark:!bg-black">
       <div className="login_form_box ">
-        <div id="loginformContent">
+        <div id="loginformContent" className="dark:!bg-gray-700">
           <form onSubmit={handleSubmit}>
             <input
               type="email"
               id="email"
-              className="login_form_input "
+              className="login_form_input dark:!bg-gray-800 dark:!border-gray-700 dark:!text-white"
               name="email"
               placeholder="Email Address"
               onChange={handleChange}
@@ -99,7 +99,7 @@ const Login = () => {
             <input
               type="password"
               id="password"
-              className="login_form_input "
+              className="login_form_input dark:!bg-gray-800 dark:!border-gray-700 dark:!text-white"
               name="password"
               placeholder="Password"
               onChange={handleChange}
@@ -114,7 +114,7 @@ const Login = () => {
               {!isLoading && "Login"}
             </button>
 
-            <p>
+            <p className="dark:text-white">
               Click here to{" "}
               <Link to="/signup" className="form_link">
                 register
