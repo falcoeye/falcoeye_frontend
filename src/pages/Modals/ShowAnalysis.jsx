@@ -50,13 +50,13 @@ const ShowAnalysis = ({
       <Fragment>
         <div className="flex justify-end gap-5">
           <button
-            className="bg-gray-50 hover:bg-gray-200 transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
+            className="bg-gray-50 dark:bg-gray-800 dark:text-white hover:bg-gray-200 transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
             onClick={closeModalHandler}
           >
             <AiOutlineClose />
           </button>
         </div>
-        <div className="h-96">
+        <div className="h-96 mt-6">
           <Lottie
             animationData={noDataAnimation}
             loop={true}
@@ -72,7 +72,9 @@ const ShowAnalysis = ({
       <Fragment>
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <h2 className="text-gray-700 text-xl  font-bold">{name}</h2>
+            <h2 className="text-gray-700 text-xl  font-bold dark:text-white">
+              {name}
+            </h2>
             <p
               className={`capitalize text-sm  ${
                 status === "Active"
@@ -86,8 +88,10 @@ const ShowAnalysis = ({
             </p>
           </div>
 
-          <p className="flex items-center gap-1 capitalize text-gray-400">
-            <span className="text-gray-500 font-semibold">Created at :</span>
+          <p className="flex items-center gap-1 capitalize text-gray-400 dark:text-gray-300">
+            <span className="text-gray-500 font-semibold dark:text-white">
+              Created at :
+            </span>
             {moment.utc(created_at).format("MMM DD YYYY")}
           </p>
         </div>
@@ -137,7 +141,7 @@ const ShowAnalysis = ({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white dark:bg-gray-700 p-6 text-left align-middle shadow-xl transition-all">
                 {content}
               </Dialog.Panel>
             </Transition.Child>

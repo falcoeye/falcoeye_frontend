@@ -224,16 +224,16 @@ const AddAnalysis = ({ handleClose, open }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full h-screen max-h-screen md:h-fit  md:max-w-3xl transform overflow-auto md:rounded-2xl bg-white py-3 px-2 md:py-6 md:px-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full h-screen max-h-screen md:h-fit  md:max-w-3xl transform overflow-auto md:rounded-2xl bg-white dark:bg-gray-700 py-3 px-2 md:py-6 md:px-6 text-left align-middle shadow-xl transition-all">
                 <div className="flex justify-end gap-5">
                   <button
-                    className="md:hidden bg-gray-50 hover:bg-gray-200 transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
+                    className="md:hidden bg-gray-50 dark:bg-gray-800 dark:text-white hover:bg-gray-200 transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
                     onClick={handleClose}
                   >
                     <AiOutlineClose />
                   </button>
                 </div>
-                <div className="text-[#42a7df] text-2xl font-bold  text-center">
+                <div className="text-[#42a7df] text-2xl font-bold  text-center dark:text-white">
                   Add Analysis
                 </div>
 

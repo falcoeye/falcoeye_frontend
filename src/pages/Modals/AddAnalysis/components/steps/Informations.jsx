@@ -61,7 +61,7 @@ const Informations = (props) => {
             <input
               type={type}
               id={field.name}
-              className="analysis_form_input"
+              className="analysis_form_input  dark:!bg-gray-800 dark:!border-gray-800 dark:!text-white"
               name={field.name}
               placeholder="longitude"
               onChange={handleChange}

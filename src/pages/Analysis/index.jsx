@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import Layout from '../../Components/Layout';
-import AddAnalysis from '../Modals/AddAnalysis/AddAnalysis';
-import AnalysisList from './AnalysisList';
+import React, { useState } from "react";
+import Layout from "../../Components/Layout";
+import AddAnalysis from "../Modals/AddAnalysis/AddAnalysis";
+import AnalysisList from "./AnalysisList";
 
 const Analysis = () => {
   const [addAnalysisModal, setAddAnalysisModal] = useState(false);
@@ -13,9 +13,11 @@ const Analysis = () => {
     <>
       <Layout>
         <div className="main-container">
-          <div className="bg-white mt-5 rounded-[10px] p-5">
+          <div className="bg-white dark:bg-gray-700 mt-5 rounded-[10px] p-5">
             <div className="flex justify-between md:items-center sm:flex-row flex-col mb-4 border-b border-[#f5f5f5] pb-5">
-              <h3 className="text-[#525252] capitalize  text-xl">Analysis</h3>
+              <h3 className="text-[#525252] capitalize  text-xl dark:text-white">
+                Analysis
+              </h3>
 
               <button
                 type="button"

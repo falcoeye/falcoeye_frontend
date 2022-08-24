@@ -6,7 +6,6 @@ const DropDown = () => {
   const toggleOptionsHandler = () => {
     setShowOptions((prevState) => !prevState);
   };
-  const closeOptionsHandler = () => setShowOptions(false);
 
   const { logout, userData } = useContext(AuthContext);
 
@@ -25,7 +24,6 @@ const DropDown = () => {
           id="menu-button"
           aria-expanded="true"
           aria-haspopup="true"
-          onBlur={closeOptionsHandler}
         >
           <svg
             className=" h-5 w-5"

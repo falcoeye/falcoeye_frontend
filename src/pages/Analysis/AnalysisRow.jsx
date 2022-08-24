@@ -116,15 +116,19 @@ const AnalysisRow = ({
           </div>
         </td>
         <td className="px-6 py-4 whitespace-nowrap">
-          <div className="text-sm font-medium text-gray-900">{name}</div>
+          <div className="text-sm font-medium text-gray-900 dark:text-white">
+            {name}
+          </div>
         </td>
         <td className="px-6 py-4 whitespace-nowrap">
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-gray-500 dark:text-white">
             {moment.utc(created_at).format("MM-DD-YYYY")}
           </div>
         </td>
         <td className="px-6 py-4 whitespace-nowrap">
-          <div className={`text-sm ${statusStyle} capitalize `}>{status}</div>
+          <div className={`text-sm ${statusStyle} capitalize dark:text-white `}>
+            {status}
+          </div>
         </td>
         <td className="px-6 py-4 whitespace-nowrap">
           <button
