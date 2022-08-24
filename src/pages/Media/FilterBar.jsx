@@ -35,7 +35,7 @@ const FilterBar = ({
           <div className="flex items-center md:max-w-lg w-full   bg-white dark:bg-gray-700  px-3 rounded-md">
             <span
               htmlFor="type"
-              className="block text-sm font-medium text-primary whitespace-nowrap dark:text-white"
+              className="block text-sm font-medium text-primary whitespace-nowrap "
             >
               Sort by:
             </span>
@@ -54,7 +54,7 @@ const FilterBar = ({
           <div className="flex items-center md:max-w-lg w-full bg-white dark:bg-gray-700  px-3 rounded-md">
             <span
               htmlFor="date"
-              className="block text-sm font-medium text-primary whitespace-nowrap dark:text-white"
+              className="block text-sm font-medium text-primary whitespace-nowrap "
             >
               Sort by:
             </span>
@@ -75,7 +75,7 @@ const FilterBar = ({
           <div className="flex items-center md:max-w-lg w-full bg-white dark:bg-gray-700  px-3 rounded-md">
             <span
               htmlFor="order"
-              className="block text-sm font-medium text-primary whitespace-nowrap dark:text-white"
+              className="block text-sm font-medium text-primary whitespace-nowrap "
             >
               Sort by:
             </span>

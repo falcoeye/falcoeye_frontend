@@ -34,17 +34,11 @@ const AllWorkflows = () => {
     setSearchInput(value);
 
     if (value) {
-      setFilteredData((prevState) => {
-        if (prevState) {
-          return prevState.filter((item) =>
-            item.name.toLowerCase().includes(value.toLowerCase())
-          );
-        } else {
-          return loadedData.filter((item) =>
-            item.name.toLowerCase().includes(value.toLowerCase())
-          );
-        }
-      });
+      setFilteredData(
+        loadedData.filter((item) =>
+          item.name.toLowerCase().includes(value.toLowerCase())
+        )
+      );
     } else {
       setDataType("Title");
       setDataOrder(null);
@@ -151,10 +145,8 @@ const AllWorkflows = () => {
   };
 
   useEffect(() => {
-    if (!workflowsData) {
-      dispatch(fetchWorkflowsData());
-    }
-  }, [dispatch, workflowsData]);
+    dispatch(fetchWorkflowsData());
+  }, [dispatch]);
 
   let content;
 
@@ -177,7 +169,32 @@ const AllWorkflows = () => {
   if (workflowsData && !isLoading) {
     let dataContent;
     if (filteredData) {
-      dataContent = filteredData.map((item) => (
+      if (filteredData.length === 0) {
+        dataContent = (
+          <div className="flex justify-center col-span-3">
+            <div className="h-96">
+              <Lottie
+                animationData={noDataAnimation}
+                loop={true}
+                style={{ width: "100%", height: "100%" }}
+              />
+            </div>
+          </div>
+        );
+      } else {
+        dataContent = filteredData.map((item) => (
+          <WorkflowCard
+            key={item.id}
+            id={item.id}
+            creator={item.creator}
+            date={item.publish_date}
+            title={item.name}
+            handleClick={openWorkflowModalHandler}
+          />
+        ));
+      }
+    } else {
+      dataContent = workflowsData.map((item) => (
         <WorkflowCard
           key={item.id}
           id={item.id}
@@ -185,17 +202,6 @@ const AllWorkflows = () => {
           date={item.publish_date}
           title={item.name}
           handleClick={openWorkflowModalHandler}
-          />
-          ));
-        } else {
-          dataContent = workflowsData.map((item) => (
-            <WorkflowCard
-            key={item.id}
-            id={item.id}
-            creator={item.creator}
-            date={item.publish_date}
-            title={item.name}
-            handleClick={openWorkflowModalHandler}
         />
       ));
     }
@@ -220,8 +226,8 @@ const AllWorkflows = () => {
   return (
     <div>
       <div className="main-container">
-        <div className="bg-white mt-5 rounded-[10px] p-5">
-          <h3 className="text-[#525252] capitalize  text-xl flex items-center gap-5 pb-5 border-b border-[#f5f5f5] mb-4">
+        <div className="bg-white dark:bg-gray-700 mt-5 rounded-[10px] p-5">
+          <h3 className="text-[#525252] capitalize dark:text-white  text-xl flex items-center gap-5 pb-5 border-b border-[#f5f5f5] mb-4">
             Workflows
           </h3>
           {content}
@@ -233,7 +239,7 @@ const AllWorkflows = () => {
           handleClose={closeWorkflowModalHandler}
           id={selectedCardId}
         />
-      ) }
+      )}
     </div>
   );
 };
