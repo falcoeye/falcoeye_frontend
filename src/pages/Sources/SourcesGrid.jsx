@@ -5,12 +5,11 @@ import noDataAnimation from "../../assets/animations/no-data.json";
 import Loader from "../../Components/UI/Loader/Loader";
 import SourceCard from "./SourceCard";
 
-const SourcesGrid = () => {
-
+const SourcesGrid = ({ lastElementRef }) => {
 
   const sources = useSelector((state) => state.sources);
 
-  if (sources.fetchingSources) {
+  if (sources.fetchingSources && sources.data.length === 0) {
     return <Loader height="96" />;
   }
   if (sources.data.length === 0 && !sources.fetchingSources) {
@@ -25,7 +24,16 @@ const SourcesGrid = () => {
     );
   }
 
-  const sourcesCards = sources.data.map((source) => {
+  const sourcesCards = sources.data.map((source, index) => {
+    if ( sources.data.length - 1 === index ) {
+      return (
+          <SourceCard
+            key={source.id}
+            source={source}
+            lastElementRef={lastElementRef}
+          />
+      );
+    } 
     return (
       <SourceCard
         key={source.id}

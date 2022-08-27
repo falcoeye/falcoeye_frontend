@@ -1,7 +1,7 @@
 import { Tab } from '@headlessui/react';
-import { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchSources } from '../../store/sources';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchSources, handlePage } from '../../store/sources';
 import AddSource from '../Modals/AddSource';
 import SourcesGrid from './SourcesGrid';
 import SourcesMap from './SourcesMap';
@@ -11,15 +11,33 @@ function classNames(...classes) {
 }
 const SourcesView = (props) => {
   const [addSourceOpened, setAddSourceOpened] = useState(false);
+
   const dispatch = useDispatch();
+  const sources = useSelector((state) => state.sources);
+  const { fetchingSources, page, lastPage } = sources;
 
   useEffect(() => {
-    dispatch(fetchSources());
-  }, [dispatch]);
+    dispatch(fetchSources(page));
+  }, [dispatch, page]);
 
   const addSourceModalChangeHandler = useCallback((val) => {
     setAddSourceOpened(val);
   }, []);
+
+  const ovserver = useRef();
+  const lastElementRef = useCallback(
+    (node) => {
+      if (fetchingSources) return;
+      if (ovserver.current) ovserver.current.disconnect();
+      ovserver.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && !lastPage) {
+          dispatch(handlePage(page + 1));
+        }
+      });
+      if (node) ovserver.current.observe(node);
+    },
+    [dispatch, fetchingSources, lastPage, page]
+  );
 
   return (
     <>
@@ -81,7 +99,7 @@ const SourcesView = (props) => {
                   'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
                 )}
               >
-                <SourcesGrid />
+                <SourcesGrid lastElementRef={lastElementRef}/>
               </Tab.Panel>
               <Tab.Panel
                 className={classNames(

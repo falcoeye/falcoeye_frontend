@@ -5,7 +5,7 @@ import ShowSource from "../Modals/ShowSource/ShowSource";
 import axios from "../../utility/api-instance";
 
 const SourceCard = (props) => {
-  const { source } = props;
+  const { source, lastElementRef } = props;
   const { id } = source;
   const [showSourceOpened, setShowSourceOpened] = useState(false);
   const [image, setImage] = useState(null);
@@ -86,6 +86,7 @@ const SourceCard = (props) => {
       <div
         className="p-4 bg-white dark:bg-slate-700 rounded-lg border border-gray-200 dark:border-gray-700  shadow-md cursor-pointer"
         onClick={openSourceModalHandler}
+        ref={lastElementRef}
       >
         {renderedImage}
         <h5 className="mb-1 text-xl font-semibold tracking-tight text-gray-900  capitalize dark:text-white ">

@@ -6,6 +6,8 @@ const initialState = {
     data: [],
     fetchingSources: false,
     fetchingSourcesError: null,
+    page: 1,
+    lastPage:true,
 }
 
 const sourcesSlice = createSlice({
@@ -34,19 +36,28 @@ const sourcesSlice = createSlice({
             const editedItemIndex = state.data.findIndex( item => item.id === action.payload.id )
             state.data[editedItemIndex] = action.payload
         },
+        handlePage: (state, action) => {
+            state.page = action.payload
+        },
+        handleLastPage: (state, action) => {
+            state.lastPage = action.payload
+        },
     },
 })
 
 // Define a thunk that dispatches those action creators
-export const fetchSources = () => async (dispatch) => {
+export const fetchSources = (page) => async (dispatch) => {
     dispatch(fetchingSources())
-    axios.get('/camera/')
+    axios.get(`/camera/?page=${page}&per_page=10`)
         .then(res => {
             if ( !res.data ) {
                 dispatch(fetchSourcesSuccess([]))
                 return;
             }
             dispatch(fetchSourcesSuccess(res.data.camera))
+            if (res.data.last_page) {
+                dispatch(handleLastPage(true))
+            }
         })
         .catch(err => {
             dispatch(fetchSourcesFailed(err.response.data.msg))
@@ -57,6 +68,6 @@ export const fetchSources = () => async (dispatch) => {
 const { actions, reducer } = sourcesSlice
 
 // Action creators are generated for each case reducer function
-export const { fetchingSources, fetchSourcesSuccess, fetchSourcesFailed, addSource, deleteSource, editSource } = actions
+export const { fetchingSources, fetchSourcesSuccess, fetchSourcesFailed, addSource, deleteSource, editSource, handlePage, handleLastPage } = actions
 
 export default reducer
