@@ -116,6 +116,10 @@
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
 }
+.modal_form_input.standard {
+  margin: 0px;
+  width: 100%;
+}
 
 .modal_form_input:focus {
   background-color: #fff;

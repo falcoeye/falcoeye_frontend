@@ -7,7 +7,6 @@ import "./Modals.css";
 import LoadingSpinner from "../../Components/UI/LoadingSpinner/LoadingSpinner";
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import "./Modals.css";
 
 const streaminServerFields = [
   "name",
