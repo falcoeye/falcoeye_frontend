@@ -13,16 +13,22 @@ import { toast } from "react-toastify";
 import Informations from "./components/steps/Informations";
 import { useDispatch } from "react-redux";
 import { addAnalysis } from "../../../store/analysis";
+import { useRef } from "react";
 
-const steps = ["Name", "Workflows", "Source", "Informations", "Completed"];
+const AddAnalysis = ({ handleClose, open, workflowId }) => {
 
-const AddAnalysis = ({ handleClose, open }) => {
+  let steps = useRef(["Name", "Workflows", "Source", "Informations", "Completed"])
+
+  if ( workflowId ) { 
+    steps.current = ["Name","Source", "Informations", "Completed"]
+  }
+
   const dispatch = useDispatch();
 
   const [currentStep, setCurrentStep] = useState(1);
 
   const [analysisName, setAnalysisName] = useState("");
-  const [selectedWorkflow, setSelectedWorkflow] = useState({ id: null });
+  const [selectedWorkflow, setSelectedWorkflow] = useState({ id: workflowId || null });
 
   const [selectedType, setSelectedType] = useState(null);
   const [selectedSource, setSelectedSource] = useState(null);
@@ -115,13 +121,13 @@ const AddAnalysis = ({ handleClose, open }) => {
 
   const handleActionsClick = useCallback(
     (direction) => {
-      if (currentStep === steps.length - 1 && direction === "next") {
+      if (currentStep === steps.current.length - 1 && direction === "next") {
         submitAnalysis();
         return;
       }
       let newStep = currentStep;
       direction === "next" ? ++newStep : --newStep;
-      newStep > 0 && newStep <= steps.length && setCurrentStep(newStep);
+      newStep > 0 && newStep <= steps.current.length && setCurrentStep(newStep);
     },
     [currentStep, submitAnalysis]
   );
@@ -239,18 +245,18 @@ const AddAnalysis = ({ handleClose, open }) => {
 
                 <div>
                   <div className="horizontal mt-5 ">
-                    <Stepper steps={steps} currentStep={currentStep} />
+                    <Stepper steps={steps.current} currentStep={currentStep} />
 
                     <div className="my-2 p-2 md:max-h-[50vh] lg:max-h-[60vh] overflow-auto">
                       {renderStep(currentStep)}
                     </div>
                   </div>
 
-                  {currentStep !== steps.length && (
+                  {currentStep !== steps.current.length && (
                     <StepperControl
                       handleClick={handleActionsClick}
                       currentStep={currentStep}
-                      steps={steps}
+                      steps={steps.current}
                       nextEnabled={handleActionsValidation}
                       submitting={submitting}
                     />
