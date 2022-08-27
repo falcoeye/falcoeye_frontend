@@ -83,7 +83,7 @@ function SourcesMap() {
       </GoogleMap>
       {
         sources.data.length === 0 && (
-        <div className="absolute w-full h-full inset-0 overflow-y-auto bg-slate-50/50">
+        <div className="absolute w-full h-full inset-0 overflow-y-auto bg-slate-50/50 ">
               <Lottie animationData={noMapDataAnimation} loop={true}  style={{ 'width': '100%', 'height': '100%' }} />
         </div>
         )

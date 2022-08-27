@@ -12,7 +12,7 @@ const FilterBar = ({
   orderHandler,
 }) => {
   return (
-    <div className=" bg-backgroundLight dark:bg-gray-800 flex items-center md:px-4 pt-2 rounded-md">
+    <div className=" bg-backgroundLight dark:bg-slate-700 flex items-center md:px-4 pt-2 rounded-md">
       <div className="flex  md:gap-4 justify-between md:flex-row flex-col w-full">
         <div className="flex items-center gap-2 md:flex-row flex-col justify-between  md:order-none order-last">
           <div className="md:px-0 px-4 w-full">

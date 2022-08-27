@@ -75,7 +75,7 @@ const MediaCard = (props) => {
       onClick={() => handleClick(id)}
     >
       {renderedImage}
-      <div className="p-4 bg-white dark:bg-gray-700 h-full">
+      <div className="p-4 bg-white dark:bg-slate-700 h-full">
         <div
           className={`inline-flex items-center mb-3 py-1 px-2 text-base font-medium text-center text-white capitalize ${
             media_type === "image" ? "bg-sky-400" : "bg-emerald-500"

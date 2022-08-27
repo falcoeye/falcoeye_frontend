@@ -93,11 +93,11 @@ const AnalysisList = (props) => {
   } else if (filteredAnalysises.length > 0 && !isLoading) {
     content = (
       <div className="flex flex-col px-4 mt-6">
-        <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-4 ">
             <div className="shadow overflow-hidden border-b border-gray-200 dark:border-gray-800 sm:rounded-lg">
               <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
-                <thead className="bg-white dark:bg-gray-800">
+                <thead className="bg-white dark:bg-slate-700">
                   <tr>
                     <th
                       scope="col"
@@ -127,7 +127,7 @@ const AnalysisList = (props) => {
                     ></th>
                   </tr>
                 </thead>
-                <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-600">
+                <tbody className="bg-white dark:bg-slate-700 divide-y divide-gray-200 dark:divide-gray-600">
                   {filteredAnalysises.map((file) => (
                     <AnalysisRow
                       key={file.id}

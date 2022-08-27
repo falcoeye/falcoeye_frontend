@@ -64,17 +64,10 @@ const Login = () => {
         }
 
         if (error.response.data.errors) {
-          Object.entries(error.response.data.errors).map((t, k) => {
+          Object.entries(error.response.data.errors).forEach((t, k) => {
             const errorMessage = `${t[0]}: ${t[1][0]}`;
-
-            return toast.error(errorMessage, {
-              position: "bottom-center",
-              autoClose: 4000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: false,
-              draggable: false,
-              progress: undefined,
+            console.log(errorMessage)
+             toast.error(errorMessage, { position: "bottom-center", autoClose: 4000, hideProgressBar: true, closeOnClick: true, pauseOnHover: false, draggable: false, progress: undefined,
             });
           });
         }
@@ -82,14 +75,14 @@ const Login = () => {
   };
 
   return (
-    <div className="login_form_wrapper dark:!bg-black">
+    <div className="login_form_wrapper dark:!bg-slate-900">
       <div className="login_form_box ">
-        <div id="loginformContent" className="dark:!bg-gray-700">
+        <div id="loginformContent" className="dark:!bg-slate-800">
           <form onSubmit={handleSubmit}>
             <input
               type="email"
               id="email"
-              className="login_form_input dark:!bg-gray-800 dark:!border-gray-700 dark:!text-white"
+              className="login_form_input dark:!bg-slate-700 dark:!border-gray-700 dark:!text-white"
               name="email"
               placeholder="Email Address"
               onChange={handleChange}
@@ -99,7 +92,7 @@ const Login = () => {
             <input
               type="password"
               id="password"
-              className="login_form_input dark:!bg-gray-800 dark:!border-gray-700 dark:!text-white"
+              className="login_form_input dark:!bg-slate-700 dark:!border-gray-700 dark:!text-white"
               name="password"
               placeholder="Password"
               onChange={handleChange}

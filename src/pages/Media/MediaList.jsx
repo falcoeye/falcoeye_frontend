@@ -46,7 +46,7 @@ const MediaList = ({ data }) => {
           <div className="py-2 align-middle inline-block min-w-full sm:px-4 ">
             <div className="shadow overflow-hidden border-b border-gray-200 dark:border-none sm:rounded-lg">
               <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
-                <thead className="bg-white dark:bg-gray-700 dark:text-white capitalize">
+                <thead className="bg-white dark:bg-slate-700 dark:text-white capitalize">
                   <tr>
                     <th
                       scope="col"
@@ -78,7 +78,7 @@ const MediaList = ({ data }) => {
                     />
                   </tr>
                 </thead>
-                <tbody className="bg-white dark:bg-gray-700 divide-y divide-gray-200 dark:divide-gray-600">
+                <tbody className="bg-white dark:bg-slate-700 divide-y divide-gray-200 dark:divide-gray-600">
                   {data.map((media) => {
                     return (
                       <tr key={media.id}>

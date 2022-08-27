@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import MobileNav from "./Menue/MobileNav";
 import SideNave from "./Menue/SideNave";
-import { ToastContainer } from "react-toastify";
 import Header from "./Header";
 import useDarkMode from "../hooks/useDarkMode";
 
@@ -37,18 +36,11 @@ const Layout = ({ children }) => {
             setTheme={setTheme}
             isLight={isLight}
           />
-          <ToastContainer
-            position="bottom-right"
-            autoClose={4000}
-            hideProgressBar={true}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnHover={false}
-            progress={undefined}
-            draggable={false}
-          />
-          {children}
+          <div className="main-container mt-6 ">
+            <div className="bg-white dark:bg-slate-800">
+              {children}
+            </div>
+          </div>
         </div>
       </div>
     </>

@@ -84,7 +84,7 @@ const SourceCard = (props) => {
   return (
     <Fragment>
       <div
-        className="p-4 bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-700  shadow-md cursor-pointer"
+        className="p-4 bg-white dark:bg-slate-700 rounded-lg border border-gray-200 dark:border-gray-700  shadow-md cursor-pointer"
         onClick={openSourceModalHandler}
       >
         {renderedImage}

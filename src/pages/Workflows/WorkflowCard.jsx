@@ -59,7 +59,7 @@ const WorkflowCard = ({ id, title, date, creator, handleClick }) => {
 
   return (
     <div
-      className="sm:max-w-[370px] sm:my-0 sm:mx-auto md:max-w-full md:w-full  flex xl:flex-row flex-col  xl:items-center gap-4  px-4 py-5 shadow rounded border border-[#f5f5f5] cursor-pointer dark:bg-gray-800 dark:border-gray-800"
+      className="sm:max-w-[370px] sm:my-0 sm:mx-auto md:max-w-full md:w-full  flex xl:flex-row flex-col  xl:items-center gap-4  px-4 py-5 shadow rounded border border-[#f5f5f5] cursor-pointer dark:bg-slate-700 dark:border-slate-700"
       onClick={handleClick.bind(null, id)}
     >
       {renderedImage}

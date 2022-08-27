@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchMedia } from "../../store/media";
-import MediaGrid from "./MediaGrid";
-import { BsFillGrid1X2Fill, BsListUl } from "react-icons/bs";
-import MediaList from "./MediaList";
-import FilterBar from "./FilterBar";
-import { useCallback } from "react";
-import UploadMedia from "../Modals/UploadMedia";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMedia } from '../../store/media';
+import MediaGrid from './MediaGrid';
+import { BsFillGrid1X2Fill, BsListUl } from 'react-icons/bs';
+import MediaList from './MediaList';
+import FilterBar from './FilterBar';
+import { useCallback } from 'react';
+import UploadMedia from '../Modals/UploadMedia';
 
 const MediaView = (props) => {
   const dispatch = useDispatch();
@@ -18,10 +18,10 @@ const MediaView = (props) => {
   const [filteredMedia, setFilteredMedia] = useState(data);
   const [uploadMediaImage, setUploadMediaImage] = useState(false);
 
-  const [term, setTerm] = useState("");
-  const [type, setType] = useState("all");
-  const [date, setDate] = useState("");
-  const [order, setOrder] = useState("");
+  const [term, setTerm] = useState('');
+  const [type, setType] = useState('all');
+  const [date, setDate] = useState('');
+  const [order, setOrder] = useState('');
 
   const termChangeHandler = useCallback((e) => {
     setTerm(e.target.value);
@@ -52,7 +52,7 @@ const MediaView = (props) => {
 
   const typeFilter = (type, items) => {
     switch (type) {
-      case "all":
+      case 'all':
         return items;
       default:
         return items.filter((item) => item.media_type === type);
@@ -61,11 +61,11 @@ const MediaView = (props) => {
 
   const dateFilter = (val, items) => {
     switch (val) {
-      case "oldest":
+      case 'oldest':
         return items.sort(
           (a, b) => new Date(a.created_at) - new Date(b.created_at)
         );
-      case "newest":
+      case 'newest':
         return items.sort(
           (a, b) => new Date(b.created_at) - new Date(a.created_at)
         );
@@ -76,9 +76,9 @@ const MediaView = (props) => {
 
   const orderFilter = (val, items) => {
     switch (val) {
-      case "a-z":
+      case 'a-z':
         return items.sort((a, b) => a.note.localeCompare(b.note));
-      case "z-a":
+      case 'z-a':
         return items.sort((a, b) => b.note.localeCompare(a.note));
       default:
         return items;
@@ -102,60 +102,55 @@ const MediaView = (props) => {
 
   return (
     <>
-      <div>
-        <div className="main-container mt-6 ">
-          <div className=" bg-white dark:bg-gray-700 mx-1 pt-4 px-4 md:px-7 pb-7 rounded-sm">
-            <div className="flex justify-between items-center sm:flex-row flex-co pb-4 mb-5 border-b border-[#f5f5f5] ">
-              <h2 className="text-gray-900 text-lg capitalize dark:text-white">
-                media
-              </h2>
-              <div className="flex items-center">
-                <button
-                  type="button"
-                  onClick={() => setUploadMediaImage(true)}
-                  className="text-white bg-primary/90 hover:bg-primary focus:ring-4 mr-5 focus:ring-blue-100 font-medium rounded-lg  px-4 py-2  focus:outline-none"
-                >
-                  Upload
-                </button>
-                <button
-                  onClick={() => setIsGridView(true)}
-                  className={`transition duration-300 p-2 rounded-full inline-flex items-center mr-4 text-primary dark:text-white ${
-                    isGridView && "bg-primary text-white"
-                  }`}
-                >
-                  <BsFillGrid1X2Fill />
-                </button>
-                <button
-                  onClick={() => setIsGridView(false)}
-                  className={`transition duration-300 p-2 rounded-full inline-flex items-center text-primary dark:text-white ${
-                    !isGridView && "bg-primary text-white"
-                  }`}
-                >
-                  <BsListUl />
-                </button>
-              </div>
-            </div>
-            <FilterBar
-              term={term}
-              type={type}
-              date={date}
-              order={order}
-              termHandler={termChangeHandler}
-              typeHandler={typeChangeHandler}
-              dateHandler={dateChangeHandler}
-              orderHandler={orderChangeHandler}
-            />
-            <div className="mt-6 rounded-xl bg-white dark:bg-gray-800 p-3 md:p-6 shadow">
-              {isGridView ? (
-                <MediaGrid data={filteredMedia} />
-              ) : (
-                <MediaList data={filteredMedia} />
-              )}
-            </div>
+      <div className=" mx-1 pt-4 px-4 md:px-7 pb-7 rounded-sm">
+        <div className="flex justify-between items-center sm:flex-row flex-co pb-4 mb-5 border-b border-[#f5f5f5] ">
+          <h2 className="text-gray-900 text-lg capitalize dark:text-white">
+            media
+          </h2>
+          <div className="flex items-center">
+            <button
+              type="button"
+              onClick={() => setUploadMediaImage(true)}
+              className="text-white bg-primary/90 hover:bg-primary focus:ring-4 mr-5 focus:ring-blue-100 font-medium rounded-lg  px-4 py-2  focus:outline-none"
+            >
+              Upload
+            </button>
+            <button
+              onClick={() => setIsGridView(true)}
+              className={`transition duration-300 p-2 rounded-full inline-flex items-center mr-4 text-primary dark:text-white ${
+                isGridView && 'bg-primary text-white'
+              }`}
+            >
+              <BsFillGrid1X2Fill />
+            </button>
+            <button
+              onClick={() => setIsGridView(false)}
+              className={`transition duration-300 p-2 rounded-full inline-flex items-center text-primary dark:text-white ${
+                !isGridView && 'bg-primary text-white'
+              }`}
+            >
+              <BsListUl />
+            </button>
           </div>
         </div>
+        <FilterBar
+          term={term}
+          type={type}
+          date={date}
+          order={order}
+          termHandler={termChangeHandler}
+          typeHandler={typeChangeHandler}
+          dateHandler={dateChangeHandler}
+          orderHandler={orderChangeHandler}
+        />
+        <div className="mt-6 rounded-xl bg-white dark:bg-slate-700/50 p-3 md:p-6 shadow">
+          {isGridView ? (
+            <MediaGrid data={filteredMedia} />
+          ) : (
+            <MediaList data={filteredMedia} />
+          )}
+        </div>
       </div>
-
       {uploadMediaImage && (
         <UploadMedia handleClose={closeModalHandler} open={uploadMediaImage} />
       )}

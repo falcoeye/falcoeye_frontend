@@ -34,7 +34,7 @@ const SideNav = ({ sideNav, toggle }) => {
       <div
         className={`${
           sideNav ? "w-[200px]" : "w-[70px]"
-        } h-screen fixed top-0 left-0  py-5 bg-white dark:bg-gray-700 flex flex-col justify-between transition-all duration-500 `}
+        } h-screen fixed top-0 left-0  py-5 bg-white dark:bg-slate-800 flex flex-col justify-between transition-all duration-500 `}
       >
         <Link to={`/`} className="w-16 ">
           <img src={logoSrc} alt="logo" />
