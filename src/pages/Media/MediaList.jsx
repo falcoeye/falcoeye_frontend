@@ -25,7 +25,7 @@ const MediaList = ({ data }) => {
   };
 
   if (media.fetchingMedia) {
-    return <Loader height="96" />;
+    return <Loader height="h-[500px]" />;
   }
   if (data.length === 0 && !media.fetchingMedia) {
     return (
@@ -42,39 +42,39 @@ const MediaList = ({ data }) => {
   return (
     <Fragment>
       <div className="flex flex-col px-4 mt-6">
-        <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="py-2 align-middle inline-block min-w-full sm:px-4 ">
+        <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="align-middle inline-block min-w-full sm:px-4 ">
             <div className="shadow overflow-hidden border-b border-gray-200 dark:border-none sm:rounded-lg">
               <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
                 <thead className="bg-white dark:bg-slate-700 dark:text-white capitalize">
                   <tr>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white uppercase tracking-wider"
+                      className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-white uppercase tracking-wider"
                     >
                       Name
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white uppercase tracking-wider"
+                      className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-white uppercase tracking-wider"
                     >
                       Type
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white uppercase tracking-wider"
+                      className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-white uppercase tracking-wider"
                     >
                       Date
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white uppercase tracking-wider"
+                      className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-white uppercase tracking-wider"
                     >
                       tag
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white uppercase tracking-wider"
+                      className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-white uppercase tracking-wider"
                     />
                   </tr>
                 </thead>
@@ -89,7 +89,7 @@ const MediaList = ({ data }) => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div
-                            className={`inline-flex items-center mb-3 py-1 px-2 text-sm font-medium text-center text-white capitalize ${
+                            className={`inline-flex items-center py-1 px-2 text-sm font-medium text-center text-white capitalize ${
                               media.media_type === "image"
                                 ? "bg-sky-400"
                                 : "bg-emerald-500"
@@ -104,7 +104,7 @@ const MediaList = ({ data }) => {
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <p className="flex items-center gap-1 capitalize text-gray-600 mb-3 dark:text-white">
+                          <p className="flex items-center gap-1 capitalize text-gray-600 dark:text-white">
                             <span className="mr-1">
                               <AiOutlineCalendar />
                             </span>

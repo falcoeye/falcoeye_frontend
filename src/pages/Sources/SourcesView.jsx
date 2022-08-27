@@ -53,7 +53,7 @@ const SourcesView = (props) => {
                     'w-full rounded-lg py-2.5 text-sm font-medium leading-5',
                     'ring-white ring-opacity-60 ',
                     selected
-                      ? 'bg-white dark:bg-slate-700 dark:text-white  shadow text-primary'
+                      ? 'bg-white dark:bg-slate-800 dark:text-white  shadow text-primary'
                       : 'text-white hover:bg-white/[0.12] hover:text-white'
                   )
                 }
@@ -66,7 +66,7 @@ const SourcesView = (props) => {
                     'w-full rounded-lg py-2.5 text-sm font-medium leading-5',
                     'ring-white ring-opacity-60 ',
                     selected
-                      ? 'bg-white dark:bg-slate-700 dark:text-white shadow text-primary'
+                      ? 'bg-white dark:bg-slate-800 dark:text-white shadow text-primary'
                       : 'text-white hover:bg-white/[0.12] hover:text-white'
                   )
                 }

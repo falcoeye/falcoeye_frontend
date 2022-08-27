@@ -26,7 +26,7 @@ const VideoCaptureModal = ({ handleClose, open, onTriggerCapture }) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-25" />
+          <div className="fixed inset-0 bg-black bg-opacity-50" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
@@ -40,7 +40,7 @@ const VideoCaptureModal = ({ handleClose, open, onTriggerCapture }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-sm  transform overflow-hidden rounded-2xl bg-white dark:bg-gray-700  p-6 align-middle shadow-xl transition-all text-center">
+              <Dialog.Panel className="w-full max-w-sm  transform overflow-hidden rounded-2xl bg-white dark:bg-slate-800  p-6 align-middle shadow-xl transition-all text-center">
                 <div className="text-[#42a7df] text-lg font-semibold text-center dark:text-white">
                   Select Capture Length
                 </div>

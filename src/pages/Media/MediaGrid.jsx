@@ -20,7 +20,7 @@ const MediaGrid = ({ data }) => {
   };
 
   if (media.fetchingMedia) {
-    return <Loader height="96" />;
+    return <Loader height="h-[500px]" />;
   }
   if (data.length === 0 && !media.fetchingMedia) {
     return (

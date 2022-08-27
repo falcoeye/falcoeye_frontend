@@ -143,7 +143,7 @@ const MediaView = (props) => {
           dateHandler={dateChangeHandler}
           orderHandler={orderChangeHandler}
         />
-        <div className="mt-6 rounded-xl bg-white dark:bg-slate-700/50 p-3 md:p-6 shadow">
+        <div className="mt-6 rounded-xl shadow">
           {isGridView ? (
             <MediaGrid data={filteredMedia} />
           ) : (

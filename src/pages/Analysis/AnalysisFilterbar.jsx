@@ -12,7 +12,7 @@ const AnalysisFilterbar = ({
       <div className="flex  md:gap-4 justify-between md:flex-row flex-col w-full">
         <div className="flex items-center gap-2 md:flex-row flex-col justify-between  md:order-none order-last">
           <div className="md:px-0 px-4 w-full">
-            <div className="md:w-auto  w-full md:mt-0 mt-2 mb-2 py-1  flex items-center px-4 rounded-full  dark:bg-gray-700  bg-white md:max-w-[270px] max-w-full  ">
+            <div className="md:w-auto  w-full md:mt-0 mt-2 mb-2 py-1  flex items-center px-4 rounded-full  dark:bg-slate-800   bg-white md:max-w-[270px] max-w-full  ">
               <span className="text-primary text-xl mr-4 dark:text-white ">
                 <AiOutlineSearch />
               </span>
@@ -29,7 +29,7 @@ const AnalysisFilterbar = ({
           </div>
         </div>
         <div className="flex-1 flex gap-4 md:flex-row flex-col items-center justify-end mb-2 md:px-0 px-4">
-          <div className="flex items-center md:max-w-[12rem] w-full  bg-white dark:bg-gray-700  px-3 rounded-md">
+          <div className="flex items-center md:max-w-[12rem] w-full  bg-white dark:bg-slate-800   px-3 rounded-md">
             <span
               htmlFor="location"
               className="block text-sm font-medium text-primary whitespace-nowrap"
@@ -39,7 +39,7 @@ const AnalysisFilterbar = ({
             <select
               id="location"
               name="location"
-              className="block bg-white dark:bg-gray-700 dark:text-white  w-full pl-1  py-2 text-base  focus:outline-none  sm:text-sm rounded-md"
+              className="block bg-white dark:bg-slate-800  dark:text-white  w-full pl-1  py-2 text-base  focus:outline-none  sm:text-sm rounded-md"
               onChange={onAnalysisStatusChange}
               value={alanysisStatus}
             >

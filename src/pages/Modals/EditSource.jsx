@@ -170,7 +170,7 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-25" />
+          <div className="fixed inset-0 bg-black bg-opacity-50" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
@@ -184,13 +184,13 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white dark:bg-gray-700 p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white dark:bg-slate-800 p-6 text-left align-middle shadow-xl transition-all">
                 <div className="cmb_heading">Edit a Source</div>
                 <form>
                   <input
                     type="text"
                     id="name"
-                    className="modal_form_input dark:!bg-gray-800 dark:!border-gray-800 dark:!text-white"
+                    className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white"
                     name="name"
                     placeholder="Name"
                     onChange={handleChange}
@@ -199,7 +199,7 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
                   <input
                     type="number"
                     id="latitude"
-                    className="modal_form_input  dark:!bg-gray-800 dark:!border-gray-800 dark:!text-white"
+                    className="modal_form_input  dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white"
                     name="latitude"
                     placeholder="longitude"
                     onChange={handleChange}
@@ -208,7 +208,7 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
                   <input
                     type="number"
                     id="longitude"
-                    className="modal_form_input  dark:!bg-gray-800 dark:!border-gray-800 dark:!text-white"
+                    className="modal_form_input  dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white"
                     name="longitude"
                     placeholder="latitude"
                     onChange={handleChange}
@@ -216,7 +216,7 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
                   />
                   <select
                     id="streaming_type"
-                    className="modal_form_input  dark:!bg-gray-800 dark:!border-gray-800 dark:!text-white"
+                    className="modal_form_input  dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white"
                     name="streaming_type"
                     value={data.streaming_type}
                     onChange={(e) => {
@@ -230,7 +230,7 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
                   <input
                     type="text"
                     id="url"
-                    className="modal_form_input  dark:!bg-gray-800 dark:!border-gray-800 dark:!text-white"
+                    className="modal_form_input  dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white"
                     name="url"
                     placeholder="url"
                     onChange={handleChange}
@@ -241,7 +241,7 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
                       <input
                         type="text"
                         id="host"
-                        className="modal_form_input dark:!bg-gray-800 dark:!border-gray-800 dark:!text-white"
+                        className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white"
                         name="host"
                         placeholder="host"
                         onChange={handleChange}
@@ -250,7 +250,7 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
                       <input
                         type="number"
                         id="port"
-                        className="modal_form_input dark:!bg-gray-800 dark:!border-gray-800 dark:!text-white"
+                        className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white"
                         name="port"
                         placeholder="port"
                         onChange={handleChange}
@@ -259,7 +259,7 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
                       <input
                         type="text"
                         id="username"
-                        className="modal_form_input dark:!bg-gray-800 dark:!border-gray-800 dark:!text-white"
+                        className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white"
                         name="username"
                         placeholder="username"
                         onChange={handleChange}
@@ -268,7 +268,7 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
                       <input
                         type="password"
                         id="password"
-                        className="modal_form_input dark:!bg-gray-800 dark:!border-gray-800 dark:!text-white"
+                        className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white"
                         name="password"
                         placeholder="password"
                         onChange={handleChange}
@@ -290,7 +290,7 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
                             type="file"
                             id="image"
                             accept="image/*"
-                            className="modal_form_input dark:!bg-gray-800 dark:!border-gray-800 dark:!text-white"
+                            className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white"
                             name="image"
                             placeholder="Source Thumbnail"
                             onChange={handleImageUpload}
