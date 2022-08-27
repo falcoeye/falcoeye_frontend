@@ -1,17 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import {
   AiFillAppstore,
   AiFillCamera,
   AiFillRobot,
   AiOutlineBackward,
-  AiOutlineForward,
+  AiOutlineForward
 } from "react-icons/ai";
-import { RiCameraLensFill } from "react-icons/ri";
 import { BiSearchAlt } from "react-icons/bi";
-import { useLocation } from "react-router-dom";
+import { RiCameraLensFill } from "react-icons/ri";
+import { Link, useLocation } from "react-router-dom";
 import logoSrc from "../../images/logo.png";
-import { IoSettings } from "react-icons/io5";
 
 const navLinks = [
   { id: 1, text: "dashboard", icon: <AiFillAppstore />, path: "/" },
@@ -24,7 +22,6 @@ const navLinks = [
     icon: <BiSearchAlt />,
     path: "/analysis",
   },
-  { id: 6, text: "Settings", icon: <IoSettings />, path: "/settings" },
 ];
 
 const SideNav = ({ sideNav, toggle }) => {

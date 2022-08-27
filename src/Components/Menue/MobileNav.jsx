@@ -1,16 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { AiFillAppstore, AiFillCamera, AiFillRobot } from "react-icons/ai";
+import { BiSearchAlt } from "react-icons/bi";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { RiCameraLensFill } from "react-icons/ri";
 import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
-import { RiCameraLensFill } from "react-icons/ri";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { BiSearchAlt } from "react-icons/bi";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logoSrc from "../../images/logo.png";
-import { IoSettings } from "react-icons/io5";
-import { LoadingSkelton } from "../Header";
 import DropDown from "../DropDown/DropDown";
+import { LoadingSkelton } from "../Header";
 import ToggleMode from "../UI/ToggleMode/ToggleMode";
 
 const navLinks = [
@@ -24,7 +22,6 @@ const navLinks = [
     icon: <BiSearchAlt />,
     path: "/analysis",
   },
-  { id: 6, text: "Settings", icon: <IoSettings />, path: "/settings" },
 ];
 
 const MobileNav = ({ isOpen, toggleDrawer, isLight, colorTheme, setTheme }) => {
