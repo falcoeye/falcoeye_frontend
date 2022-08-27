@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { AiOutlineCalendar, AiOutlineUser } from "react-icons/ai";
 import moment from "moment";
-import axios from "../../utility/api-instance";
+import React, { useCallback, useEffect, useState } from "react";
+import { AiOutlineCalendar } from "react-icons/ai";
 import { toast } from "react-toastify";
+import axios from "../../utility/api-instance";
 
 const WorkflowCard = ({ id, title, date, creator, handleClick }) => {
   const [image, setImage] = useState(null);
@@ -73,12 +73,6 @@ const WorkflowCard = ({ id, title, date, creator, handleClick }) => {
               <AiOutlineCalendar />
             </span>
             {moment.utc(date).format("MMM DD YYYY")}
-          </p>
-          <p className="flex items-center gap-1 capitalize text-green bg-green/5 dark:bg-green/10 w-fit p-2 rounded-md">
-            <span>
-              <AiOutlineUser />
-            </span>
-            {creator}
           </p>
         </div>
       </div>

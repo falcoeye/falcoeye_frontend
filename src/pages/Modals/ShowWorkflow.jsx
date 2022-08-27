@@ -4,8 +4,7 @@ import moment from "moment";
 import React, { Fragment, useCallback, useEffect, useState } from "react";
 import {
   AiOutlineCalendar,
-  AiOutlineClose,
-  AiOutlineUser,
+  AiOutlineClose
 } from "react-icons/ai";
 import { toast } from "react-toastify";
 import noDataAnimation from "../../assets/animations/no-data.json";
@@ -119,12 +118,6 @@ const ShowWorkflow = ({ open, handleClose, id }) => {
               <AiOutlineCalendar />
             </span>
             {moment.utc(data.date).format("MMM DD YYYY")}
-          </p>
-          <p className="flex items-center gap-1 capitalize text-green bg-green/5 dark:bg-green/10 w-fit p-2 rounded-md">
-            <span>
-              <AiOutlineUser />
-            </span>
-            {data.creator}
           </p>
         </div>
         <div className="flex flex-col gap-2 text-sm mt-5 dark:text-white">
