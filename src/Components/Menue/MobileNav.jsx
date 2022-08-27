@@ -1,33 +1,28 @@
-import React from "react";
-import { AiFillAppstore, AiFillCamera, AiFillRobot } from "react-icons/ai";
-import { BiSearchAlt } from "react-icons/bi";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { RiCameraLensFill } from "react-icons/ri";
-import Drawer from "react-modern-drawer";
-import "react-modern-drawer/dist/index.css";
-import { Link, useLocation } from "react-router-dom";
-import logoSrc from "../../images/logo.png";
-import DropDown from "../DropDown/DropDown";
-import { LoadingSkelton } from "../Header";
-import ToggleMode from "../UI/ToggleMode/ToggleMode";
+import React from 'react';
+import { AiFillAppstore, AiFillCamera, AiFillRobot } from 'react-icons/ai';
+import { FaBriefcase } from 'react-icons/fa';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { RiCameraLensFill } from 'react-icons/ri';
+import Drawer from 'react-modern-drawer';
+import 'react-modern-drawer/dist/index.css';
+import { Link, useLocation } from 'react-router-dom';
+import logoSrc from '../../images/logo.png';
+import DropDown from '../DropDown/DropDown';
+import { LoadingSkelton } from '../Header';
+import ToggleMode from '../UI/ToggleMode/ToggleMode';
 
 const navLinks = [
-  { id: 1, text: "dashboard", icon: <AiFillAppstore />, path: "/" },
-  { id: 2, text: "sources", icon: <AiFillCamera />, path: "/sources" },
-  { id: 3, text: "media", icon: <RiCameraLensFill />, path: "/media" },
-  { id: 4, text: "workflows", icon: <AiFillRobot />, path: "/workflows" },
-  {
-    id: 5,
-    text: "Analysis",
-    icon: <BiSearchAlt />,
-    path: "/analysis",
-  },
+  { id: 1, text: 'dashboard', icon: <AiFillAppstore />, path: '/' },
+  { id: 2, text: 'sources', icon: <AiFillCamera />, path: '/sources' },
+  { id: 3, text: 'media', icon: <RiCameraLensFill />, path: '/media' },
+  { id: 4, text: 'workflows', icon: <AiFillRobot />, path: '/workflows' },
+  { id: 5, text: 'Analysis', icon: <FaBriefcase />, path: '/analysis' },
 ];
 
 const MobileNav = ({ isOpen, toggleDrawer, isLight, colorTheme, setTheme }) => {
   const { pathname } = useLocation();
 
-  const userData = JSON.parse(localStorage.getItem("user"));
+  const userData = JSON.parse(localStorage.getItem('user'));
   let firstUserNameLetter;
 
   if (userData) {
@@ -84,8 +79,8 @@ const MobileNav = ({ isOpen, toggleDrawer, isLight, colorTheme, setTheme }) => {
                   <span
                     className={`${
                       pathname === path
-                        ? "bg-primary text-white curve"
-                        : "bg-white dark:bg-gray-800 text-primary"
+                        ? 'bg-primary text-white curve'
+                        : 'bg-white dark:bg-gray-800 text-primary'
                     } flex text-xl items-center gap-x-8   relative  w-full rounded-r-full  h-[45px]  px-6`}
                   >
                     <span className="min-w-max">{icon}</span>

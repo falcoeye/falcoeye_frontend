@@ -1,27 +1,22 @@
-import React from "react";
+import React from 'react';
 import {
   AiFillAppstore,
   AiFillCamera,
   AiFillRobot,
   AiOutlineBackward,
   AiOutlineForward
-} from "react-icons/ai";
-import { BiSearchAlt } from "react-icons/bi";
-import { RiCameraLensFill } from "react-icons/ri";
-import { Link, useLocation } from "react-router-dom";
-import logoSrc from "../../images/logo.png";
+} from 'react-icons/ai';
+import { FaBriefcase } from 'react-icons/fa';
+import { RiCameraLensFill } from 'react-icons/ri';
+import { Link, useLocation } from 'react-router-dom';
+import logoSrc from '../../images/logo.png';
 
 const navLinks = [
-  { id: 1, text: "dashboard", icon: <AiFillAppstore />, path: "/" },
-  { id: 2, text: "sources", icon: <AiFillCamera />, path: "/sources" },
-  { id: 3, text: "media", icon: <RiCameraLensFill />, path: "/media" },
-  { id: 4, text: "workflows", icon: <AiFillRobot />, path: "/workflows" },
-  {
-    id: 5,
-    text: "Analysis",
-    icon: <BiSearchAlt />,
-    path: "/analysis",
-  },
+  { id: 1, text: 'dashboard', icon: <AiFillAppstore />, path: '/' },
+  { id: 2, text: 'sources', icon: <AiFillCamera />, path: '/sources' },
+  { id: 3, text: 'media', icon: <RiCameraLensFill />, path: '/media' },
+  { id: 4, text: 'workflows', icon: <AiFillRobot />, path: '/workflows' },
+  { id: 5, text: 'Analysis', icon: <FaBriefcase />, path: '/analysis' },
 ];
 
 const SideNav = ({ sideNav, toggle }) => {
@@ -30,7 +25,7 @@ const SideNav = ({ sideNav, toggle }) => {
     <div className="w-full md:block hidden relative">
       <div
         className={`${
-          sideNav ? "w-[200px]" : "w-[70px]"
+          sideNav ? 'w-[200px]' : 'w-[70px]'
         } h-screen fixed top-0 left-0  py-5 bg-white dark:bg-slate-800 flex flex-col justify-between transition-all duration-500 `}
       >
         <Link to={`/`} className="w-16 ">
@@ -45,8 +40,8 @@ const SideNav = ({ sideNav, toggle }) => {
                     <span
                       className={`${
                         pathname === path
-                          ? "bg-primary text-white curve"
-                          : "bg-white dark:bg-gray-800 text-primary"
+                          ? 'bg-primary text-white curve'
+                          : 'bg-white dark:bg-gray-800 text-primary'
                       } flex text-xl items-center gap-x-8   relative  w-full rounded-r-full  h-[45px]  px-6`}
                     >
                       <span className="min-w-max">{icon}</span>
