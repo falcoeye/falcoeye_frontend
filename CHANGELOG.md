@@ -1,3 +1,5 @@
+### 0.0.8.1
+- Add Dark Mode Support
 ### 0.0.8
 - Enable Video in Preview Capture Modal
 - Implement Create Analysis
