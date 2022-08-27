@@ -56,12 +56,10 @@ const AnalysisRow = ({
         axios.spread((...responses) => {
           onLoadingAnalysisData(false);
           onGetAnalysisData(responses[0].data);
-          console.log(responses[1]);
         })
       )
       .catch((error) => {
         onLoadingAnalysisData(false);
-        console.log(error.response);
         const { message } = error.response.data;
         toast.error(message || "Something went wrong!");
       });

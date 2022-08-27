@@ -66,7 +66,6 @@ const Login = () => {
         if (error.response.data.errors) {
           Object.entries(error.response.data.errors).forEach((t, k) => {
             const errorMessage = `${t[0]}: ${t[1][0]}`;
-            console.log(errorMessage)
              toast.error(errorMessage, { position: "bottom-center", autoClose: 4000, hideProgressBar: true, closeOnClick: true, pauseOnHover: false, draggable: false, progress: undefined,
             });
           });
