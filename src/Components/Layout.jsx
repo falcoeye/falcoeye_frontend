@@ -19,7 +19,7 @@ const Layout = ({ children }) => {
         <div
           className={`${
             sideNavToggle ? "w-64" : "w-[4.5rem]"
-          } transition-[width] duration-500 md:block hidden `}
+          } transition-[width] duration-500 lg:block hidden `}
         >
           <SideNave toggleDrawer={handleSideNav} sideNav={sideNavToggle} />
         </div>

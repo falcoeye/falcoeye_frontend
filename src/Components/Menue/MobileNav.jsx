@@ -28,7 +28,7 @@ const MobileNav = ({ isOpen, toggleDrawer, isLight, colorTheme, setTheme }) => {
   }
 
   return (
-    <div className="w-full md:hidden bg-white dark:bg-slate-800 min-h-[70px] flex items-center">
+    <div className="w-full lg:hidden bg-white dark:bg-slate-800 min-h-[70px] flex items-center">
       <div className="main-container flex items-center justify-between">
         <div className="flex items-center gap-x-5">
           <button
