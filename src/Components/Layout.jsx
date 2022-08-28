@@ -18,10 +18,10 @@ const Layout = ({ children }) => {
       <div className="flex">
         <div
           className={`${
-            sideNavToggle ? "w-[200px]" : "w-[70px]"
-          } transition-all duration-500 md:block hidden `}
+            sideNavToggle ? "w-64" : "w-[4.5rem]"
+          } transition-[width] duration-500 md:block hidden `}
         >
-          <SideNave toggle={handleSideNav} sideNav={sideNavToggle} />
+          <SideNave toggleDrawer={handleSideNav} sideNav={sideNavToggle} />
         </div>
         <div className="flex flex-1 flex-col w-full ">
           <MobileNav
@@ -37,9 +37,7 @@ const Layout = ({ children }) => {
             isLight={isLight}
           />
           <div className="main-container mt-6 ">
-            <div className="bg-white dark:bg-slate-800">
-              {children}
-            </div>
+            <div className="bg-white dark:bg-slate-800">{children}</div>
           </div>
         </div>
       </div>
