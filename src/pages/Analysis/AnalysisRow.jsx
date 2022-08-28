@@ -10,6 +10,7 @@ const AnalysisRow = ({
   onOpenAnalysisModal,
   onGetAnalysisData,
   onLoadingAnalysisData,
+  lastElementRef,
 }) => {
   const { id, workflow_id, status, name, created_at } = file;
 
@@ -100,47 +101,45 @@ const AnalysisRow = ({
     statusStyle = "text-[#74ab96]";
   }
   return (
-    <>
-      <tr>
-        <td className="px-6 py-4 whitespace-nowrap">
-          <div className="flex items-center">
-            <div
-              className={`w-[130px] min-w-[80px] h-20 rounded-t-md rounded-br-md overflow-hidden bg-gray-300 flex justify-center items-center ${
-                loading && "animate-pulse"
-              }`}
-            >
-              {renderedImage}
-            </div>
-          </div>
-        </td>
-        <td className="px-6 py-4 whitespace-nowrap">
-          <div className="text-sm font-medium text-gray-900 dark:text-white">
-            {name}
-          </div>
-        </td>
-        <td className="px-6 py-4 whitespace-nowrap">
-          <div className="text-sm text-gray-500 dark:text-white">
-            {moment.utc(created_at).format("MM-DD-YYYY")}
-          </div>
-        </td>
-        <td className="px-6 py-4 whitespace-nowrap">
-          <div className={`text-sm ${statusStyle} capitalize dark:text-white `}>
-            {status}
-          </div>
-        </td>
-        <td className="px-6 py-4 whitespace-nowrap">
-          <button
-            className="btn-primary"
-            onClick={() => {
-              onOpenAnalysisModal(id);
-              fetchAnalysisData();
-            }}
+    <tr ref={lastElementRef}>
+      <td className="px-6 py-4 whitespace-nowrap">
+        <div className="flex items-center">
+          <div
+            className={`w-[130px] min-w-[80px] h-20 rounded-t-md rounded-br-md overflow-hidden bg-gray-300 flex justify-center items-center ${
+              loading && "animate-pulse"
+            }`}
           >
-            view details
-          </button>
-        </td>
-      </tr>
-    </>
+            {renderedImage}
+          </div>
+        </div>
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap">
+        <div className="text-sm font-medium text-gray-900 dark:text-white">
+          {name}
+        </div>
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap">
+        <div className="text-sm text-gray-500 dark:text-white">
+          {moment.utc(created_at).format("MM-DD-YYYY")}
+        </div>
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap">
+        <div className={`text-sm ${statusStyle} capitalize dark:text-white `}>
+          {status}
+        </div>
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap">
+        <button
+          className="btn-primary"
+          onClick={() => {
+            onOpenAnalysisModal(id);
+            fetchAnalysisData();
+          }}
+        >
+          view details
+        </button>
+      </td>
+    </tr>
   );
 };
 

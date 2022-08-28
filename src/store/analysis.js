@@ -7,6 +7,8 @@ const initialState = {
   isLoading: true,
   error: false,
   AnalysisData: null,
+  page: 1,
+  lastPage: false,
 };
 
 export const analysisSlice = createSlice({
@@ -32,23 +34,32 @@ export const analysisSlice = createSlice({
       state.AnalysisData = fetchedData.payload;
     },
     addAnalysis: (state, action) => {
-      state.data.push(action.payload)
+      state.data.push(action.payload);
+    },
+    handlePage(state, action) {
+      state.page = action.payload;
+    },
+    handleLastPage(state, action) {
+      state.lastPage = action.payload;
     },
   },
 });
 
-export const fetchAnalysisData = () => {
+export const fetchAnalysisData = (page) => {
   return async (dispatch) => {
     dispatch(startLoading());
 
     const fetchData = async () => {
-      const response = await axios.get("/analysis/");
+      const response = await axios.get(`/analysis/?page=${page}&per_page=10`);
       return response;
     };
 
     try {
       const responseData = await fetchData();
       dispatch(fetchAnalysis(responseData.data.analysis));
+      if (responseData.data.lastPage) {
+        dispatch(handleLastPage(true));
+      }
       dispatch(endLoading());
     } catch (err) {
       dispatch(noDataError());
@@ -97,5 +108,15 @@ export const getOneAnalysisData = (id) => {
   };
 };
 
-export const {addAnalysis, startLoading, endLoading, noDataError,fetchAnalysis, getAnalysisData, deleteAnalysis } = analysisSlice.actions;
+export const {
+  addAnalysis,
+  startLoading,
+  endLoading,
+  noDataError,
+  fetchAnalysis,
+  getAnalysisData,
+  deleteAnalysis,
+  handlePage,
+  handleLastPage,
+} = analysisSlice.actions;
 export default analysisSlice.reducer;

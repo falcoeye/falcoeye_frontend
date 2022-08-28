@@ -1,65 +1,99 @@
-import React from 'react';
+import React from "react";
 import {
   AiFillAppstore,
   AiFillCamera,
   AiFillRobot,
   AiOutlineBackward,
-  AiOutlineForward
-} from 'react-icons/ai';
-import { FaBriefcase } from 'react-icons/fa';
-import { RiCameraLensFill } from 'react-icons/ri';
-import { Link, useLocation } from 'react-router-dom';
-import logoSrc from '../../images/logo.png';
+  AiOutlineForward,
+} from "react-icons/ai";
+import { FaBriefcase } from "react-icons/fa";
+import { RiCameraLensFill } from "react-icons/ri";
+import { NavLink } from "react-router-dom";
+import logoSrc from "../../images/logo.png";
 
 const navLinks = [
-  { id: 1, text: 'dashboard', icon: <AiFillAppstore />, path: '/' },
-  { id: 2, text: 'sources', icon: <AiFillCamera />, path: '/sources' },
-  { id: 3, text: 'media', icon: <RiCameraLensFill />, path: '/media' },
-  { id: 4, text: 'workflows', icon: <AiFillRobot />, path: '/workflows' },
-  { id: 5, text: 'Analysis', icon: <FaBriefcase />, path: '/analysis' },
+  { id: 1, text: "dashboard", icon: <AiFillAppstore size={20} />, path: "/" },
+  {
+    id: 2,
+    text: "sources",
+    icon: <AiFillCamera size={20} />,
+    path: "/sources",
+  },
+  {
+    id: 3,
+    text: "media",
+    icon: <RiCameraLensFill size={20} />,
+    path: "/media",
+  },
+  {
+    id: 4,
+    text: "workflows",
+    icon: <AiFillRobot size={20} />,
+    path: "/workflows",
+  },
+  {
+    id: 5,
+    text: "Analysis",
+    icon: <FaBriefcase size={20} />,
+    path: "/analysis",
+  },
 ];
 
-const SideNav = ({ sideNav, toggle }) => {
-  const { pathname } = useLocation();
+const SideNav = ({ sideNav, toggleDrawer }) => {
   return (
     <div className="w-full md:block hidden relative">
       <div
         className={`${
-          sideNav ? 'w-[200px]' : 'w-[70px]'
-        } h-screen fixed top-0 left-0  py-5 bg-white dark:bg-slate-800 flex flex-col justify-between transition-all duration-500 `}
+          sideNav ? "w-64" : "w-[4.5rem]"
+        } h-screen fixed top-0 left-0  py-5 bg-white dark:bg-slate-800 flex flex-col justify-between  transition-[width] duration-500`}
       >
-        <Link to={`/`} className="w-16 ">
-          <img src={logoSrc} alt="logo" />
-        </Link>
-        <div className="grow text-center">
-          <ul className="flex flex-col gap-y-1  pr-4 mt-4 py-4 overflow-hidden">
-            {navLinks.map(({ id, icon, path, text }) => {
-              return (
-                <li key={id}>
-                  <Link to={path}>
-                    <span
-                      className={`${
-                        pathname === path
-                          ? 'bg-primary text-white curve'
-                          : 'bg-white dark:bg-gray-800 text-primary'
-                      } flex text-xl items-center gap-x-8   relative  w-full rounded-r-full  h-[45px]  px-6`}
+        <div>
+          <div className="pl-px">
+            <NavLink to={`/`}>
+              <img src={logoSrc} alt="logo" className="w-[70px]" />
+            </NavLink>
+          </div>
+
+          <div className="px-3">
+            <ul className="mt-4 flex flex-col gap-4 relative">
+              {navLinks.map((link, i) => (
+                <li key={link.id}>
+                  <NavLink
+                    to={link.path}
+                    className={(navData) =>
+                      navData.isActive
+                        ? "px-3.5 flex  items-center text-sm gap-3.5 font-medium py-2 bg-primary rounded-md text-white "
+                        : "px-3.5 flex  items-center text-sm gap-3.5 font-medium py-2 duration-300 hover:bg-primary rounded-md hover:text-white text-primary"
+                    }
+                  >
+                    <div>{link.icon}</div>
+                    <h2
+                      className={`whitespace-pre transition-opacity duration-300 ${
+                        !sideNav && "opacity-0 overflow-hidden"
+                      }`}
                     >
-                      <span className="min-w-max">{icon}</span>
-                      <span className="capitalize text-sm min-w-max">
-                        {text}
-                      </span>
-                    </span>
-                  </Link>
+                      {link.text}
+                    </h2>
+                  </NavLink>
                 </li>
-              );
-            })}
-          </ul>
-          <button
-            onClick={toggle}
-            className="text-primary text-xl mx-auto mt-8"
-          >
-            {sideNav ? <AiOutlineBackward /> : <AiOutlineForward />}
-          </button>
+              ))}
+            </ul>
+            <div className="py-3 flex justify-center">
+              {sideNav ? (
+                <AiOutlineBackward
+                  size={26}
+                  className="cursor-pointer text-primary mt-5"
+                  onClick={toggleDrawer}
+                />
+              ) : (
+                <AiOutlineForward
+                  size={26}
+                  className="cursor-pointer text-primary mt-5"
+                  onClick={toggleDrawer}
+                />
+              )}
+            </div>
+          </div>
         </div>
         {process.env.REACT_APP_VERSION && (
           <span className=" text-center text-gray-400 text-base font-semibold">

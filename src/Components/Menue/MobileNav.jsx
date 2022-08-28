@@ -1,28 +1,26 @@
-import React from 'react';
-import { AiFillAppstore, AiFillCamera, AiFillRobot } from 'react-icons/ai';
-import { FaBriefcase } from 'react-icons/fa';
-import { GiHamburgerMenu } from 'react-icons/gi';
-import { RiCameraLensFill } from 'react-icons/ri';
-import Drawer from 'react-modern-drawer';
-import 'react-modern-drawer/dist/index.css';
-import { Link, useLocation } from 'react-router-dom';
-import logoSrc from '../../images/logo.png';
-import DropDown from '../DropDown/DropDown';
-import { LoadingSkelton } from '../Header';
-import ToggleMode from '../UI/ToggleMode/ToggleMode';
+import React from "react";
+import { AiFillAppstore, AiFillCamera, AiFillRobot } from "react-icons/ai";
+import { FaBriefcase } from "react-icons/fa";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { RiCameraLensFill } from "react-icons/ri";
+import Drawer from "react-modern-drawer";
+import "react-modern-drawer/dist/index.css";
+import { Link, NavLink } from "react-router-dom";
+import logoSrc from "../../images/logo.png";
+import DropDown from "../DropDown/DropDown";
+import { LoadingSkelton } from "../Header";
+import ToggleMode from "../UI/ToggleMode/ToggleMode";
 
 const navLinks = [
-  { id: 1, text: 'dashboard', icon: <AiFillAppstore />, path: '/' },
-  { id: 2, text: 'sources', icon: <AiFillCamera />, path: '/sources' },
-  { id: 3, text: 'media', icon: <RiCameraLensFill />, path: '/media' },
-  { id: 4, text: 'workflows', icon: <AiFillRobot />, path: '/workflows' },
-  { id: 5, text: 'Analysis', icon: <FaBriefcase />, path: '/analysis' },
+  { id: 1, text: "dashboard", icon: <AiFillAppstore />, path: "/" },
+  { id: 2, text: "sources", icon: <AiFillCamera />, path: "/sources" },
+  { id: 3, text: "media", icon: <RiCameraLensFill />, path: "/media" },
+  { id: 4, text: "workflows", icon: <AiFillRobot />, path: "/workflows" },
+  { id: 5, text: "Analysis", icon: <FaBriefcase />, path: "/analysis" },
 ];
 
 const MobileNav = ({ isOpen, toggleDrawer, isLight, colorTheme, setTheme }) => {
-  const { pathname } = useLocation();
-
-  const userData = JSON.parse(localStorage.getItem('user'));
+  const userData = JSON.parse(localStorage.getItem("user"));
   let firstUserNameLetter;
 
   if (userData) {
@@ -30,7 +28,7 @@ const MobileNav = ({ isOpen, toggleDrawer, isLight, colorTheme, setTheme }) => {
   }
 
   return (
-    <div className="w-full md:hidden bg-white dark:bg-slate-800 min-h-[70px] flex items-center">
+    <div className="w-full lg:hidden bg-white dark:bg-slate-800 min-h-[70px] flex items-center">
       <div className="main-container flex items-center justify-between">
         <div className="flex items-center gap-x-5">
           <button
@@ -64,33 +62,40 @@ const MobileNav = ({ isOpen, toggleDrawer, isLight, colorTheme, setTheme }) => {
         open={isOpen}
         onClose={toggleDrawer}
         direction="left"
-        className="py-8 !bg-white dark:!bg-gray-700"
+        className="py-8 !bg-white dark:!bg-gray-700 flex flex-col justify-between"
       >
-        <div className="px-5">
-          <Link to={`/`} className="w-full ">
-            <img src={logoSrc} className="w-16" alt="logo" />
-          </Link>
-        </div>
-        <ul className="flex flex-col gap-y-1  pr-4 mt-4 py-4 overflow-hidden">
-          {navLinks.map(({ id, icon, path, text }) => {
-            return (
-              <li key={id}>
-                <Link to={path}>
-                  <span
-                    className={`${
-                      pathname === path
-                        ? 'bg-primary text-white curve'
-                        : 'bg-white dark:bg-gray-800 text-primary'
-                    } flex text-xl items-center gap-x-8   relative  w-full rounded-r-full  h-[45px]  px-6`}
+        <div>
+          <div className="px-5">
+            <Link to={`/`} className="w-full ">
+              <img src={logoSrc} className="w-16" alt="logo" />
+            </Link>
+          </div>
+          <ul className="flex flex-col gap-y-4  pr-4 mt-4 py-4 px-5 overflow-hidden">
+            {navLinks.map(({ id, icon, path, text }) => {
+              return (
+                <li key={id}>
+                  <NavLink
+                    to={path}
+                    className={(navData) =>
+                      navData.isActive
+                        ? "px-3.5 flex  items-center gap-3.5 font-medium py-2 bg-primary rounded-md text-white "
+                        : "px-3.5 flex  items-center gap-3.5 font-medium py-2 duration-300 hover:bg-primary rounded-md hover:text-white text-primary"
+                    }
                   >
                     <span className="min-w-max">{icon}</span>
                     <span className="capitalize text-sm min-w-max">{text}</span>
-                  </span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+                  </NavLink>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+
+        {process.env.REACT_APP_VERSION && (
+          <p className=" text-center text-gray-400 text-base font-semibold">
+            {`${process.env.REACT_APP_VERSION}`}
+          </p>
+        )}
       </Drawer>
     </div>
   );
