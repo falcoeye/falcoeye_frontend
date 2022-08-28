@@ -1,23 +1,46 @@
 import Lottie from "lottie-react";
 import moment from "moment";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BsBookmarkHeartFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import noDataAnimation from "../../../../../assets/animations/no-data.json";
 import Loader from "../../../../../Components/UI/Loader/Loader";
-import { fetchWorkflowsData } from "../../../../../store/workflows";
+import { fetchWorkflowsData, handlePage } from "../../../../../store/workflows";
 import ShowWorkflow from "../../../ShowWorkflow";
 
 const WorkflowsStep = ({ onSelectWorkflow, selectedWorkflow }) => {
   const dispatch = useDispatch();
-  const workflowsData = useSelector((state) => state.workflows.data);
-  const isLoading = useSelector((state) => state.workflows.isLoading);
+  const {
+    data: workflowsData,
+    isLoading,
+    page,
+    lastPage,
+  } = useSelector((state) => state.workflows);
 
   const [filteredData, setFilteredData] = useState(null);
   const [searchInput, setSearchInput] = useState("");
 
   const [showWorkflowOpened, setShowWorkflowOpened] = useState(false);
+
+  useEffect(() => {
+    dispatch(fetchWorkflowsData(page));
+  }, [dispatch, page]);
+
+  const observer = useRef();
+  const lastElementRef = useCallback(
+    (node) => {
+      if (isLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && !lastPage) {
+          dispatch(handlePage(page + 1));
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [dispatch, isLoading, lastPage, page]
+  );
 
   const openWorkflowModalHandler = () => {
     setShowWorkflowOpened(true);
@@ -94,12 +117,6 @@ const WorkflowsStep = ({ onSelectWorkflow, selectedWorkflow }) => {
     setFilteredData(filteredDataWithActiveStyle);
   };
 
-  useEffect(() => {
-    if (!workflowsData) {
-      dispatch(fetchWorkflowsData());
-    }
-  }, [dispatch, workflowsData]);
-
   let content;
 
   if (isLoading) {
@@ -119,38 +136,75 @@ const WorkflowsStep = ({ onSelectWorkflow, selectedWorkflow }) => {
   if (workflowsData && !isLoading) {
     let dataContent;
     if (filteredData && filteredData.length !== 0) {
-      dataContent = filteredData.map((item) => (
-        <div
-          key={item.id}
-          onClick={() => addActiveStyleHandler(item.id)}
-          className={`relative shadow rounded-md  py-3 px-4 flex flex-col gap-2 cursor-pointer h-fit transition duration-300 ease-in-out ${
-            item.selected
-              ? "bg-primary/10 hover:bg-primary/10 dark:bg-gray-100/10"
-              : "bg-gray-50 hover:bg-gray-100/90 dark:bg-gray-800"
-          }`}
-        >
-          <div className="flex justify-between min-h-[30px]">
-            <h1 className="text-base font-bold text-gray-600 dark:text-white">
-              {item.name}
-            </h1>
-            {item.selected && (
-              <span className="text-white text-sm bg-primary w-fit p-2 rounded-full">
-                <BsBookmarkHeartFill />
-              </span>
-            )}
-          </div>
-          <p className="text-sm text-gray-400/80 mb-3 dark:text-gray-200">
-            {moment.utc(item.publish_date).format("MMM DD YYYY")}
-          </p>
-          <button
-            onClick={openWorkflowModalHandler}
-            type="button"
-            className="focus:outline-none text-white bg-cyan-500 hover:bg-cyan-600 font-medium rounded-lg text-sm px-5 py-2.5 transition w-max	"
+      dataContent = filteredData.map((item, index) => {
+        if (filteredData.length - 1 === index) {
+          return (
+            <div
+              key={item.id}
+              ref={lastElementRef}
+              onClick={() => addActiveStyleHandler(item.id)}
+              className={`relative shadow rounded-md  py-3 px-4 flex flex-col gap-2 cursor-pointer h-fit transition duration-300 ease-in-out ${
+                item.selected
+                  ? "bg-primary/10 hover:bg-primary/10 dark:bg-gray-100/10"
+                  : "bg-gray-50 hover:bg-gray-100/90 dark:bg-gray-800"
+              }`}
+            >
+              <div className="flex justify-between min-h-[30px]">
+                <h1 className="text-base font-bold text-gray-600 dark:text-white">
+                  {item.name}
+                </h1>
+                {item.selected && (
+                  <span className="text-white text-sm bg-primary w-fit p-2 rounded-full">
+                    <BsBookmarkHeartFill />
+                  </span>
+                )}
+              </div>
+              <p className="text-sm text-gray-400/80 mb-3 dark:text-gray-200">
+                {moment.utc(item.publish_date).format("MMM DD YYYY")}
+              </p>
+              <button
+                onClick={openWorkflowModalHandler}
+                type="button"
+                className="focus:outline-none text-white bg-cyan-500 hover:bg-cyan-600 font-medium rounded-lg text-sm px-5 py-2.5 transition w-max	"
+              >
+                Read More
+              </button>
+            </div>
+          );
+        }
+        return (
+          <div
+            key={item.id}
+            onClick={() => addActiveStyleHandler(item.id)}
+            className={`relative shadow rounded-md  py-3 px-4 flex flex-col gap-2 cursor-pointer h-fit transition duration-300 ease-in-out ${
+              item.selected
+                ? "bg-primary/10 hover:bg-primary/10 dark:bg-gray-100/10"
+                : "bg-gray-50 hover:bg-gray-100/90 dark:bg-gray-800"
+            }`}
           >
-            Read More
-          </button>
-        </div>
-      ));
+            <div className="flex justify-between min-h-[30px]">
+              <h1 className="text-base font-bold text-gray-600 dark:text-white">
+                {item.name}
+              </h1>
+              {item.selected && (
+                <span className="text-white text-sm bg-primary w-fit p-2 rounded-full">
+                  <BsBookmarkHeartFill />
+                </span>
+              )}
+            </div>
+            <p className="text-sm text-gray-400/80 mb-3 dark:text-gray-200">
+              {moment.utc(item.publish_date).format("MMM DD YYYY")}
+            </p>
+            <button
+              onClick={openWorkflowModalHandler}
+              type="button"
+              className="focus:outline-none text-white bg-cyan-500 hover:bg-cyan-600 font-medium rounded-lg text-sm px-5 py-2.5 transition w-max	"
+            >
+              Read More
+            </button>
+          </div>
+        );
+      });
     } else if (filteredData && filteredData.length === 0) {
       dataContent = (
         <div className="h-80 col-span-2">

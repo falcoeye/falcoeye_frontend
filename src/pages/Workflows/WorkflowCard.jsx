@@ -4,7 +4,7 @@ import { AiOutlineCalendar } from "react-icons/ai";
 import { toast } from "react-toastify";
 import axios from "../../utility/api-instance";
 
-const WorkflowCard = ({ id, title, date, creator, handleClick }) => {
+const WorkflowCard = ({ id, title, date, handleClick, lastElementRef }) => {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -61,6 +61,7 @@ const WorkflowCard = ({ id, title, date, creator, handleClick }) => {
     <div
       className="sm:max-w-[370px] sm:my-0 sm:mx-auto md:max-w-full md:w-full  flex xl:flex-row flex-col  xl:items-center gap-4  px-4 py-5 shadow rounded border border-[#f5f5f5] cursor-pointer dark:bg-slate-700 dark:border-slate-700"
       onClick={handleClick.bind(null, id)}
+      ref={lastElementRef}
     >
       {renderedImage}
       <div className="xl:flex-[2]">

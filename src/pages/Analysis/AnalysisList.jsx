@@ -1,17 +1,46 @@
 import Lottie from "lottie-react";
-import React, { Fragment, useCallback, useEffect, useState } from "react";
+import React, {
+  Fragment,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import noDataAnimation from "../../assets/animations/no-data.json";
 import Loader from "../../Components/UI/Loader/Loader";
-import { fetchAnalysisData } from "../../store/analysis";
+import { fetchAnalysisData, handlePage } from "../../store/analysis";
 import ShowAnalysis from "../Modals/ShowAnalysis";
 import AnalysisFilterbar from "./AnalysisFilterbar";
 import AnalysisRow from "./AnalysisRow";
 
 const AnalysisList = (props) => {
-  const isLoading = useSelector((state) => state.analysis.isLoading);
-  const analysises = useSelector((state) => state.analysis.data);
+  const {
+    isLoading,
+    data: analysises,
+    page,
+    lastPage,
+  } = useSelector((state) => state.analysis);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAnalysisData(page));
+  }, [dispatch, page]);
+
+  const observer = useRef();
+  const lastElementRef = useCallback(
+    (node) => {
+      if (isLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && !lastPage) {
+          dispatch(handlePage(page + 1));
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [dispatch, isLoading, lastPage, page]
+  );
 
   const [filteredAnalysises, setFilteredAnalysises] = useState(analysises);
   const [searchInput, setSearchInput] = useState("");
@@ -38,10 +67,6 @@ const AnalysisList = (props) => {
   const searchInputChangeHandler = (e) => {
     setSearchInput(e.target.value);
   };
-
-  useEffect(() => {
-    dispatch(fetchAnalysisData());
-  }, [dispatch]);
 
   const searchFilter = (term, items) => {
     if (term.length === 0) return items;
@@ -128,15 +153,29 @@ const AnalysisList = (props) => {
                   </tr>
                 </thead>
                 <tbody className="bg-white dark:bg-slate-700 divide-y divide-gray-200 dark:divide-gray-600">
-                  {filteredAnalysises.map((file) => (
-                    <AnalysisRow
-                      key={file.id}
-                      file={file}
-                      onOpenAnalysisModal={openShowAnalysisModalHandler}
-                      onGetAnalysisData={getAnalysisDataHandler}
-                      onLoadingAnalysisData={loadingAnalysisDataHandler}
-                    />
-                  ))}
+                  {filteredAnalysises.map((file, index) => {
+                    if (filteredAnalysises.length - 1 === index) {
+                      return (
+                        <AnalysisRow
+                          key={file.id}
+                          file={file}
+                          onOpenAnalysisModal={openShowAnalysisModalHandler}
+                          onGetAnalysisData={getAnalysisDataHandler}
+                          onLoadingAnalysisData={loadingAnalysisDataHandler}
+                          lastElementRef={lastElementRef}
+                        />
+                      );
+                    }
+                    return (
+                      <AnalysisRow
+                        key={file.id}
+                        file={file}
+                        onOpenAnalysisModal={openShowAnalysisModalHandler}
+                        onGetAnalysisData={getAnalysisDataHandler}
+                        onLoadingAnalysisData={loadingAnalysisDataHandler}
+                      />
+                    );
+                  })}
                 </tbody>
               </table>
             </div>

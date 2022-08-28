@@ -8,6 +8,8 @@ const initialState = {
   isLoading: true,
   dataType: null,
   inputSearch: null,
+  page: 1,
+  lastPage: false,
 };
 
 export const workflowsSlice = createSlice({
@@ -37,23 +39,32 @@ export const workflowsSlice = createSlice({
       }
     },
     deleteWorkflow: (state, action) => {
-      state.data = state.data.filter( item => item.id !== action.payload )
+      state.data = state.data.filter((item) => item.id !== action.payload);
+    },
+    handlePage(state, action) {
+      state.page = action.payload;
+    },
+    handleLastPage(state, action) {
+      state.lastPage = action.payload;
     },
   },
 });
 
-export const fetchWorkflowsData = () => {
+export const fetchWorkflowsData = (page) => {
   return async (dispatch) => {
     dispatch(startLoading());
 
     const fetchData = async () => {
-      const response = await axios.get("/workflow/");
+      const response = await axios.get(`/workflow/?page=${page}&per_page=10`);
       return response;
     };
 
     try {
       const responseData = await fetchData();
       dispatch(fetchWorkflows(responseData.data.workflow));
+      if (responseData.data.lastPage) {
+        dispatch(handleLastPage(true));
+      }
       dispatch(endLoading());
     } catch (err) {
       const errorMessage = err.response.data.msg || err.response.data.message;
@@ -71,5 +82,12 @@ export const fetchWorkflowsData = () => {
   };
 };
 
-export const {startLoading,  fetchWorkflows, endLoading, deleteWorkflow } = workflowsSlice.actions;
+export const {
+  startLoading,
+  fetchWorkflows,
+  endLoading,
+  deleteWorkflow,
+  handlePage,
+  handleLastPage,
+} = workflowsSlice.actions;
 export default workflowsSlice.reducer;

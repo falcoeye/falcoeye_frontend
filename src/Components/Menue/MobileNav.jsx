@@ -5,7 +5,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { RiCameraLensFill } from "react-icons/ri";
 import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import logoSrc from "../../images/logo.png";
 import DropDown from "../DropDown/DropDown";
 import { LoadingSkelton } from "../Header";
@@ -20,8 +20,6 @@ const navLinks = [
 ];
 
 const MobileNav = ({ isOpen, toggleDrawer, isLight, colorTheme, setTheme }) => {
-  const { pathname } = useLocation();
-
   const userData = JSON.parse(localStorage.getItem("user"));
   let firstUserNameLetter;
 

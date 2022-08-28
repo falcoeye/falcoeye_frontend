@@ -1,26 +1,49 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Loader from '../../Components/UI/Loader/Loader';
-import { fetchWorkflowsData } from '../../store/workflows';
-import WorkflowCard from './WorkflowCard';
-import WorkflowsFilterBar from './WorkflowsFilterBar';
-import noDataAnimation from '../../assets/animations/no-data.json';
-import Lottie from 'lottie-react';
-import ShowWorkflow from '../Modals/ShowWorkflow';
+import React, { useEffect, useState, useRef, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Loader from "../../Components/UI/Loader/Loader";
+import { fetchWorkflowsData, handlePage } from "../../store/workflows";
+import WorkflowCard from "./WorkflowCard";
+import WorkflowsFilterBar from "./WorkflowsFilterBar";
+import noDataAnimation from "../../assets/animations/no-data.json";
+import Lottie from "lottie-react";
+import ShowWorkflow from "../Modals/ShowWorkflow";
 
 const AllWorkflows = () => {
   const dispatch = useDispatch();
-  const workflowsData = useSelector((state) => state.workflows.data);
-  const isLoading = useSelector((state) => state.workflows.isLoading);
+  const {
+    data: workflowsData,
+    isLoading,
+    page,
+    lastPage,
+  } = useSelector((state) => state.workflows);
 
   const loadedData = workflowsData?.slice();
   const [filteredData, setFilteredData] = useState(null);
   const [dataOrder, setDataOrder] = useState(null);
-  const [dataType, setDataType] = useState('Title');
-  const [searchInput, setSearchInput] = useState('');
+  const [dataType, setDataType] = useState("Title");
+  const [searchInput, setSearchInput] = useState("");
 
   const [selectedCardId, setSelectedCardId] = useState(null);
   const [showWorkflowOpened, setShowWorkflowOpened] = useState(false);
+
+  useEffect(() => {
+    dispatch(fetchWorkflowsData(page));
+  }, [dispatch, page]);
+
+  const observer = useRef();
+  const lastElementRef = useCallback(
+    (node) => {
+      if (isLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && !lastPage) {
+          dispatch(handlePage(page + 1));
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [dispatch, isLoading, lastPage, page]
+  );
 
   const openWorkflowModalHandler = (id) => {
     setShowWorkflowOpened(true);
@@ -40,7 +63,7 @@ const AllWorkflows = () => {
         )
       );
     } else {
-      setDataType('Title');
+      setDataType("Title");
       setDataOrder(null);
       setFilteredData(loadedData);
     }
@@ -48,21 +71,21 @@ const AllWorkflows = () => {
 
   const changeDataTypeHandler = (value) => {
     setDataType(value);
-    if (value === 'Date') {
-      setDataOrder('oldest');
+    if (value === "Date") {
+      setDataOrder("oldest");
       setFilteredData(
         loadedData.sort(
           (a, b) => new Date(a.publish_date) - new Date(b.publish_date)
         )
       );
     } else {
-      if (dataOrder === 'a-z') {
-        setDataOrder('a-z');
-      } else if (dataOrder === 'z-a') {
-        setDataOrder('z-a');
+      if (dataOrder === "a-z") {
+        setDataOrder("a-z");
+      } else if (dataOrder === "z-a") {
+        setDataOrder("z-a");
       } else {
-        setDataOrder('a-z');
-        if (value === 'Title') {
+        setDataOrder("a-z");
+        if (value === "Title") {
           setFilteredData(
             loadedData.sort((a, b) => a.name.localeCompare(b.name))
           );
@@ -74,32 +97,32 @@ const AllWorkflows = () => {
       }
     }
 
-    if ((value === 'Title' || !dataType) && dataOrder === 'a-z') {
+    if ((value === "Title" || !dataType) && dataOrder === "a-z") {
       setFilteredData(loadedData.sort((a, b) => a.name.localeCompare(b.name)));
     }
-    if ((value === 'Title' || !dataType) && dataOrder === 'z-a') {
+    if ((value === "Title" || !dataType) && dataOrder === "z-a") {
       setFilteredData(loadedData.sort((a, b) => b.name.localeCompare(a.name)));
     }
 
-    if (value === 'Creator' && dataOrder === 'a-z') {
+    if (value === "Creator" && dataOrder === "a-z") {
       setFilteredData(
         loadedData.sort((a, b) => a.creator.localeCompare(b.creator))
       );
     }
-    if (value === 'Creator' && dataOrder === 'z-a') {
+    if (value === "Creator" && dataOrder === "z-a") {
       setFilteredData(
         loadedData.sort((a, b) => b.creator.localeCompare(a.creator))
       );
     }
 
-    if (value === 'Date' && dataOrder === 'oldest') {
+    if (value === "Date" && dataOrder === "oldest") {
       setFilteredData(
         loadedData.sort(
           (a, b) => new Date(a.publish_date) - new Date(b.publish_date)
         )
       );
     }
-    if (value === 'Date' && dataOrder === 'newest') {
+    if (value === "Date" && dataOrder === "newest") {
       setFilteredData(
         loadedData.sort(
           (a, b) => new Date(b.publish_date) - new Date(a.publish_date)
@@ -110,32 +133,32 @@ const AllWorkflows = () => {
   const changeDataOrderHandler = (value) => {
     setDataOrder(value);
 
-    if (value === 'a-z' && (!dataType || dataType === 'Title')) {
+    if (value === "a-z" && (!dataType || dataType === "Title")) {
       setFilteredData(loadedData.sort((a, b) => a.name.localeCompare(b.name)));
     }
-    if (value === 'z-a' && (!dataType || dataType === 'Title')) {
+    if (value === "z-a" && (!dataType || dataType === "Title")) {
       setFilteredData(loadedData.sort((a, b) => b.name.localeCompare(a.name)));
     }
 
-    if (value === 'a-z' && dataType === 'Creator') {
+    if (value === "a-z" && dataType === "Creator") {
       setFilteredData(
         loadedData.sort((a, b) => a.creator.localeCompare(b.creator))
       );
     }
-    if (value === 'z-a' && dataType === 'Creator') {
+    if (value === "z-a" && dataType === "Creator") {
       setFilteredData(
         loadedData.sort((a, b) => b.creator.localeCompare(a.creator))
       );
     }
 
-    if (value === 'oldest' && dataType === 'Date') {
+    if (value === "oldest" && dataType === "Date") {
       setFilteredData(
         loadedData.sort(
           (a, b) => new Date(a.publish_date) - new Date(b.publish_date)
         )
       );
     }
-    if (value === 'newest' && dataType === 'Date') {
+    if (value === "newest" && dataType === "Date") {
       setFilteredData(
         loadedData.sort(
           (a, b) => new Date(b.publish_date) - new Date(a.publish_date)
@@ -143,10 +166,6 @@ const AllWorkflows = () => {
       );
     }
   };
-
-  useEffect(() => {
-    dispatch(fetchWorkflowsData());
-  }, [dispatch]);
 
   let content;
 
@@ -160,7 +179,7 @@ const AllWorkflows = () => {
         <Lottie
           animationData={noDataAnimation}
           loop={true}
-          style={{ width: '100%', height: '100%' }}
+          style={{ width: "100%", height: "100%" }}
         />
       </div>
     );
@@ -176,34 +195,60 @@ const AllWorkflows = () => {
               <Lottie
                 animationData={noDataAnimation}
                 loop={true}
-                style={{ width: '100%', height: '100%' }}
+                style={{ width: "100%", height: "100%" }}
               />
             </div>
           </div>
         );
       } else {
-        dataContent = filteredData.map((item) => (
+        dataContent = filteredData.map((item, index) => {
+          if (filteredData.length - 1 === index) {
+            return (
+              <WorkflowCard
+                key={item.id}
+                id={item.id}
+                date={item.publish_date}
+                title={item.name}
+                handleClick={openWorkflowModalHandler}
+                lastElementRef={lastElementRef}
+              />
+            );
+          }
+          return (
+            <WorkflowCard
+              key={item.id}
+              id={item.id}
+              date={item.publish_date}
+              title={item.name}
+              handleClick={openWorkflowModalHandler}
+            />
+          );
+        });
+      }
+    } else {
+      dataContent = workflowsData.map((item, index) => {
+        if (workflowsData.length - 1 === index) {
+          return (
+            <WorkflowCard
+              key={item.id}
+              id={item.id}
+              date={item.publish_date}
+              title={item.name}
+              handleClick={openWorkflowModalHandler}
+              lastElementRef={lastElementRef}
+            />
+          );
+        }
+        return (
           <WorkflowCard
             key={item.id}
             id={item.id}
-            creator={item.creator}
             date={item.publish_date}
             title={item.name}
             handleClick={openWorkflowModalHandler}
           />
-        ));
-      }
-    } else {
-      dataContent = workflowsData.map((item) => (
-        <WorkflowCard
-          key={item.id}
-          id={item.id}
-          creator={item.creator}
-          date={item.publish_date}
-          title={item.name}
-          handleClick={openWorkflowModalHandler}
-        />
-      ));
+        );
+      });
     }
 
     content = (
