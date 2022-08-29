@@ -14,6 +14,8 @@ import DeleteMedia from "./DeleteMedia";
 import "./Modals.css";
 import axios from "../../utility/api-instance";
 import { useRef } from "react";
+import { FaEdit } from "react-icons/fa";
+import EditMedia from "./EditMedia";
 
 const ShowMedia = ({ open, handleClose, id }) => {
   const media = useSelector((state) => state.media);
@@ -21,6 +23,10 @@ const ShowMedia = ({ open, handleClose, id }) => {
   const [deleteModalOpened, setDeleteModalOpened] = useState(false);
   const [mediaPreview, setMediaPreview] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [editMedia, setEditMedia] = useState(false);
+
+  const openEditModalHandler = useCallback(() => setEditMedia(true), []);
+  const closeEditModalHandler = useCallback(() => setEditMedia(false), []);
 
   const openDeleteModalHandler = useCallback(
     () => setDeleteModalOpened(true),
@@ -141,6 +147,12 @@ const ShowMedia = ({ open, handleClose, id }) => {
             <MdDelete />
           </button>
           <button
+            className="bg-green/70 hover:bg-green text-white transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
+            onClick={openEditModalHandler}
+          >
+            <FaEdit />
+          </button>
+          <button
             className="bg-gray-50 dark:bg-gray-800 dark:text-white hover:bg-gray-200 transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
             onClick={handleClose}
           >
@@ -180,39 +192,48 @@ const ShowMedia = ({ open, handleClose, id }) => {
   }
 
   return (
-    <Transition appear show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-[400]" onClose={handleClose}>
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 bg-black bg-opacity-50" />
-        </Transition.Child>
+    <>
+      <Transition appear show={open} as={Fragment}>
+        <Dialog as="div" className="relative z-[400]" onClose={handleClose}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-50" />
+          </Transition.Child>
 
-        <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center md:p-4 text-center">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
-            >
-              <Dialog.Panel className="w-full h-screen md:h-fit md:max-w-4xl md:w-11/12 transform overflow-hidden md:rounded-2xl bg-white dark:bg-slate-800 py-6 px-3 md:px-6  text-left align-middle shadow-xl transition-all">
-                {content}
-              </Dialog.Panel>
-            </Transition.Child>
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center md:p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full h-screen md:h-fit md:max-w-4xl md:w-11/12 transform overflow-hidden md:rounded-2xl bg-white dark:bg-slate-800 py-6 px-3 md:px-6  text-left align-middle shadow-xl transition-all">
+                  {content}
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
           </div>
-        </div>
-      </Dialog>
-    </Transition>
+        </Dialog>
+      </Transition>
+
+      <EditMedia
+        open={editMedia}
+        handleClose={closeEditModalHandler}
+        id={id}
+        onCloseShowMedia={handleClose}
+      />
+    </>
   );
 };
 export default ShowMedia;
