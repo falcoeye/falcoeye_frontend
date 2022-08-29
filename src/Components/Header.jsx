@@ -1,5 +1,3 @@
-import { useContext } from "react";
-import AuthContext from "../store/auth-context";
 import DropDown from "./DropDown/DropDown";
 import ToggleMode from "./UI/ToggleMode/ToggleMode";
 
@@ -26,9 +24,7 @@ export const LoadingSkelton = () => {
   );
 };
 
-const Header = ({ isLight, colorTheme, setTheme }) => {
-  const { userData } = useContext(AuthContext);
-
+const Header = ({ isLight, colorTheme, setTheme, userData }) => {
   let firstUserNameLetter;
   if (userData) {
     firstUserNameLetter = userData.name?.slice(0, 1).toUpperCase();
@@ -52,7 +48,7 @@ const Header = ({ isLight, colorTheme, setTheme }) => {
               ) : (
                 <LoadingSkelton />
               )}
-              <DropDown />
+              <DropDown userData={userData} />
             </div>
           </div>
         </div>
