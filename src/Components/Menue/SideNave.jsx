@@ -50,7 +50,7 @@ const SideNav = ({ sideNav, toggleDrawer }) => {
         <div>
           <div className="pl-px">
             <NavLink to={`/`}>
-              <img src={logoSrc} alt="logo" className="w-[70px]" />
+              <img src={logoSrc} alt="logo" className="w-[70px]" style={{ transform: 'rotateY(180deg)' }} />
             </NavLink>
           </div>
 

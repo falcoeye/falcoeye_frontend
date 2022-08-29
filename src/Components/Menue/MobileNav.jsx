@@ -43,7 +43,7 @@ const MobileNav = ({
             <GiHamburgerMenu />
           </button>
           <NavLink to={`/`}>
-            <img className="w-12" src={logoSrc} alt="logo" />
+            <img className="w-12" src={logoSrc} alt="logo"  style={{ transform: 'rotateY(180deg)' }} />
           </NavLink>
         </div>
         <div>

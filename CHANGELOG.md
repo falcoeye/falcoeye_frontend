@@ -6,6 +6,7 @@
 - Remove ID from workflow cards in workflow list page
 - Change analysis icon
 - User profile page
+- Change App logo
 ### 0.0.8.1
 - Add Dark Mode Support
 ### 0.0.8
