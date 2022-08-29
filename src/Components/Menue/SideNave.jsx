@@ -15,19 +15,19 @@ const navLinks = [
   { id: 1, text: "dashboard", icon: <AiFillAppstore size={20} />, path: "/" },
   {
     id: 2,
-    text: "sources",
+    text: "Sources",
     icon: <AiFillCamera size={20} />,
     path: "/sources",
   },
   {
     id: 3,
-    text: "media",
+    text: "Media",
     icon: <RiCameraLensFill size={20} />,
     path: "/media",
   },
   {
     id: 4,
-    text: "workflows",
+    text: "Workflows",
     icon: <AiFillRobot size={20} />,
     path: "/workflows",
   },

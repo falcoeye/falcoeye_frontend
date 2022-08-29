@@ -99,7 +99,7 @@ const UploadMedia = ({ handleClose, open }) => {
           <input
             type="text"
             id="notes"
-            className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white standard"
+            className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white standard has_margin"
             name="notes"
             placeholder="Notes"
             onChange={handleChange}
@@ -108,7 +108,7 @@ const UploadMedia = ({ handleClose, open }) => {
           <input
             type="text"
             id="tags"
-            className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white standard"
+            className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white standard has_margin"
             name="tags"
             placeholder="Tags"
             onChange={handleChange}

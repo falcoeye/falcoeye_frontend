@@ -120,6 +120,9 @@
   margin: 0px;
   width: 100%;
 }
+.modal_form_input.standard.has_margin {
+  margin-bottom: 10px;
+}
 
 .modal_form_input:focus {
   background-color: #fff;

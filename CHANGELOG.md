@@ -1,3 +1,11 @@
+### 0.0.8.2
+- Change SideDrawer Style
+- Edit Media Notes & Tags
+- Add Notes & Tags in submiting Upload in Media
+- Remove settings page
+- Remove ID from workflow cards in workflow list page
+- Change analysis icon
+- User profile page
 ### 0.0.8.1
 - Add Dark Mode Support
 ### 0.0.8
