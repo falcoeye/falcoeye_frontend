@@ -9,6 +9,7 @@ import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
 import Home from "./pages/Home";
 import Media from "./pages/Media";
+import Profile from "./pages/Profile/Profile";
 import Sources from "./pages/Sources";
 import Workflows from "./pages/Workflows";
 
@@ -65,6 +66,14 @@ function App() {
             element={
               <RequireAuth>
                 <Analysis />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="profile"
+            element={
+              <RequireAuth>
+                <Profile />
               </RequireAuth>
             }
           />

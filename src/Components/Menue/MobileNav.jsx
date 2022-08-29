@@ -19,10 +19,15 @@ const navLinks = [
   { id: 5, text: "Analysis", icon: <FaBriefcase />, path: "/analysis" },
 ];
 
-const MobileNav = ({ isOpen, toggleDrawer, isLight, colorTheme, setTheme }) => {
-  const userData = JSON.parse(localStorage.getItem("user"));
+const MobileNav = ({
+  isOpen,
+  toggleDrawer,
+  isLight,
+  colorTheme,
+  setTheme,
+  userData,
+}) => {
   let firstUserNameLetter;
-
   if (userData) {
     firstUserNameLetter = userData.name?.slice(0, 1).toUpperCase();
   }
@@ -37,7 +42,9 @@ const MobileNav = ({ isOpen, toggleDrawer, isLight, colorTheme, setTheme }) => {
           >
             <GiHamburgerMenu />
           </button>
-          <img className="w-12" src={logoSrc} alt="logo" />
+          <NavLink to={`/`}>
+            <img className="w-12" src={logoSrc} alt="logo" />
+          </NavLink>
         </div>
         <div>
           <div className="flex gap-x-5 items-center">
@@ -54,7 +61,7 @@ const MobileNav = ({ isOpen, toggleDrawer, isLight, colorTheme, setTheme }) => {
               <LoadingSkelton />
             )}
 
-            <DropDown />
+            <DropDown userData={userData} />
           </div>
         </div>
       </div>
