@@ -7,7 +7,7 @@ const initialState = {
   fetchingSources: false,
   fetchingSourcesError: null,
   page: 1,
-  lastPage: true,
+  lastPage: false,
 };
 
 const sourcesSlice = createSlice({
@@ -58,7 +58,7 @@ export const fetchSources = (page) => async (dispatch) => {
         return;
       }
       dispatch(fetchSourcesSuccess(res.data.camera));
-      if (res.data.last_page) {
+      if (res.data.lastPage) {
         dispatch(handleLastPage(true));
       }
     })
