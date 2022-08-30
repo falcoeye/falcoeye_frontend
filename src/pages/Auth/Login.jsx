@@ -1,11 +1,10 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import LoadingSpinner from "../../Components/UI/LoadingSpinner/LoadingSpinner";
 import AuthContext from "../../store/auth-context";
 import axios from "../../utility/auth-instance";
-
 import "./Auth.css";
-import LoadingSpinner from "../../Components/UI/LoadingSpinner/LoadingSpinner";
 
 const Login = () => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -66,7 +65,14 @@ const Login = () => {
         if (error.response.data.errors) {
           Object.entries(error.response.data.errors).forEach((t, k) => {
             const errorMessage = `${t[0]}: ${t[1][0]}`;
-             toast.error(errorMessage, { position: "bottom-center", autoClose: 4000, hideProgressBar: true, closeOnClick: true, pauseOnHover: false, draggable: false, progress: undefined,
+            toast.error(errorMessage, {
+              position: "bottom-center",
+              autoClose: 4000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: false,
+              progress: undefined,
             });
           });
         }
