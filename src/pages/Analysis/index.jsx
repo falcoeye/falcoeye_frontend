@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import Layout from '../../Components/Layout';
-import AddAnalysis from '../Modals/AddAnalysis/AddAnalysis';
-import AnalysisList from './AnalysisList';
+import React, { useState } from "react";
+import Layout from "../../Components/Layout";
+import AddAnalysis from "../Modals/AddAnalysis/AddAnalysis";
+import AnalysisList from "./AnalysisList";
 
 const Analysis = () => {
   const [addAnalysisModal, setAddAnalysisModal] = useState(false);
@@ -23,7 +23,7 @@ const Analysis = () => {
               className="flex gap-5 sm:pt-0 pt-4"
               onClick={openAddAnalysisModalHandler}
             >
-              <span className="bg-primary text-white text-sm py-2  flex justify-center items-center md:px-4 px-3 md:rounded-3xl rounded-full">
+              <span className="bg-primary text-white text-sm py-2  flex justify-center items-center md:px-4 px-3 rounded-md">
                 <span className="capitalize"> Add analysis</span>
               </span>
             </button>

@@ -1,8 +1,8 @@
-import { Fragment, useCallback, useEffect } from 'react';
-import { useState } from 'react';
-import { toast } from 'react-toastify';
-import ShowSource from '../../../../../../../ShowSource/ShowSource';
-import axios from '../../../../../../../../../utility/api-instance';
+import { Fragment, useCallback, useEffect } from "react";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import ShowSource from "../../../../../../../ShowSource/ShowSource";
+import axios from "../../../../../../../../../utility/api-instance";
 
 const SourceCard = (props) => {
   const { source, selectedSourceId, handleClick, lastElementRef } = props;
@@ -22,10 +22,10 @@ const SourceCard = (props) => {
     let url = `/camera/${id}/img_260.jpg`;
     setLoading(true);
     axios
-      .get(url, { responseType: 'blob' })
+      .get(url, { responseType: "blob" })
       .then((res) => {
         // we can all pass them to the Blob constructor directly
-        const new_blob = new Blob([res.data], { type: 'image/jpg' });
+        const new_blob = new Blob([res.data], { type: "image/jpg" });
         const url = URL.createObjectURL(new_blob);
         setImage(url);
         setLoading(false);
@@ -43,7 +43,7 @@ const SourceCard = (props) => {
   let renderedImage = (
     <div
       className={`flex justify-center items-center h-48 bg-gray-300 ${
-        loading && 'animate-pulse'
+        loading && "animate-pulse"
       } mb-5`}
     >
       <svg
@@ -71,23 +71,23 @@ const SourceCard = (props) => {
   }
 
   const status =
-    source.status === '1' ||
+    source.status === "1" ||
     source.status === 1 ||
-    source.status.toLowerCase() === 'running'
-      ? 'Running'
-      : 'Stopped';
+    source.status.toLowerCase() === "running"
+      ? "Running"
+      : "Stopped";
   const type =
-    source.streaming_type === 'StreamingServer'
-      ? 'Streaming Server'
+    source.streaming_type === "StreamingServer"
+      ? "Streaming Server"
       : source.streaming_type;
 
   return (
     <Fragment>
       <div
         ref={lastElementRef}
-        className={`p-4 rounded-lg border border-gray-200 dark:border-gray-800 shadow-md cursor-pointer bg-white dark:bg-gray-800 ${
+        className={`p-4 rounded-md border border-gray-200 dark:border-gray-800 shadow-md cursor-pointer bg-white dark:bg-gray-800 ${
           selectedSourceId === source.id &&
-          'bg-primary/10 dark:!bg-green/20 hover:bg-primary/10 dark:hover:!bg-green/20 dark:!border-green/20'
+          "bg-primary/10 dark:!bg-green/20 hover:bg-primary/10 dark:hover:!bg-green/20 dark:!border-green/20"
         }`}
         onClick={handleClick.bind(null, source.id)}
       >
@@ -101,8 +101,8 @@ const SourceCard = (props) => {
           </p>
           <div
             className={`inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white ${
-              status === 'Running' ? 'bg-primary' : 'bg-danger'
-            } rounded-lg`}
+              status === "Running" ? "bg-primary" : "bg-danger"
+            } rounded-md`}
           >
             {status}
           </div>
@@ -111,7 +111,7 @@ const SourceCard = (props) => {
           <button
             onClick={openSourceModalHandler}
             type="button"
-            className="focus:outline-none text-white bg-green/80 hover:bg-green font-medium rounded-lg text-sm px-5 py-2.5 transition w-max	"
+            className="focus:outline-none text-white bg-green/80 hover:bg-green font-medium rounded-md text-sm px-5 py-2.5 transition w-max	"
           >
             View Details
           </button>

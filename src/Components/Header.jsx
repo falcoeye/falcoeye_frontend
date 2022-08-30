@@ -34,7 +34,7 @@ const Header = ({ isLight, colorTheme, setTheme, userData, toggleDrawer }) => {
   return (
     <>
       <div className="main-container pt-6 lg:block hidden">
-        <div className="flex md:flex-row flex-col flex-wrap lg:flex-nowrap justify-between rounded-lg lg:rounded-full gap-y-3  bg-white dark:bg-slate-800 px-4 md:px-8 lg:px-5 py-3 lg:py-1 min-h-[42px]">
+        <div className="flex md:flex-row flex-col flex-wrap lg:flex-nowrap justify-between rounded-md gap-y-3  bg-white dark:bg-slate-800 px-4 md:px-8 lg:px-5 py-3 lg:py-1 min-h-[42px]">
           <div className="flex-1 md:justify-between md:order-none order-first lg:basis-1/6 bas flex items-center px-3 gap-x-4">
             <div className="leading-3">
               <button

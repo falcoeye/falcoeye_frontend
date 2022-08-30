@@ -25,7 +25,7 @@ const ToggleMode = ({ setTheme, colorTheme, isLight }) => {
 
   return (
     <button
-      className=" w-10 h-5 md:w-12 md:h-6 rounded-2xl bg-white dark:bg-gray-800 flex items-center transition duration-300 focus:outline-none shadow"
+      className=" w-10 h-5 md:w-12 md:h-6 rounded-md bg-white dark:bg-gray-800 flex items-center transition duration-300 focus:outline-none shadow"
       onClick={toggleModeHandler}
     >
       <div

@@ -163,7 +163,7 @@ const ShowMedia = ({ open, handleClose, id }) => {
         <div
           className={`inline-flex items-center mb-3 py-1 px-2 text-base font-medium text-center text-white capitalize ${
             media.media_type === "image" ? "bg-sky-400" : "bg-emerald-500"
-          } rounded-lg`}
+          } rounded-md`}
         >
           {data.current.media_type === "image" ? (
             <AiFillCamera className="mr-2" />
@@ -218,7 +218,7 @@ const ShowMedia = ({ open, handleClose, id }) => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full h-screen md:h-fit md:max-w-4xl md:w-11/12 transform overflow-hidden md:rounded-2xl bg-white dark:bg-slate-800 py-6 px-3 md:px-6  text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full h-screen md:h-fit md:max-w-4xl md:w-11/12 transform overflow-hidden rounded-md bg-white dark:bg-slate-800 py-6 px-3 md:px-6  text-left align-middle shadow-xl transition-all">
                   {content}
                 </Dialog.Panel>
               </Transition.Child>

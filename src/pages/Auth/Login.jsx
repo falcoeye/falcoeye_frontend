@@ -82,12 +82,12 @@ const Login = () => {
   return (
     <div className="login_form_wrapper dark:!bg-slate-900">
       <div className="login_form_box ">
-        <div id="loginformContent" className="dark:!bg-slate-800">
+        <div id="loginformContent" className="dark:!bg-slate-800 !rounded-md">
           <form onSubmit={handleSubmit}>
             <input
               type="email"
               id="email"
-              className="login_form_input dark:!bg-slate-700 dark:!border-gray-700 dark:!text-white"
+              className="login_form_input dark:!bg-slate-700 dark:!border-gray-700 dark:!text-white !rounded-md"
               name="email"
               placeholder="Email Address"
               onChange={handleChange}
@@ -97,7 +97,7 @@ const Login = () => {
             <input
               type="password"
               id="password"
-              className="login_form_input dark:!bg-slate-700 dark:!border-gray-700 dark:!text-white"
+              className="login_form_input dark:!bg-slate-700 dark:!border-gray-700 dark:!text-white !rounded-md"
               name="password"
               placeholder="Password"
               onChange={handleChange}
@@ -107,7 +107,11 @@ const Login = () => {
 
             {errorMessage && <p className="error_text">{errorMessage}</p>}
 
-            <button type="submit" className="login_form_btn" value="Login">
+            <button
+              type="submit"
+              className="login_form_btn !rounded-md"
+              value="Login"
+            >
               {isLoading && <LoadingSpinner />}
               {!isLoading && "Login"}
             </button>

@@ -86,7 +86,7 @@ const ShowAnalysis = ({
                   : status === "Error"
                   ? "text-[#c16a7b]"
                   : "text-green"
-              } bg-gray-50 w-fit py-2 px-5 rounded-full font-semibold`}
+              } bg-gray-50 w-fit py-2 px-5 rounded-md font-semibold`}
             >
               {status}
             </p>
@@ -104,7 +104,7 @@ const ShowAnalysis = ({
           <button
             onClick={deleteAnalysisHandler}
             type="button"
-            className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5"
+            className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-5 py-2.5"
           >
             Delete
           </button>
@@ -145,7 +145,7 @@ const ShowAnalysis = ({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white dark:bg-slate-800 p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-md bg-white dark:bg-slate-800 p-6 text-left align-middle shadow-xl transition-all">
                 {content}
               </Dialog.Panel>
             </Transition.Child>

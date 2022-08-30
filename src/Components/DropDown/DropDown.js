@@ -71,7 +71,7 @@ const DropDown = ({ userData }) => {
             )}
             <button
               onClick={logout}
-              className="mx-4 text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5  bg-green hover:bg-green/90 focus:outline-none focus:ring-green/50"
+              className="mx-4 text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2.5  bg-green hover:bg-green/90 focus:outline-none focus:ring-green/50"
             >
               Logout
             </button>
