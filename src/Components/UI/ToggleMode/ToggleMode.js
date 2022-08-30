@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MdLightMode, MdModeNight } from "react-icons/md";
-import useDarkMode from "../../../hooks/useDarkMode";
+import ThemeContext from "../../../store/theme-context";
 
 const ToggleMode = () => {
-  const [colorTheme, setTheme] = useDarkMode();
+  const { colorTheme, themeChangeHandler } = useContext(ThemeContext);
   const isLight = colorTheme !== "dark";
 
   const startIcon = isLight ? <MdModeNight /> : <MdLightMode />;
-
   const [icon, setIcon] = useState(startIcon);
 
   const toggleModeHandler = () => {
-    setTheme(colorTheme);
+    themeChangeHandler(colorTheme);
   };
 
   useEffect(() => {
