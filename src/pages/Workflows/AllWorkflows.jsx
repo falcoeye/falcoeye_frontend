@@ -270,7 +270,7 @@ const AllWorkflows = () => {
 
   return (
     <>
-      <div className="mt-5 rounded-[10px] p-5">
+      <div className="mx-1 pt-5 px-4 md:px-7 pb-5 rounded-md">
         <h3 className="text-[#525252] capitalize dark:text-white  text-xl flex items-center gap-5 pb-5 border-b border-[#f5f5f5] mb-4">
           Workflows
         </h3>

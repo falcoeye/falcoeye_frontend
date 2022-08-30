@@ -27,7 +27,7 @@ const Profile = () => {
 
   return (
     <Layout>
-      <div className="p-4">
+      <div className="mx-1 pt-5 px-4 md:px-7 pb-5 rounded-md">
         <h2 className="text-gray-900 text-xl capitalize dark:text-white">
           Profile
         </h2>

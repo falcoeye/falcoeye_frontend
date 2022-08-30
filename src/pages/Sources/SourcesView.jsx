@@ -46,7 +46,7 @@ const SourcesView = (props) => {
         handleClose={addSourceModalChangeHandler}
       />
 
-      <div className="mx-1 pt-3 px-4 md:px-7 pb-7 rounded-sm">
+      <div className="mx-1 pt-5 px-4 md:px-7 pb-5 rounded-md">
         <div className="flex justify-between sm:flex-row flex-col">
           <div>
             <h2 className="text-gray-900 text-lg capitalize dark:text-white">
