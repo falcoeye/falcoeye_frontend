@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { MdLightMode, MdModeNight } from "react-icons/md";
+import useDarkMode from "../../../hooks/useDarkMode";
 
-const ToggleMode = ({ setTheme, colorTheme, isLight }) => {
-  const theme = localStorage.getItem("theme");
-  const startIcon = theme === "dark" ? <MdModeNight /> : <MdLightMode />;
+const ToggleMode = () => {
+  const [colorTheme, setTheme] = useDarkMode();
+  const isLight = colorTheme !== "dark";
+
+  const startIcon = isLight ? <MdModeNight /> : <MdLightMode />;
 
   const [icon, setIcon] = useState(startIcon);
 

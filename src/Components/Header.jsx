@@ -25,7 +25,7 @@ export const LoadingSkelton = () => {
   );
 };
 
-const Header = ({ isLight, colorTheme, setTheme, userData, toggleDrawer }) => {
+const Header = ({ userData, toggleDrawer }) => {
   let firstUserNameLetter;
   if (userData) {
     firstUserNameLetter = userData.name?.slice(0, 1).toUpperCase();
@@ -45,11 +45,7 @@ const Header = ({ isLight, colorTheme, setTheme, userData, toggleDrawer }) => {
               </button>
             </div>
             <div className="flex gap-x-5 items-center">
-              <ToggleMode
-                isLight={isLight}
-                colorTheme={colorTheme}
-                setTheme={setTheme}
-              />
+              <ToggleMode />
               {firstUserNameLetter ? (
                 <div className="w-10 h-10 rounded-full bg-green text-white flex items-center justify-center font-bold text-lg">
                   {firstUserNameLetter}
