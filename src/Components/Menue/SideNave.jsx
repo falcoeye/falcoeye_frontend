@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  AiFillAppstore,
-  AiFillCamera,
-  AiFillRobot,
-  AiOutlineBackward,
-  AiOutlineForward,
-} from "react-icons/ai";
+import { AiFillAppstore, AiFillCamera, AiFillRobot } from "react-icons/ai";
 import { FaBriefcase } from "react-icons/fa";
 import { RiCameraLensFill } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
@@ -39,7 +33,7 @@ const navLinks = [
   },
 ];
 
-const SideNav = ({ sideNav, toggleDrawer }) => {
+const SideNav = ({ sideNav }) => {
   return (
     <div className="w-full md:block hidden relative">
       <div
@@ -50,7 +44,12 @@ const SideNav = ({ sideNav, toggleDrawer }) => {
         <div>
           <div className="pl-px">
             <NavLink to={`/`}>
-              <img src={logoSrc} alt="logo" className="w-[70px]" style={{ transform: 'rotateY(180deg)' }} />
+              <img
+                src={logoSrc}
+                alt="logo"
+                className="w-[70px]"
+                style={{ transform: "rotateY(180deg)" }}
+              />
             </NavLink>
           </div>
 
@@ -78,21 +77,6 @@ const SideNav = ({ sideNav, toggleDrawer }) => {
                 </li>
               ))}
             </ul>
-            <div className="py-3 flex justify-center">
-              {sideNav ? (
-                <AiOutlineBackward
-                  size={26}
-                  className="cursor-pointer text-primary mt-5"
-                  onClick={toggleDrawer}
-                />
-              ) : (
-                <AiOutlineForward
-                  size={26}
-                  className="cursor-pointer text-primary mt-5"
-                  onClick={toggleDrawer}
-                />
-              )}
-            </div>
           </div>
         </div>
         {process.env.REACT_APP_VERSION && (

@@ -40,6 +40,7 @@ const Layout = ({ children }) => {
             setTheme={setTheme}
             isLight={isLight}
             userData={userData}
+            toggleDrawer={handleSideNav}
           />
           <div className="main-container mt-6 ">
             <div className="bg-white dark:bg-slate-800">{children}</div>

@@ -1,3 +1,4 @@
+import { GiHamburgerMenu } from "react-icons/gi";
 import DropDown from "./DropDown/DropDown";
 import ToggleMode from "./UI/ToggleMode/ToggleMode";
 
@@ -24,7 +25,7 @@ export const LoadingSkelton = () => {
   );
 };
 
-const Header = ({ isLight, colorTheme, setTheme, userData }) => {
+const Header = ({ isLight, colorTheme, setTheme, userData, toggleDrawer }) => {
   let firstUserNameLetter;
   if (userData) {
     firstUserNameLetter = userData.name?.slice(0, 1).toUpperCase();
@@ -34,7 +35,15 @@ const Header = ({ isLight, colorTheme, setTheme, userData }) => {
     <>
       <div className="main-container pt-6 lg:block hidden">
         <div className="flex md:flex-row flex-col flex-wrap lg:flex-nowrap justify-between rounded-lg lg:rounded-full gap-y-3  bg-white dark:bg-slate-800 px-4 md:px-8 lg:px-5 py-3 lg:py-1 min-h-[42px]">
-          <div className="flex-1 md:justify-end md:order-none order-first lg:basis-1/6 bas flex items-center px-3 gap-x-4">
+          <div className="flex-1 md:justify-between md:order-none order-first lg:basis-1/6 bas flex items-center px-3 gap-x-4">
+            <div className="leading-3">
+              <button
+                onClick={toggleDrawer}
+                className="text-primary text-xl dark:text-white"
+              >
+                <GiHamburgerMenu />
+              </button>
+            </div>
             <div className="flex gap-x-5 items-center">
               <ToggleMode
                 isLight={isLight}
