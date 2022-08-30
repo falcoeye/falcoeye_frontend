@@ -20,7 +20,7 @@ const sourcesSlice = createSlice({
     },
     fetchSourcesSuccess: (state, action) => {
       state.fetchingSources = false;
-      state.data = action.payload;
+      state.data.push(...action.payload);
     },
     fetchSourcesFailed: (state, action) => {
       state.fetchingSources = false;

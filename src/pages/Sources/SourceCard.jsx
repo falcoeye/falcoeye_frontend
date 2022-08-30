@@ -70,6 +70,8 @@ const SourceCard = (props) => {
     );
   }
 
+  // console.log(source, source.status)
+
   const status =
     source.status === "1" ||
     source.status === 1 ||

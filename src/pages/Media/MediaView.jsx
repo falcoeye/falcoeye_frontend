@@ -13,7 +13,7 @@ const MediaView = (props) => {
   const [isGridView, setIsGridView] = useState(true);
 
   const media = useSelector((state) => state.media);
-  const { data } = media;
+  const { data, page, lastPage } = media;
 
   const [filteredMedia, setFilteredMedia] = useState(data);
   const [uploadMediaImage, setUploadMediaImage] = useState(false);
@@ -39,8 +39,8 @@ const MediaView = (props) => {
   const closeModalHandler = () => setUploadMediaImage(false);
 
   useEffect(() => {
-    dispatch(fetchMedia());
-  }, [dispatch]);
+    !lastPage && dispatch(fetchMedia(page));
+  }, [dispatch, lastPage, page]);
 
   const searchFilter = (term, items) => {
     if (term.length === 0) return items;

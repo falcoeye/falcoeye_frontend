@@ -17,8 +17,8 @@ const SourcesView = (props) => {
   const { fetchingSources, page, lastPage } = sources;
 
   useEffect(() => {
-    dispatch(fetchSources(page));
-  }, [dispatch, page]);
+    !lastPage && dispatch(fetchSources(page));
+  }, [dispatch, lastPage, page]);
 
   const addSourceModalChangeHandler = useCallback((val) => {
     setAddSourceOpened(val);

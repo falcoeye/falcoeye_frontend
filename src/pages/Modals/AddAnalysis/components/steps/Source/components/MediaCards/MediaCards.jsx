@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMedia } from "../../../../../../../../store/media";
+import { fetchMedia, handlePage } from "../../../../../../../../store/media";
 import Lottie from 'lottie-react';
 import Loader from "../../../../../../../../Components/UI/Loader/Loader";
 import noDataAnimation from '../../../../../../../../assets/animations/no-data.json'
@@ -16,13 +16,28 @@ const MediaCards = props => {
 
     const dispatch = useDispatch();
     const media = useSelector((state) => state.media);
-    const { data, fetchingMedia } = media;
+    const { data, fetchingMedia, page, lastPage  } = media;
 
     const [filteredMedia, setFilteredMedia] = useState(data);
 
     useEffect(() => {
-        dispatch(fetchMedia());
-    }, [dispatch]);
+        !lastPage && dispatch(fetchMedia(page));
+    }, [dispatch, lastPage, page]);
+
+    const ovserver = useRef();
+    const lastElementRef = useCallback(
+        (node) => {
+        if (fetchingMedia) return;
+        if (ovserver.current) ovserver.current.disconnect();
+        ovserver.current = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && !lastPage) {
+            dispatch(handlePage(page + 1));
+            }
+        });
+        if (node) ovserver.current.observe(node);
+        },
+        [dispatch, fetchingMedia, lastPage, page]
+    );
 
     const typeFilter = (type, items) => {
         switch (type) {
@@ -53,7 +68,7 @@ const MediaCards = props => {
     };
     
 
-    if (fetchingMedia) {
+    if (fetchingMedia && filteredMedia.length === 0) {
         return <Loader height="h-[300px]" />;
     }
     if (filteredMedia.length === 0 && !media.fetchingMedia) {
@@ -68,7 +83,19 @@ const MediaCards = props => {
         );
     }
 
-    const mediaCards = filteredMedia.map((media) => {
+    const mediaCards = filteredMedia.map((media, index) => {
+        if(  filteredMedia.length - 1 === index ) {
+            return (
+                <MediaCard
+                    key={media.id}
+                    selectedMediaId={selectedSource}
+                    media={media}
+                    handleClick={updateSource}
+                    handleShowClick={openMediaModalHandler}
+                    lastElementRef={lastElementRef}
+                />
+            );
+        }
         return (
             <MediaCard
                 key={media.id}
