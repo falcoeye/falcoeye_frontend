@@ -1,13 +1,13 @@
-import { Dialog, Transition } from '@headlessui/react';
-import { useState } from 'react';
-import { Fragment, useCallback } from 'react';
-import { BsFillCameraVideoFill } from 'react-icons/bs';
-import { useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
-import LoadingSpinner from '../../Components/UI/LoadingSpinner/LoadingSpinner';
-import { addMedia } from '../../store/media';
-import axios from '../../utility/api-instance';
-import './Modals.css';
+import { Dialog, Transition } from "@headlessui/react";
+import { useState } from "react";
+import { Fragment, useCallback } from "react";
+import { BsFillCameraVideoFill } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import LoadingSpinner from "../../Components/UI/LoadingSpinner/LoadingSpinner";
+import { addMedia } from "../../store/media";
+import axios from "../../utility/api-instance";
+import "./Modals.css";
 
 const UploadMedia = ({ handleClose, open }) => {
   const dispatch = useDispatch();
@@ -18,21 +18,21 @@ const UploadMedia = ({ handleClose, open }) => {
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const [data, setData] = useState({
-    notes: '',
-    tags: '',
+    notes: "",
+    tags: "",
   });
 
   const handleImageUpload = useCallback(async (event) => {
     const file = event.target.files[0];
 
     let formData = new FormData();
-    formData.append('file', file);
+    formData.append("file", file);
 
     setLoading(true);
     axios
-      .post('/upload', formData, {
+      .post("/upload", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       })
       .then((res) => {
@@ -79,7 +79,7 @@ const UploadMedia = ({ handleClose, open }) => {
     try {
       const res = await axios.post(`/media/video`, {
         registry_key: videoKey,
-        ...data
+        ...data,
       });
       setSubmitLoading(false);
       dispatch(addMedia(res.data.video));
@@ -87,7 +87,7 @@ const UploadMedia = ({ handleClose, open }) => {
       handleClose();
     } catch (error) {
       setSubmitLoading(false);
-      toast.error(error.data.message || 'Something went wrong!');
+      toast.error(error.data.message || "Something went wrong!");
     }
   };
 
@@ -95,7 +95,7 @@ const UploadMedia = ({ handleClose, open }) => {
   if (!loading && videoURL) {
     buttonsContent = (
       <Fragment>
-        <form className='mb-3 w-full md:w-3/4	' >
+        <form className="mb-3 w-full md:w-3/4	">
           <input
             type="text"
             id="notes"
@@ -118,7 +118,7 @@ const UploadMedia = ({ handleClose, open }) => {
         <button
           type="button"
           onClick={submitVideoHandler}
-          className="text-white bg-green/90 hover:bg-green rounded-lg font-medium text-base px-4 py-2  focus:outline-none flex items-center"
+          className="text-white bg-green/90 hover:bg-green rounded-md font-medium text-base px-4 py-2  focus:outline-none flex items-center"
         >
           {submitLoading && (
             <svg
@@ -151,9 +151,9 @@ const UploadMedia = ({ handleClose, open }) => {
         <BsFillCameraVideoFill className="relative fill-current z-50" />
         <input
           style={{
-            visibility: 'hidden',
-            position: 'absolute',
-            zIndex: '-1',
+            visibility: "hidden",
+            position: "absolute",
+            zIndex: "-1",
           }}
           type="file"
           id="image"
@@ -193,10 +193,10 @@ const UploadMedia = ({ handleClose, open }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-xl transform overflow-hidden rounded-2xl bg-white dark:bg-slate-800 py-12 px-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-xl transform overflow-hidden rounded-md bg-white dark:bg-slate-800 py-12 px-6 text-left align-middle shadow-xl transition-all">
                 <div
                   className={`${
-                    videoURL ? '' : 'border'
+                    videoURL ? "" : "border"
                   }  border-dashed border-gray-500 aspect-video flex justify-center items-center`}
                 >
                   {content}

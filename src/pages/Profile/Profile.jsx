@@ -42,7 +42,7 @@ const Profile = () => {
                 debounceTimeout={500}
                 type="text"
                 id="name"
-                className="modal_form_input !text-left !w-full !ml-0 dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white"
+                className="modal_form_input !text-left !w-full !ml-0 dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white !rounded-md"
                 name="name"
                 placeholder="Name"
                 value={data?.name || ""}
@@ -63,7 +63,7 @@ const Profile = () => {
                 debounceTimeout={500}
                 type="text"
                 id="email"
-                className="modal_form_input !text-left !w-full !ml-0 dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white"
+                className="modal_form_input !text-left !w-full !ml-0 dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white !rounded-md"
                 name="email"
                 placeholder="Email"
                 value={data?.email || ""}
@@ -87,7 +87,7 @@ const Profile = () => {
                 debounceTimeout={500}
                 type="text"
                 id="username"
-                className="modal_form_input !text-left !w-full !ml-0 dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white"
+                className="modal_form_input !text-left !w-full !ml-0 dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white !rounded-md"
                 name="username"
                 placeholder="Username"
                 value={data?.username || ""}

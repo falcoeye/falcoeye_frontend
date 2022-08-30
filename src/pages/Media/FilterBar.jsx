@@ -16,7 +16,7 @@ const FilterBar = ({
       <div className="flex  md:gap-4 justify-between md:flex-row flex-col w-full">
         <div className="flex items-center gap-2 md:flex-row flex-col justify-between  md:order-none order-last">
           <div className="md:px-0 px-4 w-full">
-            <div className=" md:w-auto  w-full md:mt-0 mt-2 mb-2 py-1  flex items-center px-4 rounded-full   bg-white dark:bg-slate-800  dark:text-white md:max-w-[270px] max-w-full  ">
+            <div className=" md:w-auto  w-full md:mt-0 mt-2 mb-2 py-1  flex items-center px-4 rounded-md   bg-white dark:bg-slate-800  dark:text-white md:max-w-[270px] max-w-full  ">
               <span className="text-primary text-xl mr-4 dark:text-white">
                 <AiOutlineSearch />
               </span>

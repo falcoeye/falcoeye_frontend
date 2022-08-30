@@ -208,7 +208,7 @@ const ShowSource = ({ open, handleClose, id }) => {
             <button
               onClick={capturePreviewOpenHandler}
               type="button"
-              className="capitalize focus:outline-none text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:ring-green/30 font-medium rounded-lg text-sm px-5 py-2.5"
+              className="capitalize focus:outline-none text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:ring-green/30 font-medium rounded-md text-sm px-5 py-2.5"
             >
               preview
             </button>
@@ -338,7 +338,7 @@ const ShowSource = ({ open, handleClose, id }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full h-screen md:h-fit md:max-w-4xl md:w-11/12 transform overflow-hidden md:rounded-2xl bg-white dark:bg-slate-800 py-6 px-3 md:px-6  text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full h-screen md:h-fit md:max-w-4xl md:w-11/12 transform overflow-hidden rounded-md bg-white dark:bg-slate-800 py-6 px-3 md:px-6  text-left align-middle shadow-xl transition-all">
                 {content}
               </Dialog.Panel>
             </Transition.Child>

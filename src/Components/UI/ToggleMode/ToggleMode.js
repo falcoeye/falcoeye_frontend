@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { MdLightMode, MdModeNight } from "react-icons/md";
+import useDarkMode from "../../../hooks/useDarkMode";
 
-const ToggleMode = ({ setTheme, colorTheme, isLight }) => {
-  const theme = localStorage.getItem("theme");
-  const startIcon = theme === "dark" ? <MdModeNight /> : <MdLightMode />;
+const ToggleMode = () => {
+  const [colorTheme, setTheme] = useDarkMode();
+  const isLight = colorTheme !== "dark";
+
+  const startIcon = isLight ? <MdModeNight /> : <MdLightMode />;
 
   const [icon, setIcon] = useState(startIcon);
 
@@ -25,7 +28,7 @@ const ToggleMode = ({ setTheme, colorTheme, isLight }) => {
 
   return (
     <button
-      className=" w-10 h-5 md:w-12 md:h-6 rounded-2xl bg-white dark:bg-gray-800 flex items-center transition duration-300 focus:outline-none shadow"
+      className=" w-10 h-5 md:w-12 md:h-6 rounded-md bg-white dark:bg-gray-800 flex items-center transition duration-300 focus:outline-none shadow"
       onClick={toggleModeHandler}
     >
       <div

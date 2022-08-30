@@ -19,14 +19,7 @@ const navLinks = [
   { id: 5, text: "Analysis", icon: <FaBriefcase />, path: "/analysis" },
 ];
 
-const MobileNav = ({
-  isOpen,
-  toggleDrawer,
-  isLight,
-  colorTheme,
-  setTheme,
-  userData,
-}) => {
+const MobileNav = ({ isOpen, toggleDrawer, userData }) => {
   let firstUserNameLetter;
   if (userData) {
     firstUserNameLetter = userData.name?.slice(0, 1).toUpperCase();
@@ -43,16 +36,17 @@ const MobileNav = ({
             <GiHamburgerMenu />
           </button>
           <NavLink to={`/`}>
-            <img className="w-12" src={logoSrc} alt="logo"  style={{ transform: 'rotateY(180deg)' }} />
+            <img
+              className="w-12"
+              src={logoSrc}
+              alt="logo"
+              style={{ transform: "rotateY(180deg)" }}
+            />
           </NavLink>
         </div>
         <div>
           <div className="flex gap-x-5 items-center">
-            <ToggleMode
-              isLight={isLight}
-              colorTheme={colorTheme}
-              setTheme={setTheme}
-            />
+            <ToggleMode />
             {firstUserNameLetter ? (
               <div className="w-10 h-10 rounded-full bg-green text-white flex items-center justify-center font-bold text-lg">
                 {firstUserNameLetter}

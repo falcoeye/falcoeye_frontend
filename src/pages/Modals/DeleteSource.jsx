@@ -57,7 +57,7 @@ const DeleteSource = ({ handleClose, id, open, handleShowClose }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white dark:bg-slate-800 p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-md bg-white dark:bg-slate-800 p-6 text-left align-middle shadow-xl transition-all">
                 <div className="text-[#42a7df] text-lg font-semibold text-center dark:text-white">
                   Are You Sure You Want To Delete This Source ?
                 </div>
@@ -66,14 +66,14 @@ const DeleteSource = ({ handleClose, id, open, handleShowClose }) => {
                   <button
                     onClick={deleteSourceHandler}
                     type="button"
-                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5"
+                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-5 py-2.5"
                   >
                     {deleting ? <LoadingSpinner /> : "Yes"}
                   </button>
                   <button
                     onClick={handleClose}
                     type="button"
-                    className="focus:outline-none text-white bg-green/70 hover:bg-green focus:ring-4 focus:ring-green/30 font-medium rounded-lg text-sm px-5 py-2.5"
+                    className="focus:outline-none text-white bg-green/70 hover:bg-green focus:ring-4 focus:ring-green/30 font-medium rounded-md text-sm px-5 py-2.5"
                   >
                     No
                   </button>

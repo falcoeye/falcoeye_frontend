@@ -71,7 +71,7 @@ const MediaCard = (props) => {
 
   return (
     <div
-      className="rounded-lg  cursor-pointer shadow-md overflow-hidden"
+      className="rounded-md  cursor-pointer shadow-md overflow-hidden"
       onClick={() => handleClick(id)}
     >
       {renderedImage}
@@ -79,7 +79,7 @@ const MediaCard = (props) => {
         <div
           className={`inline-flex items-center mb-3 py-1 px-2 text-base font-medium text-center text-white capitalize ${
             media_type === "image" ? "bg-sky-400" : "bg-emerald-500"
-          } rounded-lg`}
+          } rounded-md`}
         >
           {media_type === "image" ? (
             <AiFillCamera className="mr-2" />
