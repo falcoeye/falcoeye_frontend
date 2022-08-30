@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import noDataAnimation from "../../assets/animations/no-data.json";
 import Loader from "../../Components/UI/Loader/Loader";
 import axios from "../../utility/api-instance";
+import AddAnalysis from "./AddAnalysis/AddAnalysis";
 import "./Modals.css";
 
 const ShowWorkflow = ({ open, handleClose, id }) => {
@@ -15,6 +16,11 @@ const ShowWorkflow = ({ open, handleClose, id }) => {
 
   const [data, setData] = useState(null);
   const [fetching, setFetching] = useState(false);
+
+  const [analysisModalOpened, setAnalysisModalOpened] = useState(false);
+
+  const analysisModalOpenHandler = () => setAnalysisModalOpened(true);
+  const analysisModalCloseHandler = () => setAnalysisModalOpened(false);
 
   const fetchData = useCallback(() => {
     setFetching(true);
@@ -117,7 +123,7 @@ const ShowWorkflow = ({ open, handleClose, id }) => {
             {moment.utc(data.date).format("MMM DD YYYY")}
           </p>
         </div>
-        <div className="flex flex-col gap-2 text-sm mt-5 dark:text-white">
+        <div className="flex flex-col gap-2 text-sm mt-5 mb-5 dark:text-white">
           <p>
             <span className="font-bold inline-block mr-2">Used For:</span>
             <span className="dark:text-gray-200">{data.usedfor}</span>
@@ -131,54 +137,72 @@ const ShowWorkflow = ({ open, handleClose, id }) => {
             <span className="dark:text-gray-200">{data.assumption}</span>
           </p>
         </div>
+        <button type="button" className="flex gap-5 sm:pt-0 pt-4">
+            <span
+              onClick={analysisModalOpenHandler}
+              className="bg-primary text-white text-sm py-2  flex justify-center items-center md:px-4 px-3 rounded-md"
+            >
+              <span className="capitalize"> Create Analysis</span>
+            </span>
+          </button>
       </Fragment>
     );
   }
 
   return (
-    <Transition appear show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-[400]" onClose={handleClose}>
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 bg-black bg-opacity-50" />
-        </Transition.Child>
+    <Fragment>
+      <Transition appear show={open} as={Fragment}>
+        <Dialog as="div" className="relative z-[400]" onClose={handleClose}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-50" />
+          </Transition.Child>
 
-        <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center md:p-4 text-center">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
-            >
-              <Dialog.Panel className="w-full h-screen md:h-fit md:max-w-4xl md:w-11/12 transform overflow-hidden rounded-md bg-white dark:bg-slate-800 py-6 px-3 md:px-6  text-left align-middle shadow-xl transition-all">
-                <div className="flex justify-end mb-5 gap-5">
-                  <button
-                    className="bg-gray-100 dark:bg-gray-900 dark:text-white hover:bg-gray-200 transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
-                    onClick={handleClose}
-                  >
-                    <AiOutlineClose />
-                  </button>
-                </div>
-                <div className="max-h-[calc(100%-2.5rem)] lg:max-h-[calc(100vh-10rem)] overflow-y-auto pr-3">
-                  {content}
-                </div>
-              </Dialog.Panel>
-            </Transition.Child>
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center md:p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full h-screen md:h-fit md:max-w-4xl md:w-11/12 transform overflow-hidden rounded-md bg-white dark:bg-slate-800 py-6 px-3 md:px-6  text-left align-middle shadow-xl transition-all">
+                  <div className="flex justify-end mb-5 gap-5">
+                    <button
+                      className="bg-gray-100 dark:bg-gray-900 dark:text-white hover:bg-gray-200 transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
+                      onClick={handleClose}
+                    >
+                      <AiOutlineClose />
+                    </button>
+                  </div>
+                  <div className="max-h-[calc(100%-2.5rem)] lg:max-h-[calc(100vh-10rem)] overflow-y-auto pr-3">
+                    {content}
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
           </div>
-        </div>
-      </Dialog>
-    </Transition>
+        </Dialog>
+      </Transition>
+      {analysisModalOpened && (
+        <AddAnalysis
+          handleClose={analysisModalCloseHandler}
+          open={analysisModalOpened}
+          workflowId={id}
+          topLayer
+        />
+      )}
+    </Fragment>
   );
 };
 export default ShowWorkflow;
