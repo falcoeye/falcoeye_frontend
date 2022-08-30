@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import axios from "../../../../../../../../../utility/api-instance";
 
 const MediaCard = (props) => {
-  const { media, handleClick, handleShowClick, selectedMediaId } = props;
+  const { media, handleClick, handleShowClick, selectedMediaId, lastElementRef } = props;
   const { id, media_type } = media;
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -69,6 +69,7 @@ const MediaCard = (props) => {
     <div
       className={`rounded-md  cursor-pointer shadow-md`}
       onClick={() => handleClick(id)}
+      ref={lastElementRef}
     >
       {renderedImage}
       <div

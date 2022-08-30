@@ -18,8 +18,8 @@ const SourceCards = (props) => {
   const { fetchingSources, data, page, lastPage } = sources;
 
   useEffect(() => {
-    dispatch(fetchSources(page));
-  }, [dispatch, page]);
+    !lastPage && dispatch(fetchSources(page));
+  }, [dispatch, lastPage, page]);
 
   const ovserver = useRef();
   const lastElementRef = useCallback(
@@ -36,7 +36,7 @@ const SourceCards = (props) => {
     [dispatch, fetchingSources, lastPage, page]
   );
 
-  if (fetchingSources && data.length) {
+  if (fetchingSources && data.length === 0) {
     return <Loader height="h-[300px]" />;
   }
   if (data.length === 0 && !fetchingSources) {

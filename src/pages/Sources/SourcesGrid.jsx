@@ -28,7 +28,7 @@ const SourcesGrid = ({ lastElementRef }) => {
     if ( sources.data.length - 1 === index ) {
       return (
           <SourceCard
-            key={source.id}
+            key={index}
             source={source}
             lastElementRef={lastElementRef}
           />
@@ -36,7 +36,7 @@ const SourcesGrid = ({ lastElementRef }) => {
     } 
     return (
       <SourceCard
-        key={source.id}
+        key={index}
         source={source}
       />
     );
