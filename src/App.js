@@ -4,7 +4,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import RequireAuth from "./Components/RequireAuth/RequireAuth";
 import Page404 from "./Components/UI/Page404/Page404";
-import useDarkMode from "./hooks/useDarkMode";
 import Analysis from "./pages/Analysis";
 import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
@@ -15,8 +14,6 @@ import Sources from "./pages/Sources";
 import Workflows from "./pages/Workflows";
 
 function App() {
-  useDarkMode();
-
   return (
     <Fragment>
       <ToastContainer

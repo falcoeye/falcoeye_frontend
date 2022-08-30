@@ -7,15 +7,18 @@ import { BrowserRouter } from "react-router-dom";
 import { store } from "./store/configureStore";
 import { Provider } from "react-redux";
 import { AuthContextProvider } from "./store/auth-context";
+import { ThemeContextProvider } from "./store/theme-context";
 
 ReactDOM.render(
   <React.StrictMode>
     <AuthContextProvider>
-      <BrowserRouter>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </BrowserRouter>
+      <ThemeContextProvider>
+        <BrowserRouter>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </BrowserRouter>
+      </ThemeContextProvider>
     </AuthContextProvider>
   </React.StrictMode>,
   document.getElementById("root")
