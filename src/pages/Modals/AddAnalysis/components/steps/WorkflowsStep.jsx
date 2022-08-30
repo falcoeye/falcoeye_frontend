@@ -165,7 +165,7 @@ const WorkflowsStep = ({ onSelectWorkflow, selectedWorkflow }) => {
               <button
                 onClick={openWorkflowModalHandler}
                 type="button"
-                className="focus:outline-none text-white bg-cyan-500 hover:bg-cyan-600 font-medium rounded-lg text-sm px-5 py-2.5 transition w-max	"
+                className="focus:outline-none text-white bg-cyan-500 hover:bg-cyan-600 font-medium rounded-md text-sm px-5 py-2.5 transition w-max	"
               >
                 Read More
               </button>
@@ -198,7 +198,7 @@ const WorkflowsStep = ({ onSelectWorkflow, selectedWorkflow }) => {
             <button
               onClick={openWorkflowModalHandler}
               type="button"
-              className="focus:outline-none text-white bg-cyan-500 hover:bg-cyan-600 font-medium rounded-lg text-sm px-5 py-2.5 transition w-max	"
+              className="focus:outline-none text-white bg-cyan-500 hover:bg-cyan-600 font-medium rounded-md text-sm px-5 py-2.5 transition w-max	"
             >
               Read More
             </button>
@@ -219,7 +219,7 @@ const WorkflowsStep = ({ onSelectWorkflow, selectedWorkflow }) => {
 
     content = (
       <div className="mt-5 md:mt-0">
-        <div className="w-full py-2 mb-3 flex items-center px-4 rounded-full bg-gray-50 shadow dark:bg-gray-800 ">
+        <div className="w-full py-2 mb-3 flex items-center px-4 rounded-md bg-gray-50 shadow dark:bg-gray-800 ">
           <span className="text-primary text-xl mr-4 dark:text-white">
             <AiOutlineSearch />
           </span>

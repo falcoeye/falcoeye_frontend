@@ -105,7 +105,7 @@ const AnalysisRow = ({
       <td className="px-6 py-4 whitespace-nowrap">
         <div className="flex items-center">
           <div
-            className={`w-[130px] min-w-[80px] h-20 rounded-t-md rounded-br-md overflow-hidden bg-gray-300 flex justify-center items-center ${
+            className={`w-[130px] min-w-[80px] h-20 rounded-md overflow-hidden bg-gray-300 flex justify-center items-center ${
               loading && "animate-pulse"
             }`}
           >
@@ -130,7 +130,7 @@ const AnalysisRow = ({
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
         <button
-          className="btn-primary"
+          className="btn-primary !rounded-md"
           onClick={() => {
             onOpenAnalysisModal(id);
             fetchAnalysisData();

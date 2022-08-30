@@ -86,7 +86,7 @@ const SourceCard = (props) => {
   return (
     <Fragment>
       <div
-        className="p-4 bg-white dark:bg-slate-700 rounded-lg border border-gray-200 dark:border-gray-700  shadow-md cursor-pointer"
+        className="p-4 bg-white dark:bg-slate-700 rounded-md border border-gray-200 dark:border-gray-700  shadow-md cursor-pointer"
         onClick={openSourceModalHandler}
         ref={lastElementRef}
       >
@@ -100,7 +100,7 @@ const SourceCard = (props) => {
         <div
           className={`inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white ${
             status === "Running" ? "bg-primary" : "bg-danger"
-          } rounded-lg`}
+          } rounded-md`}
         >
           {status}
         </div>

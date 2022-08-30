@@ -16,11 +16,16 @@ import { addAnalysis } from "../../../store/analysis";
 import { useRef } from "react";
 
 const AddAnalysis = ({ handleClose, open, workflowId }) => {
+  let steps = useRef([
+    "Name",
+    "Workflows",
+    "Source",
+    "Informations",
+    "Completed",
+  ]);
 
-  let steps = useRef(["Name", "Workflows", "Source", "Informations", "Completed"])
-
-  if ( workflowId ) { 
-    steps.current = ["Name","Source", "Informations", "Completed"]
+  if (workflowId) {
+    steps.current = ["Name", "Source", "Informations", "Completed"];
   }
 
   const dispatch = useDispatch();
@@ -28,7 +33,9 @@ const AddAnalysis = ({ handleClose, open, workflowId }) => {
   const [currentStep, setCurrentStep] = useState(1);
 
   const [analysisName, setAnalysisName] = useState("");
-  const [selectedWorkflow, setSelectedWorkflow] = useState({ id: workflowId || null });
+  const [selectedWorkflow, setSelectedWorkflow] = useState({
+    id: workflowId || null,
+  });
 
   const [selectedType, setSelectedType] = useState(null);
   const [selectedSource, setSelectedSource] = useState(null);
@@ -230,7 +237,7 @@ const AddAnalysis = ({ handleClose, open, workflowId }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full h-screen max-h-screen md:h-fit  md:max-w-3xl transform overflow-auto md:rounded-2xl bg-white dark:bg-gray-700 py-3 px-2 md:py-6 md:px-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full h-screen max-h-screen md:h-fit  md:max-w-3xl transform overflow-auto rounded-md bg-white dark:bg-gray-700 py-3 px-2 md:py-6 md:px-6 text-left align-middle shadow-xl transition-all">
                 <div className="flex justify-end gap-5">
                   <button
                     className="md:hidden bg-gray-50 dark:bg-gray-800 dark:text-white hover:bg-gray-200 transition duration-300 font-bold p-2 rounded-full inline-flex items-center"

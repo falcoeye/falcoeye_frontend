@@ -9,7 +9,7 @@ import LoadingSpinner from "../../Components/UI/LoadingSpinner/LoadingSpinner";
 import { editMedia } from "../../store/media";
 import { useDispatch } from "react-redux";
 
-const EditMedia = ({ open, handleClose, id, onCloseShowMedia }) => {
+const EditMedia = ({ open, handleClose, id }) => {
   const { data } = useSelector((state) => state.media);
   const dispatch = useDispatch();
 
@@ -43,7 +43,6 @@ const EditMedia = ({ open, handleClose, id, onCloseShowMedia }) => {
         dispatch(editMedia({ ...res.data.image, media_type: type }));
       }
       handleClose();
-      onCloseShowMedia();
       toast.success("Media has been updated successfully");
     } catch (error) {
       console.log(error.response);
@@ -89,7 +88,7 @@ const EditMedia = ({ open, handleClose, id, onCloseShowMedia }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white dark:bg-slate-800 p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-md bg-white dark:bg-slate-800 p-6 text-left align-middle shadow-xl transition-all">
                 <div className="cmb_heading">Edit a Media</div>
                 <form className="flex flex-col gap-4">
                   <input

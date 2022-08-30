@@ -87,12 +87,12 @@ const Signup = () => {
   return (
     <div className="login_form_wrapper dark:!bg-slate-900">
       <div className="login_form_box ">
-        <div id="loginformContent" className="dark:!bg-slate-800">
+        <div id="loginformContent" className="dark:!bg-slate-800 !rounded-md">
           <form onSubmit={handleSubmit}>
             <input
               type="text"
               id="name"
-              className="login_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white "
+              className="login_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white !rounded-md "
               name="name"
               placeholder="Name"
               onChange={handleChange}
@@ -102,7 +102,7 @@ const Signup = () => {
             <input
               type="text"
               id="username"
-              className="login_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white "
+              className="login_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white !rounded-md "
               name="username"
               placeholder="Username"
               onChange={handleChange}
@@ -112,7 +112,7 @@ const Signup = () => {
             <input
               type="email"
               id="email"
-              className="login_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white "
+              className="login_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white !rounded-md "
               name="email"
               placeholder="Email Address"
               onChange={handleChange}
@@ -122,7 +122,7 @@ const Signup = () => {
             <input
               type="password"
               id="password"
-              className="login_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white "
+              className="login_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white !rounded-md "
               name="password"
               placeholder="Password"
               onChange={handleChange}
@@ -132,7 +132,11 @@ const Signup = () => {
 
             {errorMessage && <p className="error_text">{errorMessage}</p>}
 
-            <button type="submit" className="login_form_btn" value="Signup">
+            <button
+              type="submit"
+              className="login_form_btn !rounded-md"
+              value="Signup"
+            >
               {isLoading && <LoadingSpinner />}
               {!isLoading && "Signup"}
             </button>

@@ -129,14 +129,14 @@ const PreviewCapture = ({ handleClose, open, registerKey, type }) => {
           <button
             onClick={approveCapture}
             type="button"
-            className="focus:outline-none text-white bg-green hover:bg-green/70 focus:ring-4 focus:ring-green/30 font-medium rounded-lg text-sm px-5 py-2.5 mr-3"
+            className="focus:outline-none text-white bg-green hover:bg-green/70 focus:ring-4 focus:ring-green/30 font-medium rounded-md text-sm px-5 py-2.5 mr-3"
           >
             {submitting ? <LoadingSpinner /> : "Submit"}
           </button>
           <button
             onClick={handleClose}
             type="button"
-            className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red/30 font-medium rounded-lg text-sm px-5 py-2.5"
+            className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red/30 font-medium rounded-md text-sm px-5 py-2.5"
           >
             Capture again
           </button>
@@ -171,7 +171,7 @@ const PreviewCapture = ({ handleClose, open, registerKey, type }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-lg  transform overflow-hidden rounded-2xl bg-white dark:bg-slate-800 p-6 text-left align-middle shadow-xl transition-all text-center">
+              <Dialog.Panel className="w-full max-w-lg  transform overflow-hidden rounded-md bg-white dark:bg-slate-800 p-6 text-left align-middle shadow-xl transition-all text-center">
                 <div className="text-[#42a7df] text-lg font-semibold text-center dark:text-white">
                   Preview Capture
                 </div>

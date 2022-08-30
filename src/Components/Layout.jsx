@@ -1,18 +1,14 @@
 import React, { useContext, useState } from "react";
+import AuthContext from "../store/auth-context";
+import Header from "./Header";
 import MobileNav from "./Menue/MobileNav";
 import SideNave from "./Menue/SideNave";
-import Header from "./Header";
-import useDarkMode from "../hooks/useDarkMode";
-import AuthContext from "../store/auth-context";
 
 const Layout = ({ children }) => {
   const [sideNavToggle, setSideNavToggle] = useState(false);
   const handleSideNav = () => {
     setSideNavToggle(!sideNavToggle);
   };
-
-  const [colorTheme, setTheme] = useDarkMode();
-  const isLight = colorTheme !== "dark";
 
   const { userData } = useContext(AuthContext);
 
@@ -30,17 +26,9 @@ const Layout = ({ children }) => {
           <MobileNav
             isOpen={sideNavToggle}
             toggleDrawer={handleSideNav}
-            colorTheme={colorTheme}
-            setTheme={setTheme}
-            isLight={isLight}
             userData={userData}
           />
-          <Header
-            colorTheme={colorTheme}
-            setTheme={setTheme}
-            isLight={isLight}
-            userData={userData}
-          />
+          <Header userData={userData} toggleDrawer={handleSideNav} />
           <div className="main-container mt-6 ">
             <div className="bg-white dark:bg-slate-800">{children}</div>
           </div>
