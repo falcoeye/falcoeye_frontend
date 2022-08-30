@@ -8,7 +8,7 @@ const Source = (props) => {
     const { selectedType, selectedSource, updateType, updateSource, fetchingParams, params } = props;
 
     if (fetchingParams) {
-        return <Loader height="96" />;
+        return <Loader height="h-[400px]" />;
     }
     let content;
     if (!fetchingParams && params) {

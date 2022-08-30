@@ -4,49 +4,49 @@ const Stepper = ({ steps, currentStep }) => {
   const [newStep, setNewStep] = useState([]);
   const stepsRef = useRef();
 
-  const updateStep = (stepNumber, steps) => {
-    const newSteps = [...steps];
-    let count = 0;
-    while (count < newSteps.length) {
-      if (count === stepNumber && stepNumber !== 0 && stepNumber !== 1) {
-        newSteps[count] = {
-          ...newSteps[count],
-          highlighted: true,
-          selected: true,
-          completed: true,
-        };
-        count++;
-      } else if (count < stepNumber) {
-        newSteps[count] = {
-          ...newSteps[count],
-          highlighted: false,
-          selected: true,
-          completed: true,
-        };
-        count++;
-      } else {
-        newSteps[count] = {
-          ...newSteps[count],
-          highlighted: false,
-          selected: false,
-          completed: false,
-        };
-        count++;
-      }
-    }
-
-    return newSteps;
+  const updateStep = (activeStep, steps) => {
+    return steps.map( (step, i) => {
+        if (i === steps.length - 1 && i === activeStep) {
+          return {
+            ...step,
+            highlighted: false,
+            selected: true,
+            completed: true,
+          };
+        } else  if (i === activeStep ) {
+          return {
+            ...step,
+            highlighted: true,
+            selected: true,
+            completed: false,
+          };
+        } else if (i < activeStep) {
+          return {
+            ...step,
+            highlighted: false,
+            selected: true,
+            completed: true,
+          };
+        } else {
+          return {
+            ...step,
+            highlighted: false,
+            selected: false,
+            completed: false,
+          };
+        }
+    } )
   };
 
   useEffect(() => {
-    const stepsState = steps.map((step, index) =>
+    const stepsState = steps.map((step,) =>
       Object.assign(
         {},
         {
-          description: step,
+          description: step.label,
           completed: false,
-          highlighted: index === 0 ? true : false,
-          selected: index === 0 ? true : false,
+          highlighted: false,
+          selected: false,
         }
       )
     );

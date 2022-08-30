@@ -51,7 +51,7 @@ const mediaSlice = createSlice({
 export const fetchMedia = (page) => async (dispatch) => {
   dispatch(fetchingMedia());
   axios
-    .get(`/media/?page=${page}&per_page=1`)
+    .get(`/media/?page=${page}&per_page=10`)
     .then((res) => {
       if (!res.data) {
         dispatch(fetchMediaSuccess([]));
