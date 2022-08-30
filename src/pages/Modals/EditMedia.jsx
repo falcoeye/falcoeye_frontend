@@ -9,7 +9,7 @@ import LoadingSpinner from "../../Components/UI/LoadingSpinner/LoadingSpinner";
 import { editMedia } from "../../store/media";
 import { useDispatch } from "react-redux";
 
-const EditMedia = ({ open, handleClose, id, onCloseShowMedia }) => {
+const EditMedia = ({ open, handleClose, id }) => {
   const { data } = useSelector((state) => state.media);
   const dispatch = useDispatch();
 
@@ -43,7 +43,6 @@ const EditMedia = ({ open, handleClose, id, onCloseShowMedia }) => {
         dispatch(editMedia({ ...res.data.image, media_type: type }));
       }
       handleClose();
-      onCloseShowMedia();
       toast.success("Media has been updated successfully");
     } catch (error) {
       console.log(error.response);

@@ -227,12 +227,7 @@ const ShowMedia = ({ open, handleClose, id }) => {
         </Dialog>
       </Transition>
 
-      <EditMedia
-        open={editMedia}
-        handleClose={closeEditModalHandler}
-        id={id}
-        onCloseShowMedia={handleClose}
-      />
+      <EditMedia open={editMedia} handleClose={closeEditModalHandler} id={id} />
     </>
   );
 };
