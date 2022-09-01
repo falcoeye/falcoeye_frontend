@@ -54,8 +54,7 @@ const Informations = (props) => {
   const renderedInputs = (
     <Fragment>
       {questionFields.map((field, index) => {
-        const type =
-          field.type === "int" || field.type === "float" ? "number" : "text";
+        const type = "text";
         return (
           <Fragment key={index}>
             <input
@@ -63,7 +62,6 @@ const Informations = (props) => {
               id={field.name}
               className="analysis_form_input  dark:!bg-gray-800 dark:!border-gray-800 dark:!text-white !rounded-md"
               name={field.name}
-              placeholder="longitude"
               onChange={handleChange}
               value={data[field.name]}
             />
