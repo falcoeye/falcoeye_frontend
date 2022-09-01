@@ -7,6 +7,8 @@
 - Add Dashboard API
 - Change Show Analysis Modal UI
 - Fix dynamic inputs in create analysis as user can now clear the field
+- Cancel Thumbnails requests if user left the page before the request is done to save data and memory leak
+- Add Validation for Dynamic Inputs in create Analysis Information Tab
 ### 0.0.8.2
 - Change SideDrawer Style
 - Edit Media Notes & Tags

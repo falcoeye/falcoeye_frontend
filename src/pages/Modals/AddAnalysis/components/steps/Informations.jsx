@@ -54,10 +54,11 @@ const Informations = (props) => {
       return newState;
     });
   };
-
-  const schemaArray = questionFields.map((q) => ({
-    [q.name]: yup.number().required(),
-  }));
+  
+  const schemaArray = questionFields.map((q) => {
+    if (q.type === 'string' ) { return {[q.name]: yup.string().required()} }
+    return { [q.name]: yup.number().required(), }
+  });
   let yupSchema = {};
   schemaArray.forEach((item, index) => {
     let objKeys = Object.keys(item);
@@ -70,12 +71,14 @@ const Informations = (props) => {
   const validationSchema = yup.object(yupSchema);
 
   const {
-    formState: { errors },
+    formState: { errors, isValid },
     control,
   } = useForm({
     resolver: yupResolver(validationSchema),
     mode: "onChange",
   });
+
+  console.log(errors, isValid)
 
   const renderedInputs = (
     <Fragment>
@@ -95,22 +98,19 @@ const Informations = (props) => {
                   className="analysis_form_input  dark:!bg-gray-800 dark:!border-gray-800 dark:!text-white !rounded-md"
                   onChange={(e) => {
                     handleChange(e);
-
                     field.onChange(e.target.value);
                   }}
                 />
               )}
             />
-
-            {errors[field.name] && (
-              <p className=" w-full md:w-[85%] my-1  md:ml-[30px] font-semibold text-xs text-red-700">
-                This field must contains only numbers
-              </p>
-            )}
-
-            <p className=" w-full md:w-[85%] mb-3 md:ml-[30px] text-sm font-semibold text-orange-500">
+            <p className=" w-full md:w-[85%]  my-1 md:ml-[30px] text-sm font-semibold text-orange-500">
               {field.disc}
             </p>
+            {errors[field.name] && (
+              <p className=" w-full md:w-[85%] mb-3 md:ml-[30px] font-semibold text-xs text-red-500/80">
+                {`This field must contains ${ field.type === 'string' ? 'a value' :  'only numbers'}`}
+              </p>
+            )}
           </Fragment>
         );
       })}
