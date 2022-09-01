@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import axios from "../utility/api-instance";
 
 const initialState = {
-  data: null,
+  data: [],
   dataOrder: null,
   isLoading: true,
   dataType: null,
@@ -17,7 +17,7 @@ export const workflowsSlice = createSlice({
   initialState,
   reducers: {
     fetchWorkflows(state, fetchedData) {
-      state.data = fetchedData.payload;
+      state.data.push(...fetchedData.payload);
     },
 
     startLoading(state) {

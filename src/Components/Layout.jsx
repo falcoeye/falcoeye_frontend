@@ -29,7 +29,7 @@ const Layout = ({ children }) => {
             userData={userData}
           />
           <Header userData={userData} toggleDrawer={handleSideNav} />
-          <div className="main-container mt-6 ">
+          <div className="main-container mt-6 pb-5">
             <div className="bg-white dark:bg-slate-800">{children}</div>
           </div>
         </div>

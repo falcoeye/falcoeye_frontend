@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import noDataAnimation from "../../assets/animations/no-data.json";
 import Loader from "../../Components/UI/Loader/Loader";
 import { fetchAnalysisData, handlePage } from "../../store/analysis";
-import ShowAnalysis from "../Modals/ShowAnalysis";
 import AnalysisFilterbar from "./AnalysisFilterbar";
 import AnalysisRow from "./AnalysisRow";
 
@@ -24,8 +23,8 @@ const AnalysisList = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchAnalysisData(page));
-  }, [dispatch, page]);
+    !lastPage && dispatch(fetchAnalysisData(page));
+  }, [dispatch, lastPage, page]);
 
   const observer = useRef();
   const lastElementRef = useCallback(
@@ -45,20 +44,6 @@ const AnalysisList = (props) => {
   const [filteredAnalysises, setFilteredAnalysises] = useState(analysises);
   const [searchInput, setSearchInput] = useState("");
   const [alanysisStatus, setAlanysisStatus] = useState("all");
-
-  const [showAnalysisModal, setShowAnalysisModal] = useState(false);
-
-  const [analysisData, setAnalysisData] = useState(null);
-  const [loadingAnalysisData, setLoadingAnalysisData] = useState(true);
-
-  const loadingAnalysisDataHandler = (value) => setLoadingAnalysisData(value);
-  const getAnalysisDataHandler = (data) => setAnalysisData(data);
-  const clearAnalysisDataHandler = (data) => setAnalysisData(null);
-
-  const openShowAnalysisModalHandler = (id) => {
-    setShowAnalysisModal(true);
-  };
-  const closeShowAnalysisModalHandler = () => setShowAnalysisModal(false);
 
   const analysisStatusChangeHandler = (e) => {
     setAlanysisStatus(e.target.value);
@@ -159,22 +144,11 @@ const AnalysisList = (props) => {
                         <AnalysisRow
                           key={file.id}
                           file={file}
-                          onOpenAnalysisModal={openShowAnalysisModalHandler}
-                          onGetAnalysisData={getAnalysisDataHandler}
-                          onLoadingAnalysisData={loadingAnalysisDataHandler}
                           lastElementRef={lastElementRef}
                         />
                       );
                     }
-                    return (
-                      <AnalysisRow
-                        key={file.id}
-                        file={file}
-                        onOpenAnalysisModal={openShowAnalysisModalHandler}
-                        onGetAnalysisData={getAnalysisDataHandler}
-                        onLoadingAnalysisData={loadingAnalysisDataHandler}
-                      />
-                    );
+                    return <AnalysisRow key={file.id} file={file} />;
                   })}
                 </tbody>
               </table>
@@ -193,17 +167,6 @@ const AnalysisList = (props) => {
         alanysisStatus={alanysisStatus}
       />
       {content}
-
-      {showAnalysisModal && (
-        <ShowAnalysis
-          handleClose={closeShowAnalysisModalHandler}
-          open={showAnalysisModal}
-          analysisData={analysisData}
-          loadingAnalysisData={loadingAnalysisData}
-          id={analysisData?.analysis?.id}
-          onClearAnalysisData={clearAnalysisDataHandler}
-        />
-      )}
     </Fragment>
   );
 };

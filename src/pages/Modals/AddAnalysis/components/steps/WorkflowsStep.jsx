@@ -24,8 +24,8 @@ const WorkflowsStep = ({ onSelectWorkflow, selectedWorkflow }) => {
   const [showWorkflowOpened, setShowWorkflowOpened] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchWorkflowsData(page));
-  }, [dispatch, page]);
+    !lastPage && dispatch(fetchWorkflowsData(page));
+  }, [dispatch, lastPage, page]);
 
   const observer = useRef();
   const lastElementRef = useCallback(

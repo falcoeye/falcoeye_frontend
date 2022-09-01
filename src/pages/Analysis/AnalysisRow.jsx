@@ -1,25 +1,24 @@
-import axios from "axios";
 import moment from "moment";
 import React, { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Cookies } from "../../shared/utility";
-import instance from "../../utility/api-instance";
+import axios from "../../utility/api-instance";
+import ShowAnalysis from "../Modals/ShowAnalysis";
 
-const AnalysisRow = ({
-  file,
-  onOpenAnalysisModal,
-  onGetAnalysisData,
-  onLoadingAnalysisData,
-  lastElementRef,
-}) => {
+const AnalysisRow = ({ file, lastElementRef }) => {
   const { id, workflow_id, status, name, created_at } = file;
 
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showAnalysisModal, setShowAnalysisModal] = useState(false);
+
+  const openShowAnalysisModalHandler = () => {
+    setShowAnalysisModal(true);
+  };
+  const closeShowAnalysisModalHandler = () => setShowAnalysisModal(false);
 
   const fetchImage = useCallback(() => {
     setLoading(true);
-    instance
+    axios
       .get(`workflow/${workflow_id}/img_260.jpg`, { responseType: "blob" })
       .then((res) => {
         // we can all pass them to the Blob constructor directly
@@ -33,38 +32,6 @@ const AnalysisRow = ({
         toast.error(err.response.data.message);
       });
   }, [workflow_id]);
-
-  const fetchAnalysisData = useCallback(() => {
-    const token = Cookies.getCookie("token");
-    const headers = {
-      Accept: "*/*",
-      "Content-Type": "application/json",
-      "X-API-KEY": `JWT ${token}`,
-    };
-    const analysisEndPoint = `${instance.defaults.baseURL}/analysis/${id}`;
-    const getAnalysisData = axios.get(analysisEndPoint, {
-      headers: headers,
-    });
-    const analysisMetaDataEndPoint = `${instance.defaults.baseURL}/analysis/${id}/meta.json`;
-    const getAnalysisMetaData = axios.get(analysisMetaDataEndPoint, {
-      headers: headers,
-    });
-
-    onLoadingAnalysisData(true);
-    axios
-      .all([getAnalysisData, getAnalysisMetaData])
-      .then(
-        axios.spread((...responses) => {
-          onLoadingAnalysisData(false);
-          onGetAnalysisData(responses[0].data);
-        })
-      )
-      .catch((error) => {
-        onLoadingAnalysisData(false);
-        const { message } = error.response.data;
-        toast.error(message || "Something went wrong!");
-      });
-  }, [id, onGetAnalysisData, onLoadingAnalysisData]);
 
   useEffect(() => {
     fetchImage();
@@ -100,46 +67,60 @@ const AnalysisRow = ({
   if (status === "done") {
     statusStyle = "text-[#74ab96]";
   }
+
   return (
-    <tr ref={lastElementRef}>
-      <td className="px-6 py-4 whitespace-nowrap">
-        <div className="flex items-center">
-          <div
-            className={`w-[130px] min-w-[80px] h-20 rounded-md overflow-hidden bg-gray-300 flex justify-center items-center ${
-              loading && "animate-pulse"
-            }`}
-          >
-            {renderedImage}
+    <>
+      <tr ref={lastElementRef}>
+        <td className="px-6 py-4 whitespace-nowrap">
+          <div className="flex items-center">
+            <div
+              className={`w-[130px] min-w-[80px] h-20 rounded-md overflow-hidden bg-gray-300 flex justify-center items-center ${
+                loading && "animate-pulse"
+              }`}
+            >
+              {renderedImage}
+            </div>
           </div>
-        </div>
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap">
-        <div className="text-sm font-medium text-gray-900 dark:text-white">
-          {name}
-        </div>
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap">
-        <div className="text-sm text-gray-500 dark:text-white">
-          {moment.utc(created_at).format("MM-DD-YYYY")}
-        </div>
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap">
-        <div className={`text-sm ${statusStyle} capitalize dark:text-white `}>
-          {status}
-        </div>
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap">
-        <button
-          className="btn-primary !rounded-md"
-          onClick={() => {
-            onOpenAnalysisModal(id);
-            fetchAnalysisData();
-          }}
-        >
-          view details
-        </button>
-      </td>
-    </tr>
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap">
+          <div className="text-sm font-medium text-gray-900 dark:text-white">
+            {name}
+          </div>
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap">
+          <div className="text-sm text-gray-500 dark:text-white">
+            {moment.utc(created_at).format("MM-DD-YYYY")}
+          </div>
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap">
+          <div className={`text-sm ${statusStyle} capitalize dark:text-white `}>
+            {status}
+          </div>
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap">
+          <button
+            className="btn-primary !rounded-md"
+            onClick={openShowAnalysisModalHandler}
+          >
+            view details
+          </button>
+        </td>
+      </tr>
+
+      {showAnalysisModal && (
+        <tr>
+          <td>
+            <ShowAnalysis
+              handleClose={closeShowAnalysisModalHandler}
+              open={showAnalysisModal}
+              id={id}
+              image={image}
+              workflowId={workflow_id}
+            />
+          </td>
+        </tr>
+      )}
+    </>
   );
 };
 

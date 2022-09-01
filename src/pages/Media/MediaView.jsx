@@ -102,7 +102,7 @@ const MediaView = (props) => {
 
   return (
     <>
-      <div className=" mx-1 pt-4 px-4 md:px-7 pb-7 rounded-sm">
+      <div className="mx-1 pt-5 px-4 md:px-7 pb-5 rounded-md">
         <div className="flex justify-between items-center sm:flex-row flex-co pb-4 mb-5 border-b border-[#f5f5f5] ">
           <h2 className="text-gray-900 text-lg capitalize dark:text-white">
             media
