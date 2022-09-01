@@ -23,8 +23,8 @@ const AnalysisList = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchAnalysisData(page));
-  }, [dispatch, page]);
+    !lastPage && dispatch(fetchAnalysisData(page));
+  }, [dispatch, lastPage, page]);
 
   const observer = useRef();
   const lastElementRef = useCallback(

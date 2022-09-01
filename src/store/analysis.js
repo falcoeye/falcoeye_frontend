@@ -16,7 +16,7 @@ export const analysisSlice = createSlice({
   initialState,
   reducers: {
     fetchAnalysis(state, fetchedData) {
-      state.data = fetchedData.payload;
+      state.data.push(...fetchedData.payload);
     },
     startLoading(state) {
       state.isLoading = true;
