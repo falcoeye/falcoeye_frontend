@@ -1,32 +1,32 @@
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useCallback, useEffect, useState } from "react";
-import Stepper from "./components/Stepper";
-import StepperControl from "./components/StepperControl";
-import Name from "./components/steps/Name";
-import WorkflowsStep from "./components/steps/WorkflowsStep";
-import Final from "./components/steps/Final";
-import "../Modals.css";
-import { AiOutlineClose } from "react-icons/ai";
-import Source from "./components/steps/Source/Source";
-import axios from "../../../utility/api-instance";
-import { toast } from "react-toastify";
-import Informations from "./components/steps/Informations";
-import { useDispatch } from "react-redux";
-import { addAnalysis } from "../../../store/analysis";
-import { useRef } from "react";
+import { Dialog, Transition } from '@headlessui/react';
+import { Fragment, useCallback, useEffect, useState } from 'react';
+import Stepper from './components/Stepper';
+import StepperControl from './components/StepperControl';
+import Name from './components/steps/Name';
+import WorkflowsStep from './components/steps/WorkflowsStep';
+import Final from './components/steps/Final';
+import '../Modals.css';
+import { AiOutlineClose } from 'react-icons/ai';
+import Source from './components/steps/Source/Source';
+import axios from '../../../utility/api-instance';
+import { toast } from 'react-toastify';
+import Informations from './components/steps/Informations';
+import { useDispatch } from 'react-redux';
+import { addAnalysis } from '../../../store/analysis';
+import { useRef } from 'react';
 
 const longSteps = [
-  { name: "name", label: "Name" },
-  { name: "workflows", label: "Workflows" },
-  { name: "source", label: "Source" },
-  { name: "informations", label: "Informations" },
-  { name: "completed", label: "Completed" },
+  { name: 'name', label: 'Name' },
+  { name: 'workflows', label: 'Workflows' },
+  { name: 'source', label: 'Source' },
+  { name: 'informations', label: 'Informations' },
+  { name: 'completed', label: 'Completed' },
 ];
 const shortSteps = [
-  { name: "name", label: "Name" },
-  { name: "source", label: "Source" },
-  { name: "informations", label: "Informations" },
-  { name: "completed", label: "Completed" },
+  { name: 'name', label: 'Name' },
+  { name: 'source', label: 'Source' },
+  { name: 'informations', label: 'Informations' },
+  { name: 'completed', label: 'Completed' },
 ];
 
 const AddAnalysis = ({ handleClose, open, workflowId, topLayer }) => {
@@ -36,7 +36,7 @@ const AddAnalysis = ({ handleClose, open, workflowId, topLayer }) => {
 
   const [currentStep, setCurrentStep] = useState(1);
 
-  const [analysisName, setAnalysisName] = useState("");
+  const [analysisName, setAnalysisName] = useState('');
   const [selectedWorkflow, setSelectedWorkflow] = useState({
     id: workflowId || null,
   });
@@ -49,6 +49,7 @@ const AddAnalysis = ({ handleClose, open, workflowId, topLayer }) => {
   const [params, setParams] = useState(null);
 
   const [informations, setInformations] = useState(null);
+  const [informationValid, setInformationValid] = useState(true);
 
   const [submitting, setSubmitting] = useState(false);
 
@@ -65,14 +66,14 @@ const AddAnalysis = ({ handleClose, open, workflowId, topLayer }) => {
         setFetchingParams(false);
         setParams(null);
         const errorMessage = err.response.data.msg || err.response.data.message;
-        toast.error(errorMessage || "Something went wrong!");
+        toast.error(errorMessage || 'Something went wrong!');
       });
   }, [selectedWorkflow]);
 
   useEffect(() => {
     const { id } = selectedWorkflow;
     const selectedStep = steps.current[currentStep - 1].name;
-    id && selectedStep === "source" && fetchParams();
+    id && selectedStep === 'source' && fetchParams();
   }, [currentStep, fetchParams, selectedWorkflow]);
 
   const selectWorkflowHandler = useCallback(
@@ -95,6 +96,10 @@ const AddAnalysis = ({ handleClose, open, workflowId, topLayer }) => {
 
   const informatinChangeHandler = useCallback((data) => {
     setInformations(data);
+  }, []);
+
+  const validateInfoHandler = useCallback((val) => {
+    setInformationValid(val);
   }, []);
 
   const submitAnalysis = useCallback(() => {
@@ -120,7 +125,7 @@ const AddAnalysis = ({ handleClose, open, workflowId, topLayer }) => {
       .catch((err) => {
         setSubmitting(false);
         const errorMessage = err.response.data.msg || err.response.data.message;
-        toast.error(errorMessage || "Error Submitting Analysis!");
+        toast.error(errorMessage || 'Error Submitting Analysis!');
       });
   }, [
     analysisName,
@@ -133,12 +138,12 @@ const AddAnalysis = ({ handleClose, open, workflowId, topLayer }) => {
 
   const handleActionsClick = useCallback(
     (direction) => {
-      if (currentStep === steps.current.length - 1 && direction === "next") {
+      if (currentStep === steps.current.length - 1 && direction === 'next') {
         submitAnalysis();
         return;
       }
       let newStep = currentStep;
-      direction === "next" ? ++newStep : --newStep;
+      direction === 'next' ? ++newStep : --newStep;
       newStep > 0 && newStep <= steps.current.length && setCurrentStep(newStep);
     },
     [currentStep, submitAnalysis]
@@ -148,27 +153,24 @@ const AddAnalysis = ({ handleClose, open, workflowId, topLayer }) => {
     let isValid = false;
     const selectedStep = steps.current[currentStep - 1];
     switch (selectedStep.name) {
-      case "name":
+      case 'name':
         if (analysisName.length > 0) {
           isValid = true;
         }
         break;
-      case "workflows":
+      case 'workflows':
         if (selectedWorkflow.id) {
           isValid = true;
         }
         break;
-      case "source":
+      case 'source':
         if (selectedType && selectedSource) {
           isValid = true;
         }
         break;
-      case "informations":
+      case 'informations':
         if (informations) {
-          const informationsArray = Object.values(informations);
-          const isTrue = informationsArray.every((num) => +num);
-
-          isValid = isTrue;
+          isValid = informationValid;
         }
         break;
       default:
@@ -177,6 +179,7 @@ const AddAnalysis = ({ handleClose, open, workflowId, topLayer }) => {
   }, [
     analysisName.length,
     currentStep,
+    informationValid,
     informations,
     selectedSource,
     selectedType,
@@ -185,21 +188,21 @@ const AddAnalysis = ({ handleClose, open, workflowId, topLayer }) => {
 
   const renderStep = (stepName) => {
     switch (stepName) {
-      case "name":
+      case 'name':
         return (
           <Name
             onAnalysisNameChange={analysisNameChangeHandler}
             analysisName={analysisName}
           />
         );
-      case "workflows":
+      case 'workflows':
         return (
           <WorkflowsStep
             onSelectWorkflow={selectWorkflowHandler}
             selectedWorkflow={selectedWorkflow}
           />
         );
-      case "source":
+      case 'source':
         return (
           <Source
             fetchingParams={fetchingParams}
@@ -210,11 +213,15 @@ const AddAnalysis = ({ handleClose, open, workflowId, topLayer }) => {
             updateSource={selectedSourceChangeHandler}
           />
         );
-      case "informations":
+      case 'informations':
         return (
-          <Informations params={params} updateData={informatinChangeHandler} />
+          <Informations
+            params={params}
+            updateData={informatinChangeHandler}
+            validateInfo={validateInfoHandler}
+          />
         );
-      case "completed":
+      case 'completed':
         return <Final />;
       default:
     }
@@ -224,7 +231,7 @@ const AddAnalysis = ({ handleClose, open, workflowId, topLayer }) => {
     <Transition appear show={open} as={Fragment}>
       <Dialog
         as="div"
-        className={`relative ${topLayer ? "z-[401]" : "z-[300]"}`}
+        className={`relative ${topLayer ? 'z-[401]' : 'z-[300]'}`}
         onClose={handleClose}
       >
         <Transition.Child

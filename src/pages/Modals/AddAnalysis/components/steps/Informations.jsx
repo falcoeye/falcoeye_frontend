@@ -1,15 +1,15 @@
-import { Fragment, useEffect, useRef } from "react";
-import { useMemo, useState } from "react";
-import "../../../Modals.css";
-import * as yup from "yup";
-import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { Fragment, useEffect, useRef } from 'react';
+import { useMemo, useState } from 'react';
+import '../../../Modals.css';
+import * as yup from 'yup';
+import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const Informations = (props) => {
-  const { params, updateData } = props;
+  const { params, updateData, validateInfo } = props;
 
   const questionFields = useMemo(
-    () => params.params.filter((param) => param.source === "user"),
+    () => params.params.filter((param) => param.source === 'user'),
     [params]
   );
 
@@ -34,30 +34,41 @@ const Informations = (props) => {
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
-    if (type === "number") {
+    let prevState = {};
+    if (type === 'number') {
       setData((preVal) => {
+        prevState = preVal;
         let newState = {
           ...preVal,
           [name]: +value,
         };
-        updateData(newState);
         return newState;
+      });
+      updateData({
+        ...prevState,
+        [name]: +value,
       });
       return;
     }
     setData((preVal) => {
+      prevState = preVal;
       let newState = {
         ...preVal,
         [name]: value,
       };
-      updateData(newState);
       return newState;
     });
+    updateData({
+      ...prevState,
+      [name]: +value,
+    });
   };
-  
+
   const schemaArray = questionFields.map((q) => {
-    if (q.type === 'string' ) { return {[q.name]: yup.string().required()} }
-    return { [q.name]: yup.number().required(), }
+    if (q.type === 'string') {
+      return { [q.name]: yup.string().required() };
+    }
+    return { [q.name]: yup.number().required() };
   });
   let yupSchema = {};
   schemaArray.forEach((item, index) => {
@@ -71,19 +82,23 @@ const Informations = (props) => {
   const validationSchema = yup.object(yupSchema);
 
   const {
-    formState: { errors, isValid },
+    formState: { errors },
     control,
   } = useForm({
     resolver: yupResolver(validationSchema),
-    mode: "onChange",
+    mode: 'onChange',
+    criteriaMode: 'all',
   });
+  useEffect(() => {
+    validateInfo(Object.keys(errors).length === 0)
+  })
 
-  console.log(errors, isValid)
+  //console.log(Object.keys(errors).length === 0);
 
   const renderedInputs = (
     <Fragment>
       {questionFields.map((field, index) => {
-        const type = "text";
+        const type = 'text';
         return (
           <Fragment key={index}>
             <Controller
@@ -108,7 +123,9 @@ const Informations = (props) => {
             </p>
             {errors[field.name] && (
               <p className=" w-full md:w-[85%] mb-3 md:ml-[30px] font-semibold text-xs text-red-500/80">
-                {`This field must contains ${ field.type === 'string' ? 'a value' :  'only numbers'}`}
+                {`This field must contains ${
+                  field.type === 'string' ? 'a value' : 'only numbers'
+                }`}
               </p>
             )}
           </Fragment>
