@@ -88,7 +88,7 @@ const AnalysisList = (props) => {
 
   let content;
 
-  if (isLoading) {
+  if (isLoading && filteredAnalysises.length === 0 ) {
     content = <Loader />;
   } else if (filteredAnalysises.length === 0 && !isLoading) {
     content = (
@@ -100,7 +100,7 @@ const AnalysisList = (props) => {
         />
       </div>
     );
-  } else if (filteredAnalysises.length > 0 && !isLoading) {
+  } else if (filteredAnalysises.length > 0 ) {
     content = (
       <div className="flex flex-col px-4 mt-6">
         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">

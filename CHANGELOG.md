@@ -1,3 +1,12 @@
+### 0.9.1
+- Implement Paginatoin For Sources, Media and Analysis
+-  Add New analysis from workflow page.
+- Dark Mode For Auth Page on Intialization
+- Make Drawer Toggler on the header for desktop same as mobile
+- Change Border Radius in Application UI Component
+- Add Dashboard API
+- Change Show Analysis Modal UI
+- Fix dynamic inputs in create analysis as user can now clear the field
 ### 0.0.8.2
 - Change SideDrawer Style
 - Edit Media Notes & Tags
