@@ -1,5 +1,5 @@
 import moment from "moment";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AiFillCamera,
   AiFillVideoCamera,
@@ -14,14 +14,16 @@ const MediaCard = (props) => {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const fetchImage = useCallback(() => {
+  useEffect(() => {
+    const controller = new AbortController();
+
     let url = `media/image/${id}/img_260.jpg`;
     if (media_type === "video") {
       url = `media/video/${id}/video_260.jpg`;
     }
     setLoading(true);
     axios
-      .get(url, { responseType: "blob" })
+      .get(url, { responseType: "blob", signal: controller.signal })
       .then((res) => {
         // we can all pass them to the Blob constructor directly
         const new_blob = new Blob([res.data], { type: "image/jpg" });
@@ -33,11 +35,11 @@ const MediaCard = (props) => {
         setLoading(false);
         toast.error(err.response.data.message);
       });
-  }, [id, media_type]);
 
-  useEffect(() => {
-    fetchImage();
-  }, [fetchImage]);
+    return () => {
+      controller.abort();
+    };
+  }, [id, media_type]);
 
   let renderedImage = (
     <div

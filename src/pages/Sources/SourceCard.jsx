@@ -1,8 +1,7 @@
-import { Fragment, useCallback, useEffect } from "react";
-import { useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import ShowSource from "../Modals/ShowSource/ShowSource";
 import axios from "../../utility/api-instance";
+import ShowSource from "../Modals/ShowSource/ShowSource";
 
 const SourceCard = (props) => {
   const { source, lastElementRef } = props;
@@ -18,11 +17,13 @@ const SourceCard = (props) => {
     setShowSourceOpened(false);
   };
 
-  const fetchImage = useCallback(() => {
+  useEffect(() => {
+    const controller = new AbortController();
+
     let url = `/camera/${id}/img_260.jpg`;
     setLoading(true);
     axios
-      .get(url, { responseType: "blob" })
+      .get(url, { responseType: "blob", signal: controller.signal })
       .then((res) => {
         // we can all pass them to the Blob constructor directly
         const new_blob = new Blob([res.data], { type: "image/jpg" });
@@ -34,11 +35,11 @@ const SourceCard = (props) => {
         setLoading(false);
         toast.error(err.response.data.message);
       });
-  }, [id]);
 
-  useEffect(() => {
-    fetchImage();
-  }, [fetchImage]);
+    return () => {
+      controller.abort();
+    };
+  }, [id]);
 
   let renderedImage = (
     <div

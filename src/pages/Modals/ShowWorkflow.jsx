@@ -40,10 +40,15 @@ const ShowWorkflow = ({ open, handleClose, id }) => {
     fetchData();
   }, [fetchData]);
 
-  const fetchImage = useCallback(() => {
+  useEffect(() => {
+    const controller = new AbortController();
+
     setLoading(true);
     axios
-      .get(`workflow/${id}/img_original.jpg`, { responseType: "blob" })
+      .get(`workflow/${id}/img_original.jpg`, {
+        responseType: "blob",
+        signal: controller.signal,
+      })
       .then((res) => {
         // we can all pass them to the Blob constructor directly
         const new_blob = new Blob([res.data], { type: "image/jpg" });
@@ -55,11 +60,11 @@ const ShowWorkflow = ({ open, handleClose, id }) => {
         setLoading(false);
         toast.error(err.response.data.message);
       });
-  }, [id]);
 
-  useEffect(() => {
-    fetchImage();
-  }, [fetchImage]);
+    return () => {
+      controller.abort();
+    };
+  }, [id]);
 
   let content;
 
@@ -138,13 +143,13 @@ const ShowWorkflow = ({ open, handleClose, id }) => {
           </p>
         </div>
         <button type="button" className="flex gap-5 sm:pt-0 pt-4">
-            <span
-              onClick={analysisModalOpenHandler}
-              className="bg-primary text-white text-sm py-2  flex justify-center items-center md:px-4 px-3 rounded-md"
-            >
-              <span className="capitalize"> Create Analysis</span>
-            </span>
-          </button>
+          <span
+            onClick={analysisModalOpenHandler}
+            className="bg-primary text-white text-sm py-2  flex justify-center items-center md:px-4 px-3 rounded-md"
+          >
+            <span className="capitalize"> Create Analysis</span>
+          </span>
+        </button>
       </Fragment>
     );
   }

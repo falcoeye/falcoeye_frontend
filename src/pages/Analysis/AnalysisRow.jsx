@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "../../utility/api-instance";
 import ShowAnalysis from "../Modals/ShowAnalysis";
@@ -16,10 +16,15 @@ const AnalysisRow = ({ file, lastElementRef }) => {
   };
   const closeShowAnalysisModalHandler = () => setShowAnalysisModal(false);
 
-  const fetchImage = useCallback(() => {
+  useEffect(() => {
+    const controller = new AbortController();
+
     setLoading(true);
     axios
-      .get(`workflow/${workflow_id}/img_260.jpg`, { responseType: "blob" })
+      .get(`workflow/${workflow_id}/img_260.jpg`, {
+        responseType: "blob",
+        signal: controller.signal,
+      })
       .then((res) => {
         // we can all pass them to the Blob constructor directly
         const new_blob = new Blob([res.data], { type: "image/jpg" });
@@ -31,11 +36,11 @@ const AnalysisRow = ({ file, lastElementRef }) => {
         setLoading(false);
         toast.error(err.response.data.message);
       });
-  }, [workflow_id]);
 
-  useEffect(() => {
-    fetchImage();
-  }, [fetchImage]);
+    return () => {
+      controller.abort();
+    };
+  }, [workflow_id]);
 
   let renderedImage;
 
