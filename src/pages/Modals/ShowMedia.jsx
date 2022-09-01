@@ -37,37 +37,42 @@ const ShowMedia = ({ open, handleClose, id }) => {
     []
   );
 
-  const fetchMediaPreview = useCallback((id, mediaType) => {
-    let url = `media/image/${id}/img_original.jpg`;
-    let type = { responseType: "blob" };
-    if (mediaType === "video") {
-      url = `media/video/${id}/video_original.mp4`;
-      type = {};
-    }
-    setLoading(true);
-    axios
-      .get(url, type)
-      .then((res) => {
-        if (mediaType === "image") {
-          // we can all pass them to the Blob constructor directly
-          const new_blob = new Blob([res.data], { type: "image/jpg" });
-          const url = URL.createObjectURL(new_blob);
-          setMediaPreview(url);
-          return;
-        }
-        setLoading(false);
-        setMediaPreview(res.data);
-      })
-      .catch((err) => {
-        setLoading(false);
-        toast.error(err.response.data.message);
-      });
-  }, []);
+  const fetchMediaPreview = useCallback((id, mediaType) => {}, []);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     if (id && data.current) {
-      fetchMediaPreview(id, data.current.media_type);
+      const mediaType = data.current.media_type;
+      let url = `media/image/${id}/img_original.jpg`;
+      let type = { responseType: "blob", signal: controller.signal };
+      if (mediaType === "video") {
+        url = `media/video/${id}/video_original.mp4`;
+        type = { signal: controller.signal };
+      }
+      setLoading(true);
+      axios
+        .get(url, type)
+        .then((res) => {
+          if (mediaType === "image") {
+            // we can all pass them to the Blob constructor directly
+            const new_blob = new Blob([res.data], { type: "image/jpg" });
+            const url = URL.createObjectURL(new_blob);
+            setMediaPreview(url);
+            return;
+          }
+          setLoading(false);
+          setMediaPreview(res.data);
+        })
+        .catch((err) => {
+          setLoading(false);
+          toast.error(err.response.data.message);
+        });
     }
+
+    return () => {
+      controller.abort();
+    };
   }, [id, fetchMediaPreview]);
 
   if (id) {

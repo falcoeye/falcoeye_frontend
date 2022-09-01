@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineCalendar } from "react-icons/ai";
 import { toast } from "react-toastify";
 import axios from "../../utility/api-instance";
@@ -8,10 +8,15 @@ const WorkflowCard = ({ id, title, date, handleClick, lastElementRef }) => {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const fetchImage = useCallback(() => {
+  useEffect(() => {
+    const controller = new AbortController();
+
     setLoading(true);
     axios
-      .get(`workflow/${id}/img_260.jpg`, { responseType: "blob" })
+      .get(`workflow/${id}/img_260.jpg`, {
+        responseType: "blob",
+        signal: controller.signal,
+      })
       .then((res) => {
         // we can all pass them to the Blob constructor directly
         const new_blob = new Blob([res.data], { type: "image/jpg" });
@@ -23,11 +28,11 @@ const WorkflowCard = ({ id, title, date, handleClick, lastElementRef }) => {
         setLoading(false);
         toast.error(err.response.data.message);
       });
-  }, [id]);
 
-  useEffect(() => {
-    fetchImage();
-  }, [fetchImage]);
+    return () => {
+      controller.abort();
+    };
+  }, [id]);
 
   let renderedImage = (
     <div
