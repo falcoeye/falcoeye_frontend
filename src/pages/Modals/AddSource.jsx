@@ -137,7 +137,7 @@ const AddSource = ({ handleClose, open }) => {
       const res = await axios.post("/camera/", sentData);
       dispatch(addSource(res.data.camera));
       setSendingRequest(false);
-      handleClose(false);
+      handleClose();
     } catch (error) {
       setSendingRequest(false);
       setErrorMessage(error.response.data.message || "Something went wrong");
@@ -155,7 +155,7 @@ const AddSource = ({ handleClose, open }) => {
       <Dialog
         as="div"
         className="relative z-[400]"
-        onClose={() => handleClose(false)}
+        onClose={() => handleClose()}
       >
         <Transition.Child
           as={Fragment}

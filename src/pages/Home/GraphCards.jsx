@@ -43,27 +43,27 @@ const cards = [
     numeric: 38399,
     icon: card1,
     title: "total videos",
-    total: 32
+    total: 32,
   },
   {
     id: 2,
     numeric: 11040,
     icon: card2,
     title: "total snapshot",
-    total: 302
+    total: 302,
   },
   {
     id: 3,
     numeric: 14040,
     icon: card3,
     title: "total analysis",
-    total: 12
+    total: 12,
   },
   {
     id: 4,
     numeric: 21080,
     icon: card4,
     title: "total uploaded camera",
-    total: 132
-  }
+    total: 132,
+  },
 ];

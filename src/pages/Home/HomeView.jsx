@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useCallback } from "react";
 import { toast } from "react-toastify";
+import axios from "../../utility/api-instance";
+import ShowWorkflow from "../Modals/ShowWorkflow";
 import AnalysisCard from "./components/AnalysisCard";
+import HomeInfoBoxes from "./components/HomeInfoBoxes";
 import MediasCard from "./components/MediasCard";
 import SourcesCard from "./components/SourcesCard";
 import WorkflowsCard from "./components/WorkflowsCard";
-import axios from "../../utility/api-instance";
 
 const HomeView = () => {
   const [analysisData, setAnalysisData] = useState(null);
@@ -14,6 +17,7 @@ const HomeView = () => {
   const [loadingWorkflowData, setLoadingWorkflowData] = useState(true);
   const [workflowImage, setWorkflowImage] = useState(null);
   const [loadingWorkflowImage, setLoadingWorkflowImage] = useState(true);
+  const [showWorkflowOpened, setShowWorkflowOpened] = useState(false);
 
   useEffect(() => {
     axios
@@ -68,6 +72,15 @@ const HomeView = () => {
     }
   }, [analysisData]);
 
+  const openWorkflowModalHandler = useCallback(() => {
+    if (workflowData && workflowImage) {
+      setShowWorkflowOpened(true);
+    }
+  }, [workflowData, workflowImage]);
+  const closeWorkflowModalHandler = useCallback(() => {
+    setShowWorkflowOpened(false);
+  }, []);
+
   let lastAnalysisData;
   let lastAnalysisContent;
   if (analysisData && !loadingAnalysis) {
@@ -105,56 +118,78 @@ const HomeView = () => {
     );
   }
 
-  let workflowContent;
-  if (
-    workflowImage &&
-    workflowData &&
-    !loadingWorkflowImage &&
-    !loadingWorkflowData
-  ) {
-    workflowContent = (
-      <div className="flex items-center gap-5 flex-wrap">
-        <div className="rounded-md overflow-hidden w-48 h-24">
-          <img
-            src={workflowImage}
-            alt=""
-            className="w-full h-full object-cover"
-          />
-        </div>
-
-        <h3 className="font-semibold text-base  md:text-lg text-gray-600 dark:text-gray-200">
-          {workflowData.name}
-        </h3>
+  let workflowImageContent;
+  if (workflowImage && !loadingWorkflowImage) {
+    workflowImageContent = (
+      <div className="rounded-md overflow-hidden w-48 h-24">
+        <img
+          src={workflowImage}
+          alt=""
+          className="w-full h-full object-cover"
+        />
       </div>
     );
-  } else if (
-    !workflowImage &&
-    !workflowData &&
-    loadingWorkflowImage &&
-    loadingWorkflowData
-  ) {
+  } else if (!workflowImage && loadingWorkflowImage) {
+    workflowImageContent = (
+      <div role="status" className="animate-pulse">
+        <div className="w-48 h-24 bg-gray-200  dark:bg-gray-700 rounded-md"></div>
+      </div>
+    );
+  }
+
+  let workflowNameContent;
+  if (workflowData && !loadingWorkflowData) {
+    workflowNameContent = (
+      <h3 className="font-semibold text-base  md:text-lg text-gray-600 dark:text-gray-200">
+        {workflowData.name}
+      </h3>
+    );
+  } else if (!workflowData && loadingWorkflowData) {
+    workflowNameContent = (
+      <div role="status" className="animate-pulse">
+        <div className="min-h-[36px] bg-gray-200  dark:bg-gray-700 w-48"></div>
+      </div>
+    );
   }
 
   return (
-    <div className="mx-1 pt-5 px-4 md:px-7 pb-5 rounded-md space-y-7">
-      <div className="flex items-center gap-7 justify-center flex-wrap">
-        <SourcesCard />
-        <MediasCard />
-        <WorkflowsCard />
-        <AnalysisCard
-          analysisData={analysisData}
-          loadingAnalysis={loadingAnalysis}
-        />
-      </div>
-
-      <div className="shadow-md rounded-md dark:bg-gray-900 p-5 space-y-5">
-        <div className="flex items-center justify-between gap-3 flex-wrap">
-          {lastAnalysisContent}
+    <>
+      <div className="mx-1 pt-5 px-4 md:px-7 pb-5 rounded-md space-y-7">
+        <div className="flex items-center gap-7 justify-center flex-wrap">
+          <SourcesCard />
+          <MediasCard />
+          <WorkflowsCard />
+          <AnalysisCard
+            analysisData={analysisData}
+            loadingAnalysis={loadingAnalysis}
+          />
         </div>
 
-        <div>{workflowContent}</div>
+        <div className="shadow-md rounded-md dark:bg-gray-900 p-5 space-y-5">
+          <div className="flex items-center justify-between gap-3 flex-wrap">
+            {lastAnalysisContent}
+          </div>
+
+          <div
+            className="flex items-center gap-5 flex-wrap cursor-pointer w-fit"
+            onClick={openWorkflowModalHandler}
+          >
+            {workflowImageContent}
+            {workflowNameContent}
+          </div>
+        </div>
+
+        <HomeInfoBoxes />
       </div>
-    </div>
+
+      {showWorkflowOpened && (
+        <ShowWorkflow
+          open={showWorkflowOpened}
+          handleClose={closeWorkflowModalHandler}
+          id={workflowData?.id}
+        />
+      )}
+    </>
   );
 };
 

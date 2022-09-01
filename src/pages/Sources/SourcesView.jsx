@@ -20,8 +20,8 @@ const SourcesView = (props) => {
     dispatch(fetchSources(page));
   }, [dispatch, page]);
 
-  const addSourceModalChangeHandler = useCallback((val) => {
-    setAddSourceOpened(val);
+  const closeSourceModalHandler = useCallback(() => {
+    setAddSourceOpened(false);
   }, []);
 
   const ovserver = useRef();
@@ -41,10 +41,7 @@ const SourcesView = (props) => {
 
   return (
     <>
-      <AddSource
-        open={addSourceOpened}
-        handleClose={addSourceModalChangeHandler}
-      />
+      <AddSource open={addSourceOpened} handleClose={closeSourceModalHandler} />
 
       <div className="mx-1 pt-5 px-4 md:px-7 pb-5 rounded-md">
         <div className="flex justify-between sm:flex-row flex-col">
