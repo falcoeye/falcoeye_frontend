@@ -1,3 +1,5 @@
+### 0.9.2
+- Implement the Count API for Media, source, workflows and analysises 
 ### 0.9.1
 - Implement Paginatoin For Sources, Media and Analysis
 -  Add New analysis from workflow page.
