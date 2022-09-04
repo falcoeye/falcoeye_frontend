@@ -9,11 +9,10 @@ const WorkflowsCard = () => {
 
   useEffect(() => {
     axios
-      .get(`/workflow/`)
+      .get(`/workflow/count`)
       .then((res) => {
         setLoading(false);
-        const number = res.data.workflow.length;
-        setNumberOfWorkflows(number);
+        setNumberOfWorkflows(res.data.workflow_count);
       })
       .catch((error) => {
         setLoading(false);

@@ -9,11 +9,10 @@ const SourcesCard = () => {
 
   useEffect(() => {
     axios
-      .get(`/camera/`)
+      .get(`/camera/count`)
       .then((res) => {
         setLoading(false);
-        const number = res.data.camera.length;
-        setNumberOfSources(number);
+        setNumberOfSources(res.data.camera_count);
       })
       .catch((error) => {
         setLoading(false);
