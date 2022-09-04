@@ -9,11 +9,10 @@ const MediasCard = () => {
 
   useEffect(() => {
     axios
-      .get(`/media/`)
+      .get(`/media/count`)
       .then((res) => {
         setLoading(false);
-        const number = res.data.media.length;
-        setNumberOfMedias(number);
+        setNumberOfMedias(res.data.media_count);
       })
       .catch((error) => {
         setLoading(false);
