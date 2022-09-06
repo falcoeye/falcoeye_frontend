@@ -64,8 +64,9 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
         ? streaminServerFields
         : RTSPFields;
     let hasNull = false;
+    const unrequiredFields = ['image', 'latitude','longitude']
     dataFields.forEach((key) => {
-      if (data[key] === null || data[key] === "") {
+      if (data[key] === "" && !unrequiredFields.includes(key)) {
         hasNull = true;
       }
     });
