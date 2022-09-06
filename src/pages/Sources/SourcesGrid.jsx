@@ -10,7 +10,7 @@ const SourcesGrid = ({ lastElementRef }) => {
   const sources = useSelector((state) => state.sources);
 
   if (sources.fetchingSources && sources.data.length === 0) {
-    return <Loader height="96" />;
+    return <Loader height="h-96" />;
   }
   if (sources.data.length === 0 && !sources.fetchingSources) {
     return (
