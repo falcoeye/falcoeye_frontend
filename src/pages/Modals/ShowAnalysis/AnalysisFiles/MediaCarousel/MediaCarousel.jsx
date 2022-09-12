@@ -31,6 +31,11 @@ const MediaCarousel = (props) => {
         setPrevDisabled(swiper?.current?.isBeginning)
         setNextDisabled(swiper?.current?.isEnd)
     }
+    const middleClickHandler = () => {
+        swiper.current.slideTo(Math.floor((files.length - 1) / 2))
+        setPrevDisabled(swiper?.current?.isBeginning)
+        setNextDisabled(swiper?.current?.isEnd)
+    }
     const lastClickHandler = () => {
         swiper.current.slideTo(files.length)
         setPrevDisabled(swiper?.current?.isBeginning)
@@ -51,8 +56,9 @@ const MediaCarousel = (props) => {
                 <button disabled={prevDisabled} className="shrink-0 bg-lime-500 hover:bg-lime-600 text-white  transition duration-300 font-bold p-2 rounded-full inline-flex items-center disabled:bg-gray-400 disabled:cursor-not-allowed" onClick={prevClickHandler} >
                     <FaChevronLeft />
                 </button>
-                <div className='grow flex gap-3 justify-center' >
+                <div className='grow hidden md:flex gap-3 justify-center' >
                     <Chip small active={prevDisabled} clickHandler={firstClickHandler} >first</Chip>
+                    <Chip small active={Math.floor((files.length - 1) / 2) === swiper?.current?.activeIndex} clickHandler={middleClickHandler} >middle</Chip>
                     <Chip small active={nextDisabled}  clickHandler={lastClickHandler} >last</Chip>
                 </div>
                 <button disabled={nextDisabled} className="shrink-0 bg-lime-500 hover:bg-lime-600 text-white  transition duration-300 font-bold p-2 rounded-full inline-flex items-center disabled:bg-gray-400 disabled:cursor-not-allowed" onClick={nextClickHandler} >

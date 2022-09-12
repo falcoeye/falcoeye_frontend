@@ -18,7 +18,6 @@ const MediaVideo = (props) => {
             .then((res) => {
                 setLoading(false);
                 setMediaPreview(res.data);
-                console.log(res.data);
             })
             .catch((err) => {
                 setLoading(false);
