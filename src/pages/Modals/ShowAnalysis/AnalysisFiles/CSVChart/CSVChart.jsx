@@ -1,19 +1,21 @@
-import Lottie from "lottie-react";
+import Lottie from 'lottie-react';
 import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 import noDataAnimation from '../../../../../assets/animations/no-data.json';
 import Loader from '../../../../../Components/UI/Loader/Loader';
 import axios from '../../../../../utility/api-instance';
 
-
 import {
-    Chart as ChartJS, Legend, LinearScale, LineElement, PointElement, Tooltip
+    Chart as ChartJS,
+    Legend,
+    LinearScale,
+    LineElement,
+    PointElement,
+    Tooltip,
 } from 'chart.js';
 import { Scatter } from 'react-chartjs-2';
-import { usePapaParse } from "react-papaparse";
+import { usePapaParse } from 'react-papaparse';
 ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
-
-
 
 const CSVChart = (props) => {
     const { file, id, meta } = props;
@@ -21,7 +23,7 @@ const CSVChart = (props) => {
 
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState(null);
-    const [list, setList] = useState([])
+    const [list, setList] = useState([]);
 
     const options = useMemo(() => {
         return {
@@ -30,15 +32,15 @@ const CSVChart = (props) => {
                     beginAtZero: true,
                     title: {
                         display: true,
-                        text:meta['y-axis']
-                    }
+                        text: meta['y-axis'].toUpperCase(),
+                    },
                 },
                 x: {
                     beginAtZero: true,
                     title: {
                         display: true,
-                        text:meta['x-axis']
-                    }
+                        text: meta['x-axis'].toUpperCase(),
+                    },
                 },
             },
             responsive: true,
@@ -47,31 +49,9 @@ const CSVChart = (props) => {
                     position: 'top',
                 },
             },
-        }
+        };
     }, [meta]);
     const labels = useMemo(() => [meta['x-axis'], meta['y-axis']], [meta]);
-
-    // Handle csv string...
-    useEffect(() => {
-        if (!data) { return; }
-        readString(data, {
-            header: true,
-            worker: true,
-            complete: (results) => {
-                const formattedData = results.data.map(item => {
-                    return {
-                        x: item[meta['x-axis']],
-                        y: item[meta['y-axis']]
-                    }
-                })
-                setList([{
-                    label: 'CSV Result',
-                    data: formattedData,
-                    backgroundColor: 'rgba(255, 99, 132, 1)',
-                }])
-            },
-        });
-    }, [data, meta, readString])
 
     useEffect(() => {
         const controller = new AbortController();
@@ -82,6 +62,25 @@ const CSVChart = (props) => {
             .then((res) => {
                 setLoading(false);
                 setData(res.data);
+                res.data && readString(res.data, {
+                    header: true,
+                    worker: true,
+                    complete: (results) => {
+                        const formattedData = results.data.map((item) => {
+                            return {
+                                x: item[meta['x-axis']],
+                                y: item[meta['y-axis']],
+                            };
+                        });
+                        setList([
+                            {
+                                label: 'CSV Result',
+                                data: formattedData,
+                                backgroundColor: 'rgba(255, 99, 132, 1)',
+                            },
+                        ]);
+                    },
+                });
             })
             .catch((err) => {
                 setLoading(false);
@@ -90,10 +89,10 @@ const CSVChart = (props) => {
         return () => {
             controller.abort();
         };
-    }, [id, file]);
+    }, [id, file, readString, meta]);
 
     if (loading) {
-        return <Loader height='h-96' />
+        return <Loader height="h-96" />;
     }
 
     if (!loading && !data) {
@@ -102,10 +101,10 @@ const CSVChart = (props) => {
                 <Lottie
                     animationData={noDataAnimation}
                     loop={true}
-                    style={{ width: "100%", height: "100%" }}
+                    style={{ width: '100%', height: '100%' }}
                 />
             </div>
-        )
+        );
     }
 
     return (
@@ -113,9 +112,9 @@ const CSVChart = (props) => {
             options={options}
             data={{
                 labels,
-                datasets: list
+                datasets: list,
             }}
         />
-    )
+    );
 };
 export default CSVChart;
