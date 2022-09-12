@@ -37,8 +37,6 @@ const ShowMedia = ({ open, handleClose, id }) => {
     []
   );
 
-  const fetchMediaPreview = useCallback((id, mediaType) => {}, []);
-
   useEffect(() => {
     const controller = new AbortController();
 
@@ -73,7 +71,7 @@ const ShowMedia = ({ open, handleClose, id }) => {
     return () => {
       controller.abort();
     };
-  }, [id, fetchMediaPreview]);
+  }, [id]);
 
   if (id) {
     data.current = media.data.find((item) => item.id === id);

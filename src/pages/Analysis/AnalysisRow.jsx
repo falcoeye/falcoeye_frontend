@@ -2,7 +2,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "../../utility/api-instance";
-import ShowAnalysis from "../Modals/ShowAnalysis";
+import ShowAnalysis from "../Modals/ShowAnalysis/ShowAnalysis";
 
 const AnalysisRow = ({ file, lastElementRef }) => {
   const { id, workflow_id, status, name, created_at } = file;
