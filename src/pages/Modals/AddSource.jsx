@@ -133,7 +133,7 @@ const AddSource = ({ handleClose, open }) => {
           : RTSPFields;
       let sentData = {};
       dataFields.forEach((field) => {
-        sentData[field] = data[field];
+        data[field] !== '' && (sentData[field] = data[field]);
       });
       const res = await axios.post("/camera/", sentData);
       dispatch(addSource(res.data.camera));

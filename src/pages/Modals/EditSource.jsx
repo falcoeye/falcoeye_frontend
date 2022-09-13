@@ -140,7 +140,7 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
           : RTSPFields;
       let sentData = {};
       dataFields.forEach((field) => {
-        sentData[field] = data[field];
+        data[field] !== '' && (sentData[field] = data[field]);
       });
       const res = await axios.put(`/camera/${id}`, sentData);
       dispatch(editSource(res.data.camera));
