@@ -1,3 +1,5 @@
+### 0.9.4
+- Replace Analysis Status with workflow thumbnail in Dashboard
 ### 0.9.3
 - Complete Show Analysis Page and show analysis files and their data weither it is Media or CSV
 - Make Coords & Thumbnail Not required in Add / Edit Source
