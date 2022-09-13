@@ -131,10 +131,6 @@ const AnalysisList = (props) => {
                     >
                       status
                     </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-white"
-                    ></th>
                   </tr>
                 </thead>
                 <tbody className="bg-white dark:bg-slate-700 divide-y divide-gray-200 dark:divide-gray-600">

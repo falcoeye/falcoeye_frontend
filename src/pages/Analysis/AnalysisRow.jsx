@@ -88,7 +88,7 @@ const AnalysisRow = ({ file, lastElementRef }) => {
           </div>
         </td>
         <td className="px-6 py-4 whitespace-nowrap">
-          <div className="text-sm font-medium text-gray-900 dark:text-white">
+          <div className="text-sm font-medium text-gray-900 dark:text-white cursor-pointer" onClick={openShowAnalysisModalHandler}>
             {name}
           </div>
         </td>
@@ -101,14 +101,6 @@ const AnalysisRow = ({ file, lastElementRef }) => {
           <div className={`text-sm ${statusStyle} capitalize dark:text-white `}>
             {status}
           </div>
-        </td>
-        <td className="px-6 py-4 whitespace-nowrap">
-          <button
-            className="btn-primary !rounded-md"
-            onClick={openShowAnalysisModalHandler}
-          >
-            view details
-          </button>
         </td>
       </tr>
 
