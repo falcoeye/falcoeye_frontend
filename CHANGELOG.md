@@ -1,3 +1,8 @@
+### 0.9.3
+- Complete Show Analysis Page and show analysis files and their data weither it is Media or CSV
+- Make Coords & Thumbnail Not required in Add / Edit Source
+- Edits to Dashboard View and Reorder Sidebar Icons
+- Enhancements to analysis list page to make analysis name clickable
 ### 0.9.2
 - Implement the Count API for Media, source, workflows and analysises 
 ### 0.9.1
