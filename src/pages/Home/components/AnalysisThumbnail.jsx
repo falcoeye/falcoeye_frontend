@@ -43,14 +43,20 @@ const AnalysisThumbnail = (props) => {
 
     return (
         <Fragment>
-            <div className="shadow-md rounded-md dark:bg-gray-900 p-5 space-y-5 cursor-pointer " onClick={showAnalysisOpenHandler} >
-                <div className="flex items-center justify-between gap-3 flex-wrap">
+            <div className="shadow-md rounded-md dark:bg-gray-900 p-3 space-y-5 cursor-pointer " onClick={showAnalysisOpenHandler} >
+                <div className="flex items-center gap-3 flex-wrap">
+                    {loading ? (
+                        <div role="status" className="max-w-sm animate-pulse">
+                            <div className="h-[130px] w-[130px] rounded-md bg-gray-200 dark:bg-gray-700 mr-2"></div>
+                        </div>
+                    ) : (
+                        <div className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white rounded-md capitalize mr-2 h-[130px] w-[130px]">
+                            <img className="w-full h-full object-cover" src={image} alt='workflow thumb' />
+                        </div>
+                    )}
                     <h4 className="font-semibold text-base md:text-xl text-gray-800 dark:text-gray-200">
                         {item?.name}
                     </h4>
-                    <div className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-primary rounded-md capitalize">
-                        {item?.status}
-                    </div>
                 </div>
             </div>
             {showAnalysisOpened && !loading && image && (
