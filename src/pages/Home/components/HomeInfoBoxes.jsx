@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import AddAnalysis from "../../Modals/AddAnalysis/AddAnalysis";
 import AddSource from "../../Modals/AddSource";
 import UploadMedia from "../../Modals/UploadMedia";
@@ -36,27 +36,17 @@ const HomeInfoBoxes = () => {
 
   return (
     <>
-      <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 justify-items-center">
-        <Link
-          to="/profile"
-          className="shadow-lg rounded-md  dark:bg-gray-900 max-w-[240px] w-full h-32 flex justify-center items-center p-2"
+      <div className="grid xs:grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8 justify-items-center">
+        <NavLink
+          to="profile"
+          className="shadow-lg rounded-md  dark:bg-gray-900 max-w-[370px] w-full h-32 flex justify-center items-center p-2"
         >
           <h3 className="font-semibold text-xl text-gray-600 text-center capitalize dark:text-gray-100">
             My account
           </h3>
-        </Link>
-        <div className="shadow-lg rounded-md  dark:bg-gray-400 max-w-[240px] w-full h-32 flex justify-center items-center p-2 bg-gray-300">
-          <h3 className="font-semibold text-xl text-gray-600 text-center capitalize ">
-            Billing
-          </h3>
-        </div>
-        <div className="shadow-lg rounded-md  dark:bg-gray-400 max-w-[240px] w-full h-32 flex justify-center items-center p-2 bg-gray-300">
-          <h3 className="font-semibold text-xl text-gray-600 text-center capitalize ">
-            Documentation
-          </h3>
-        </div>
+        </NavLink>
         <div
-          className="shadow-lg rounded-md  dark:bg-gray-900 max-w-[240px] w-full h-32 flex justify-center items-center p-2 cursor-pointer"
+          className="shadow-lg rounded-md  dark:bg-gray-900 max-w-[370px] w-full h-32 flex justify-center items-center p-2 cursor-pointer"
           onClick={openUploadMediaModalHandler}
         >
           <h3 className="font-semibold text-xl text-gray-600 text-center capitalize dark:text-gray-100">
@@ -64,7 +54,7 @@ const HomeInfoBoxes = () => {
           </h3>
         </div>
         <div
-          className="shadow-lg rounded-md  dark:bg-gray-900 max-w-[240px] w-full h-32 flex justify-center items-center p-2 cursor-pointer"
+          className="shadow-lg rounded-md  dark:bg-gray-900 max-w-[370px] w-full h-32 flex justify-center items-center p-2 cursor-pointer"
           onClick={openAddAnalysisModalHandler}
         >
           <h3 className="font-semibold text-xl text-gray-600 text-center capitalize dark:text-gray-100">
@@ -72,7 +62,7 @@ const HomeInfoBoxes = () => {
           </h3>
         </div>
         <div
-          className="shadow-lg rounded-md  dark:bg-gray-900 max-w-[240px] w-full h-32 flex justify-center items-center p-2 cursor-pointer"
+          className="shadow-lg rounded-md  dark:bg-gray-900 max-w-[370px] w-full h-32 flex justify-center items-center p-2 cursor-pointer"
           onClick={openSourceModalHandler}
         >
           <h3 className="font-semibold text-xl text-gray-600 text-center capitalize dark:text-gray-100">

@@ -4,7 +4,7 @@ import HomeInfoBoxes from "./components/HomeInfoBoxes";
 import LastAnalysisInfo from "./components/LastAnalysisInfo";
 import MediasCard from "./components/MediasCard";
 import SourcesCard from "./components/SourcesCard";
-import WorkflowsCard from "./components/WorkflowsCard";
+// import WorkflowsCard from "./components/WorkflowsCard";
 
 const HomeView = () => {
   return (
@@ -13,12 +13,10 @@ const HomeView = () => {
         <div className="flex items-center gap-7 justify-center flex-wrap">
           <SourcesCard />
           <MediasCard />
-          <WorkflowsCard />
+          {/* <WorkflowsCard /> */}
           <AnalysisCard />
         </div>
-
         <LastAnalysisInfo />
-
         <HomeInfoBoxes />
       </div>
     </>

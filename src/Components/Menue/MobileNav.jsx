@@ -13,10 +13,10 @@ import ToggleMode from "../UI/ToggleMode/ToggleMode";
 
 const navLinks = [
   { id: 1, text: "dashboard", icon: <AiFillAppstore />, path: "/" },
+  { id: 5, text: "Analysis", icon: <FaBriefcase />, path: "/analysis" },
   { id: 2, text: "sources", icon: <AiFillCamera />, path: "/sources" },
   { id: 3, text: "media", icon: <RiCameraLensFill />, path: "/media" },
   { id: 4, text: "workflows", icon: <AiFillRobot />, path: "/workflows" },
-  { id: 5, text: "Analysis", icon: <FaBriefcase />, path: "/analysis" },
 ];
 
 const MobileNav = ({ isOpen, toggleDrawer, userData }) => {

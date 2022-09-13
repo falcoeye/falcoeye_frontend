@@ -8,6 +8,12 @@ import logoSrc from "../../images/logo.png";
 const navLinks = [
   { id: 1, text: "dashboard", icon: <AiFillAppstore size={20} />, path: "/" },
   {
+    id: 5,
+    text: "Analysis",
+    icon: <FaBriefcase size={20} />,
+    path: "/analysis",
+  },
+  {
     id: 2,
     text: "Sources",
     icon: <AiFillCamera size={20} />,
@@ -24,12 +30,6 @@ const navLinks = [
     text: "Workflows",
     icon: <AiFillRobot size={20} />,
     path: "/workflows",
-  },
-  {
-    id: 5,
-    text: "Analysis",
-    icon: <FaBriefcase size={20} />,
-    path: "/analysis",
   },
 ];
 
