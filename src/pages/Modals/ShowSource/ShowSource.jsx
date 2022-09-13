@@ -92,7 +92,7 @@ const ShowSource = ({ open, handleClose, id }) => {
           setCaptureType(type);
         })
         .catch((err) => {
-          setCaptureMessage(err.data.message);
+          setCaptureMessage(err.response.data.message);
           setCaptureLoading(false);
           setCaptureFailed(true);
         });
@@ -119,7 +119,7 @@ const ShowSource = ({ open, handleClose, id }) => {
         setCaptureStatus(res.data);
       })
       .catch((err) => {
-        toast.error(err.data?.message || "Error Getting Capture Info");
+        toast.error(err.response.data?.message || "Error Getting Capture Info");
       });
   }, [registerationKey]);
 

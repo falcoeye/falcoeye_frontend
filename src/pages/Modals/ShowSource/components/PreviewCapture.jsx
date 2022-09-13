@@ -60,7 +60,7 @@ const PreviewCapture = ({ handleClose, open, registerKey, type }) => {
       })
       .catch((err) => {
         setSubmitting(false);
-        toast.error(err.data?.message || "Error Submitting Capture");
+        toast.error(err.response.data?.message || "Error Submitting Capture");
       });
   }, [data, handleClose, registerKey, type]);
 
