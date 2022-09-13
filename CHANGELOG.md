@@ -1,3 +1,5 @@
+### 0.9.5
+- Add Support for m3u8 Type in Streaming services
 ### 0.9.4
 - Replace Analysis Status with workflow thumbnail in Dashboard
 ### 0.9.3
