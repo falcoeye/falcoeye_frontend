@@ -33,6 +33,7 @@
     "react-youtube": "^9.0.3",
     "recharts": "^2.1.9",
     "swiper": "^8.3.2",
+    "video.js": "^7.20.2",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },

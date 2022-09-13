@@ -252,7 +252,7 @@ const ShowSource = ({ open, handleClose, id }) => {
             <AiOutlineClose />
           </button>
         </div>
-        <YoutubeView videoID={videoID} />
+        <YoutubeView videoID={videoID}  url={data.url} />
         <Fragment>
           <div className="flex items-center justify-center gap-8 mt-5">
             <button
