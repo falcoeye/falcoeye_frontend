@@ -1,21 +1,21 @@
-import { Dialog, Transition } from "@headlessui/react";
-import Lottie from "lottie-react";
-import React, { Fragment, useCallback, useEffect, useState } from "react";
+import { Dialog, Transition } from '@headlessui/react';
+import Lottie from 'lottie-react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import {
   AiFillCamera,
   AiFillVideoCamera,
   AiOutlineClose,
-} from "react-icons/ai";
-import { MdDelete } from "react-icons/md";
-import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import noDataAnimation from "../../assets/animations/no-data.json";
-import DeleteMedia from "./DeleteMedia";
-import "./Modals.css";
-import axios from "../../utility/api-instance";
-import { useRef } from "react";
-import { FaEdit } from "react-icons/fa";
-import EditMedia from "./EditMedia";
+} from 'react-icons/ai';
+import { MdDelete } from 'react-icons/md';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import noDataAnimation from '../../assets/animations/no-data.json';
+import DeleteMedia from './DeleteMedia';
+import './Modals.css';
+import axios from '../../utility/api-instance';
+import { useRef } from 'react';
+import { FaEdit } from 'react-icons/fa';
+import EditMedia from './EditMedia';
 
 const ShowMedia = ({ open, handleClose, id }) => {
   const media = useSelector((state) => state.media);
@@ -23,10 +23,13 @@ const ShowMedia = ({ open, handleClose, id }) => {
   const [deleteModalOpened, setDeleteModalOpened] = useState(false);
   const [mediaPreview, setMediaPreview] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [editMedia, setEditMedia] = useState(false);
+  const [editMediaOpened, setEditMediaOpened] = useState(false);
 
-  const openEditModalHandler = useCallback(() => setEditMedia(true), []);
-  const closeEditModalHandler = useCallback(() => setEditMedia(false), []);
+  const openEditModalHandler = useCallback(() => setEditMediaOpened(true), []);
+  const closeEditModalHandler = useCallback(
+    () => setEditMediaOpened(false),
+    []
+  );
 
   const openDeleteModalHandler = useCallback(
     () => setDeleteModalOpened(true),
@@ -43,8 +46,8 @@ const ShowMedia = ({ open, handleClose, id }) => {
     if (id && data.current) {
       const mediaType = data.current.media_type;
       let url = `media/image/${id}/img_original.jpg`;
-      let type = { responseType: "blob", signal: controller.signal };
-      if (mediaType === "video") {
+      let type = { responseType: 'blob', signal: controller.signal };
+      if (mediaType === 'video') {
         url = `media/video/${id}/video_original.mp4`;
         type = { signal: controller.signal };
       }
@@ -52,9 +55,9 @@ const ShowMedia = ({ open, handleClose, id }) => {
       axios
         .get(url, type)
         .then((res) => {
-          if (mediaType === "image") {
+          if (mediaType === 'image') {
             // we can all pass them to the Blob constructor directly
-            const new_blob = new Blob([res.data], { type: "image/jpg" });
+            const new_blob = new Blob([res.data], { type: 'image/jpg' });
             const url = URL.createObjectURL(new_blob);
             setMediaPreview(url);
             return;
@@ -94,7 +97,7 @@ const ShowMedia = ({ open, handleClose, id }) => {
           <Lottie
             animationData={noDataAnimation}
             loop={true}
-            style={{ width: "100%", height: "100%" }}
+            style={{ width: '100%', height: '100%' }}
           />
         </div>
       </Fragment>
@@ -104,9 +107,8 @@ const ShowMedia = ({ open, handleClose, id }) => {
   if (id && data.current) {
     let renderedPreview = (
       <div
-        className={`flex justify-center items-center h-96 bg-gray-300 dark:bg-gray-700 mb-3 ${
-          loading && "animate-pulse"
-        }`}
+        className={`flex justify-center items-center h-96 bg-gray-300 dark:bg-gray-700 mb-3 ${loading && 'animate-pulse'
+          }`}
       >
         <svg
           className="w-12 h-12 text-gray-200"
@@ -119,7 +121,7 @@ const ShowMedia = ({ open, handleClose, id }) => {
         </svg>
       </div>
     );
-    if (mediaPreview && data.current.media_type === "image") {
+    if (mediaPreview && data.current.media_type === 'image') {
       renderedPreview = (
         <div className="flex justify-center items-center h-96 bg-gray-300 dark:bg-gray-700 mb-3">
           <img
@@ -130,7 +132,7 @@ const ShowMedia = ({ open, handleClose, id }) => {
         </div>
       );
     }
-    if (mediaPreview && data.current.media_type === "video") {
+    if (mediaPreview && data.current.media_type === 'video') {
       renderedPreview = (
         <div className="flex justify-center items-center h-96 bg-gray-300 dark:bg-gray-700 mb-3">
           <video className="w-full h-full object-cover block" controls>
@@ -164,11 +166,10 @@ const ShowMedia = ({ open, handleClose, id }) => {
         </div>
         {renderedPreview}
         <div
-          className={`inline-flex items-center mb-3 py-1 px-2 text-base font-medium text-center text-white capitalize ${
-            media.media_type === "image" ? "bg-sky-400" : "bg-emerald-500"
-          } rounded-md`}
+          className={`inline-flex items-center mb-3 py-1 px-2 text-base font-medium text-center text-white capitalize ${media.media_type === 'image' ? 'bg-sky-400' : 'bg-emerald-500'
+            } rounded-md`}
         >
-          {data.current.media_type === "image" ? (
+          {data.current.media_type === 'image' ? (
             <AiFillCamera className="mr-2" />
           ) : (
             <AiFillVideoCamera className="mr-2" />
@@ -183,13 +184,22 @@ const ShowMedia = ({ open, handleClose, id }) => {
             {data.current.tags}
           </span>
         </div>
-        <DeleteMedia
-          open={deleteModalOpened}
-          handleClose={closeDeleteModalHandler}
-          id={id}
-          type={data.current.media_type}
-          handleShowClose={handleClose}
-        />
+        {deleteModalOpened && (
+          <DeleteMedia
+            open={deleteModalOpened}
+            handleClose={closeDeleteModalHandler}
+            id={id}
+            type={data.current.media_type}
+            handleShowClose={handleClose}
+          />
+        )}
+        {editMediaOpened && (
+          <EditMedia
+            open={editMediaOpened}
+            handleClose={closeEditModalHandler}
+            id={id}
+          />
+        )}
       </Fragment>
     );
   }
@@ -229,8 +239,6 @@ const ShowMedia = ({ open, handleClose, id }) => {
           </div>
         </Dialog>
       </Transition>
-
-      <EditMedia open={editMedia} handleClose={closeEditModalHandler} id={id} />
     </>
   );
 };

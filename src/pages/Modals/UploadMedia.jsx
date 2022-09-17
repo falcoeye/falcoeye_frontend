@@ -118,6 +118,7 @@ const UploadMedia = ({ handleClose, open }) => {
         <button
           type="button"
           onClick={submitVideoHandler}
+          disabled={submitLoading}
           className="text-white bg-green/90 hover:bg-green rounded-md font-medium text-base px-4 py-2  focus:outline-none flex items-center"
         >
           {submitLoading && (
@@ -162,6 +163,7 @@ const UploadMedia = ({ handleClose, open }) => {
           name="file"
           placeholder="Upload Media"
           onChange={handleImageUpload}
+          disabled={loading}
         />
       </label>
     );

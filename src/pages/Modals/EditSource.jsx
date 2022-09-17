@@ -306,6 +306,7 @@ const EditSource = ({ handleClose, id, open, handleShowClose }) => {
                     className={`login_form_btn ${
                       disableSubmit && "disable_submit_btn"
                     }`}
+                    disabled={sendingRequest}
                     onClick={handleSubmit}
                   >
                     {sendingRequest ? <LoadingSpinner /> : "Edit Source"}

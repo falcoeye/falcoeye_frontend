@@ -306,6 +306,7 @@ const AddSource = ({ handleClose, open }) => {
                       disableSubmit && "disable_submit_btn"
                     }`}
                     onClick={handleSubmit}
+                    disabled={sendingRequest}
                   >
                     {sendingRequest ? <LoadingSpinner /> : "Add Source"}
                   </button>

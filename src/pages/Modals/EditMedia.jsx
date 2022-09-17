@@ -116,6 +116,7 @@ const EditMedia = ({ open, handleClose, id }) => {
                     style={{ margin: "25px auto", display: "block" }}
                     className={`login_form_btn`}
                     onClick={submitFormHandler}
+                    disabled={sendingRequest}
                   >
                     {sendingRequest ? <LoadingSpinner /> : "Edit Media"}
                   </button>

@@ -21,6 +21,8 @@ const ShowAnalysis = ({ handleClose, open, id, image, workflowId }) => {
   const [loadingWorkflowData, setLoadingWorkflowData] = useState(true);
   const [showWorkflowOpened, setShowWorkflowOpened] = useState(false);
 
+  const [deletinganalysis, setDeletingAnalysis] = useState(false)
+
   const openWorkflowModalHandler = useCallback(() => {
     if (workflowData) {
       setShowWorkflowOpened(true);
@@ -88,14 +90,16 @@ const ShowAnalysis = ({ handleClose, open, id, image, workflowId }) => {
   };
 
   const deleteAnalysisHandler = () => {
+    setDeletingAnalysis(true)
     axios
-      .delete(`/analysis/${id}`)
-      .then((res) => {
+    .delete(`/analysis/${id}`)
+    .then((res) => {
         closeModalHandler();
         dispatch(deleteAnalysis(id));
         toast.success('Analysis deleted successfully');
       })
       .catch((err) => {
+        setDeletingAnalysis(false)
         closeModalHandler();
         toast.error(
           err.response?.data?.message ||
@@ -198,6 +202,7 @@ const ShowAnalysis = ({ handleClose, open, id, image, workflowId }) => {
                     <button
                       className="bg-red-600/90 hover:bg-red-600 text-white  transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
                       onClick={deleteAnalysisHandler}
+                      disabled={deletinganalysis}
                     >
                       <MdDelete />
                     </button>
