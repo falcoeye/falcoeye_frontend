@@ -32,21 +32,22 @@ const Informations = (props) => {
     }
   }, [updateData, initialState]);
 
-  const handleChange = (e) => {
-    const { name, value, type } = e.target;
+  const handleChange = (e, fieldType) => {
+    const { name, value } = e.target;
     let prevState = {};
-    if (type === 'number') {
+    if (fieldType === 'int' || fieldType === 'float') {
+      console.log(value, fieldType)
       setData((preVal) => {
         prevState = preVal;
         let newState = {
           ...preVal,
-          [name]: +value,
+          [name]: value,
         };
+        updateData({
+          ...prevState,
+          [name]: isNaN(+value) ? value : +value,
+        });
         return newState;
-      });
-      updateData({
-        ...prevState,
-        [name]: +value,
       });
       return;
     }
@@ -56,11 +57,11 @@ const Informations = (props) => {
         ...preVal,
         [name]: value,
       };
+      updateData({
+        ...prevState,
+        [name]: value,
+      });
       return newState;
-    });
-    updateData({
-      ...prevState,
-      [name]: +value,
     });
   };
 
@@ -93,38 +94,36 @@ const Informations = (props) => {
     validateInfo(Object.keys(errors).length === 0)
   })
 
-  //console.log(Object.keys(errors).length === 0);
-
   const renderedInputs = (
     <Fragment>
-      {questionFields.map((field, index) => {
+      {questionFields.map((input, index) => {
         const type = 'text';
         return (
           <Fragment key={index}>
+            <p className=" w-full md:w-[85%]  my-1 md:ml-[30px] text-sm font-semibold text-green">
+              {input.disc}
+            </p>
             <Controller
-              name={field.name}
+              name={input.name}
               control={control}
               render={({ field }) => (
                 <input
                   {...field}
                   type={type}
-                  id={field.name}
-                  value={data[field.name]}
+                  id={input.name}
+                  value={data[input.name]}
                   className="analysis_form_input  dark:!bg-gray-800 dark:!border-gray-800 dark:!text-white !rounded-md"
                   onChange={(e) => {
-                    handleChange(e);
+                    handleChange(e, input.type);
                     field.onChange(e.target.value);
                   }}
                 />
               )}
             />
-            <p className=" w-full md:w-[85%]  my-1 md:ml-[30px] text-sm font-semibold text-orange-500">
-              {field.disc}
-            </p>
-            {errors[field.name] && (
+            {errors[input.name] && (
               <p className=" w-full md:w-[85%] mb-3 md:ml-[30px] font-semibold text-xs text-red-500/80">
                 {`This field must contains ${
-                  field.type === 'string' ? 'a value' : 'only numbers'
+                  input.type === 'string' ? 'a value' : 'only numbers'
                 }`}
               </p>
             )}

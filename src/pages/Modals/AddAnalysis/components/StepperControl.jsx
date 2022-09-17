@@ -19,7 +19,7 @@ export default function StepperControl({
       </button>
 
       <button
-        disabled={!nextEnabled()}
+        disabled={!nextEnabled() || submitting}
         onClick={() => handleClick("next")}
         className="cursor-pointer rounded-md bg-primary py-2 px-4 font-semibold uppercase border-2 border-primary text-white transition duration-200 ease-in-out hover:bg-slate-700 hover:border-slate-700 hover:text-white disabled:bg-gray-800 disabled:cursor-not-allowed disabled:border-gray-800 dark:disabled:hover:bg-gray-900 dark:disabled:hover:border-gray-900 dark:hover:bg-primary/80 dark:hover:border-primary/80"
       >
