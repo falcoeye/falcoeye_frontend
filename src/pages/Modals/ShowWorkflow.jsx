@@ -190,7 +190,7 @@ const ShowWorkflow = ({ open, handleClose, id }) => {
                       <AiOutlineClose />
                     </button>
                   </div>
-                  <div className="max-h-[calc(100%-2.5rem)] lg:max-h-[calc(100vh-10rem)] overflow-y-auto pr-3">
+                  <div className="max-h-[calc(100%-3rem)] lg:max-h-[calc(100vh-10rem)] overflow-y-auto pr-3">
                     {content}
                   </div>
                 </Dialog.Panel>
