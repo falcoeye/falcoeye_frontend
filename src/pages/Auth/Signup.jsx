@@ -136,6 +136,7 @@ const Signup = () => {
               type="submit"
               className="login_form_btn !rounded-md"
               value="Signup"
+              disabled={isLoading}
             >
               {isLoading && <LoadingSpinner />}
               {!isLoading && "Signup"}
