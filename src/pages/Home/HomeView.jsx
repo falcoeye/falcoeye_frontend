@@ -9,15 +9,15 @@ import SourcesCard from "./components/SourcesCard";
 const HomeView = () => {
   return (
     <>
-      <div className="mx-1 pt-5 px-4 md:px-7 pb-5 rounded-md space-y-7">
-        <div className="flex items-center gap-7 justify-center flex-wrap">
+      <div className="mx-1 pt-5 px-4 md:px-7 pb-5 rounded-md space-y-8">
+        <HomeInfoBoxes />
+        <div className="flex items-center gap-7 justify-center flex-wrap mt-5">
           <SourcesCard />
           <MediasCard />
           {/* <WorkflowsCard /> */}
           <AnalysisCard />
         </div>
         <LastAnalysisInfo />
-        <HomeInfoBoxes />
       </div>
     </>
   );
