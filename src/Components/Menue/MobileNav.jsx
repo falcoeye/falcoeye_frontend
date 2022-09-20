@@ -80,7 +80,7 @@ const MobileNav = ({ isOpen, toggleDrawer, userData }) => {
                     className={(navData) =>
                       navData.isActive
                         ? "px-3.5 flex  items-center gap-3.5 font-medium py-2 bg-primary rounded-md text-white "
-                        : "px-3.5 flex  items-center gap-3.5 font-medium py-2 duration-300 hover:bg-primary rounded-md hover:text-white text-primary"
+                        : "px-3.5 flex  items-center gap-3.5 font-medium py-2 duration-300 rounded-md text-primary"
                     }
                   >
                     <span className="min-w-max">{icon}</span>

@@ -62,7 +62,7 @@ const SideNav = ({ sideNav }) => {
                     className={(navData) =>
                       navData.isActive
                         ? "px-3.5 flex  items-center text-sm gap-3.5 font-medium py-2 bg-primary rounded-md text-white "
-                        : "px-3.5 flex  items-center text-sm gap-3.5 font-medium py-2 duration-300 hover:bg-primary rounded-md hover:text-white text-primary"
+                        : "px-3.5 flex  items-center text-sm gap-3.5 font-medium py-2 duration-300 rounded-md text-primary"
                     }
                   >
                     <div>{link.icon}</div>

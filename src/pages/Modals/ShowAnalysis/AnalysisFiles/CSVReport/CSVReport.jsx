@@ -19,7 +19,6 @@ const CSVReport = (props) => {
     useEffect(() => {
         const controller = new AbortController();
         let url = `/analysis/${id}/${meta.filename}`;
-        setLoading(true);
         axios
             .get(url)
             .then((res) => {
