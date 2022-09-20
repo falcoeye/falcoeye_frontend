@@ -12,7 +12,6 @@ const MediaVideo = (props) => {
     useEffect(() => {
         const controller = new AbortController();
         let url = `/analysis/${id}/${file}`;
-        setLoading(true);
         axios
             .get(url)
             .then((res) => {
@@ -29,7 +28,7 @@ const MediaVideo = (props) => {
         };
     }, [id, file]);
     let renderedPreview;
-    if (loading) {
+    if (loading && !mediaPreview) {
         renderedPreview = <Loader height="h-full" />;
     }
     if (!loading && mediaPreview) {

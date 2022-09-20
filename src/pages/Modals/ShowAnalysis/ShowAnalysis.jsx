@@ -7,8 +7,10 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import noDataAnimation from '../../../assets/animations/no-data.json';
 import Loader from '../../../Components/UI/Loader/Loader';
+import { Cookies } from '../../../shared/utility';
 import { deleteAnalysis } from '../../../store/analysis';
-import axios from '../../../utility/api-instance';
+import apiInstance from '../../../utility/api-instance';
+import axios from 'axios';
 import '../Modals.css';
 import ShowWorkflow from '../ShowWorkflow';
 import AnalysisFiles from './AnalysisFiles/AnalysisFiles';
@@ -33,7 +35,7 @@ const ShowAnalysis = ({ handleClose, open, id, image, workflowId }) => {
   }, []);
 
   const fetchAnalysisDataHandler = useCallback(() => {
-    axios
+    apiInstance
       .get(`/analysis/${id}`)
       .then((res) => {
         setAnalysisData(res.data);
@@ -47,8 +49,8 @@ const ShowAnalysis = ({ handleClose, open, id, image, workflowId }) => {
   }, [id]);
 
   const fetchAnalysisMetaHandler = useCallback(() => {
-    axios
-      .get(`analysis/${id}/meta.json`)
+    apiInstance
+      .get(`/analysis/${id}/meta.json`)
       .then((res) => {
         setAnalysisMeta(res.data);
       })
@@ -59,7 +61,7 @@ const ShowAnalysis = ({ handleClose, open, id, image, workflowId }) => {
   }, [id]);
 
   const fetchWorkflowDataHandler = useCallback(() => {
-    axios
+    apiInstance
       .get(`/workflow/${workflowId}`)
       .then((res) => {
         setLoadingWorkflowData(false);
@@ -82,6 +84,42 @@ const ShowAnalysis = ({ handleClose, open, id, image, workflowId }) => {
   useEffect(() => {
     fetchWorkflowDataHandler();
   }, [fetchWorkflowDataHandler]);
+
+  useEffect(() => {
+    if (  !analysisData && !analysisMeta ) {return ;}
+    let refetchInterval;
+    refetchInterval = setInterval( () => {
+      let token = Cookies.getCookie("token")
+      const headers = {
+        headers: {
+          Accept: "*/*",
+          "Content-Type": "application/json",
+          "X-API-KEY": `JWT ${token}`,
+        },
+      };
+      const analysisDataEndpoint = `${apiInstance.defaults.baseURL}/analysis/${id}`;
+      const analysisMetaEndpoint = `${apiInstance.defaults.baseURL}/analysis/${id}/meta.json`;
+  
+      const getAnalysisData = axios.get(analysisDataEndpoint, headers);
+      const getAnalysisMetaData = axios.get(analysisMetaEndpoint, headers);
+  
+      axios
+        .all([getAnalysisData, getAnalysisMetaData])
+        .then(
+          axios.spread((...responses) => {
+            setAnalysisData(responses[0].data);
+            setAnalysisMeta(responses[1].data);
+          })
+          )
+        .catch((error) => {
+          console.log(error)
+          toast.error("Error Fetching Data");
+        });
+      } , [5000])
+      return ( ) => {
+        clearInterval(refetchInterval)
+      }
+  }, [analysisData, analysisMeta, id]);
 
   const dispatch = useDispatch();
 

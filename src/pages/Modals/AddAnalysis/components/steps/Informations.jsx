@@ -36,7 +36,6 @@ const Informations = (props) => {
     const { name, value } = e.target;
     let prevState = {};
     if (fieldType === 'int' || fieldType === 'float') {
-      console.log(value, fieldType)
       setData((preVal) => {
         prevState = preVal;
         let newState = {

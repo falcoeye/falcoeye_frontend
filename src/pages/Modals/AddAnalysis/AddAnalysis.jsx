@@ -29,7 +29,7 @@ const shortSteps = [
   { name: 'completed', label: 'Completed' },
 ];
 
-const AddAnalysis = ({ handleClose, open, workflowId, topLayer }) => {
+const AddAnalysis = ({ handleClose, open, workflowId, topLayer, callback }) => {
   let steps = useRef(workflowId ? shortSteps : longSteps);
 
   const dispatch = useDispatch();

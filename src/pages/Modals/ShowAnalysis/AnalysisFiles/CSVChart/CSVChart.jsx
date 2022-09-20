@@ -56,7 +56,6 @@ const CSVChart = (props) => {
     useEffect(() => {
         const controller = new AbortController();
         let url = `/analysis/${id}/${file}`;
-        setLoading(true);
         axios
             .get(url)
             .then((res) => {
@@ -91,7 +90,7 @@ const CSVChart = (props) => {
         };
     }, [id, file, readString, meta]);
 
-    if (loading) {
+    if (loading && !data) {
         return <Loader height="h-96" />;
     }
 
