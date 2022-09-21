@@ -1,3 +1,13 @@
+### 0.9.6
+- Description of the fields above the fields not below in the analysis form and change its color
+- Fix params not sent correctly to backend in Add Analysis Form
+- Disable buttons on submitting to avoid duplicate requests
+- Updated view of analysis (refresh every 5 seconds)
+- Change Dashboard Buttons Style & Position
+- Fix scroll of the show workflow modal
+- Remove buttons in video analysis (first,middle,last)
+- Enhance Show Analysis Video Fetching
+- Delete analysis from state if user deletes it in main dashboard
 ### 0.9.5
 - Add Support for m3u8 Type in Streaming services
 ### 0.9.4
