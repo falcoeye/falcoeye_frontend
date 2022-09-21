@@ -15,7 +15,7 @@ import '../Modals.css';
 import ShowWorkflow from '../ShowWorkflow';
 import AnalysisFiles from './AnalysisFiles/AnalysisFiles';
 
-const ShowAnalysis = ({ handleClose, open, id, image, workflowId }) => {
+const ShowAnalysis = ({ handleClose, open, id, image, workflowId, deleteFallback }) => {
   const [analysisData, setAnalysisData] = useState(null);
   const [loadingAnalysisData, setLoadingAnalysisData] = useState(true);
   const [analysisMeta, setAnalysisMeta] = useState(null);
@@ -129,16 +129,18 @@ const ShowAnalysis = ({ handleClose, open, id, image, workflowId }) => {
 
   const deleteAnalysisHandler = () => {
     setDeletingAnalysis(true)
-    axios
+    apiInstance
     .delete(`/analysis/${id}`)
     .then((res) => {
         closeModalHandler();
         dispatch(deleteAnalysis(id));
+        deleteFallback && deleteFallback()
         toast.success('Analysis deleted successfully');
       })
       .catch((err) => {
         setDeletingAnalysis(false)
         closeModalHandler();
+        console.log(err)
         toast.error(
           err.response?.data?.message ||
             'Error Deleting Analysis, Try again later'

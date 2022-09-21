@@ -21,6 +21,11 @@ const LastAnalysisInfo = () => {
         toast.error(error.response.data.msg || "Something went wrong");
       });
   }, []);
+
+  const deleteAnalysisHandler = ( itemIndex ) => {
+    setAnalysisData(analysisData.filter( (i, index) => index !== itemIndex  ))
+  }
+
   let lastAnalysisContent;
   if (loadingAnalysis) {
     lastAnalysisContent = (
@@ -35,7 +40,7 @@ const LastAnalysisInfo = () => {
   } else if (analysisData.length > 0 && !loadingAnalysis) {
     lastAnalysisContent = analysisData.map((item, index) => {
       return (
-        <AnalysisThumbnail key={index} item={item} />
+        <AnalysisThumbnail key={index} item={item} handleDelete={deleteAnalysisHandler.bind(null, index)} />
       )
     })
   } else if (analysisData.length === 0 && !loadingAnalysis) {

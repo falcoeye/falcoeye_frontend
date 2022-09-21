@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 
 const AnalysisThumbnail = (props) => {
-    const { item } = props;
+    const { item, handleDelete } = props;
     const [showAnalysisOpened, setShowAnalysisOpened] = useState(false)
 
     const [image, setImage] = useState(null);
@@ -66,6 +66,7 @@ const AnalysisThumbnail = (props) => {
                     id={item.id}
                     image={image}
                     workflowId={item.workflow_id}
+                    deleteFallback={handleDelete}
                 />
 
             )}
