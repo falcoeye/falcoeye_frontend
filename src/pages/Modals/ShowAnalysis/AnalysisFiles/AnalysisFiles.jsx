@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useState } from "react";
 import CSVChart from "./CSVChart/CSVChart";
 import CSVReport from "./CSVReport/CSVReport";
-import MediaCarousel from "./MediaCarousel/MediaCarousel";
+import MediaGrid from "./MediaGrid/MediaGrid";
 
 const AnalysisFiles = props => {
     const { id, meta } = props;
@@ -25,7 +25,7 @@ const AnalysisFiles = props => {
                     </span>
                 </button>}
             </div>
-            {meta.type === 'media' && <MediaCarousel id={id} files={meta.filenames} />}
+            {meta.type === 'media' && <MediaGrid id={id} files={meta.filenames} />}
             {meta.type === 'csv' && <CSVChart id={id} file={meta.filename} meta={meta} />}
             {meta.type === 'csv' && csvReportOpened && (
                 <CSVReport  open={csvReportOpened} handleClose={csvReportCloseHandler}  id={id} meta={meta} />

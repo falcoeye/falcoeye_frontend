@@ -172,7 +172,7 @@ const ShowAnalysis = ({ handleClose, open, id, image, workflowId }) => {
 
     content = (
       <Fragment>
-        <div className="max-h-[calc(100%-3.8rem)] lg:max-h-[calc(100vh-10rem)] overflow-y-auto pr-3">
+        <div className="max-h-[calc(100%-108px)] md:max-h-[calc(90vh-108px)] overflow-y-auto pr-3">
           <div className="flex items-center justify-between flex-wrap gap-2 mb-2">
             <h2 className="text-gray-700 text-xl  font-bold dark:text-white">
               {name}
