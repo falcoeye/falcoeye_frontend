@@ -1,5 +1,5 @@
 ### 0.9.7
-- User can now can delete an ongoing capture and can't capture a new one in Sources
+- User can now can delete an ongoing capture and can't capture a new one in Sources but preview don't work now
 - Enhance The mobile view for the workflow show modal
 - Handle when adding a new item to redux store to avoid infinite refetching 
 - Update analysis status filters label and values
