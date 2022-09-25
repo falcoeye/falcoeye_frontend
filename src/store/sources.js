@@ -2,12 +2,15 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "../utility/api-instance";
 import { toast } from "react-toastify";
 
+const initialRegistery = { registry_key: null, type: null }
+
 const initialState = {
   data: [],
   fetchingSources: false,
   fetchingSourcesError: null,
   page: 1,
   lastPage: false,
+  registery: initialRegistery
 };
 
 const sourcesSlice = createSlice({
@@ -25,6 +28,12 @@ const sourcesSlice = createSlice({
     fetchSourcesFailed: (state, action) => {
       state.fetchingSources = false;
       state.fetchingSourcesError = action.payload;
+    },
+    addRegistery: ( state,action ) => {
+      state.registery = action.payload
+    },
+    resetRegistery: ( state,action ) => {
+      state.registery = initialRegistery
     },
     addSource: (state, action) => {
       state.data.push(action.payload);
@@ -58,6 +67,7 @@ export const fetchSources = (page) => async (dispatch) => {
         return;
       }
       dispatch(fetchSourcesSuccess(res.data.camera));
+      dispatch(addRegistery(res.data.registry.hasOwnProperty('registry_key') ? res.data.registry : initialRegistery))
       if (res.data.lastPage) {
         dispatch(handleLastPage(true));
       }
@@ -75,6 +85,8 @@ export const {
   fetchingSources,
   fetchSourcesSuccess,
   fetchSourcesFailed,
+  addRegistery,
+  resetRegistery,
   addSource,
   deleteSource,
   editSource,

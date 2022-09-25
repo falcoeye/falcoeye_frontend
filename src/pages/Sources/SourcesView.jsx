@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSources, handlePage } from "../../store/sources";
 import AddSource from "../Modals/AddSource";
+import CaptureStatus from "../Modals/CaptureStatus";
 import SourcesGrid from "./SourcesGrid";
 import SourcesMap from "./SourcesMap";
 
@@ -50,14 +51,17 @@ const SourcesView = (props) => {
               My sources
             </h2>
           </div>
-          <button type="button" className="flex gap-5 sm:pt-0 pt-4">
-            <span
-              onClick={() => setAddSourceOpened(true)}
-              className="bg-primary text-white text-sm py-2  flex justify-center items-center md:px-4 px-3 rounded-md"
-            >
-              <span className="capitalize"> Add source</span>
-            </span>
-          </button>
+          <div>
+            <CaptureStatus />
+            <button type="button" className="inline-flex gap-5 sm:pt-0 pt-4 ml-4">
+              <span
+                onClick={() => setAddSourceOpened(true)}
+                className="bg-primary text-white text-sm py-2  flex justify-center items-center md:px-4 px-3 rounded-md"
+              >
+                <span className="capitalize"> Add source</span>
+              </span>
+            </button>
+          </div>
         </div>
         <div className="w-full mt-6 mb-16 sm:px-0 shadow rounded-md">
           <Tab.Group>

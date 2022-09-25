@@ -12,7 +12,7 @@ import axios from '../../../utility/api-instance';
 import { toast } from 'react-toastify';
 import Informations from './components/steps/Informations';
 import { useDispatch } from 'react-redux';
-import { addAnalysis } from '../../../store/analysis';
+import { addAnalysis, handleLastPage } from '../../../store/analysis';
 import { useRef } from 'react';
 
 const longSteps = [
@@ -121,6 +121,7 @@ const AddAnalysis = ({ handleClose, open, workflowId, topLayer, callback }) => {
         setSubmitting(false);
         setCurrentStep((cur) => cur + 1);
         dispatch(addAnalysis(res.data.analysis));
+        dispatch(handleLastPage(true));
       })
       .catch((err) => {
         setSubmitting(false);

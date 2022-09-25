@@ -37,7 +37,7 @@ const FilterBar = ({
               htmlFor="type"
               className="block text-sm font-medium text-primary whitespace-nowrap "
             >
-              Sort by:
+              Filter by:
             </span>
             <select
               id="type"

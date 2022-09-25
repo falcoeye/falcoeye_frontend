@@ -5,7 +5,7 @@ import { BsFillCameraVideoFill } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import LoadingSpinner from "../../Components/UI/LoadingSpinner/LoadingSpinner";
-import { addMedia } from "../../store/media";
+import { addMedia, handleLastPage } from "../../store/media";
 import axios from "../../utility/api-instance";
 import "./Modals.css";
 
@@ -83,6 +83,7 @@ const UploadMedia = ({ handleClose, open }) => {
       });
       setSubmitLoading(false);
       dispatch(addMedia(res.data.video));
+      dispatch(handleLastPage(true));
       toast.success(res.data.message);
       handleClose();
     } catch (error) {

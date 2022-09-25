@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addSource } from "../../store/sources";
+import { addSource, handleLastPage } from "../../store/sources";
 import { toast } from "react-toastify";
 import axios from "../../utility/api-instance";
 import "./Modals.css";
@@ -137,6 +137,7 @@ const AddSource = ({ handleClose, open }) => {
       });
       const res = await axios.post("/camera/", sentData);
       dispatch(addSource(res.data.camera));
+      dispatch(handleLastPage(true));
       setSendingRequest(false);
       handleClose();
     } catch (error) {

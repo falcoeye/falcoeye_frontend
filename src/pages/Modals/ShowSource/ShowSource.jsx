@@ -2,35 +2,31 @@ import { Dialog, Transition } from "@headlessui/react";
 import Lottie from "lottie-react";
 import React, { Fragment, useCallback, useEffect, useState } from "react";
 import {
-  AiFillCamera,
-  AiFillCheckCircle,
-  AiFillCloseCircle,
-  AiFillVideoCamera,
-  AiOutlineClose,
+  AiFillCamera, AiFillVideoCamera,
+  AiOutlineClose
 } from "react-icons/ai";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import noDataAnimation from "../../../assets/animations/no-data.json";
 import LoadingSpinner from "../../../Components/UI/LoadingSpinner/LoadingSpinner";
+import { addRegistery, resetRegistery } from "../../../store/sources";
 import DeleteSource from "../DeleteSource";
 import EditSource from "../EditSource";
 import "../Modals.css";
 import axios from "./../../../utility/api-instance";
-import PreviewCapture from "./components/PreviewCapture";
 import VideoCaptureModal from "./components/VideoCaptureModal";
 import YoutubeView from "./components/YoutubeView";
 
 const ShowSource = ({ open, handleClose, id }) => {
   const sources = useSelector((state) => state.sources);
+  const dispatch = useDispatch()
   const [deleteModal, setDeleteModal] = useState(false);
   const [editModalOpened, setEditModalOpened] = useState(false);
 
-  const [captureType, setCaptureType] = useState(null);
   const [captureLoading, setCaptureLoading] = useState(false);
   const [captureFailed, setCaptureFailed] = useState(false);
-  const [captureSuccess, setCaptureSuccess] = useState(false);
   const [captureMessage, setCaptureMessage] = useState(false);
 
   const [captureModalOpened, setCaptureModalOpened] = useState(false);
@@ -39,7 +35,6 @@ const ShowSource = ({ open, handleClose, id }) => {
   const [gettingCaptureStatus, setGettingCaptureStatus] = useState(false);
   const [captureStatus, setCaptureStatus] = useState(null);
 
-  const [capturePreviewOpened, setCapturePreviewOpened] = useState(false);
 
   let data = sources.data.find((item) => item.id === id);
 
@@ -49,15 +44,6 @@ const ShowSource = ({ open, handleClose, id }) => {
   const openEditModalHandler = useCallback(() => setEditModalOpened(true), []);
   const closeEditModalHandler = useCallback(
     () => setEditModalOpened(false),
-    []
-  );
-
-  const capturePreviewOpenHandler = useCallback(
-    () => setCapturePreviewOpened(true),
-    []
-  );
-  const capturePreviewCloselHandler = useCallback(
-    () => setCapturePreviewOpened(false),
     []
   );
 
@@ -72,12 +58,11 @@ const ShowSource = ({ open, handleClose, id }) => {
 
   const captureHandler = useCallback(
     (type, length) => {
-      setCaptureType(null);
       setCaptureLoading(true);
-      setCaptureSuccess(false);
       setCaptureFailed(false);
       setRegisterationKey(null);
       setCaptureStatus(null);
+      dispatch(resetRegistery())
       axios
         .post(`/capture`, {
           camera_id: id,
@@ -87,9 +72,12 @@ const ShowSource = ({ open, handleClose, id }) => {
         .then((res) => {
           setCaptureMessage(res.data.message);
           setCaptureLoading(false);
-          setCaptureSuccess(true);
           setRegisterationKey(res.data.registry_key);
-          setCaptureType(type);
+          dispatch(addRegistery({
+            registry_key: res.data.registry_key,
+            type: type,
+          }))
+          handleClose()
         })
         .catch((err) => {
           setCaptureMessage(err.response.data.message);
@@ -97,7 +85,7 @@ const ShowSource = ({ open, handleClose, id }) => {
           setCaptureFailed(true);
         });
     },
-    [id]
+    [dispatch, handleClose, id]
   );
 
   const triggerCaptureHandler = useCallback(
@@ -175,60 +163,11 @@ const ShowSource = ({ open, handleClose, id }) => {
   if (id && data) {
     const videoID = data?.url?.split("v=")[1]?.split("&")[0];
     const disableSubmit =
+      sources.registery.registry_key ||
       captureLoading ||
       captureModalOpened ||
       (gettingCaptureStatus && !captureStatus) ||
       (gettingCaptureStatus && captureStatus?.capture_status === "STARTED");
-
-    const captureSuccessContent = captureSuccess && (
-      <div className=" mt-2">
-        <span className="font-semibold text-lime-500 capitalize inline-block">
-          {captureMessage}
-        </span>
-        {gettingCaptureStatus && (
-          <div className="flex items-center mt-3">
-            <span className="font-semibold text-gray-700 mr-2 dark:text-white">
-              Your Capture is in progress.
-            </span>
-            {captureStatus?.capture_status === "STARTED" && <LoadingSpinner />}
-            {captureStatus?.capture_status === "SUCCEEDED" && (
-              <span className="text-emerald-400">
-                <AiFillCheckCircle />
-              </span>
-            )}
-            {captureStatus?.capture_status === "FAILED" && (
-              <span className="text-rose-700	">
-                <AiFillCloseCircle />
-              </span>
-            )}
-          </div>
-        )}
-        {captureStatus?.capture_status === "SUCCEEDED" && (
-          <div className="flex mt-4">
-            <button
-              onClick={capturePreviewOpenHandler}
-              type="button"
-              className="capitalize focus:outline-none text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:ring-green/30 font-medium rounded-md text-sm px-5 py-2.5"
-            >
-              preview
-            </button>
-            <PreviewCapture
-              type={captureType}
-              open={capturePreviewOpened}
-              handleClose={capturePreviewCloselHandler}
-              registerKey={registerationKey}
-            />
-          </div>
-        )}
-        {captureStatus?.capture_status === "FAILED" && (
-          <div className="flex mt-3">
-            <span className="font-semibold text-red-700 capitalize">
-              Your Capture Failed
-            </span>
-          </div>
-        )}
-      </div>
-    );
 
     content = (
       <Fragment>
@@ -282,7 +221,6 @@ const ShowSource = ({ open, handleClose, id }) => {
               </span>
             </div>
           )}
-          {captureSuccessContent}
           {captureFailed && (
             <div className="flex items-center mt-2">
               <span className="font-semibold text-red-700 capitalize">

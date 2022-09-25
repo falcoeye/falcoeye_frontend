@@ -1,12 +1,12 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useCallback, useEffect, useState } from "react";
-import noDataAnimation from "../../../../assets/animations/no-data.json";
+import noDataAnimation from "../../assets/animations/no-data.json";
 import Lottie from "lottie-react";
-import Loader from "../../../../Components/UI/Loader/Loader";
-import "../../Modals.css";
+import Loader from "../../Components/UI/Loader/Loader";
+import "./Modals.css";
 import { toast } from "react-toastify";
-import axios from "./../../../../utility/api-instance";
-import LoadingSpinner from "../../../../Components/UI/LoadingSpinner/LoadingSpinner";
+import axios from "../../utility/api-instance";
+import LoadingSpinner from "../../Components/UI/LoadingSpinner/LoadingSpinner";
 
 const PreviewCapture = ({ handleClose, open, registerKey, type }) => {
   const [captureData, setCaptureData] = useState(null);
