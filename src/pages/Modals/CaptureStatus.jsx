@@ -120,6 +120,7 @@ const CaptureStatusModal = props => {
                                 type={captureType}
                                 open={capturePreviewOpened}
                                 handleClose={capturePreviewCloselHandler}
+                                handleShowClose={captureModalCloseHandler}
                                 registerKey={registerationKey}
                             />
                         </div>

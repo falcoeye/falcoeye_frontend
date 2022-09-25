@@ -7,8 +7,11 @@ import "./Modals.css";
 import { toast } from "react-toastify";
 import axios from "../../utility/api-instance";
 import LoadingSpinner from "../../Components/UI/LoadingSpinner/LoadingSpinner";
+import { useDispatch } from "react-redux";
+import { resetRegistery } from "../../store/sources";
 
-const PreviewCapture = ({ handleClose, open, registerKey, type }) => {
+const PreviewCapture = ({ handleClose, open, registerKey, type, handleShowClose }) => {
+  const dispatch = useDispatch();
   const [captureData, setCaptureData] = useState(null);
   const [loading, setLoading] = useState(null);
   const [submitting, setSubmitting] = useState(false);
@@ -56,13 +59,15 @@ const PreviewCapture = ({ handleClose, open, registerKey, type }) => {
       .then((res) => {
         setSubmitting(false);
         handleClose();
+        handleShowClose();
+        dispatch(resetRegistery());
         toast.success("Your Capture has been submitted");
       })
       .catch((err) => {
         setSubmitting(false);
         toast.error(err.response.data?.message || "Error Submitting Capture");
       });
-  }, [data, handleClose, registerKey, type]);
+  }, [data, dispatch, handleClose, handleShowClose, registerKey, type]);
 
   useEffect(() => {
     getCaptureData();
