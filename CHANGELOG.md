@@ -1,3 +1,8 @@
+### 0.9.7
+- User can now can delete an ongoing capture and can't capture a new one in Sources
+- Enhance The mobile view for the workflow show modal
+- Handle when adding a new item to redux store to avoid infinite refetching 
+- Update analysis status filters label and values
 ### 0.9.6
 - Description of the fields above the fields not below in the analysis form and change its color
 - Fix params not sent correctly to backend in Add Analysis Form
