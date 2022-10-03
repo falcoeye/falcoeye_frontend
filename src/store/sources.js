@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "../utility/api-instance";
 import { toast } from "react-toastify";
 
-const initialRegistery = { registry_key: null, type: null }
+const initialRegistery = { registry_key: null, media_type: null }
 
 const initialState = {
   data: [],

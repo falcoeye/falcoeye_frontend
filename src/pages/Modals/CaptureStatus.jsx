@@ -17,7 +17,7 @@ const CaptureStatusModal = props => {
 
     const registery = useSelector((state) => state.sources.registery);
 
-    const { registry_key: registerationKey, type: captureType } = registery
+    const { registry_key: registerationKey, media_type: captureType } = registery
 
     const [captureModalOpened, setCaptureModalOpened] = useState(false)
 
@@ -56,7 +56,7 @@ const CaptureStatusModal = props => {
     const checkCaptureStatus = useCallback(() => {
         setGettingCaptureStatus(true);
         axios
-            .get(`/capture/${registerationKey}`)
+            .get(`/capture/${registerationKey}`, { timeout: 8000 })
             .then((res) => {
                 setCaptureStatus(res.data);
             })

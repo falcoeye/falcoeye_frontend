@@ -75,7 +75,7 @@ const ShowSource = ({ open, handleClose, id }) => {
           setRegisterationKey(res.data.registry_key);
           dispatch(addRegistery({
             registry_key: res.data.registry_key,
-            type: type,
+            media_type: type,
           }))
           handleClose()
         })
