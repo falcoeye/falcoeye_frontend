@@ -1,3 +1,5 @@
+### 0.9.8
+- Add Capture Type from the Capture details request
 ### 0.9.7
 - User can now can delete an ongoing capture and can't capture a new one in Sources but preview don't work now
 - Enhance The mobile view for the workflow show modal
