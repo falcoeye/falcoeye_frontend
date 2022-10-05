@@ -181,7 +181,7 @@ const ShowWorkflow = ({ open, handleClose, id }) => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full h-screen md:h-fit md:max-h-[90vh] md:max-w-4xl md:w-11/12 transform overflow-hidden rounded-md bg-white dark:bg-slate-800 py-6 px-3 md:px-6  text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full h-screen modal-wrapper md:h-fit md:max-h-[90vh] md:max-w-4xl md:w-11/12 transform overflow-hidden rounded-md bg-white dark:bg-slate-800 py-6 px-3 md:px-6  text-left align-middle shadow-xl transition-all">
                   <div className="flex justify-end mb-5 gap-5">
                     <button
                       className="bg-gray-100 dark:bg-gray-900 dark:text-white hover:bg-gray-200 transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
@@ -190,7 +190,7 @@ const ShowWorkflow = ({ open, handleClose, id }) => {
                       <AiOutlineClose />
                     </button>
                   </div>
-                  <div className="max-h-[calc(var(--vh) * 100-100px)] md:max-h-[calc(90vh-100px)] overflow-y-auto pr-3">
+                  <div className="max-h-[calc(var(--vh)*100-100px)] md:max-h-[calc(90vh-100px)] overflow-y-auto pr-3">
                     {content}
                   </div>
                 </Dialog.Panel>
