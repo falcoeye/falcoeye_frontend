@@ -157,7 +157,7 @@ const ShowWorkflow = ({ open, handleClose, id }) => {
   return (
     <Fragment>
       <Transition appear show={open} as={Fragment}>
-        <Dialog as="div" className="relative z-[400]" onClose={handleClose}>
+        <Dialog as="div" className="relative z-[400] modal-wrapper" onClose={handleClose}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -190,7 +190,7 @@ const ShowWorkflow = ({ open, handleClose, id }) => {
                       <AiOutlineClose />
                     </button>
                   </div>
-                  <div className="max-h-[calc(100vh-100px)] md:max-h-[calc(90vh-100px)] overflow-y-auto pr-3">
+                  <div className="max-h-[calc(var(--vh) * 100-100px)] md:max-h-[calc(90vh-100px)] overflow-y-auto pr-3">
                     {content}
                   </div>
                 </Dialog.Panel>

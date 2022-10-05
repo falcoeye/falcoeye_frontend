@@ -1,3 +1,6 @@
+.modal-wrapper {
+  height: calc(var(--vh) * 100)
+}
 .modal_backdrop {
   width: 100%;
   min-height: 100vh;
