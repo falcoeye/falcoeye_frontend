@@ -258,37 +258,38 @@ const AddAnalysis = ({ handleClose, open, workflowId, topLayer, callback }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="modal-wrapper w-full h-screen  max-h-screen md:max-h-[90vh] md:h-fit  md:max-w-3xl transform overflow-auto rounded-md bg-white dark:bg-gray-700 py-3 px-2 md:py-6 md:px-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full modal-wrapper md:h-fit md:max-h-[90vh] md:max-w-4xl md:w-11/12 transform overflow-auto rounded-md bg-white dark:bg-gray-700 py-3 px-2 md:py-6 md:px-6 text-left align-middle shadow-xl transition-all">
                 <div className="flex justify-end gap-5">
                   <button
-                    className="md:hidden bg-gray-50 dark:bg-gray-800 dark:text-white hover:bg-gray-200 transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
+                    className="bg-gray-50 dark:bg-gray-800 dark:text-white hover:bg-gray-200 transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
                     onClick={handleClose}
                   >
                     <AiOutlineClose />
                   </button>
                 </div>
-                <div className="text-[#42a7df] text-2xl font-bold  text-center dark:text-white">
+                <div className="text-[#42a7df] text-2xl font-bold  text-center dark:text-white mb-5">
                   Add Analysis
                 </div>
+                <div className="max-h-[calc(var(--vh)*100-132px)] md:max-h-[calc(90vh-132px)] overflow-y-auto overflow-y-auto pr-3">
+                  <div>
+                    <div className="horizontal">
+                      <Stepper steps={steps.current} currentStep={currentStep} />
 
-                <div>
-                  <div className="horizontal mt-5 ">
-                    <Stepper steps={steps.current} currentStep={currentStep} />
-
-                    <div className="my-2 p-2 md:max-h-[calc(var(--vh)*50)] lg:max-h-[calc(var(--vh)*60)] overflow-auto">
-                      {renderStep(steps.current[currentStep - 1].name)}
+                      <div className="my-2 p-2">
+                        {renderStep(steps.current[currentStep - 1].name)}
+                      </div>
                     </div>
-                  </div>
 
-                  {currentStep !== steps.current.length && (
-                    <StepperControl
-                      handleClick={handleActionsClick}
-                      currentStep={currentStep}
-                      steps={steps.current}
-                      nextEnabled={handleActionsValidation}
-                      submitting={submitting}
-                    />
-                  )}
+                    {currentStep !== steps.current.length && (
+                      <StepperControl
+                        handleClick={handleActionsClick}
+                        currentStep={currentStep}
+                        steps={steps.current}
+                        nextEnabled={handleActionsValidation}
+                        submitting={submitting}
+                      />
+                    )}
+                  </div>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

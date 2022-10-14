@@ -218,7 +218,7 @@ const WorkflowsStep = ({ onSelectWorkflow, selectedWorkflow }) => {
     }
 
     content = (
-      <div className="mt-5 md:mt-0">
+      <div>
         <div className="w-full py-2 mb-3 flex items-center px-4 rounded-md bg-gray-50 shadow dark:bg-gray-800 ">
           <span className="text-primary text-xl mr-4 dark:text-white">
             <AiOutlineSearch />
@@ -234,7 +234,7 @@ const WorkflowsStep = ({ onSelectWorkflow, selectedWorkflow }) => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 h-[calc(100vh-366px)] md:h-[21rem] overflow-y-scroll pr-3">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           {dataContent}
         </div>
         {showWorkflowOpened && (
