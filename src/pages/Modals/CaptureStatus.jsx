@@ -154,9 +154,8 @@ const CaptureStatusModal = (props) => {
         <Fragment>
             <button
                 onClick={captureModalOpenHandler}
-                disabled={!registerationKey}
                 type="button"
-                className="inline-flex gap-3 p-2 capitalize bg-rose-600 text-white text-sm   flex justify-center items-center rounded-md disabled:bg-gray-700 disabled:text-gray-400  "
+                className={` ${!registerationKey && 'hidden'} inline-flex gap-3 p-2 capitalize bg-rose-600 text-white text-sm   flex justify-center items-center rounded-md disabled:bg-gray-700 disabled:text-gray-400  `}
             >
                 <span className="capitalize"> Capture in Progress</span>
                 {registerationKey && (
