@@ -1,3 +1,7 @@
+### 0.9.9
+- Enhance mobile view scrolling of pop-ups (workflow, media and analysis form and results) .
+- Keep Show source modal opened after capturing and replace capture again in preview capture with delete capture
+- Remove capture status button if no active capture
 ### 0.9.8
 - Add Capture Type from the Capture details request
 ### 0.9.7
