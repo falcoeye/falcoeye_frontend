@@ -107,8 +107,9 @@ const ShowMedia = ({ open, handleClose, id }) => {
   if (id && data.current) {
     let renderedPreview = (
       <div
-        className={`flex justify-center items-center h-96 bg-gray-300 dark:bg-gray-700 mb-3 ${loading && 'animate-pulse'
-          }`}
+        className={`flex justify-center items-center h-96 bg-gray-300 dark:bg-gray-700 mb-3 ${
+          loading && 'animate-pulse'
+        }`}
       >
         <svg
           className="w-12 h-12 text-gray-200"
@@ -164,25 +165,28 @@ const ShowMedia = ({ open, handleClose, id }) => {
             <AiOutlineClose />
           </button>
         </div>
-        {renderedPreview}
-        <div
-          className={`inline-flex items-center mb-3 py-1 px-2 text-base font-medium text-center text-white capitalize ${media.media_type === 'image' ? 'bg-sky-400' : 'bg-emerald-500'
+        <div className="max-h-[calc(var(--vh)*100-100px)] md:max-h-[calc(90vh-100px)] overflow-y-auto overflow-y-auto pr-3">
+          {renderedPreview}
+          <div
+            className={`inline-flex items-center mb-3 py-1 px-2 text-base font-medium text-center text-white capitalize ${
+              media.media_type === 'image' ? 'bg-sky-400' : 'bg-emerald-500'
             } rounded-md`}
-        >
-          {data.current.media_type === 'image' ? (
-            <AiFillCamera className="mr-2" />
-          ) : (
-            <AiFillVideoCamera className="mr-2" />
-          )}
-          {data.current.media_type}
-        </div>
-        <h5 className="mb-2 text-xl font-semibold tracking-tight text-gray-900  capitalize dark:text-white">
-          {data.current.note}
-        </h5>
-        <div className="flex">
-          <span className="inline-flex items-center py-1 px-2 text-sm justify-center text-white capitalize bg-orange-500 rounded-md">
-            {data.current.tags}
-          </span>
+          >
+            {data.current.media_type === 'image' ? (
+              <AiFillCamera className="mr-2" />
+            ) : (
+              <AiFillVideoCamera className="mr-2" />
+            )}
+            {data.current.media_type}
+          </div>
+          <h5 className="mb-2 text-xl font-semibold tracking-tight text-gray-900  capitalize dark:text-white">
+            {data.current.note}
+          </h5>
+          <div className="flex">
+            <span className="inline-flex items-center py-1 px-2 text-sm justify-center text-white capitalize bg-orange-500 rounded-md">
+              {data.current.tags}
+            </span>
+          </div>
         </div>
         {deleteModalOpened && (
           <DeleteMedia
@@ -207,7 +211,11 @@ const ShowMedia = ({ open, handleClose, id }) => {
   return (
     <>
       <Transition appear show={open} as={Fragment}>
-        <Dialog as="div" className="relative z-[450]" onClose={handleClose}>
+        <Dialog
+          as="div"
+          className="relative z-[450] modal-wrapper"
+          onClose={handleClose}
+        >
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -231,8 +239,8 @@ const ShowMedia = ({ open, handleClose, id }) => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full h-screen md:h-fit md:max-w-4xl md:w-11/12 transform overflow-hidden rounded-md bg-white dark:bg-slate-800 py-6 px-3 md:px-6  text-left align-middle shadow-xl transition-all">
-                  {content}
+                <Dialog.Panel className="w-full modal-wrapper md:h-fit md:max-h-[90vh] md:max-w-4xl md:w-11/12 transform overflow-hidden rounded-md bg-white dark:bg-slate-800 py-6 px-3 md:px-6  text-left align-middle shadow-xl transition-all">
+                    {content}
                 </Dialog.Panel>
               </Transition.Child>
             </div>
