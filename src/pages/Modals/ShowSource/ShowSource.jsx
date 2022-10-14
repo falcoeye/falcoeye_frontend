@@ -77,7 +77,6 @@ const ShowSource = ({ open, handleClose, id }) => {
             registry_key: res.data.registry_key,
             media_type: type,
           }))
-          handleClose()
         })
         .catch((err) => {
           setCaptureMessage(err.response.data.message);
@@ -85,7 +84,7 @@ const ShowSource = ({ open, handleClose, id }) => {
           setCaptureFailed(true);
         });
     },
-    [dispatch, handleClose, id]
+    [dispatch, id]
   );
 
   const triggerCaptureHandler = useCallback(
