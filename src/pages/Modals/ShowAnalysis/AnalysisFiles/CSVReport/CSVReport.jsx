@@ -47,7 +47,7 @@ const CSVReport = (props) => {
         content = <Loader height="h-96" />;
     } else if (!loading && data && list) {
         content = (
-            <div className="max-h-[calc(100%-3.8rem)] md:max-h-[calc(100vh-10rem)] overflow-y-auto pr-3">
+            <div className="max-h-[calc(var(--vh)*100-108px)] md:max-h-[calc(90vh-108px)] overflow-y-auto overflow-y-auto pr-3">
                 <div class="overflow-x-auto relative">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -83,7 +83,7 @@ const CSVReport = (props) => {
 
     return (
         <Transition appear show={open} as={Fragment}>
-            <Dialog as="div" className="relative z-[300]" onClose={handleClose}>
+            <Dialog as="div" className="relative z-[300] modal-wrapper" onClose={handleClose}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -107,7 +107,7 @@ const CSVReport = (props) => {
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="w-full h-screen md:h-fit md:max-w-4xl md:w-11/12 transform overflow-hidden rounded-md bg-white dark:bg-slate-800 p-6 text-left align-middle shadow-xl transition-all">
+                            <Dialog.Panel className="w-full modal-wrapper md:h-fit md:max-h-[90vh] md:max-w-4xl md:w-11/12 transform overflow-hidden rounded-md bg-white dark:bg-slate-800 p-6 text-left align-middle shadow-xl transition-all">
                                 <div className="flex justify-end mb-7 gap-3">
                                     {!loading && list && (
                                                 <CSVDownloader
