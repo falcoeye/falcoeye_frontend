@@ -49,7 +49,7 @@ const YoutubeView = ({ videoID, url }) => {
   const isYoutube  = url.includes('youtu')
 
   return (
-    <div className="flex justify-center mt-4 relative h-64 md:h-96">
+    <div className="flex justify-center relative h-64 md:h-96 mb-4">
       {url && (
         <Fragment>
           {isYoutube ? (

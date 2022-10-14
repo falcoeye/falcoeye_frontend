@@ -171,7 +171,7 @@ const ShowSource = ({ open, handleClose, id }) => {
 
     content = (
       <Fragment>
-        <div className="flex justify-end gap-5">
+        <div className="flex justify-end gap-5 mb-5">
           <button
             className="bg-red-600/90 hover:bg-red-600 text-white transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
             onClick={openDeleteModalHandler}
@@ -191,44 +191,46 @@ const ShowSource = ({ open, handleClose, id }) => {
             <AiOutlineClose />
           </button>
         </div>
-        <YoutubeView videoID={videoID}  url={data.url} />
-        <Fragment>
-          <div className="flex items-center justify-center gap-8 mt-5">
-            <button
-              disabled={disableSubmit}
-              className={`bg-primary/80 hover:bg-primary transition duration-300 text-white font-bold p-3 rounded-full inline-flex items-center text-xl ${
-                disableSubmit && "disable_submit_btn"
-              }`}
-              onClick={captureImageClickHandler}
-            >
-              <AiFillCamera />
-            </button>
-            <button
-              disabled={disableSubmit}
-              className={`bg-primary/80 hover:bg-primary transition duration-300 text-white font-bold p-3 rounded-full inline-flex items-center text-xl  ${
-                disableSubmit && "disable_submit_btn"
-              }`}
-              onClick={openSliderModalHandler}
-            >
-              <AiFillVideoCamera />
-            </button>
-          </div>
-          {captureLoading && (
-            <div className="flex items-center mt-2">
-              <LoadingSpinner />
-              <span className="font-semibold text-gray-700 ml-2 dark:text-white">
-                Capture in progress.
-              </span>
+        <div className="max-h-[calc(var(--vh)*100-100px)] md:max-h-[calc(90vh-100px)] overflow-y-auto overflow-y-auto pr-3">
+          <YoutubeView videoID={videoID}  url={data.url} />
+          <Fragment>
+            <div className="flex items-center justify-center gap-8">
+              <button
+                disabled={disableSubmit}
+                className={`bg-primary/80 hover:bg-primary transition duration-300 text-white font-bold p-3 rounded-full inline-flex items-center text-xl ${
+                  disableSubmit && "disable_submit_btn"
+                }`}
+                onClick={captureImageClickHandler}
+              >
+                <AiFillCamera />
+              </button>
+              <button
+                disabled={disableSubmit}
+                className={`bg-primary/80 hover:bg-primary transition duration-300 text-white font-bold p-3 rounded-full inline-flex items-center text-xl  ${
+                  disableSubmit && "disable_submit_btn"
+                }`}
+                onClick={openSliderModalHandler}
+              >
+                <AiFillVideoCamera />
+              </button>
             </div>
-          )}
-          {captureFailed && (
-            <div className="flex items-center mt-2">
-              <span className="font-semibold text-red-700 capitalize">
-                {captureMessage}
-              </span>
-            </div>
-          )}
-        </Fragment>
+            {captureLoading && (
+              <div className="flex items-center mt-2">
+                <LoadingSpinner />
+                <span className="font-semibold text-gray-700 ml-2 dark:text-white">
+                  Capture in progress.
+                </span>
+              </div>
+            )}
+            {captureFailed && (
+              <div className="flex items-center mt-2">
+                <span className="font-semibold text-red-700 capitalize">
+                  {captureMessage}
+                </span>
+              </div>
+            )}
+          </Fragment>
+        </div>
         <EditSource
           open={editModalOpened}
           handleClose={closeEditModalHandler}
@@ -252,7 +254,7 @@ const ShowSource = ({ open, handleClose, id }) => {
 
   return (
     <Transition appear show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-[450]" onClose={handleClose}>
+      <Dialog as="div" className="relative z-[450] modal-wrapper" onClose={handleClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -276,7 +278,7 @@ const ShowSource = ({ open, handleClose, id }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full h-screen md:h-fit md:max-w-4xl md:w-11/12 transform overflow-hidden rounded-md bg-white dark:bg-slate-800 py-6 px-3 md:px-6  text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full modal-wrapper md:h-fit md:max-h-[90vh] md:max-w-4xl md:w-11/12 transform overflow-hidden rounded-md bg-white dark:bg-slate-800 py-6 px-3 md:px-6  text-left align-middle shadow-xl transition-all">
                 {content}
               </Dialog.Panel>
             </Transition.Child>
