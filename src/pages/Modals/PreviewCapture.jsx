@@ -108,51 +108,51 @@ const PreviewCapture = ({ handleClose, open, registerKey, type, handleShowClose 
     }
 
     content = (
-      <div>
-        <div className="aspect-video my-5">{mediaPreview}</div>
-        <form>
-          <input
-            type="text"
-            id="note"
-            className="modal_form_input !ml-0 dark:!bg-gray-800 dark:!border-gray-800 dark:!text-white"
-            name="note"
-            placeholder="Note"
-            onChange={handleChange}
-            value={data.note}
-          />
-          <input
-            type="text"
-            id="tags"
-            className="modal_form_input !ml-0 dark:!bg-gray-800 dark:!border-gray-800 dark:!text-white"
-            name="tags"
-            placeholder="Tags"
-            onChange={handleChange}
-            value={data.tags}
-          />
-        </form>
-        <div className="flex items-center justify-center mt-5 ">
-          <button
-            onClick={approveCapture}
-            type="button"
-            className="focus:outline-none text-white bg-green hover:bg-green/70 focus:ring-4 focus:ring-green/30 font-medium rounded-md text-sm px-5 py-2.5 mr-3"
-          >
-            {submitting ? <LoadingSpinner /> : "Submit"}
-          </button>
-          <button
-            onClick={handleClose}
-            type="button"
-            className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red/30 font-medium rounded-md text-sm px-5 py-2.5"
-          >
-            Capture again
-          </button>
+        <div className="max-h-[calc(var(--vh)*100-76px)] md:max-h-[calc(90vh-76px)] overflow-y-auto overflow-y-auto pr-3">
+          <div className="aspect-video my-5">{mediaPreview}</div>
+          <form>
+            <input
+              type="text"
+              id="note"
+              className="modal_form_input !ml-0 dark:!bg-gray-800 dark:!border-gray-800 dark:!text-white"
+              name="note"
+              placeholder="Note"
+              onChange={handleChange}
+              value={data.note}
+            />
+            <input
+              type="text"
+              id="tags"
+              className="modal_form_input !ml-0 dark:!bg-gray-800 dark:!border-gray-800 dark:!text-white"
+              name="tags"
+              placeholder="Tags"
+              onChange={handleChange}
+              value={data.tags}
+            />
+          </form>
+          <div className="flex items-center justify-center mt-5 ">
+            <button
+              onClick={approveCapture}
+              type="button"
+              className="focus:outline-none text-white bg-green hover:bg-green/70 focus:ring-4 focus:ring-green/30 font-medium rounded-md text-sm px-5 py-2.5 mr-3"
+            >
+              {submitting ? <LoadingSpinner /> : "Submit"}
+            </button>
+            <button
+              onClick={handleClose}
+              type="button"
+              className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red/30 font-medium rounded-md text-sm px-5 py-2.5"
+            >
+              Capture again
+            </button>
+          </div>
         </div>
-      </div>
     );
   }
 
   return (
     <Transition appear show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-[450]" onClose={handleClose}>
+      <Dialog as="div" className="relative z-[450] modal-wrapper" onClose={handleClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -166,7 +166,7 @@ const PreviewCapture = ({ handleClose, open, registerKey, type, handleShowClose 
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
+          <div className="flex min-h-full items-center justify-center md:p-4 text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -176,7 +176,7 @@ const PreviewCapture = ({ handleClose, open, registerKey, type, handleShowClose 
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-lg  transform overflow-hidden rounded-md bg-white dark:bg-slate-800 p-6 text-left align-middle shadow-xl transition-all text-center">
+              <Dialog.Panel className="w-full modal-wrapper md:h-fit md:max-h-[90vh] md:max-w-4xl md:w-11/12 transform overflow-hidden rounded-md bg-white dark:bg-slate-800 p-6 text-left align-middle shadow-xl transition-all text-center">
                 <div className="text-[#42a7df] text-lg font-semibold text-center dark:text-white">
                   Preview Capture
                 </div>
