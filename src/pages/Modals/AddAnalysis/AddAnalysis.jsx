@@ -232,7 +232,7 @@ const AddAnalysis = ({ handleClose, open, workflowId, topLayer, callback }) => {
     <Transition appear show={open} as={Fragment}>
       <Dialog
         as="div"
-        className={`relative ${topLayer ? 'z-[401]' : 'z-[300]'}`}
+        className={`relative modal-wrapper ${topLayer ? 'z-[401]' : 'z-[300]'}`}
         onClose={handleClose}
       >
         <Transition.Child
@@ -258,7 +258,7 @@ const AddAnalysis = ({ handleClose, open, workflowId, topLayer, callback }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full h-screen max-h-screen md:h-fit  md:max-w-3xl transform overflow-auto rounded-md bg-white dark:bg-gray-700 py-3 px-2 md:py-6 md:px-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="modal-wrapper w-full h-screen  max-h-screen md:max-h-[90vh] md:h-fit  md:max-w-3xl transform overflow-auto rounded-md bg-white dark:bg-gray-700 py-3 px-2 md:py-6 md:px-6 text-left align-middle shadow-xl transition-all">
                 <div className="flex justify-end gap-5">
                   <button
                     className="md:hidden bg-gray-50 dark:bg-gray-800 dark:text-white hover:bg-gray-200 transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
@@ -275,7 +275,7 @@ const AddAnalysis = ({ handleClose, open, workflowId, topLayer, callback }) => {
                   <div className="horizontal mt-5 ">
                     <Stepper steps={steps.current} currentStep={currentStep} />
 
-                    <div className="my-2 p-2 md:max-h-[50vh] lg:max-h-[60vh] overflow-auto">
+                    <div className="my-2 p-2 md:max-h-[calc(var(--vh)*50)] lg:max-h-[calc(var(--vh)*60)] overflow-auto">
                       {renderStep(steps.current[currentStep - 1].name)}
                     </div>
                   </div>
