@@ -1,8 +1,8 @@
 const Name = ({ onAnalysisNameChange, analysisName }) => {
   return (
     <div className="flex flex-col ">
-      <div className="mx-2 w-full flex-1">
-        <div className="my-2 flex rounded-md border border-gray-200 bg-white p-1 dark:bg-gray-800 dark:border-gray-800">
+      <div className="w-full flex-1">
+        <div className="flex rounded-md border border-gray-200 bg-white p-1 dark:bg-gray-800 dark:border-gray-800">
           <input
             name="name"
             placeholder="Anaylsis Name *"

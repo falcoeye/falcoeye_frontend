@@ -174,7 +174,7 @@ const ShowAnalysis = ({ handleClose, open, id, image, workflowId, deleteFallback
 
     content = (
       <Fragment>
-        <div className="max-h-[calc(100%-108px)] md:max-h-[calc(90vh-108px)] overflow-y-auto pr-3">
+        <div className="max-h-[calc(var(--vh)*100-108px)] md:max-h-[calc(90vh-108px)] overflow-y-auto pr-3">
           <div className="flex items-center justify-between flex-wrap gap-2 mb-2">
             <h2 className="text-gray-700 text-xl  font-bold dark:text-white">
               {name}
@@ -211,7 +211,7 @@ const ShowAnalysis = ({ handleClose, open, id, image, workflowId, deleteFallback
       <Transition appear show={open} as={Fragment}>
         <Dialog
           as="div"
-          className="relative z-[300]"
+          className="relative z-[300] modal-wrapper"
           onClose={closeModalHandler}
         >
           <Transition.Child
@@ -237,7 +237,7 @@ const ShowAnalysis = ({ handleClose, open, id, image, workflowId, deleteFallback
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full h-screen md:h-fit md:max-w-4xl md:w-11/12 transform overflow-hidden rounded-md bg-white dark:bg-slate-800 p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full h-screen modal-wrapper md:max-h-[90vh] md:h-fit md:max-w-4xl md:w-11/12 transform overflow-hidden rounded-md bg-white dark:bg-slate-800 p-6 text-left align-middle shadow-xl transition-all">
                   <div className="flex justify-end mb-7 gap-3">
                     <button
                       className="bg-red-600/90 hover:bg-red-600 text-white  transition duration-300 font-bold p-2 rounded-full inline-flex items-center"

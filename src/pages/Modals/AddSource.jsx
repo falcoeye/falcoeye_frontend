@@ -1,33 +1,35 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { addSource, handleLastPage } from "../../store/sources";
-import { toast } from "react-toastify";
-import axios from "../../utility/api-instance";
-import "./Modals.css";
-import LoadingSpinner from "../../Components/UI/LoadingSpinner/LoadingSpinner";
-import { Fragment } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import { Dialog, Transition } from '@headlessui/react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
+import {
+  AiOutlineClose
+} from 'react-icons/ai';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import LoadingSpinner from '../../Components/UI/LoadingSpinner/LoadingSpinner';
+import { addSource, handleLastPage } from '../../store/sources';
+import axios from '../../utility/api-instance';
+import './Modals.css';
 
 const streaminServerFields = [
-  "name",
-  "latitude",
-  "longitude",
-  "streaming_type",
-  "url",
-  "status",
-  "image",
+  'name',
+  'latitude',
+  'longitude',
+  'streaming_type',
+  'url',
+  'status',
+  'image',
 ];
 const RTSPFields = [
-  "name",
-  "latitude",
-  "longitude",
-  "streaming_type",
-  "status",
-  "host",
-  "port",
-  "user",
-  "password",
-  "image",
+  'name',
+  'latitude',
+  'longitude',
+  'streaming_type',
+  'status',
+  'host',
+  'port',
+  'user',
+  'password',
+  'image',
 ];
 
 const AddSource = ({ handleClose, open }) => {
@@ -36,29 +38,29 @@ const AddSource = ({ handleClose, open }) => {
   const [sendingRequest, setSendingRequest] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
   const [data, setData] = useState({
-    name: "",
-    latitude: "",
-    longitude: "",
-    streaming_type: "",
-    url: "",
-    host: "",
-    port: "",
-    username: "",
-    password: "",
+    name: '',
+    latitude: '',
+    longitude: '',
+    streaming_type: '',
+    url: '',
+    host: '',
+    port: '',
+    username: '',
+    password: '',
     image: null,
-    status: "RUNNING",
+    status: 'RUNNING',
   });
 
   useEffect(() => {
-    if (data.streaming_type === "") return;
+    if (data.streaming_type === '') return;
     const dataFields =
-      data.streaming_type === "StreamingServer"
+      data.streaming_type === 'StreamingServer'
         ? streaminServerFields
         : RTSPFields;
     let hasNull = false;
-    const unrequiredFields = ['image', 'latitude','longitude']
+    const unrequiredFields = ['image', 'latitude', 'longitude'];
     dataFields.forEach((key) => {
-      if (data[key] === "" && !unrequiredFields.includes(key)) {
+      if (data[key] === '' && !unrequiredFields.includes(key)) {
         hasNull = true;
       }
     });
@@ -67,7 +69,7 @@ const AddSource = ({ handleClose, open }) => {
 
   const handleStreamingTypeChange = (e) => {
     handleChange(e);
-    if (e.target.value === "RTSP") {
+    if (e.target.value === 'RTSP') {
       // setShowRTSP(true);
     } else {
       // setShowRTSP(false);
@@ -76,7 +78,7 @@ const AddSource = ({ handleClose, open }) => {
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
-    if (type === "number") {
+    if (type === 'number') {
       setData((preVal) => {
         return {
           ...preVal,
@@ -106,7 +108,7 @@ const AddSource = ({ handleClose, open }) => {
   };
 
   const getBase64StringFromDataURL = (dataURL) => {
-    return dataURL.replace("data:", "").replace(/^.+,/, "");
+    return dataURL.replace('data:', '').replace(/^.+,/, '');
   };
 
   const handleImageUpload = useCallback(async (event) => {
@@ -128,21 +130,21 @@ const AddSource = ({ handleClose, open }) => {
     setSendingRequest(true);
     try {
       const dataFields =
-        data.streaming_type === "StreamingServer"
+        data.streaming_type === 'StreamingServer'
           ? streaminServerFields
           : RTSPFields;
       let sentData = {};
       dataFields.forEach((field) => {
         data[field] !== '' && (sentData[field] = data[field]);
       });
-      const res = await axios.post("/camera/", sentData);
+      const res = await axios.post('/camera/', sentData);
       dispatch(addSource(res.data.camera));
       dispatch(handleLastPage(true));
       setSendingRequest(false);
       handleClose();
     } catch (error) {
       setSendingRequest(false);
-      setErrorMessage(error.response.data.message || "Something went wrong");
+      setErrorMessage(error.response.data.message || 'Something went wrong');
       if (error.response.data.errors) {
         let errorObjectKeys = Object.keys(error.response.data.errors);
         errorObjectKeys.forEach((key) => {
@@ -156,7 +158,7 @@ const AddSource = ({ handleClose, open }) => {
     <Transition appear show={open} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-[400]"
+        className="relative z-[400] modal-wrapper"
         onClose={() => handleClose()}
       >
         <Transition.Child
@@ -172,7 +174,7 @@ const AddSource = ({ handleClose, open }) => {
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
+          <div className="flex min-h-full items-center justify-center md:p-4 text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -182,136 +184,146 @@ const AddSource = ({ handleClose, open }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-md bg-white dark:bg-slate-800 p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full modal-wrapper md:h-fit md:max-h-[90vh] md:max-w-md md:w-11/12 transform overflow-hidden rounded-md bg-white dark:bg-slate-800 p-6 text-left align-middle shadow-xl transition-all">
+              <div className="flex justify-end gap-5 mb-5">
+                <button
+                  className="bg-gray-50 dark:bg-gray-800 dark:text-white hover:bg-gray-200 transition duration-300 font-bold p-2 rounded-full inline-flex items-center"
+                  onClick={handleClose}
+                >
+                  <AiOutlineClose />
+                </button>
+              </div>
                 <div className="cmb_heading dark:!text-white">Add a Source</div>
-                <form>
-                  <select
-                    id="streaming_type"
-                    className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white  "
-                    name="streaming_type"
-                    onChange={(e) => {
-                      handleStreamingTypeChange(e);
-                    }}
-                  >
-                    <option value="-">--TYPE--</option>
-                    <option value="RTSP">RTSP</option>
-                    <option value="StreamingServer">STREAMING SERVER</option>
-                  </select>
-                  <input
-                    type="text"
-                    id="name"
-                    className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white"
-                    name="name"
-                    placeholder="Name"
-                    onChange={handleChange}
-                    value={data.name}
-                  />
-                  <input
-                    type="number"
-                    id="latitude"
-                    className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white "
-                    name="latitude"
-                    placeholder="longitude"
-                    onChange={handleChange}
-                    value={data.latitude}
-                  />
-                  <input
-                    type="number"
-                    id="longitude"
-                    className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white "
-                    name="longitude"
-                    placeholder="latitude"
-                    onChange={handleChange}
-                    value={data.longitude}
-                  />
-                  {data.streaming_type === "StreamingServer" && (
+                <div className="max-h-[calc(var(--vh)*100-173px)] md:max-h-[calc(90vh-173px)] overflow-y-auto overflow-y-auto pr-3">
+                  <form>
+                    <select
+                      id="streaming_type"
+                      className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white  "
+                      name="streaming_type"
+                      onChange={(e) => {
+                        handleStreamingTypeChange(e);
+                      }}
+                    >
+                      <option value="-">--TYPE--</option>
+                      <option value="RTSP">RTSP</option>
+                      <option value="StreamingServer">STREAMING SERVER</option>
+                    </select>
                     <input
                       type="text"
-                      id="url"
-                      className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white "
-                      name="url"
-                      placeholder="url"
+                      id="name"
+                      className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white"
+                      name="name"
+                      placeholder="Name"
                       onChange={handleChange}
-                      value={data.url}
+                      value={data.name}
                     />
-                  )}
-                  {data.streaming_type === "RTSP" && (
-                    <Fragment>
+                    <input
+                      type="number"
+                      id="latitude"
+                      className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white "
+                      name="latitude"
+                      placeholder="longitude"
+                      onChange={handleChange}
+                      value={data.latitude}
+                    />
+                    <input
+                      type="number"
+                      id="longitude"
+                      className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white "
+                      name="longitude"
+                      placeholder="latitude"
+                      onChange={handleChange}
+                      value={data.longitude}
+                    />
+                    {data.streaming_type === 'StreamingServer' && (
                       <input
                         type="text"
-                        id="host"
+                        id="url"
                         className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white "
-                        name="host"
-                        placeholder="host"
+                        name="url"
+                        placeholder="url"
                         onChange={handleChange}
-                        value={data.host}
+                        value={data.url}
                       />
+                    )}
+                    {data.streaming_type === 'RTSP' && (
+                      <Fragment>
+                        <input
+                          type="text"
+                          id="host"
+                          className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white "
+                          name="host"
+                          placeholder="host"
+                          onChange={handleChange}
+                          value={data.host}
+                        />
 
-                      <input
-                        type="number"
-                        id="port"
-                        className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white "
-                        name="port"
-                        placeholder="port"
-                        onChange={handleChange}
-                        value={data.port}
-                      />
+                        <input
+                          type="number"
+                          id="port"
+                          className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white "
+                          name="port"
+                          placeholder="port"
+                          onChange={handleChange}
+                          value={data.port}
+                        />
 
-                      <input
-                        type="text"
-                        id="username"
-                        className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white "
-                        name="username"
-                        placeholder="username"
-                        onChange={handleChange}
-                        value={data.username}
-                      />
-                      <input
-                        type="password"
-                        id="password"
-                        className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white "
-                        name="password"
-                        placeholder="password"
-                        onChange={handleChange}
-                        value={data.password}
-                      />
-                    </Fragment>
-                  )}
-                  <div>
-                    <label
-                      htmlFor="image"
-                      className="image_upload_label"
-                      style={{ margin: "5px auto" }}
+                        <input
+                          type="text"
+                          id="username"
+                          className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white "
+                          name="username"
+                          placeholder="username"
+                          onChange={handleChange}
+                          value={data.username}
+                        />
+                        <input
+                          type="password"
+                          id="password"
+                          className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white "
+                          name="password"
+                          placeholder="password"
+                          onChange={handleChange}
+                          value={data.password}
+                        />
+                      </Fragment>
+                    )}
+                    <div>
+                      <label
+                        htmlFor="image"
+                        className="image_upload_label"
+                        style={{ margin: '5px auto' }}
+                      >
+                        Upload Source Thumbnail
+                        <input
+                          style={{
+                            visibility: 'hidden',
+                            position: 'absolute',
+                            zIndex: '-1',
+                          }}
+                          type="file"
+                          id="image"
+                          accept="image/*"
+                          className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white "
+                          name="image"
+                          placeholder="Source Thumbnail"
+                          onChange={handleImageUpload}
+                        />
+                      </label>
+                    </div>
+                    {errorMessage && <p className="error_text">{errorMessage}</p>}
+                    <button
+                      style={{ margin: '25px auto', display: 'block' }}
+                      className={`login_form_btn ${
+                        disableSubmit && 'disable_submit_btn'
+                      }`}
+                      onClick={handleSubmit}
+                      disabled={sendingRequest}
                     >
-                      Upload Source Thumbnail
-                      <input
-                        style={{
-                          visibility: "hidden",
-                          position: "absolute",
-                          zIndex: "-1",
-                        }}
-                        type="file"
-                        id="image"
-                        accept="image/*"
-                        className="modal_form_input dark:!bg-slate-700 dark:!border-gray-800 dark:!text-white "
-                        name="image"
-                        placeholder="Source Thumbnail"
-                        onChange={handleImageUpload}
-                      />
-                    </label>
-                  </div>
-                  {errorMessage && <p className="error_text">{errorMessage}</p>}
-                  <button
-                    style={{ margin: "25px auto", display: "block" }}
-                    className={`login_form_btn ${
-                      disableSubmit && "disable_submit_btn"
-                    }`}
-                    onClick={handleSubmit}
-                    disabled={sendingRequest}
-                  >
-                    {sendingRequest ? <LoadingSpinner /> : "Add Source"}
-                  </button>
-                </form>
+                      {sendingRequest ? <LoadingSpinner /> : 'Add Source'}
+                    </button>
+                  </form>
+                </div>
               </Dialog.Panel>
             </Transition.Child>
           </div>
