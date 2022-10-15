@@ -82,6 +82,7 @@ const MobileNav = ({ isOpen, toggleDrawer, userData }) => {
                         ? "px-3.5 flex  items-center gap-3.5 font-medium py-2 bg-primary rounded-md text-white "
                         : "px-3.5 flex  items-center gap-3.5 font-medium py-2 duration-300 rounded-md text-primary"
                     }
+                    end
                   >
                     <span className="min-w-max">{icon}</span>
                     <span className="capitalize text-sm min-w-max">{text}</span>
