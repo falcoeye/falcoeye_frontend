@@ -61,9 +61,10 @@ const SideNav = ({ sideNav }) => {
                     to={link.path}
                     className={(navData) =>
                       navData.isActive
-                        ? "px-3.5 flex  items-center text-sm gap-3.5 font-medium py-2 bg-primary rounded-md text-white "
+                        ? "px-3.5 flex  items-center text-sm gap-3.5 font-medium py-2 bg-primary rounded-md text-white"
                         : "px-3.5 flex  items-center text-sm gap-3.5 font-medium py-2 duration-300 rounded-md text-primary"
                     }
+                    end
                   >
                     <div>{link.icon}</div>
                     <h2
