@@ -1,3 +1,5 @@
+### 0.9.10
+- Fix The Double Selection on Mobile Menu Drawer
 ### 0.9.9
 - Enhance mobile view scrolling of pop-ups (workflow, media and analysis form and results) .
 - Keep Show source modal opened after capturing and replace capture again in preview capture with delete capture
