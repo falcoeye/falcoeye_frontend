@@ -2,7 +2,7 @@ import axios from "axios";
 import { Cookies } from "../shared/utility";
 
 const instance = axios.create({
-  baseURL: "https://falcoeye-backend-xbjr6s7buq-uc.a.run.app",
+  baseURL: "http://localhost:3000",
 });
 
 instance.interceptors.request.use(
