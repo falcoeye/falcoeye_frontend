@@ -2,12 +2,16 @@
 import { GoogleMap, HeatmapLayerF } from "@react-google-maps/api";
 import React, { useContext } from "react";
 import MapContext from "../../store/map-context";
-import { MapContainer } from "./Map.styled";
+import { MapContainer, AnimationWrapper } from "./Map.styled";
 import { blueWater, brightAndBubbly, cobalt, lightDream, simpleNightVersion, varsoNavy } from "./MapStyles";
 import { heatMapData } from "./mapData";
 import TopBar from "../../Components/TopBar/TopBar";
 import { useState } from "react";
 import BottomBar from "../../Components/BottomBar/BottomBar";
+import { useLoadScript } from "@react-google-maps/api";
+import LoadingSpinner from "../../Components/UI/LoadingSpinner/LoadingSpinner";
+import Lottie from "lottie-react";
+import noMapDataAnimation from "../../assets/animations/no-map-data.json";
 
 const mapStyles = {
     cobalt,
@@ -30,14 +34,27 @@ const mapContainerStyle = {
     height: "100%",
     position: "relative",
 };
+const libraries = ["places", "visualization"];
 
 const Map = () => {
     const { mapMode } = useContext(MapContext);
     const [weightType, setWeightType] = useState("n_cracks")
+    const { isLoaded, loadError } = useLoadScript({
+        googleMapsApiKey: "AIzaSyCvQYmlYtxWzuXKU_kZEi-iJLEUAj53FUM",
+        libraries,
+    });
+
+    if (!isLoaded) return <LoadingSpinner />;
+    if (loadError)
+        return (
+            <AnimationWrapper>
+                <Lottie animationData={noMapDataAnimation} loop={true} style={{ width: "100%", height: "100%" }} />
+            </AnimationWrapper>
+        );
 
     let data = heatMapData.map((item) => {
         return {
-            location: google.maps.LatLng(item.latitude, item.longitude),
+            location: new google.maps.LatLng(item.latitude, item.longitude),
             weight: item[weightType],
         }
     });
