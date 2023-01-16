@@ -12,7 +12,7 @@ import Media from "./pages/Media";
 import Profile from "./pages/Profile/Profile";
 import Sources from "./pages/Sources";
 import Workflows from "./pages/Workflows";
-
+import Map from './pages/Map/Map'
 function App() {
   return (
     <Fragment>
@@ -75,6 +75,12 @@ function App() {
               <RequireAuth>
                 <Profile />
               </RequireAuth>
+            }
+          />
+          <Route
+            path="/map"
+            element={
+              <Map />
             }
           />
           <Route path="login" element={<Login />} />
