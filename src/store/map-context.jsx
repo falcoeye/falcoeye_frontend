@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 const MapContext = React.createContext({
     mapMode: "",
-    changeMode: () => {},
+    changeMode: () => { },
 });
 
 export const MapContextProvider = (props) => {
