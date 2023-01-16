@@ -8,16 +8,19 @@ import { store } from "./store/configureStore";
 import { Provider } from "react-redux";
 import { AuthContextProvider } from "./store/auth-context";
 import { ThemeContextProvider } from "./store/theme-context";
+import { MapContextProvider } from "./store/map-context";
 
 ReactDOM.render(
   <React.StrictMode>
     <AuthContextProvider>
       <ThemeContextProvider>
-        <BrowserRouter>
-          <Provider store={store}>
-            <App />
-          </Provider>
-        </BrowserRouter>
+        <MapContextProvider>
+          <BrowserRouter>
+            <Provider store={store}>
+              <App />
+            </Provider>
+          </BrowserRouter>
+        </MapContextProvider>
       </ThemeContextProvider>
     </AuthContextProvider>
   </React.StrictMode>,
