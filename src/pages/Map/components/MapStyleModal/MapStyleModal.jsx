@@ -4,9 +4,8 @@ import MapContext from "../../../../store/map-context";
 
 const MapStyleModal = ({ open, onClose }) => {
     const { changeMode, mapMode } = useContext(MapContext);
-    console.log(mapMode)
+
     const selectMapVersionHandler = (value) => {
-        console.log(value)
         changeMode(value);
         onClose();
     };
