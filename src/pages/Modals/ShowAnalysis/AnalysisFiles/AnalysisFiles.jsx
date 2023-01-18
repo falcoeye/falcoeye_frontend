@@ -2,15 +2,21 @@ import { useCallback } from "react";
 import { useState } from "react";
 import CSVChart from "./CSVChart/CSVChart";
 import CSVReport from "./CSVReport/CSVReport";
+import MapReport from "./MapReport/MapReport";
 import MediaGrid from "./MediaGrid/MediaGrid";
 
 const AnalysisFiles = props => {
     const { id, meta } = props;
     const [csvReportOpened, setCsvReportOpened] = useState(false)
+    const [mapReportOpened, setMapReportOpened] = useState(false)
 
     const csvReportOpenHandler = () => { setCsvReportOpened(true); }
     const csvReportCloseHandler = useCallback(() => {
         setCsvReportOpened(false);
+    }, [])
+    const mapReportOpenHandler = () => { setMapReportOpened(true); }
+    const mapReportCloseHandler = useCallback(() => {
+        setMapReportOpened(false);
     }, [])
 
     return (
@@ -24,11 +30,19 @@ const AnalysisFiles = props => {
                         <span className="capitalize"> open data</span>
                     </span>
                 </button>}
+                {meta.type === 'map' && <button type="button" onClick={mapReportOpenHandler}>
+                    <span className="capitalize bg-rose-600 text-white text-sm py-1.5  flex justify-center items-center px-3 rounded-md ml-3"  >
+                        <span className="capitalize"> open data</span>
+                    </span>
+                </button>}
             </div>
             {meta.type === 'media' && <MediaGrid id={id} files={meta.filenames} />}
             {meta.type === 'csv' && <CSVChart id={id} file={meta.filename} meta={meta} />}
             {meta.type === 'csv' && csvReportOpened && (
                 <CSVReport  open={csvReportOpened} handleClose={csvReportCloseHandler}  id={id} meta={meta} />
+            )}
+            {meta.type === 'map' && csvReportOpened && (
+                <MapReport  open={mapReportOpened} handleClose={mapReportCloseHandler}  id={id} meta={meta} />
             )}
         </div>
     )
