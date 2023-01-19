@@ -41,7 +41,7 @@ const AnalysisFiles = props => {
             {meta.type === 'csv' && csvReportOpened && (
                 <CSVReport  open={csvReportOpened} handleClose={csvReportCloseHandler}  id={id} meta={meta} />
             )}
-            {meta.type === 'map' && csvReportOpened && (
+            {meta.type === 'map' && mapReportOpened && (
                 <MapReport  open={mapReportOpened} handleClose={mapReportCloseHandler}  id={id} meta={meta} />
             )}
         </div>
