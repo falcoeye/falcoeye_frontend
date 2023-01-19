@@ -67,15 +67,21 @@ const TableReport = (props) => {
                             {list.map((item, index) => {
                                 return (
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <th
+                                        {
+                                            item.meta.columns.forEach((el, index) => {
+                                                return (
+                                                    <td class="py-4 px-6">{item[el]}</td>
+                                                );
+                                            })
+                                        }
+                                        {/* <th
                                             scope="row"
                                             class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                                         >
                                             {item[meta['x-latitude']]}
                                         </th>
-                                        <td class="py-4 px-6">{item[meta['longitude']]}</td>
                                         <td class="py-4 px-6">{item[meta['total_length']]}</td>
-                                        <td class="py-4 px-6">{item[meta['n_cracks']]}</td>
+                                        <td class="py-4 px-6">{item[meta['n_cracks']]}</td> */}
                                     </tr>
                                 );
                             })}
