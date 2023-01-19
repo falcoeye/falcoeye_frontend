@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useState } from "react";
 import CSVChart from "./CSVChart/CSVChart";
 import CSVReport from "./CSVReport/CSVReport";
-import MapReport from "./MapReport/MapReport";
+import TableReport from "./TableReport/TableReport";
 import MediaGrid from "./MediaGrid/MediaGrid";
 
 const AnalysisFiles = props => {
@@ -41,8 +41,8 @@ const AnalysisFiles = props => {
             {meta.type === 'csv' && csvReportOpened && (
                 <CSVReport  open={csvReportOpened} handleClose={csvReportCloseHandler}  id={id} meta={meta} />
             )}
-            {meta.type === 'map' && mapReportOpened && (
-                <MapReport  open={mapReportOpened} handleClose={mapReportCloseHandler}  id={id} meta={meta} />
+            {meta.type === 'table' && mapReportOpened && (
+                <TableReport  open={mapReportOpened} handleClose={mapReportCloseHandler}  id={id} meta={meta} />
             )}
         </div>
     )

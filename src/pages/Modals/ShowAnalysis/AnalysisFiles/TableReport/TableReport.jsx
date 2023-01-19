@@ -7,7 +7,7 @@ import { usePapaParse, useCSVDownloader } from 'react-papaparse';
 import { toast } from 'react-toastify';
 import Loader from '../../../../../Components/UI/Loader/Loader';
 import axios from '../../../../../utility/api-instance';
-const CSVReport = (props) => {
+const TableReport = (props) => {
     const { id, meta, handleClose, open } = props;
     const { readString } = usePapaParse();
     const { CSVDownloader, Type } = useCSVDownloader();
@@ -52,18 +52,15 @@ const CSVReport = (props) => {
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
-                                <th scope="col" class="py-3 px-6">
-                                    {meta['latitude']}
-                                </th>
-                                <th scope="col" class="py-3 px-6">
-                                    {meta['longitude']}
-                                </th>
-                                <th scope="col" class="py-3 px-6">
-                                    {meta['total_length']}
-                                </th>
-                                <th scope="col" class="py-3 px-6">
-                                    {meta['n_cracks']}
-                                </th>
+                                {
+                                    meta.columns.map((item, index) => {
+                                        return (
+                                            <th scope="col" class="py-3 px-6" key={index}>
+                                                {item}
+                                            </th>
+                                        );
+                                    })
+                                }
                             </tr>
                         </thead>
                         <tbody>
@@ -150,4 +147,4 @@ const CSVReport = (props) => {
         </Transition>
     );
 };
-export default CSVReport;
+export default TableReport;
