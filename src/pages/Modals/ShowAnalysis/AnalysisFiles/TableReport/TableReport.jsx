@@ -48,14 +48,14 @@ const TableReport = (props) => {
     } else if (!loading && data && list) {
         content = (
             <div className="max-h-[calc(var(--vh)*100-108px)] md:max-h-[calc(90vh-108px)] overflow-y-auto overflow-y-auto pr-3">
-                <div class="overflow-x-auto relative">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <div className="overflow-x-auto relative">
+                    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 {
                                     meta.columns.map((item, index) => {
                                         return (
-                                            <th scope="col" class="py-3 px-6" key={index}>
+                                            <th scope="col" className="py-3 px-6" key={index}>
                                                 {item}
                                             </th>
                                         );
@@ -66,11 +66,11 @@ const TableReport = (props) => {
                         <tbody>
                             {list.map((item, index) => {
                                 return (
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         {
-                                            item.meta.columns.forEach((el, index) => {
+                                            meta.columns.map((el, index) => {
                                                 return (
-                                                    <td class="py-4 px-6">{item[el]}</td>
+                                                    <td key={index} className="py-4 px-6">{item[el]}</td>
                                                 );
                                             })
                                         }
