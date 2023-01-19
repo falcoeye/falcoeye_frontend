@@ -1,5 +1,5 @@
 /* global google */
-import { GoogleMap, HeatmapLayerF } from "@react-google-maps/api";
+import { GoogleMap, HeatmapLayer } from "@react-google-maps/api";
 import React, { useContext } from "react";
 import MapContext from "../../store/map-context";
 import { MapContainer, AnimationWrapper } from "./Map.styled";
@@ -71,7 +71,7 @@ const Map = () => {
                         disableDefaultUI: true,
                     }}
                 >
-                    <HeatmapLayerF data={data} options={{ opacity: 1 }} />
+                    <HeatmapLayer data={data} options={{ opacity: 1 }} />
                 </GoogleMap>
             </MapContainer>
             <BottomBar data={data} />
